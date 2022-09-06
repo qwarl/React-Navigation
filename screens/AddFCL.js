@@ -22,17 +22,30 @@ const { width, height } = Dimensions.get("window");
 const Add = ({ navigation }) => {
 
 	const addQuo = (logs) => {
-		const { month, continent, type, pol, pod, of20, of40, of45, sur20, sur40, lines, freeTime, valid, notes } = logs
-
-		const url = `http://localhost:3001/api/phongLogs`
-		axios.post(url, { month: month, continent: continent, type: type, pol: pol, pod: pod, of20: of20, of40: of40, of45: of45, sur20: sur20, sur40: sur40, lines: lines, freeTime: freeTime, valid: valid, notes: notes })
-			.then(res => {
-				console.log(res['logs'].msg)
-				console.log(error.response.data)
-			})
-			.catch(
-				err => console.log(err)
-			)
+		const {
+			month,
+			// continent, 
+			// type,
+			pol1, pod1, of201, of401, of451, sur201, sur401, lines1, freeTime1
+			// valid, 
+			, notes1
+		} = logs
+		console.log(logs);
+		// const url = `http://localhost:3001/api/phongLogs/create`
+		// axios.post(url, { 
+		// 	month: month1, 
+		// 	// continent: continent, 
+		// 	// type: type, 
+		// 	pol: pol1, pod: pod1, of20: of201, of40: of401, of45: of451, sur20: sur201, sur40: sur401, lines: lines, freeTime: freeTime1, 
+		// 	// valid: valid, 
+		// 	notes: notes1 })
+		// 	.then(res => {
+		// 		console.log(res['logs'].msg)
+		// 		console.log(error.res.data)
+		// 	})
+		// 	.catch(
+		// 		err => console.log(err)
+		// 	)
 	}
 
 	const [fclInfo, setFclInfo] = useState({
@@ -108,7 +121,18 @@ const Add = ({ navigation }) => {
 	const addDate = () => {
 		showMode('date');
 	}
-
+	const [pol1, setPol1] = useState('')
+	const [pod1, setPod1] = useState('')
+	const [of201, setOf201] = useState('')
+	const [of401, setOf401] = useState('')
+	const [of451, setOf451] = useState('')
+	const [sur201, setSur201] = useState('')
+	const [sur401, setSur401] = useState('')
+	const [lines1, setLines1] = useState('')
+	const [freeTime1, setFreeTime1] = useState('')
+	const [notes1, setNotes1] = useState('')
+	const [month1, setMonth1] = useState('')
+	// const [month1, setMonth1] = useState('')
 	return (
 		// <TouchableOpacity
 		//   onPress={() => {
@@ -119,18 +143,18 @@ const Add = ({ navigation }) => {
 		// </TouchableOpacity>
 		<View style={StyleSheet.container}>
 			<ScrollView>
-				<FormDropDownMonth label="Chọn Tháng" />
+				<FormDropDownMonth label="Chọn Tháng" onChangeText={setMonth1} value={month1} />
 				<FormDropdownContinent label="Chọn Châu" />
 				<FormDropdownStyleFCL label="Chọn Loại Container" />
-				<FormInput label="POL" placeholder="pol" />
-				<FormInput label="POD" placeholder="pod" />
-				<FormInput label="O/F 20" placeholder="O/F 20" />
-				<FormInput placeholder="O/F 40" label="O/F 40" />
-				<FormInput placeholder="O/F 45" label="O/F 45" />
-				<FormInput placeholder="SUR 20" label="SUR 20" />
-				<FormInput placeholder="SUR 40" label="SUR 40" />
-				<FormInput placeholder="LINES" label="LINES" />
-				<FormInput placeholder="FREE TIME" label="FREE TIME" />
+				<FormInput label="POL" placeholder="pol" onChangeText={setPol1} value={pol1} />
+				<FormInput label="POD" placeholder="pod" onChangeText={setPod1} value={pod1} />
+				<FormInput label="O/F 20" placeholder="O/F 20" onChangeText={setOf201} value={of201} />
+				<FormInput placeholder="O/F 40" label="O/F 40" onChangeText={setOf401} value={of401} />
+				<FormInput placeholder="O/F 45" label="O/F 45" onChangeText={setOf451} value={of451} />
+				<FormInput placeholder="SUR 20" label="SUR 20" onChangeText={setSur201} value={sur201} />
+				<FormInput placeholder="SUR 40" label="SUR 40" onChangeText={setSur401} value={sur401} />
+				<FormInput placeholder="LINES" label="LINES" onChangeText={setLines1} value={lines1} />
+				<FormInput placeholder="FREE TIME" label="FREE TIME" onChangeText={setFreeTime1} value={freeTime1} />
 				<FormInput
 					placeholder="VALID"
 					label="VALID"
@@ -148,19 +172,20 @@ const Add = ({ navigation }) => {
 						onChange={onChange}
 					/>
 				)}
-				<FormInput placeholder="NOTES" label="NOTES" />
+				<FormInput placeholder="NOTES" label="NOTES" onChangeText={setNotes1} value={notes1} />
 				<View style={{ flex: 1, justifyContent: "center" }}>
 					<TouchableOpacity
 						onPress={() => {
-							addQuo(fclInfo)
+							addQuo(pol1, pod1, of201, of401, of451, sur201, sur401, lines1, freeTime1, notes1)
+							// console.log(pol1, pod1, of201, of401, of451, sur201, sur401, lines1, freeTime1, notes1);
 						}}
 					>
 						<View style={styles.iconWrapper}>
 							<Text style={styles.icon}>send</Text>
 						</View>
 					</TouchableOpacity>
-					</View>
-		
+				</View>
+
 			</ScrollView >
 		</View >
 	);
