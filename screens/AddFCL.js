@@ -15,6 +15,10 @@ import FormDropdownStyleFCL from "../components/FormDropdownStyleFCL";
 import DateTimePicker from '@react-native-community/datetimepicker';
 import color from "./../contains/color";
 import axios from 'axios';
+import SelectList from "react-native-dropdown-select-list";
+import { Month } from '../contains/month';
+import { Continent } from '../contains/continent';
+import { Container } from "../contains/container";
 
 const { width, height } = Dimensions.get("window");
 
@@ -121,6 +125,9 @@ const Add = ({ navigation }) => {
 	const addDate = () => {
 		showMode('date');
 	}
+	const [month1, setMonth1] = useState('')
+	const [continent1, setContinent1] = useState('')
+	const [container1, setContainer1] = useState('')
 	const [pol1, setPol1] = useState('')
 	const [pod1, setPod1] = useState('')
 	const [of201, setOf201] = useState('')
@@ -131,8 +138,6 @@ const Add = ({ navigation }) => {
 	const [lines1, setLines1] = useState('')
 	const [freeTime1, setFreeTime1] = useState('')
 	const [notes1, setNotes1] = useState('')
-	const [month1, setMonth1] = useState('')
-	// const [month1, setMonth1] = useState('')
 	return (
 		// <TouchableOpacity
 		//   onPress={() => {
@@ -143,9 +148,29 @@ const Add = ({ navigation }) => {
 		// </TouchableOpacity>
 		<View style={StyleSheet.container}>
 			<ScrollView>
-				<FormDropDownMonth label="Chọn Tháng" onChangeText={setMonth1} value={month1} />
-				<FormDropdownContinent label="Chọn Châu" />
-				<FormDropdownStyleFCL label="Chọn Loại Container" />
+				<View style={styles.dropMenu}>
+					<Text style={styles.label}>
+						Chọn Tháng
+					</Text>
+					<SelectList setSelected={setMonth1} data={Month} />
+					<Text>{month1}</Text>
+				</View>
+				<View style={styles.dropMenu}>
+					<Text style={styles.label}>
+						Chọn Châu
+					</Text>
+					<SelectList setSelected={setContinent1} data={Continent} />
+					<Text>{continent1}</Text>
+				</View>
+				<View style={styles.dropMenu}>
+					<Text style={styles.label}>
+						Chọn Loại Container
+					</Text>
+					<SelectList setSelected={setContainer1} data={Container} />
+					<Text>{container1}</Text>
+				</View>
+				{/* <FormDropdownContinent label="Chọn Châu" />
+				<FormDropdownStyleFCL label="Chọn Loại Container" /> */}
 				<FormInput label="POL" placeholder="pol" onChangeText={setPol1} value={pol1} />
 				<FormInput label="POD" placeholder="pod" onChangeText={setPod1} value={pod1} />
 				<FormInput label="O/F 20" placeholder="O/F 20" onChangeText={setOf201} value={of201} />
@@ -176,8 +201,8 @@ const Add = ({ navigation }) => {
 				<View style={{ flex: 1, justifyContent: "center" }}>
 					<TouchableOpacity
 						onPress={() => {
-							addQuo(pol1, pod1, of201, of401, of451, sur201, sur401, lines1, freeTime1, notes1)
-							// console.log(pol1, pod1, of201, of401, of451, sur201, sur401, lines1, freeTime1, notes1);
+							addQuo(month1, pol1, pod1, of201, of401, of451, sur201, sur401, lines1, freeTime1, notes1)
+							console.log(month1, container1, continent1, pol1, pod1, of201, of401, of451, sur201, sur401, lines1, freeTime1, notes1);
 						}}
 					>
 						<View style={styles.iconWrapper}>
@@ -212,6 +237,17 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		justifyContent: "center",
 	},
+	dropMenu: {
+		paddingHorizontal: 20,
+		paddingVertical: 4,
+		flex: 1,
+		minWidth: 180,
+	},
+	label: {
+		fontSize: 18,
+		fontWeight: "bold",
+		marginBottom: 5
+	}
 });
 
 export default Add;

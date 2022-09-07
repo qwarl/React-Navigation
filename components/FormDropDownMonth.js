@@ -31,7 +31,7 @@ const FormDropDownMonth = ({ label }) => {
 			<Text style={{ fontSize: 18, fontWeight: "bold", marginBottom: 5 }}>
 				{label}
 			</Text>
-			<SelectList setSelected={setSelected} data={data} value={setSelected} onChangeText={setSelected} value={selected} />
+			<SelectList setSelected={setSelected} data={data} />
 			<Text>{selected}</Text>
 		</View>
 	);
