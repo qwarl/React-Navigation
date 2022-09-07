@@ -273,8 +273,23 @@ const Add = ({ navigation }) => {
         >
           {/* <TouchableOpacity
 						onPress={() => {
-							addQuo(month1, pol1, pod1, of201, of401, of451, sur201, sur401, lines1, freeTime1, notes1)
-							console.log(month1, container1, continent1, pol1, pod1, of201, of401, of451, sur201, sur401, lines1, freeTime1, notes1);
+							addQuo(
+								// month1,
+								// continent1,
+								// container1,
+								// pol1,
+								// pod1,
+								// of201,
+								// of401,
+								// of451,
+								// sur201,
+								// sur401,
+								// lines1,
+								// freeTime1,
+								// notes1
+								fclInfo
+							)
+							// console.log(month1, container1, continent1, pol1, pod1, of201, of401, of451, sur201, sur401, lines1, freeTime1, notes1);
 						}}
 					>
 						<View style={styles.iconWrapper}>
