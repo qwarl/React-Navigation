@@ -27,9 +27,9 @@ const Add = ({ navigation }) => {
 
 	const addQuo = (logs) => {
 		const {
-			month,
-			// continent, 
-			// type,
+			month1,
+			continent1, 
+			type1,
 			pol1, pod1, of201, of401, of451, sur201, sur401, lines1, freeTime1
 			// valid, 
 			, notes1

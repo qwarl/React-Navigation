@@ -45,7 +45,9 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         borderWidth: 2,
         borderColor: color.background,
-        marginLeft: height * 0.445,
+        position:'absolute',
+        right:10,
+        marginBottom:0,
     },
     icon: {
         fontSize: 24,
