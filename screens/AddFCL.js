@@ -25,70 +25,64 @@ const { width, height } = Dimensions.get("window");
 
 const Add = ({ navigation }) => {
 
-	const addQuo = (logs) => {
+	const addQuo = (fclInfo) => {
 		const {
-			month1,
-			continent1, 
-			type1,
-			pol1, pod1, of201, of401, of451, sur201, sur401, lines1, freeTime1
+			// 	// month1,
+			// 	// continent1,
+			// 	// type1,
+			// 	// pol1, pod1, of201, of401, of451, sur201, sur401, lines1, freeTime1
+			// 	// // valid, 
+			// 	// , notes1
+
+			month,
+			continent,
+			type,
+			pol, pod, of20, of40, of45, sur20, sur40, lines, freeTime
 			// valid, 
 			, notes1
-		} = logs
-		console.log(logs);
-		// const url = `http://localhost:3001/api/phongLogs/create`
-		// axios.post(url, { 
-		// 	month: month1, 
-		// 	// continent: continent, 
-		// 	// type: type, 
-		// 	pol: pol1, pod: pod1, of20: of201, of40: of401, of45: of451, sur20: sur201, sur40: sur401, lines: lines, freeTime: freeTime1, 
-		// 	// valid: valid, 
-		// 	notes: notes1 })
-		// 	.then(res => {
-		// 		console.log(res['logs'].msg)
-		// 		console.log(error.res.data)
-		// 	})
-		// 	.catch(
-		// 		err => console.log(err)
-		// 	)
+		} = fclInfo
+		console.log(fclInfo);
 	}
 
-	const [fclInfo, setFclInfo] = useState({
-		month: "",
-		continent: "",
-		type: "",
-		pol: "",
-		pod: "",
-		of20: "",
-		of40: "",
-		of45: "",
-		sur20: "",
-		sur40: "",
-		lines: "",
-		freeTime: "",
-		valid: "",
-		notes: "",
-	});
+	const fclInfo = {
+		month: month1,
+		continent: continent1,
+		container: container1,
+		pol: pol1,
+		pod: pod1,
+		of20: of201,
+		of40: of401,
+		of45: of451,
+		sur20: sur201,
+		sur40: sur401,
+		lines: lines1,
+		freeTime: freeTime1,
+		// valid: valid,
+		notes: notes1
+	}
+	console.log(fclInfo);
+	// const [fclInfo, setFclInfo] = useState({
+	// 	month: "",
+	// 	continent: "",
+	// 	type: "",
+	// 	pol: "",
+	// 	pod: "",
+	// 	of20: "",
+	// 	of40: "",
+	// 	of45: "",
+	// 	sur20: "",
+	// 	sur40: "",
+	// 	lines: "",
+	// 	freeTime: "",
+	// 	valid: "",
+	// 	notes: "",
+	// });
 
 	const handleOnChangeText = (value, fieldName) => {
 		setUserInfo({ ...useInfo, [fieldName]: value });
 	};
 
 	const [error, setError] = useState("");
-
-	const {
-		month,
-		continent,
-		type,
-		pol,
-		pod,
-		of20,
-		of40,
-		of45,
-		sur20,
-		sur40,
-		lines,
-		notes,
-	} = fclInfo;
 
 	const [date, setDate] = useState(new Date());
 	const [mode, setMode] = useState("date");
@@ -201,8 +195,23 @@ const Add = ({ navigation }) => {
 				<View style={{ flex: 1, justifyContent: "center" }}>
 					<TouchableOpacity
 						onPress={() => {
-							addQuo(month1, pol1, pod1, of201, of401, of451, sur201, sur401, lines1, freeTime1, notes1)
-							console.log(month1, container1, continent1, pol1, pod1, of201, of401, of451, sur201, sur401, lines1, freeTime1, notes1);
+							addQuo(
+								// month1,
+								// continent1,
+								// container1,
+								// pol1,
+								// pod1,
+								// of201,
+								// of401,
+								// of451,
+								// sur201,
+								// sur401,
+								// lines1,
+								// freeTime1,
+								// notes1
+								fclInfo
+							)
+							// console.log(month1, container1, continent1, pol1, pod1, of201, of401, of451, sur201, sur401, lines1, freeTime1, notes1);
 						}}
 					>
 						<View style={styles.iconWrapper}>
