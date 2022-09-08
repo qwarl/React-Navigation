@@ -21,6 +21,10 @@ import { Month } from "../contains/month";
 import { Continent } from "../contains/continent";
 import { Container } from "../contains/container";
 import FormSubmitButton from "./../components/FormSubmitButton";
+import {
+  isValidObjectField,
+  updateError,
+} from "../utils/method.js";
 
 const { width, height } = Dimensions.get("window");
 
@@ -158,7 +162,7 @@ const Add = ({ navigation }) => {
     }
   };
 
-  console.log(fclInfo)
+  // console.log(fclInfo)
 
   return (
     <View style={StyleSheet.container}>

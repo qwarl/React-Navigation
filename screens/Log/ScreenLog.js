@@ -1,22 +1,21 @@
 
-import React from 'react';
+import React from 'react'
 import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import Home from "./Home";
-import Detail from "./Detail";
-import Add from './AddFCL';
 
 const Stack = createStackNavigator();
 
-export default function fcl () {
+const ScreenLog = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Home" component={Home}/>
-        <Stack.Screen name="Detail" component={Detail}/>
-        <Stack.Screen name="Add" component={Add}/>
+        <Stack.Screen name="HomeLog" component={Home}/>
+        <Stack.Screen name="DetailLog" component={Detail}/>
+        <Stack.Screen name="AddLog" component={Add}/>
       </Stack.Navigator>
     </NavigationContainer>
   )
 }
+
+export default ScreenLog
