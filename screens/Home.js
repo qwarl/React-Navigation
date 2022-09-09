@@ -15,26 +15,31 @@ import axios from "axios";
 const { width, height } = Dimensions.get("window");
 
 const Home = ({ navigation }) => {
-	const [data, setData] = useState('');
+	const [data1, setData1] = useState('');
 	useEffect(() => {
 		const url = `http://192.168.1.104:3001/api/quotations/getAll`;
 		axios.get(url)
 			// .then(res => setSubAdminData(res['data']))
 			.then(res => {
-				console.log(res['data'])
-				setData(res['data'])
+				console.log('hohoho',res['data'])
+				setData1(res['data'].quotations)
 			})
 
 	}, [])
 
 	const ListItem = ({ item }) => {
-
+		console.log('month', item.month);
 		return (
-			<View style={styles.listContainer}>
+			// <View style={styles.listContainer}>
+			// 	<Text style={{ marginLeft: 10, fontSize: 20 }}>Tháng: {item.month}</Text>
+			// 	<Text style={styles.item}>Cảng đi: {item.pol}</Text>
+			// 	<Text style={styles.item}>Cảng đến: {item.pod}</Text>
+			// </View>
+			<TouchableOpacity onPress={()=>navigation.navigate("Add",item)}>
 				<Text style={{ marginLeft: 10, fontSize: 20 }}>Tháng: {item.month}</Text>
 				<Text style={styles.item}>Cảng đi: {item.pol}</Text>
 				<Text style={styles.item}>Cảng đến: {item.pod}</Text>
-			</View>
+			</TouchableOpacity>
 		)
 	}
 
@@ -42,22 +47,28 @@ const Home = ({ navigation }) => {
 		<View style={{ flex: 1 }}>
 			<View
 				style={{
-					flex: 4,
+					// flex: 4,
 					justifyContent: "space-between",
-					marginBottom: 50,
+					// marginBottom: 50,
 					flexDirection: "row",
 				}}
 			>
 				<FormDropDownMonth label="Chọn Tháng" />
 				<FormDropdownContinent label="Chọn Châu" />
-				<FlatList
-                keyExtractor={item => item._id}
-                data={data}
-                renderItem={
-                    ({ item }) => <ListItem item={item} />
-                } />
-
 			</View>
+			{
+				data1 && (
+					<FlatList
+						keyExtractor={item => item._id}
+						style={{ backgroundColor: 'coral' }}
+						data={data1}
+						renderItem={
+							// ({ item }) => <ListItem item={item} />
+							ListItem
+						}
+					/>
+				)
+			}
 			<View style={{ flex: 1, justifyContent: "center" }}>
 				<TouchableOpacity
 					onPress={() => {
@@ -94,16 +105,16 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 	},
 	item: {
-        marginLeft: 10,
-    },
-    listContainer: {
-        backgroundColor: '#f1f1f1',
-        // flexDirection:'row',
-        margin: width * 3.6 / 187.5,
-        padding: width * 3.6 / 187.5,
-        borderRadius: width * 3.6 / 187.5,
-        width: '100%'
-    },
+		marginLeft: 10,
+	},
+	listContainer: {
+		backgroundColor: 'b',
+		// flexDirection:'row',
+		margin: width * 3.6 / 187.5,
+		padding: width * 3.6 / 187.5,
+		borderRadius: width * 3.6 / 187.5,
+		width: '100%'
+	},
 });
 
 export default Home;

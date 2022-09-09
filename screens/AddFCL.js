@@ -24,8 +24,9 @@ import FormSubmitButton from "./../components/FormSubmitButton";
 
 const { width, height } = Dimensions.get("window");
 
-const Add = ({ navigation }) => {
-
+const Add = ({ navigation, route }) => {
+	let { container, continent, month, pol, pod, of20, of40, of45, sur20, sur40, freeTime, lines, notes } = route.params;
+	// console.log('item',item)
 	const handleOnChangeText = (value, fieldName) => {
 		setFclInfo({ ...fclInfo, [fieldName]: value });
 	};
@@ -69,19 +70,19 @@ const Add = ({ navigation }) => {
 	};
 
 	const [fclInfo, setFclInfo] = useState({
-		month: "",
-		continent: "",
-		container: "",
-		pol: "",
-		pod: "",
-		of20: "",
-		of40: "",
-		of45: "",
-		sur20: "",
-		sur40: "",
-		lines: "",
-		freeTime: "",
-		notes: "",
+		month: month,
+		continent: continent,
+		container: container,
+		pol: pol,
+		pod: pod,
+		of20: of20,
+		of40: of40,
+		of45: of45,
+		sur20: sur20,
+		sur40: 		sur40,
+		lines: lines,
+		freeTime: freeTime,
+		notes: notes,
 	});
 
 	//   const isValidForm = () => {
@@ -97,7 +98,7 @@ const Add = ({ navigation }) => {
 
 	const submitForm = async () => {
 		// if (isValidForm()) {
-		const url = `http://192.168.1.4:3001/api/quotations/create`
+		const url = `http://192.168.1.104:3001/api/quotations/create`
 		try {
 			const res = await axios.post(url, { ...fclInfo });
 			if (res.data.success) {
@@ -121,6 +122,8 @@ const Add = ({ navigation }) => {
 					<SelectList
 						setSelected={(value) => setFclInfo({ ...fclInfo, month: value })}
 						data={Month}
+					// defaultOption={{ key: month, value: month }}
+					// defaultOption={{ month }}
 					/>
 				</View>
 				<View style={styles.dropMenu}>
