@@ -8,22 +8,22 @@ import {
   Dimensions,
   Alert,
 } from "react-native";
-import React, { useEffect, useState } from "react";
-import FormInput from "../components/FormInput";
-import color from "./../contains/color";
+import React, { useState } from "react";
+import color from "../../contains/color";
 import SelectList from "react-native-dropdown-select-list";
-import { Month } from "../contains/month";
-import { Continent } from "../contains/continent";
-import { Container } from "../contains/container";
-import { isValidObjectField, updateError } from "../utils/method.js";
-import client from "../api/client";
+import { ShippingType } from "../../contains/ShippingType";
+import { Type } from "../../contains/Type";
+import { Month } from "../../contains/month";
+import FormInput from "../../components/FormInput";
+import clientLog from "../../api/clientLog";
+import { isValidObjectField, updateError } from "../../utils/method";
 
 const { width, height } = Dimensions.get("window");
 
-const Add = ({ navigation }) => {
+const AddLog = ({ route }) => {
 
   const handleOnChangeText = (value, fieldName) => {
-    setFclInfo({ ...fclInfo, [fieldName]: value });
+    setLogInfo({ ...logInfo, [fieldName]: value });
   };
 
   const [error, setError] = useState("");
@@ -63,24 +63,24 @@ const Add = ({ navigation }) => {
   const addDate = () => {
     showMode("date");
   };
-  const [fclInfo, setFclInfo] = useState({
+  const [logInfo, setLogInfo] = useState({
     month: "",
-    continent: "",
-    container: "",
+    freight: "",
+    type: "",
+    name: "",
+    hsCode: "",
+    function: "",
+    image: "",
     pol: "",
     pod: "",
-    of20: "",
-    of40: "",
-    of45: "",
-    sur20: "",
-    sur40: "",
-    lines: "",
-    freeTime: "",
-    notes: "",
+    typeProduct: "",
+    quantity: "",
+    requirement: "",
+    price: "",
   });
 
   const isValidForm = () => {
-    if (!isValidObjectField(fclInfo))
+    if (!isValidObjectField(logInfo))
       return updateError("Required all fields!", setError);
     //only valid email id is allowed
     // if (!isValidEmail(email)) return updateError("Invalid email!", setError);
@@ -93,23 +93,23 @@ const Add = ({ navigation }) => {
   const submitForm = async () => {
     if (isValidForm()) {
       try {
-        const res = await client.post("/create", { ...fclInfo });
+        const res = await clientLog.post("/create", { ...logInfo });
         if (res.data.success) {
           Alert.alert("Thêm Thành Công");
-          setFclInfo({
+          setLogInfo({
             month: "",
-            continent: "",
-            container: "",
+            freight: "",
+            type: "",
+            name: "",
+            hsCode: "",
+            function: "",
+            image: "",
             pol: "",
             pod: "",
-            of20: "",
-            of40: "",
-            of45: "",
-            sur20: "",
-            sur40: "",
-            lines: "",
-            freeTime: "",
-            notes: "",
+            typeProduct: "",
+            quantity: "",
+            requirement: "",
+            price: "",
           });
         }
         console.log("running");
@@ -120,7 +120,7 @@ const Add = ({ navigation }) => {
     }
   };
 
-  // console.log(fclInfo)
+  // console.log(logInfo);
 
   return (
     <View style={StyleSheet.container}>
@@ -128,106 +128,83 @@ const Add = ({ navigation }) => {
         <View style={styles.dropMenu}>
           <Text style={styles.label}>Chọn Tháng</Text>
           <SelectList
-            setSelected={(value) => setFclInfo({ ...fclInfo, month: value })}
+            setSelected={(value) => setLogInfo({ ...logInfo, month: value })}
             data={Month}
           />
         </View>
         <View style={styles.dropMenu}>
-          <Text style={styles.label}>Chọn Châu</Text>
+          <Text style={styles.label}>Chọn Loại Vận Chuyển</Text>
           <SelectList
-            setSelected={(value) =>
-              setFclInfo({ ...fclInfo, continent: value })
-            }
-            data={Continent}
+            setSelected={(value) => setLogInfo({ ...logInfo, freight: value })}
+            data={ShippingType}
           />
         </View>
         <View style={styles.dropMenu}>
-          <Text style={styles.label}>Chọn Loại Container</Text>
+          <Text style={styles.label}>Chọn Loại Hình</Text>
           <SelectList
-            setSelected={(value) =>
-              setFclInfo({ ...fclInfo, container: value })
-            }
-            data={Container}
+            setSelected={(value) => setLogInfo({ ...logInfo, type: value })}
+            data={Type}
           />
         </View>
-        {/* <FormDropdownContinent label="Chọn Châu" />
-				<FormDropdownStyleFCL label="Chọn Loại Container" /> */}
         <FormInput
+          label="Name"
+          placeholder="Name"
+          onChangeText={(value) => handleOnChangeText(value, "name")}
+          value={logInfo.name}
+        />
+        <FormInput
+          label="H/S Code"
+          placeholder="H/S Code"
+          onChangeText={(value) => handleOnChangeText(value, "hsCode")}
+          value={logInfo.hsCode}
+        />
+        <FormInput
+          label="Công Dụng"
+          placeholder="Công Dụng"
+          onChangeText={(value) => handleOnChangeText(value, "function")}
+          value={logInfo.function}
+        />
+        <FormInput
+          placeholder="Hình Ảnh"
+          label="Hình Ảnh"
+          onChangeText={(value) => handleOnChangeText(value, "image")}
+          value={logInfo.image}
+        />
+        <FormInput
+          placeholder="POL"
           label="POL"
-          placeholder="pol"
           onChangeText={(value) => handleOnChangeText(value, "pol")}
-          value={fclInfo.pol}
+          value={logInfo.pol}
         />
         <FormInput
+          placeholder="POD"
           label="POD"
-          placeholder="pod"
           onChangeText={(value) => handleOnChangeText(value, "pod")}
-          value={fclInfo.pod}
+          value={logInfo.pod}
         />
         <FormInput
-          label="O/F 20"
-          placeholder="O/F 20"
-          onChangeText={(value) => handleOnChangeText(value, "of20")}
-          value={fclInfo.of20}
+          placeholder="Loại Hàng"
+          label="Loại Hàng"
+          onChangeText={(value) => handleOnChangeText(value, "typeProduct")}
+          value={logInfo.typeProduct}
         />
         <FormInput
-          placeholder="O/F 40"
-          label="O/F 40"
-          onChangeText={(value) => handleOnChangeText(value, "of40")}
-          value={fclInfo.of40}
+          placeholder="Số Lượng Cụ Thể"
+          label="Số Lượng Cụ Thể"
+          onChangeText={(value) => handleOnChangeText(value, "quantity")}
+          value={logInfo.quantity}
         />
         <FormInput
-          placeholder="O/F 45"
-          label="O/F 45"
-          onChangeText={(value) => handleOnChangeText(value, "of45")}
-          value={fclInfo.of45}
+          placeholder="Yêu Cầu Đặc Biệt"
+          label="Yêu Cầu Đặc Biệt"
+          onChangeText={(value) => handleOnChangeText(value, "requirement")}
+          value={logInfo.requirement}
         />
         <FormInput
-          placeholder="SUR 20"
-          label="SUR 20"
-          onChangeText={(value) => handleOnChangeText(value, "sur20")}
-          value={fclInfo.sur20}
-        />
-        <FormInput
-          placeholder="SUR 40"
-          label="SUR 40"
-          onChangeText={(value) => handleOnChangeText(value, "sur40")}
-          value={fclInfo.sur40}
-        />
-        <FormInput
-          placeholder="LINES"
-          label="LINES"
-          onChangeText={(value) => handleOnChangeText(value, "lines")}
-          value={fclInfo.lines}
-        />
-        <FormInput
-          placeholder="FREE TIME"
-          label="FREE TIME"
-          onChangeText={(value) => handleOnChangeText(value, "freeTime")}
-          value={fclInfo.freeTime}
-        />
-        <FormInput
-          placeholder="VALID"
-          label="VALID"
-          value={fclInfo.valid}
-          onChangeText={(value) => handleOnChangeText(value, "valid")}
-          onPress={addDate}
-        />
-        {/* {show && (
-          <DateTimePicker
-            testID="dateTimePicker"
-            value={date}
-            mode={mode}
-            is24Hour={true}
-            display="default"
-            onChange={onChange}
-          />
-        )} */}
-        <FormInput
-          placeholder="NOTES"
-          label="NOTES"
-          onChangeText={(value) => handleOnChangeText(value, "notes")}
-          value={fclInfo.notes}
+          placeholder="Giá"
+          label="Giá"
+          value={logInfo.price}
+          onChangeText={(value) => handleOnChangeText(value, "price")}
         />
         <View
           style={{
@@ -287,4 +264,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Add;
+export default AddLog;
