@@ -21,62 +21,91 @@ const HomeLog = ({ navigation }) => {
   });
 
   const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-      clientLog.get('/getAll')
+    clientLog
+      .get("/getAll")
       .then((res) => {
-        console.log(res);
-        setData(res.data);
+        // console.log(res);
+        setData(res.data.phongLogs);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [data]);
+
+  // console.log(data);
+
+  const renderItem = ({ item }) => (
+    <TouchableOpacity
+      onPress={() => {
+        navigation.navigate("DetailLog", {
+          item: item,
+        });
+      }}
+    >
+      <View style={styles.detail}>
+        <Text style={styles.textDisplay}>Tên Hàng: {item.name}</Text>
+        <Text style={styles.textDisplay}>H/S Code: {item.hsCode}</Text>
+        <Text style={styles.textDisplay}>Cảng Đi: {item.pol}</Text>
+        <Text style={styles.textDisplay}>Cảng Đến: {item.pod}</Text>
+        <Text style={styles.textDisplay}>Giá: {item.price}</Text>
+        <Text style={styles.textDisplay}>Loại Hình: {item.type}</Text>
+      </View>
+    </TouchableOpacity>
+  );
 
   return (
     <View style={{ flex: 1 }}>
       <View
         style={{
-          flex: 4,
+          flex: 1,
           justifyContent: "space-between",
-          marginBottom: 50,
           flexDirection: "row",
         }}
       >
-        <View>
-          <View style={{ flexDirection: "row" }}>
-            <View style={styles.dropMenu}>
-              <Text style={styles.label}>Chọn Tháng</Text>
-              <SelectList
-                setSelected={(value) =>
-                  setLogInfo({ ...logInfo, month: value })
-                }
-                data={Month}
-              />
-            </View>
-            <View style={styles.dropMenu}>
-              <Text style={styles.label}>Loại Vận Chuyển</Text>
-              <SelectList
-                setSelected={(value) =>
-                  setLogInfo({ ...logInfo, month: value })
-                }
-                data={ShippingType}
-              />
-            </View>
+        <View style={{ flexDirection: "row" }}>
+          <View style={styles.dropMenu}>
+            <Text style={styles.label}>Chọn Tháng</Text>
+            <SelectList
+              setSelected={(value) => setLogInfo({ ...logInfo, month: value })}
+              data={Month}
+              dropdownStyles={{
+                backgroundColor: "#D9DBDB",
+              }}
+            />
           </View>
-          <View style={styles.displayData}>
-            {/* <TouchableOpacity  onPress={() => {
+          <View style={styles.dropMenu}>
+            <Text style={styles.label}>Loại Vận Chuyển</Text>
+            <SelectList
+              setSelected={(value) => setLogInfo({ ...logInfo, month: value })}
+              data={ShippingType}
+              dropdownStyles={{
+                backgroundColor: "#D9DBDB",
+              }}
+            />
+          </View>
+        </View>
+      </View>
+       <View style={{ flex: 8 }}>
+        <View style={styles.displayData}>
+          {/* { <TouchableOpacity  onPress={() => {
             navigation.navigate("DetailLog", {
               logInfo: logInfo,
             });
           }} >
               <Text style={{marginLeft:90, marginTop:50}}>Send data</Text>
-            </TouchableOpacity> */}
-              <FlatList style={styles.list}/>
-          </View>
+            </TouchableOpacity> } */}
+          <FlatList
+            style={styles.list}
+            data={data}
+            renderItem={renderItem}
+            keyExtractor={(item) => item._id}
+          />
         </View>
-      </View>
-      <View style={{ flex: 1, justifyContent: "center" }}>
+      </View> 
+      <View style={{ flex: 1 }}>
         <TouchableOpacity
           onPress={() => {
             navigation.navigate("AddLog", {
@@ -98,7 +127,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 4,
     flex: 1,
-    minWidth: 180,
+    minWidth: 190,
+    minHeight: 200,
+    zIndex: 1000
   },
   label: {
     fontSize: 18,
@@ -116,7 +147,8 @@ const styles = StyleSheet.create({
     borderColor: color.background,
     position: "absolute",
     right: 10,
-    marginBottom: 0,
+    marginBottom: 30,
+    marginTop: 10,
   },
   icon: {
     fontSize: 24,
@@ -124,14 +156,27 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  displayData:{
-    flex:1,
+  displayData: {
+    flex: 1,
+    width: "100%",
+    padding: 30,
   },
-  list:{
-    flex:1,
-    padding:8
+  list: {
+    flex: 1,
+    padding: 8,
   },
-
+  detail: {
+    borderRadius: 15,
+    borderColor: "#000",
+    backgroundColor: "#B1B5B5",
+    marginBottom: 10,
+    padding: 20,
+  },
+  textDisplay: {
+    fontSize: 18,
+    fontWeight: "bold",
+    lineHeight: 25,
+  },
 });
 
 export default HomeLog;
