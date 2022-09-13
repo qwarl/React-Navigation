@@ -21,12 +21,27 @@ import { Month } from "../contains/month";
 import { Continent } from "../contains/continent";
 import { Container } from "../contains/container";
 import FormSubmitButton from "./../components/FormSubmitButton";
+import DropDownPicker from 'react-native-dropdown-picker';
 
 const { width, height } = Dimensions.get("window");
 
 const Add = ({ navigation, route }) => {
-	let { container, continent, month, pol, pod, of20, of40, of45, sur20, sur40, freeTime, lines, notes } = route.params;
-	// console.log('item',item)
+	let { container,
+		continent,
+		month,
+		pol,
+		pod,
+		of20,
+		of40,
+		of45,
+		sur20,
+		sur40,
+		valid,
+		freeTime,
+		lines,
+		notes } = route?.params || {};
+	// console.log('item', route.params.container)
+
 	const handleOnChangeText = (value, fieldName) => {
 		setFclInfo({ ...fclInfo, [fieldName]: value });
 	};
@@ -36,7 +51,7 @@ const Add = ({ navigation, route }) => {
 	const [date, setDate] = useState(new Date());
 	const [mode, setMode] = useState("date");
 	const [show, setShow] = useState(false);
-	const [valid, setValid] = useState("Empty");
+	// const [valid, setValid] = useState("Empty");
 
 	const onChange = (event, selectedDate) => {
 		const currentDate = selectedDate || date;
@@ -79,22 +94,14 @@ const Add = ({ navigation, route }) => {
 		of40: of40,
 		of45: of45,
 		sur20: sur20,
-		sur40: 		sur40,
+		sur40: sur40,
+		valid: valid,
 		lines: lines,
 		freeTime: freeTime,
 		notes: notes,
 	});
+	console.log('hahaha', fclInfo)
 
-	//   const isValidForm = () => {
-	//     if (!isValidObjectField(fclInfo))
-	//       return updateError("Required all fields!", setError);
-	//     //only valid email id is allowed
-	//     // if (!isValidEmail(email)) return updateError("Invalid email!", setError);
-	//     // // password must have 8 or more characters
-	//     // if (!password.trim() || password.length < 8)
-	//     //   return updateError("Password is too short!", setError);
-	//     return true;
-	//   };
 
 	const submitForm = async () => {
 		// if (isValidForm()) {
@@ -112,36 +119,67 @@ const Add = ({ navigation, route }) => {
 		// }
 	};
 
-	console.log(fclInfo)
 
 	return (
 		<View style={StyleSheet.container}>
 			<ScrollView>
-				<View style={styles.dropMenu}>
-					<Text style={styles.label}>Chọn Tháng</Text>
-					<SelectList
-						setSelected={(value) => setFclInfo({ ...fclInfo, month: value })}
-						data={Month}
-					// defaultOption={{ key: month, value: month }}
-					// defaultOption={{ month }}
-					/>
+				<View>
+					<View style={styles.dropMenu}>
+						<Text style={styles.label}>Chọn Tháng</Text>
+						<SelectList
+							setSelected={(value) => setFclInfo({ ...fclInfo, month: value })}
+							data={Month}
+						// defaultOption={{ key: month, value: month }}
+						// defaultOption={{ month }}
+						/>
+
+						{/* <DropDownPicker
+							open={openMonth}
+							value={valueMonth}
+							items={itemsMonth}
+							setOpen={setOpenMonth}
+							setValue={setValueMonth}
+							setItems={setItemsMonth}
+							style={{}}
+						/> */}
+
+					</View>
+					<View style={styles.dropMenu}>
+						<Text style={styles.label}>Chọn Châu</Text>
+						<SelectList
+							setSelected={(value) => setFclInfo({ ...fclInfo, continent: value })}
+							data={Continent}
+						/>
+						{/* <DropDownPicker
+							open={openContinent}
+							value={valueContinent}
+							items={itemsContinent}
+							setOpen={setOpenContinent}
+							setValue={setValueContinent}
+							setItems={setItemsContinent}
+						/> */}
+					</View>
+					<View style={styles.dropMenu}>
+						<Text style={styles.label}>Chọn Loại Container</Text>
+						<SelectList
+							setSelected={(value) => setFclInfo({ ...fclInfo, container: value })}
+							data={Container}
+						/>
+						{/* <DropDownPicker
+							open={openContainer}
+							value={valueContainer}
+							items={itemsContainer}
+							setOpen={setOpenContainer}
+							setValue={setValueContainer}
+							setItems={setItemsContainer}
+						/> */}
+					</View>
 				</View>
-				<View style={styles.dropMenu}>
-					<Text style={styles.label}>Chọn Châu</Text>
-					<SelectList
-						setSelected={(value) => setFclInfo({ ...fclInfo, continent: value })}
-						data={Continent}
-					/>
-				</View>
-				<View style={styles.dropMenu}>
-					<Text style={styles.label}>Chọn Loại Container</Text>
-					<SelectList
-						setSelected={(value) => setFclInfo({ ...fclInfo, container: value })}
-						data={Container}
-					/>
-				</View>
+				{/* </ScrollView> */}
 				{/* <FormDropdownContinent label="Chọn Châu" />
 				<FormDropdownStyleFCL label="Chọn Loại Container" /> */}
+				{/* <ScrollView style={{ marginTop: 55 }}> */}
+
 				<FormInput
 					label="POL"
 					placeholder="pol"
@@ -203,16 +241,7 @@ const Add = ({ navigation, route }) => {
 					onChangeText={(value) => handleOnChangeText(value, "valid")}
 					onPress={addDate}
 				/>
-				{/* {show && (
-          <DateTimePicker
-            testID="dateTimePicker"
-            value={date}
-            mode={mode}
-            is24Hour={true}
-            display="default"
-            onChange={onChange}
-          />
-        )} */}
+
 				<FormInput
 					placeholder="NOTES"
 					label="NOTES"

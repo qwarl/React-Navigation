@@ -7,9 +7,9 @@
 // ];
 
 export const Continent = [
-    { value: 'Châu Á' },
-    { value: 'Châu Âu' },
-    { value: 'Châu Phi' },
-    { value: 'Châu Mỹ' },
-    { value: 'Châu Đại Đương' },
+    {label:'Châu Á', value: 'Châu Á' },
+    {label:'Châu Âu', value: 'Châu Âu' },
+    {label:'Châu Phi', value: 'Châu Phi' },
+    {label:'Châu Mỹ', value: 'Châu Mỹ' },
+    {label:'Châu Đại Đương', value: 'Châu Đại Đương' },
 ];

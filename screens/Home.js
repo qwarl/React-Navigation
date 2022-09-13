@@ -19,23 +19,19 @@ const Home = ({ navigation }) => {
 	useEffect(() => {
 		const url = `http://192.168.1.104:3001/api/quotations/getAll`;
 		axios.get(url)
-			// .then(res => setSubAdminData(res['data']))
 			.then(res => {
-				console.log('hohoho',res['data'])
+				// console.log('hohoho',res['data'])
 				setData1(res['data'].quotations)
 			})
 
 	}, [])
 
 	const ListItem = ({ item }) => {
-		console.log('month', item.month);
+		// console.log('month', item.month);
 		return (
-			// <View style={styles.listContainer}>
-			// 	<Text style={{ marginLeft: 10, fontSize: 20 }}>Tháng: {item.month}</Text>
-			// 	<Text style={styles.item}>Cảng đi: {item.pol}</Text>
-			// 	<Text style={styles.item}>Cảng đến: {item.pod}</Text>
-			// </View>
-			<TouchableOpacity onPress={()=>navigation.navigate("Add",item)}>
+			<TouchableOpacity onPress={() =>
+				navigation.navigate("Add", item)
+			}>
 				<Text style={{ marginLeft: 10, fontSize: 20 }}>Tháng: {item.month}</Text>
 				<Text style={styles.item}>Cảng đi: {item.pol}</Text>
 				<Text style={styles.item}>Cảng đến: {item.pod}</Text>
@@ -60,7 +56,7 @@ const Home = ({ navigation }) => {
 				data1 && (
 					<FlatList
 						keyExtractor={item => item._id}
-						style={{ backgroundColor: 'coral' }}
+						style={{ backgroundColor: 'coral', height: height * 0.5 }}
 						data={data1}
 						renderItem={
 							// ({ item }) => <ListItem item={item} />

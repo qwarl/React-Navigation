@@ -1,9 +1,9 @@
 export const Container = [
-    { value: 'GP' },
-    { value: 'RF' },
-    { value: 'FR' },
-    { value: 'OT' },
-    { value: 'HC' },
+    {label:'GP', value: 'GP' },
+    {label:'RF', value: 'RF' },
+    {label:'FR', value: 'FR' },
+    {label:'OT', value: 'OT' },
+    {label:'HC', value: 'HC' },
 ];
 
 // export const Container = [
