@@ -130,7 +130,7 @@ const Add = ({ navigation, route }) => {
 							setSelected={(value) => setFclInfo({ ...fclInfo, month: value })}
 							data={Month}
 						// defaultOption={{ key: month, value: month }}
-						// defaultOption={{ month }}
+						defaultOption={{ key:month, value: month}}
 						/>
 
 						{/* <DropDownPicker
