@@ -5,7 +5,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import Fcl from "./screens/ScreenFCL";
 import ScreenLog from "./screens/LogDepartment/ScreenLog";
-
+import color from "./contains/color";
 
 const Stack = createStackNavigator();
 
@@ -19,7 +19,10 @@ export default function App() {
   //   </NavigationContainer>
   // );
   return (
-    <ScreenLog/>
+    <>
+      <StatusBar backgroundColor={color.primary} />
+      <ScreenLog />
+    </>
     // <Fcl/>
   );
 }

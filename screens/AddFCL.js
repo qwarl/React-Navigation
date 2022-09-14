@@ -130,6 +130,7 @@ const Add = ({ navigation }) => {
           <SelectList
             setSelected={(value) => setFclInfo({ ...fclInfo, month: value })}
             data={Month}
+            defaultOption={{key:mo}}
           />
         </View>
         <View style={styles.dropMenu}>

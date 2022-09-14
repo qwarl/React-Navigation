@@ -63,21 +63,9 @@ const AddLog = ({ route }) => {
   const addDate = () => {
     showMode("date");
   };
-  const [logInfo, setLogInfo] = useState({
-    month: "",
-    freight: "",
-    type: "",
-    name: "",
-    hsCode: "",
-    function: "",
-    image: "",
-    pol: "",
-    pod: "",
-    typeProduct: "",
-    quantity: "",
-    requirement: "",
-    price: "",
-  });
+  const [logInfo, setLogInfo] = useState(route.params.data);
+
+  // console.log(logInfo);
 
   const isValidForm = () => {
     if (!isValidObjectField(logInfo))
@@ -93,7 +81,7 @@ const AddLog = ({ route }) => {
   const submitForm = async () => {
     if (isValidForm()) {
       try {
-        const res = await clientLog.post("/create", { ...logInfo });
+        const res = await clientLog.post("http://192.168.1.82:3001/api/phongLogs/create", { ...logInfo });
         if (res.data.success) {
           Alert.alert("Thêm Thành Công");
           setLogInfo({
@@ -120,7 +108,7 @@ const AddLog = ({ route }) => {
     }
   };
 
-  // console.log(logInfo);
+  console.log("sssss",logInfo);
 
   return (
     <View style={StyleSheet.container}>
@@ -130,6 +118,7 @@ const AddLog = ({ route }) => {
           <SelectList
             setSelected={(value) => setLogInfo({ ...logInfo, month: value })}
             data={Month}
+            defaultOption={{key:logInfo.month, value:logInfo.month}}
           />
         </View>
         <View style={styles.dropMenu}>

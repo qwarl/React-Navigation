@@ -29,27 +29,28 @@ const UpdateLog = ({ route }) => {
     { label: "Banana", value: "banana" },
   ]);
 
-  // console.log(updateData.month);
+  console.log("123", updateData.month);
 
   return (
     <View style={StyleSheet.container}>
       <ScrollView>
         <View style={styles.dropMenu}>
           <Text style={styles.label}>Chọn Tháng</Text>
-          {/* <SelectList
-            setSelected={(value) => setUpdateData({ ...updateData, month: value })}
+          <SelectList
+            setSelected={(value) =>
+              setUpdateData({ ...updateData, month: value })
+            }
             data={Month}
-            
-          /> */}
-          <DropDownPicker
+            defaultOption={{ key: updateData.month, value: updateData.month }}
+          />
+          {/* <DropDownPicker
             open={open}
             items={items}
             value={value}
             setOpen={setOpen}
             setValue={setValue}
             setItems={setItems}
-          />
-          
+          /> */}
         </View>
         <View style={styles.dropMenu}>
           <Text style={styles.label}>Chọn Loại Vận Chuyển</Text>

@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   FlatList,
   ScrollView,
+  TextInput,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import SelectList from "react-native-dropdown-select-list";
@@ -13,6 +14,8 @@ import { ShippingType } from "../../contains/ShippingType";
 import color from "../../contains/color";
 import clientLog from "../../api/clientLog";
 import axios from "axios";
+import FormInput from "../../components/FormInput";
+import Search from "../../components/Search";
 
 const HomeLog = ({ navigation }) => {
   const [logInfo, setLogInfo] = useState({
@@ -21,9 +24,11 @@ const HomeLog = ({ navigation }) => {
   });
 
   const [data, setData] = useState([]);
+  const [search, setSearch] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    console.log(data)
     clientLog
       .get("/getAll")
       .then((res) => {
@@ -33,9 +38,15 @@ const HomeLog = ({ navigation }) => {
       .catch((err) => {
         console.log(err);
       });
-  }, [data]);
+  }, []);
 
-  // console.log(data);
+  useEffect(() => {
+    console.log("search");
+    const filterData = data.filter((item) =>
+      item.pol.toLowerCase().includes(search.toLowerCase())
+    );
+    setData(filterData);
+  }, [search]);
 
   const renderItem = ({ item }) => (
     <TouchableOpacity
@@ -57,8 +68,8 @@ const HomeLog = ({ navigation }) => {
   );
 
   return (
-    <View style={{ flex: 1 }}>
-      <View
+    <View style={{ flex: 1, flexDirection: "column" }}>
+      {/* <View
         style={{
           flex: 1,
           justifyContent: "space-between",
@@ -87,16 +98,23 @@ const HomeLog = ({ navigation }) => {
             />
           </View>
         </View>
+      </View> */}
+      <View>
+        {/* <FormInput
+          placeholder="Search"
+          value={logInfo.search}
+          onChangeText={(value) => handleOnChangeText(value, "search")}
+        /> */}
+        <TextInput
+          style={styles.textInputStyle}
+          value={search}
+          placeholder="Nhập từ khóa tìm kiếm"
+          underlineColorAndroid="transparent"
+          onChangeText={(text) => setSearch(text)}
+        />
       </View>
-       <View style={{ flex: 8 }}>
+      <View style={{ flex: 9 }}>
         <View style={styles.displayData}>
-          {/* { <TouchableOpacity  onPress={() => {
-            navigation.navigate("DetailLog", {
-              logInfo: logInfo,
-            });
-          }} >
-              <Text style={{marginLeft:90, marginTop:50}}>Send data</Text>
-            </TouchableOpacity> } */}
           <FlatList
             style={styles.list}
             data={data}
@@ -104,8 +122,8 @@ const HomeLog = ({ navigation }) => {
             keyExtractor={(item) => item._id}
           />
         </View>
-      </View> 
-      <View style={{ flex: 1 }}>
+      </View>
+      <View style={{ flex: 0.5 }}>
         <TouchableOpacity
           onPress={() => {
             navigation.navigate("AddLog", {
@@ -129,7 +147,7 @@ const styles = StyleSheet.create({
     flex: 1,
     minWidth: 190,
     minHeight: 200,
-    zIndex: 1000
+    zIndex: 1000,
   },
   label: {
     fontSize: 18,
@@ -147,8 +165,8 @@ const styles = StyleSheet.create({
     borderColor: color.background,
     position: "absolute",
     right: 10,
-    marginBottom: 30,
-    marginTop: 10,
+    marginBottom: 20,
+    marginTop: -40,
   },
   icon: {
     fontSize: 24,
@@ -177,6 +195,14 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     lineHeight: 25,
   },
+  textInputStyle: {
+    height: 50,
+    borderWidth: 1.5,
+    paddingLeft: 20,
+    margin: 10,
+    borderColor: "#009688",
+  },
+  backgroundColor: "white",
 });
 
 export default HomeLog;
