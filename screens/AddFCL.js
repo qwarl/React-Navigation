@@ -17,9 +17,13 @@ import FormDropdownStyleFCL from "../components/FormDropdownStyleFCL";
 import color from "./../contains/color";
 import axios from "axios";
 import SelectList from "react-native-dropdown-select-list";
-import { Month } from "../contains/month";
-import { Continent } from "../contains/continent";
-import { Container } from "../contains/container";
+import {
+	Month,
+	Continent,
+	Container,
+} from "../contains/constant";
+// import { Continent } from "../contains/continent";
+// import { Container } from "../contains/container";
 import FormSubmitButton from "./../components/FormSubmitButton";
 import DropDownPicker from 'react-native-dropdown-picker';
 // import DateTimePicker from "@react-native-community/datetimepicker";
@@ -29,37 +33,41 @@ const { width, height } = Dimensions.get("window");
 
 const Add = ({ navigation, route }) => {
 
-	// const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-	// const [dateTime, setDateTime] = useState('');
-	// const showDatePicker = () => {
-	// 	setDatePickerVisibility(true);
-	// };
+	const [date, setDate] = useState(new Date());
+	const [mode, setMode] = useState('date');
+	const [show, setShow] = useState(false);
 
-	// const hideDatePicker = () => {
-	// 	setDatePickerVisibility(false);
-	// };
-
-	// const handleConfirm = (date) => {
-	// 	console.warn("A date has been picked: ", date);
-	// 	hideDatePicker();
-	// };
-
-	const [showCalendar, setShowCalendar] = useState(false);
-
-	const [date1, setDate1] = useState(new Date(2000, 0, 1));
-	const [dob, setDob] = useState();
-
-
-	const handleOnChangeDatePicker = (event, selectedDate) => {
-		const currentDate = selectedDate || date;
-		setShowCalendar(false);
+	const onChange = (event, selectedDate) => {
+		const currentDate = selectedDate;
+		setShow(false);
 		setDate(currentDate);
-		setDob(currentDate);
-	}
 
-	const showDatePicker = () => {
-		setShowCalendar(true);
-	}
+		// setShow(Platform.OS === 'ios');
+		// if (mode == 'date') {
+		//   const currentDate = selectedDate || new Date();
+		//   setDate(currentDate);
+		// } 
+	};
+
+	const showMode = (currentMode) => {
+		// if (Platform.OS === 'ios') {
+		setShow(true);
+		// for iOS, add a button that closes the picker
+		// } 
+		setMode(currentMode);
+	};
+
+	const showDatepicker = () => {
+		showMode('date');
+	};
+
+	const showTimepicker = () => {
+		showMode('time');
+	};
+
+	useEffect(() => {
+		setFclInfo(prev => { return { ...prev, valid: date } })
+	}, [date])
 
 	let { container,
 		continent,
@@ -81,43 +89,6 @@ const Add = ({ navigation, route }) => {
 		setFclInfo({ ...fclInfo, [fieldName]: value });
 	};
 
-	const [error, setError] = useState("");
-
-	const [date, setDate] = useState(new Date());
-	const [mode, setMode] = useState("date");
-	const [show, setShow] = useState(false);
-	// const [valid, setValid] = useState("Empty");
-
-	const onChange = (event, selectedDate) => {
-		const currentDate = selectedDate || date;
-		setShow(Platform.OS === "ios");
-		setDate(currentDate);
-
-		let tempDate = new Date(currentDate);
-		let fDate =
-			tempDate.getDate() +
-			"/" +
-			(tempDate.getMonth() + 1) +
-			"/" +
-			tempDate.getFullYear() +
-			" " +
-			tempDate.getHours() +
-			":" +
-			tempDate.getMinutes();
-		let fTime =
-			"Hours: " + tempDate.getHours() + "| Minutes: " + tempDate.getMinutes();
-		setValid(fDate);
-		console.log(fDate + " (" + fTime + ")");
-	};
-
-	const showMode = (currentMode) => {
-		setShow(true);
-		setMode(currentMode);
-	};
-
-	const addDate = () => {
-		showMode("date");
-	};
 
 	const [fclInfo, setFclInfo] = useState({
 		month: month,
@@ -154,6 +125,22 @@ const Add = ({ navigation, route }) => {
 		// }
 	};
 
+	const submitUpdateForm = async () => {
+		// if (isValidForm()) {
+		const url = `http://192.168.1.104:3001/api/quotations/update/${route.params._id}`
+		try {
+			const res = await axios.post(url, { ...fclInfo });
+			if (res.data.success) {
+				Alert.alert("Cập nhật thành công")
+			}
+			console.log("running");
+			console.log(res.data);
+		} catch (error) {
+			console.log(error.message);
+		}
+		// }
+	};
+
 
 	return (
 		<View style={StyleSheet.container}>
@@ -174,6 +161,7 @@ const Add = ({ navigation, route }) => {
 						<SelectList
 							setSelected={(value) => setFclInfo({ ...fclInfo, continent: value })}
 							data={Continent}
+							defaultOption={{ key: continent, value: continent }}
 						/>
 
 					</View>
@@ -182,6 +170,7 @@ const Add = ({ navigation, route }) => {
 						<SelectList
 							setSelected={(value) => setFclInfo({ ...fclInfo, container: value })}
 							data={Container}
+							defaultOption={{ key: container, value: container }}
 						/>
 
 					</View>
@@ -244,48 +233,23 @@ const Add = ({ navigation, route }) => {
 				<FormInput
 					placeholder="VALID"
 					label="VALID"
-					value={fclInfo.valid}
-					onChangeText={(value) => handleOnChangeText(value, "valid")}
-					onPress={addDate}
+					value={date.toLocaleDateString()}
+				// onChangeText={(value) => handleOnChangeText(value, "valid")}
+				// onPress={addDate}
 				/>
 				<View>
-					{/* <View >
-						<TouchableOpacity style={{ flex: 1, flexDirection: 'row' }} onPress={showDatePicker}>
-							<Text style={{
-								backgroundColor: "#fff",
-								borderRadius: 2,
-								// borderWidth: 1,
-								// borderColor: "#00355A",
-								paddingLeft: 12,
-								corlor: "blue",
-								paddingRight: 12,
-								paddingTop: 5,
-								paddingBottom: 5, flex: 1
-							}}>
-								{dateTime}</Text> */}
-					{/* <Image source={images.DATE_ICON} style={styles.iconStyle} /> */}
-					{/* </TouchableOpacity>
-					</View> */}
-					{/* <DateTimePickerModal
-						isVisible={isDatePickerVisible}
-						mode="date"
-						onConfirm={handleConfirm}
-						onCancel={hideDatePicker}
-					/> */}
-					<View>
-						{/* {showCalendar && ( */}
+					<Button onPress={showDatepicker} title="Show date picker!" />
+					{/* <Text>selected: {date.toLocaleDateString()}</Text> */}
+					{show && (
 						<DateTimePicker
 							testID="dateTimePicker"
-							// value={date1}
-							value={new Date(2000, 0, 1)}
-							mode='date'
+							value={date}
+							mode={mode}
 							is24Hour={true}
-							display="default"
-							onChange={handleOnChangeDatePicker}
-
+							onChange={onChange}
+							
 						/>
-						{/* )} */}
-					</View>
+					)}
 				</View>
 
 				<FormInput
@@ -323,7 +287,7 @@ const Add = ({ navigation, route }) => {
 								justifyContent: "center",
 							}}
 						>
-							<TouchableOpacity style={styles.buttonUpdate} onPress={submitForm}>
+							<TouchableOpacity style={styles.buttonUpdate} onPress={submitUpdateForm}>
 								<Text style={{ fontSize: 18, color: "#fff" }}>Update</Text>
 							</TouchableOpacity>
 						</View>
