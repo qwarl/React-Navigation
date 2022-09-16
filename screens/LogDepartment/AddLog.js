@@ -81,24 +81,9 @@ const AddLog = ({ route }) => {
   const submitForm = async () => {
     if (isValidForm()) {
       try {
-        const res = await clientLog.post("http://192.168.1.82:3001/api/phongLogs/create", { ...logInfo });
+        const res = await clientLog.post("/create", { ...logInfo });
         if (res.data.success) {
           Alert.alert("Thêm Thành Công");
-          setLogInfo({
-            month: "",
-            freight: "",
-            type: "",
-            name: "",
-            hsCode: "",
-            function: "",
-            image: "",
-            pol: "",
-            pod: "",
-            typeProduct: "",
-            quantity: "",
-            requirement: "",
-            price: "",
-          });
         }
         console.log("running");
         console.log(res.data);
@@ -108,7 +93,7 @@ const AddLog = ({ route }) => {
     }
   };
 
-  console.log("sssss",logInfo);
+  // console.log("sssss",logInfo);
 
   return (
     <View style={StyleSheet.container}>
@@ -118,7 +103,7 @@ const AddLog = ({ route }) => {
           <SelectList
             setSelected={(value) => setLogInfo({ ...logInfo, month: value })}
             data={Month}
-            defaultOption={{key:logInfo.month, value:logInfo.month}}
+            // defaultOption={{key:logInfo.month, value:logInfo.month}}
           />
         </View>
         <View style={styles.dropMenu}>
@@ -139,60 +124,60 @@ const AddLog = ({ route }) => {
           label="Name"
           placeholder="Name"
           onChangeText={(value) => handleOnChangeText(value, "name")}
-          value={logInfo.name}
+          // value={logInfo.name}
         />
         <FormInput
           label="H/S Code"
           placeholder="H/S Code"
           onChangeText={(value) => handleOnChangeText(value, "hsCode")}
-          value={logInfo.hsCode}
+          //value={logInfo.hsCode}
         />
         <FormInput
           label="Công Dụng"
           placeholder="Công Dụng"
           onChangeText={(value) => handleOnChangeText(value, "function")}
-          value={logInfo.function}
+          //value={logInfo.function}
         />
         <FormInput
           placeholder="Hình Ảnh"
           label="Hình Ảnh"
           onChangeText={(value) => handleOnChangeText(value, "image")}
-          value={logInfo.image}
+          // value={logInfo.image}
         />
         <FormInput
           placeholder="POL"
           label="POL"
           onChangeText={(value) => handleOnChangeText(value, "pol")}
-          value={logInfo.pol}
+          // value={logInfo.pol}
         />
         <FormInput
           placeholder="POD"
           label="POD"
           onChangeText={(value) => handleOnChangeText(value, "pod")}
-          value={logInfo.pod}
+          //value={logInfo.pod}
         />
         <FormInput
           placeholder="Loại Hàng"
           label="Loại Hàng"
           onChangeText={(value) => handleOnChangeText(value, "typeProduct")}
-          value={logInfo.typeProduct}
+          // value={logInfo.typeProduct}
         />
         <FormInput
           placeholder="Số Lượng Cụ Thể"
           label="Số Lượng Cụ Thể"
           onChangeText={(value) => handleOnChangeText(value, "quantity")}
-          value={logInfo.quantity}
+          // value={logInfo.quantity}
         />
         <FormInput
           placeholder="Yêu Cầu Đặc Biệt"
           label="Yêu Cầu Đặc Biệt"
           onChangeText={(value) => handleOnChangeText(value, "requirement")}
-          value={logInfo.requirement}
+          // value={logInfo.requirement}
         />
         <FormInput
           placeholder="Giá"
           label="Giá"
-          value={logInfo.price}
+          // value={logInfo.price}
           onChangeText={(value) => handleOnChangeText(value, "price")}
         />
         <View
@@ -219,7 +204,7 @@ const styles = StyleSheet.create({
   iconWrapper: {
     width: 44,
     height: 44,
-    backgroundColor: color.primary,
+    backgroundColor: color.colorbutton,
     borderRadius: 44,
     alignItems: "center",
     justifyContent: "center",
@@ -245,11 +230,13 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   buttonInsert: {
-    height: 45,
-    backgroundColor: "rgba(27,27,51,1)",
+    height: 50,
+    backgroundColor: color.colorbutton,
     borderRadius: 8,
     justifyContent: "center",
     alignItems: "center",
+    borderRadius:30,
+
   },
 });
 

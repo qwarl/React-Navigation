@@ -16,18 +16,45 @@ import { Type } from "../../contains/Type";
 import { Month } from "../../contains/month";
 import FormInput from "../../components/FormInput";
 import clientLog from "../../api/clientLog";
-import DropDownPicker from "react-native-dropdown-picker";
 
 import { isValidObjectField, updateError } from "../../utils/method";
 
 const UpdateLog = ({ route }) => {
   const [updateData, setUpdateData] = useState(route.params.data);
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState(null);
-  const [items, setItems] = useState([
-    { label: "Apple", value: "apple" },
-    { label: "Banana", value: "banana" },
-  ]);
+
+  const handleOnChangeText = (value, fieldName) => {
+    setUpdateData({ ...updateData, [fieldName]: value });
+  };
+
+  const isValidForm = () => {
+    if (!isValidObjectField(updateData))
+      return updateError("Required all fields!", setError);
+    //only valid email id is allowed
+    // if (!isValidEmail(email)) return updateError("Invalid email!", setError);
+    // // password must have 8 or more characters
+    // if (!password.trim() || password.length < 8)
+    //   return updateError("Password is too short!", setError);
+    return true;
+  };
+
+
+  const submitForm = async () => {
+    if (isValidForm()) {
+      try {
+        const url = "/update/";
+        const id = updateData._id;
+        const res = await clientLog.post(url+id, { ...updateData });
+        if (res.data.success) {
+          Alert.alert("Cập Nhật Thành Công");
+        }
+        console.log("running");
+        console.log(res.data);
+      } catch (error) {
+        console.log(error.message);
+      }
+    }
+  };
 
   console.log("123", updateData.month);
 
@@ -59,6 +86,10 @@ const UpdateLog = ({ route }) => {
               setUpdateData({ ...updateData, freight: value })
             }
             data={ShippingType}
+            defaultOption={{
+              key: updateData.freight,
+              value: updateData.freight,
+            }}
           />
         </View>
         <View style={styles.dropMenu}>
@@ -68,68 +99,69 @@ const UpdateLog = ({ route }) => {
               setUpdateData({ ...updateData, type: value })
             }
             data={Type}
+            defaultOption={{ key: updateData.type, value: updateData.type }}
           />
         </View>
-        {/* <FormInput
+        <FormInput
           label="Name"
           placeholder="Name"
           onChangeText={(value) => handleOnChangeText(value, "name")}
-          value={logInfo.name}
+          value={updateData.name}
         />
         <FormInput
           label="H/S Code"
           placeholder="H/S Code"
           onChangeText={(value) => handleOnChangeText(value, "hsCode")}
-          value={logInfo.hsCode}
+          value={updateData.hsCode}
         />
         <FormInput
           label="Công Dụng"
           placeholder="Công Dụng"
           onChangeText={(value) => handleOnChangeText(value, "function")}
-          value={logInfo.function}
+          value={updateData.function}
         />
         <FormInput
           placeholder="Hình Ảnh"
           label="Hình Ảnh"
           onChangeText={(value) => handleOnChangeText(value, "image")}
-          value={logInfo.image}
+          value={updateData.image}
         />
         <FormInput
           placeholder="POL"
           label="POL"
           onChangeText={(value) => handleOnChangeText(value, "pol")}
-          value={logInfo.pol}
+          value={updateData.pol}
         />
         <FormInput
           placeholder="POD"
           label="POD"
           onChangeText={(value) => handleOnChangeText(value, "pod")}
-          value={logInfo.pod}
+          value={updateData.pod}
         />
         <FormInput
           placeholder="Loại Hàng"
           label="Loại Hàng"
           onChangeText={(value) => handleOnChangeText(value, "typeProduct")}
-          value={logInfo.typeProduct}
+          value={updateData.typeProduct}
         />
         <FormInput
           placeholder="Số Lượng Cụ Thể"
           label="Số Lượng Cụ Thể"
           onChangeText={(value) => handleOnChangeText(value, "quantity")}
-          value={logInfo.quantity}
+          value={updateData.quantity}
         />
         <FormInput
           placeholder="Yêu Cầu Đặc Biệt"
           label="Yêu Cầu Đặc Biệt"
           onChangeText={(value) => handleOnChangeText(value, "requirement")}
-          value={logInfo.requirement}
+          value={updateData.requirement}
         />
         <FormInput
           placeholder="Giá"
           label="Giá"
-          value={logInfo.price}
+          value={updateData.price}
           onChangeText={(value) => handleOnChangeText(value, "price")}
-        /> */}
+        />
         <View
           style={{
             flex: 1,
@@ -138,8 +170,8 @@ const UpdateLog = ({ route }) => {
             justifyContent: "center",
           }}
         >
-          <TouchableOpacity style={[styles.buttonInsert]}>
-            <Text style={{ fontSize: 18, color: "#fff" }}>Insert</Text>
+          <TouchableOpacity style={[styles.buttonInsert]} onPress={submitForm}>
+            <Text style={{ fontSize: 18, color: "#fff" }}>Update</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>

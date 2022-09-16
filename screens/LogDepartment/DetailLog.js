@@ -1,5 +1,6 @@
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import React, { useState } from "react";
+import color from "../../contains/color";
 
 const DetailLog = ({ navigation ,route }) => {
   const [data, setData] = useState(route.params.item);
@@ -20,6 +21,7 @@ const DetailLog = ({ navigation ,route }) => {
       <Text style={styles.textDisplay}>Loại Hàng: {data.typeProduct}</Text>
       <Text style={styles.textDisplay}>Giá: {data.price}</Text>
       <Text style={styles.textDisplay}>Loại Hình: {data.type}</Text>
+      <View style={styles.styleButton}>
       <TouchableOpacity 
         style={[styles.buttonInsert]} 
         onPress={() => {
@@ -40,6 +42,7 @@ const DetailLog = ({ navigation ,route }) => {
       >
         <Text style={{ fontSize: 18, color: "#fff" }}>Update</Text>
       </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -48,8 +51,9 @@ const styles = StyleSheet.create({
   detail: {
     borderRadius: 15,
     borderColor: "#000",
-    backgroundColor: "#B1B5B5",
-    marginBottom: 10,
+    backgroundColor: color.backgrounDisplayDetail,
+    marginVertical:20,
+    marginHorizontal:10,
     padding: 20,
   },
   textDisplay: {
@@ -77,6 +81,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width:170,
     marginBottom:30,
+  },
+  styleButton:{
+    alignItems:'center',
+    justifyContent:'center',
   },
 });
 

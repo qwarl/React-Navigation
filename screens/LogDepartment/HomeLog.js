@@ -13,26 +13,22 @@ import { Month } from "../../contains/month";
 import { ShippingType } from "../../contains/ShippingType";
 import color from "../../contains/color";
 import clientLog from "../../api/clientLog";
-import axios from "axios";
-import FormInput from "../../components/FormInput";
-import Search from "../../components/Search";
+import Icon from "react-native-vector-icons/FontAwesome";
 
 const HomeLog = ({ navigation }) => {
   const [logInfo, setLogInfo] = useState({
     month: "",
     freight: "",
   });
-
   const [data, setData] = useState([]);
-  const [search, setSearch] = useState("");
+  // const [search, setSearch] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
-    console.log(data)
     clientLog
       .get("/getAll")
       .then((res) => {
-        // console.log(res);
         setData(res.data.phongLogs);
       })
       .catch((err) => {
@@ -40,14 +36,24 @@ const HomeLog = ({ navigation }) => {
       });
   }, []);
 
-  useEffect(() => {
-    console.log("search");
-    const filterData = data.filter((item) =>
-      item.pol.toLowerCase().includes(search.toLowerCase())
-    );
-    setData(filterData);
-  }, [search]);
+  const checkTypeSearch = (searchText, eachLog) => {
+    let result = false;
+    if (
+      eachLog.pol.toLowerCase().includes(searchText.toLowerCase()) ||
+      eachLog.pod.toLowerCase().includes(searchText.toLowerCase())
+    ) {
+      result = true;
+    }
+    return result;
+  };
 
+  const filteredLog = () =>
+    data.filter(
+      (eachLog) =>
+        eachLog.month.toLowerCase().includes(logInfo.month.toLowerCase()) &&
+        eachLog.freight.toLowerCase().includes(logInfo.freight.toLowerCase()) &&
+        checkTypeSearch(searchText, eachLog)
+    );
   const renderItem = ({ item }) => (
     <TouchableOpacity
       onPress={() => {
@@ -57,70 +63,96 @@ const HomeLog = ({ navigation }) => {
       }}
     >
       <View style={styles.detail}>
-        <Text style={styles.textDisplay}>Tên Hàng: {item.name}</Text>
-        <Text style={styles.textDisplay}>H/S Code: {item.hsCode}</Text>
-        <Text style={styles.textDisplay}>Cảng Đi: {item.pol}</Text>
-        <Text style={styles.textDisplay}>Cảng Đến: {item.pod}</Text>
-        <Text style={styles.textDisplay}>Giá: {item.price}</Text>
-        <Text style={styles.textDisplay}>Loại Hình: {item.type}</Text>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.textLable}>Tên Hàng: </Text>
+          <Text style={styles.textDisplay}>{item.name}</Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.textLable}>H/S Code: </Text>
+          <Text style={styles.textDisplay}>{item.hsCode}</Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.textLable}>Cảng Đi: </Text>
+          <Text style={styles.textDisplay}>{item.pol}</Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.textLable}>Cảng Đến: </Text>
+          <Text style={styles.textDisplay}>{item.pod}</Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.textLable}>Giá: </Text>
+          <Text style={styles.textDisplay}>{item.price}</Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.textLable}>Loại Hình: </Text>
+          <Text style={styles.textDisplay}>{item.type}</Text>
+        </View>
       </View>
     </TouchableOpacity>
   );
 
   return (
-    <View style={{ flex: 1, flexDirection: "column" }}>
-      {/* <View
-        style={{
-          flex: 1,
-          justifyContent: "space-between",
-          flexDirection: "row",
-        }}
-      >
-        <View style={{ flexDirection: "row" }}>
-          <View style={styles.dropMenu}>
-            <Text style={styles.label}>Chọn Tháng</Text>
-            <SelectList
-              setSelected={(value) => setLogInfo({ ...logInfo, month: value })}
-              data={Month}
-              dropdownStyles={{
-                backgroundColor: "#D9DBDB",
-              }}
-            />
-          </View>
-          <View style={styles.dropMenu}>
-            <Text style={styles.label}>Loại Vận Chuyển</Text>
-            <SelectList
-              setSelected={(value) => setLogInfo({ ...logInfo, month: value })}
-              data={ShippingType}
-              dropdownStyles={{
-                backgroundColor: "#D9DBDB",
-              }}
-            />
-          </View>
-        </View>
-      </View> */}
-      <View>
-        {/* <FormInput
-          placeholder="Search"
-          value={logInfo.search}
-          onChangeText={(value) => handleOnChangeText(value, "search")}
-        /> */}
+    <View style={{ flex: 1, backgroundColor: "white" }}>
+      <View style={{ flexDirection: "row", alignItems: "center" }}>
+        <Icon
+          name="search"
+          size={25}
+          color="black"
+          style={{ position: "absolute", top: 20, left: 30 }}
+        />
         <TextInput
           style={styles.textInputStyle}
-          value={search}
           placeholder="Nhập từ khóa tìm kiếm"
           underlineColorAndroid="transparent"
-          onChangeText={(text) => setSearch(text)}
+          onChangeText={(text) => setSearchText(text)}
         />
+      </View>
+      <View style={{ flexDirection: "row", minHeight: 100 }}>
+        <View style={styles.dropMenu}>
+          <Text style={styles.label}>Chọn Tháng</Text>
+          <SelectList
+            setSelected={(value) => setLogInfo({ ...logInfo, month: value })}
+            data={Month}
+            dropdownStyles={{
+              backgroundColor: "#D9DBDB",
+              fontSize: 28,
+              fontWeight: "bold",
+            }}
+          />
+        </View>
+        <View style={styles.dropMenu}>
+          <Text style={styles.label}>Loại Vận Chuyển</Text>
+          <SelectList
+            setSelected={(value) => setLogInfo({ ...logInfo, freight: value })}
+            data={ShippingType}
+            dropdownStyles={{
+              backgroundColor: "#D9DBDB",
+            }}
+          />
+        </View>
       </View>
       <View style={{ flex: 9 }}>
         <View style={styles.displayData}>
-          <FlatList
-            style={styles.list}
-            data={data}
-            renderItem={renderItem}
-            keyExtractor={(item) => item._id}
-          />
+          {filteredLog().length > 0 ? (
+            <FlatList
+              style={styles.list}
+              data={filteredLog()}
+              renderItem={renderItem}
+              keyExtractor={(item) => item._id}
+            />
+          ) : (
+            <View
+              style={{
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Text style={{ color: "black", fontSize: 20 }}>
+                Không có dữ liệu cảng đi tên {searchText}
+              </Text>
+            </View>
+          )}
         </View>
       </View>
       <View style={{ flex: 0.5 }}>
@@ -142,11 +174,11 @@ const HomeLog = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   dropMenu: {
-    paddingHorizontal: 20,
+    paddingHorizontal: 10,
     paddingVertical: 4,
     flex: 1,
     minWidth: 190,
-    minHeight: 200,
+    minHeight: 40,
     zIndex: 1000,
   },
   label: {
@@ -157,7 +189,7 @@ const styles = StyleSheet.create({
   iconWrapper: {
     width: 44,
     height: 44,
-    backgroundColor: color.primary,
+    backgroundColor: color.colorbutton,
     borderRadius: 44,
     alignItems: "center",
     justifyContent: "center",
@@ -177,7 +209,7 @@ const styles = StyleSheet.create({
   displayData: {
     flex: 1,
     width: "100%",
-    padding: 30,
+    padding: 10,
   },
   list: {
     flex: 1,
@@ -186,23 +218,31 @@ const styles = StyleSheet.create({
   detail: {
     borderRadius: 15,
     borderColor: "#000",
-    backgroundColor: "#B1B5B5",
+    backgroundColor: color.backgrounDisplayData,
     marginBottom: 10,
-    padding: 20,
+    padding: 5,
   },
-  textDisplay: {
+  textLable: {
     fontSize: 18,
     fontWeight: "bold",
     lineHeight: 25,
   },
   textInputStyle: {
+    flex: 1,
     height: 50,
     borderWidth: 1.5,
-    paddingLeft: 20,
-    margin: 10,
-    borderColor: "#009688",
+    paddingLeft: 35,
+    marginVertical: 10,
+    marginHorizontal: 20,
+    borderColor: color.borderColor,
+    borderRadius: 30,
+    fontSize: 18,
   },
-  backgroundColor: "white",
+  textDisplay: {
+    fontSize: 19,
+    lineHeight: 25,
+    alignItems: "center",
+  },
 });
 
 export default HomeLog;

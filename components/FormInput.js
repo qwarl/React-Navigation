@@ -1,5 +1,6 @@
 import { View, Text, StyleSheet, TextInput } from 'react-native'
 import React from 'react'
+import color from '../contains/color';
 
 const FormInput = (props) => {
     const {placeholder,  label, error}  = props;
@@ -26,11 +27,13 @@ const styles = StyleSheet.create({
     input: {
         borderWidth: 1,
         borderColor: "#1b1b33",
+        backgroundColor: color.backgroundInput,
         height: 35,
-        borderRadius: 8,
+        borderRadius: 30,
         fontSize: 14,
         padding:10,
         marginBottom: 10,
+        height:50,
         marginLeft:20,
         marginRight:20
       },

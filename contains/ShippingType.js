@@ -1,5 +1,4 @@
 export const ShippingType = [
-    { value: 'Nhập Khẩu' },
-    { value: 'Xuất Khẩu' },
-   
+  { key: "Nhập Khẩu", value: "Nhập Khẩu" },
+  { key: "Xuất Khẩu", value: "Xuất Khẩu" },
 ];
