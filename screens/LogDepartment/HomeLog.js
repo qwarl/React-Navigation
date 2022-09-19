@@ -9,11 +9,10 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import SelectList from "react-native-dropdown-select-list";
-import { Month } from "../../contains/month";
-import { ShippingType } from "../../contains/ShippingType";
 import color from "../../contains/color";
 import clientLog from "../../api/clientLog";
 import Icon from "react-native-vector-icons/FontAwesome";
+import { Month, ShippingType } from "../../contains/constant";
 
 const HomeLog = ({ navigation }) => {
   const [logInfo, setLogInfo] = useState({

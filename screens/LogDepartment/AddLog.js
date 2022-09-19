@@ -11,17 +11,14 @@ import {
 import React, { useState } from "react";
 import color from "../../contains/color";
 import SelectList from "react-native-dropdown-select-list";
-import { ShippingType } from "../../contains/ShippingType";
-import { Type } from "../../contains/Type";
-import { Month } from "../../contains/month";
 import FormInput from "../../components/FormInput";
 import clientLog from "../../api/clientLog";
 import { isValidObjectField, updateError } from "../../utils/method";
+import { Month, ShippingType, Type } from "../../contains/constant";
 
 const { width, height } = Dimensions.get("window");
 
 const AddLog = ({ route }) => {
-
   const handleOnChangeText = (value, fieldName) => {
     setLogInfo({ ...logInfo, [fieldName]: value });
   };
@@ -63,34 +60,56 @@ const AddLog = ({ route }) => {
   const addDate = () => {
     showMode("date");
   };
-  const [logInfo, setLogInfo] = useState(route.params.data);
+  const [logInfo, setLogInfo] = useState({
+    id:"",
+    name: "",
+    month: "",
+    freight: "",
+    hsCode: "",
+    function: "",
+    image: "",
+    pol: "",
+    pod: "",
+    typeProduct: "",
+    quantity: "",
+    requirement: "",
+    price: "",
+    type: "",
+    policy:"",
+    note:"",
+  });
 
-  // console.log(logInfo);
+  var day = new Date().getDate();
+  var month = new Date().getMonth() + 1;
+  const code = "BGLOG"+day+month+
+//   const getCurrentDate=()=>{
+ 
+//       
+//       var year = new Date().getFullYear();
+ 
+//       return date + '/' + month + '/' + year;//format: dd-mm-yyyy;
+// }
+ 
 
   const isValidForm = () => {
     if (!isValidObjectField(logInfo))
       return updateError("Required all fields!", setError);
-    //only valid email id is allowed
-    // if (!isValidEmail(email)) return updateError("Invalid email!", setError);
-    // // password must have 8 or more characters
-    // if (!password.trim() || password.length < 8)
-    //   return updateError("Password is too short!", setError);
     return true;
   };
 
   const submitForm = async () => {
-    if (isValidForm()) {
-      try {
-        const res = await clientLog.post("/create", { ...logInfo });
-        if (res.data.success) {
-          Alert.alert("Thêm Thành Công");
-        }
-        console.log("running");
-        console.log(res.data);
-      } catch (error) {
-        console.log(error.message);
+    // if (isValidForm()) {
+    try {
+      const res = await clientLog.post("/create", { ...logInfo });
+      if (res.data.success) {
+        Alert.alert("Thêm Thành Công");
       }
+      console.log("running");
+      console.log(res.data);
+    } catch (error) {
+      console.log(error.message);
     }
+    // }
   };
 
   // console.log("sssss",logInfo);
@@ -124,62 +143,76 @@ const AddLog = ({ route }) => {
           label="Name"
           placeholder="Name"
           onChangeText={(value) => handleOnChangeText(value, "name")}
-          // value={logInfo.name}
+          value={logInfo.name}
         />
         <FormInput
           label="H/S Code"
           placeholder="H/S Code"
           onChangeText={(value) => handleOnChangeText(value, "hsCode")}
-          //value={logInfo.hsCode}
+          value={logInfo.hsCode}
         />
         <FormInput
           label="Công Dụng"
           placeholder="Công Dụng"
           onChangeText={(value) => handleOnChangeText(value, "function")}
-          //value={logInfo.function}
+          value={logInfo.function}
         />
         <FormInput
           placeholder="Hình Ảnh"
           label="Hình Ảnh"
           onChangeText={(value) => handleOnChangeText(value, "image")}
-          // value={logInfo.image}
+          value={logInfo.image}
         />
         <FormInput
           placeholder="POL"
           label="POL"
           onChangeText={(value) => handleOnChangeText(value, "pol")}
-          // value={logInfo.pol}
+          value={logInfo.pol}
         />
         <FormInput
           placeholder="POD"
           label="POD"
           onChangeText={(value) => handleOnChangeText(value, "pod")}
-          //value={logInfo.pod}
+          value={logInfo.pod}
         />
         <FormInput
           placeholder="Loại Hàng"
           label="Loại Hàng"
           onChangeText={(value) => handleOnChangeText(value, "typeProduct")}
-          // value={logInfo.typeProduct}
+          value={logInfo.typeProduct}
         />
         <FormInput
           placeholder="Số Lượng Cụ Thể"
           label="Số Lượng Cụ Thể"
           onChangeText={(value) => handleOnChangeText(value, "quantity")}
-          // value={logInfo.quantity}
+          value={logInfo.quantity}
         />
         <FormInput
           placeholder="Yêu Cầu Đặc Biệt"
           label="Yêu Cầu Đặc Biệt"
           onChangeText={(value) => handleOnChangeText(value, "requirement")}
-          // value={logInfo.requirement}
+          value={logInfo.requirement}
         />
         <FormInput
           placeholder="Giá"
           label="Giá"
-          // value={logInfo.price}
+          value={logInfo.price}
           onChangeText={(value) => handleOnChangeText(value, "price")}
         />
+        <FormInput
+          placeholder="Chính Sách"
+          label="Chính Sách"
+          value={logInfo.policy}
+          onChangeText={(value) => handleOnChangeText(value, "policy")}
+        />
+         <FormInput
+          placeholder="Ghi Chú"
+          label="Ghi Chú"
+          value={logInfo.note}
+          onChangeText={(value) => handleOnChangeText(value, "note")}
+        />
+
+
         <View
           style={{
             flex: 1,
@@ -231,12 +264,11 @@ const styles = StyleSheet.create({
   },
   buttonInsert: {
     height: 50,
-    backgroundColor: color.colorbutton,
+    backgroundColor: color.borderColor,
     borderRadius: 8,
     justifyContent: "center",
     alignItems: "center",
-    borderRadius:30,
-
+    borderRadius: 30,
   },
 });
 

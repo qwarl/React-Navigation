@@ -29,3 +29,35 @@ export const Container = [
     {label:'HC', value: 'HC' },
 ];
 
+export const ShippingType = [
+    { key: "Nhập Khẩu", value: "Nhập Khẩu" },
+    { key: "Xuất Khẩu", value: "Xuất Khẩu" },
+  ];
+
+  export const Type = [
+    { key: "Xuất kinh doanh", value: "Xuất kinh doanh" },
+    { key: "Xuất gia công", value: "Xuất gia công" },
+    { key: "Xuất SXXK", value: "Xuất SXXK" },
+    { key: "Xuất PMD CTY", value: "Xuất PMD CTY" },
+    { key: "Xuất PMD CN", value: "Xuất PMD CN" },
+    { key: "Xuất tại chổ", value: "Xuất tại chổ" },
+    { key: "Di lý", value: "Di lý" },
+    { key: "Quá cảnh", value: "Quá cảnh" },
+    { key: "Nhập kinh doanh", value: "Nhập kinh doanh" },
+    { key: "Nhập gia công", value: "Nhập gia công" },
+    { key: "Nhập SXXK", value: "Nhập SXXK" },
+    { key: "Nhập PMD CTY", value: "Nhập PMD CTY" },
+    { key: "Nhập PMD CN", value: "Nhập PMD CN" },
+    { key: "Nhập tại chỗ", value: "Nhập tại chỗ" },
+    { key: "Giấy Phép", value: "Giấy Phép" },
+    { key: "Vận chuyển", value: "Vận chuyển" },
+    { key: "Kiểm định", value: "Kiểm định" },
+    { key: "Kiểm dịch", value: "Kiểm dịch" },
+    { key: "Xin C/O", value: "Xin C/O" },
+    { key: "Kiểm Điếm", value: "Kiểm Điếm" },
+    { key: "Thanh lý", value: "Thanh lý" },
+    { key: "Lashing", value: "Lashing" },
+    { key: "Tái xuất", value: "Tái xuất" },
+    { key: "Thay remark", value: "Thay remark" },
+  ];
+

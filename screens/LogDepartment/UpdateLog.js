@@ -11,13 +11,14 @@ import {
 import React, { useState } from "react";
 import color from "../../contains/color";
 import SelectList from "react-native-dropdown-select-list";
-import { ShippingType } from "../../contains/ShippingType";
-import { Type } from "../../contains/Type";
-import { Month } from "../../contains/month";
+// import { ShippingType } from "../../contains/ShippingType";
+// import { Type } from "../../contains/Type";
+// import { Month } from "../../contains/month";
 import FormInput from "../../components/FormInput";
 import clientLog from "../../api/clientLog";
 
 import { isValidObjectField, updateError } from "../../utils/method";
+import { Month, ShippingType, Type } from "../../contains/constant";
 
 const UpdateLog = ({ route }) => {
   const [updateData, setUpdateData] = useState(route.params.data);
@@ -70,14 +71,6 @@ const UpdateLog = ({ route }) => {
             data={Month}
             defaultOption={{ key: updateData.month, value: updateData.month }}
           />
-          {/* <DropDownPicker
-            open={open}
-            items={items}
-            value={value}
-            setOpen={setOpen}
-            setValue={setValue}
-            setItems={setItems}
-          /> */}
         </View>
         <View style={styles.dropMenu}>
           <Text style={styles.label}>Chọn Loại Vận Chuyển</Text>

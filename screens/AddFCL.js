@@ -11,23 +11,12 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import FormInput from "../components/FormInput";
-import FormDropdownStyleFCL from "../components/FormDropdownStyleFCL";
 import color from "./../contains/color";
 import SelectList from "react-native-dropdown-select-list";
-import { Month, Continent, Container } from "../contains/constant";
-// import { Continent } from "../contains/continent";
-// import { Container } from "../contains/container";
-import FormSubmitButton from "./../components/FormSubmitButton";
-import DropDownPicker from "react-native-dropdown-picker";
-// import DateTimePicker from "@react-native-community/datetimepicker";
-import DateTimePickerModal from "react-native-modal-datetime-picker";
 import DateTimePicker from "@react-native-community/datetimepicker";
 const { width, height } = Dimensions.get("window");
-import { Month } from "../contains/month";
-import { Continent } from "../contains/continent";
-import { Container } from "../contains/container";
 import { isValidObjectField, updateError } from "../utils/method.js";
-import client from "../api/client";
+import { Container, Continent, Month } from "../contains/constant";
 
 const Add = ({ navigation, route }) => {
   const [date, setDate] = useState(new Date());
@@ -109,11 +98,11 @@ const Add = ({ navigation, route }) => {
     freeTime: freeTime,
     notes: notes,
   });
-  console.log("hahaha", fclInfo);
+  // console.log("hahaha", fclInfo);
 
   const submitForm = async () => {
     // if (isValidForm()) {
-    const url = `http://192.168.1.104:3001/api/quotations/create`;
+    const url = `http://192.168.1.82:3001/api/quotations/create`;
     try {
       const res = await axios.post(url, { ...fclInfo });
       if (res.data.success) {
@@ -236,8 +225,6 @@ const Add = ({ navigation, route }) => {
           placeholder="VALID"
           label="VALID"
           value={date.toLocaleDateString()}
-          // onChangeText={(value) => handleOnChangeText(value, "valid")}
-          // onPress={addDate}
         />
         <View>
           <Button onPress={showDatepicker} title="Show date picker!" />
