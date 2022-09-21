@@ -194,7 +194,7 @@ const HomeLog = ({ navigation }) => {
               }}
             >
               <Text style={{ color: "black", fontSize: 20 }}>
-                Không có dữ liệu cảng đi tên {searchText}
+                Không có dữ liệu có tên là: {searchText}
               </Text>
             </View>
           )}
