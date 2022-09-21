@@ -31,7 +31,9 @@ const Home = ({ navigation }) => {
 		continent: "",
 		year: "",
 		beweenprice: "",
+		type: "",
 	});
+	console.log(fclInfo.type);
 	const ListItem = ({ item }) => {
 		// console.log('month', item.month);
 		return (
@@ -44,9 +46,6 @@ const Home = ({ navigation }) => {
 			</TouchableOpacity>
 		);
 	};
-
-	const [value, setValue] = React.useState();
-	console.log(value)
 
 	return (
 		<View style={{ flex: 1 }}>
@@ -85,7 +84,7 @@ const Home = ({ navigation }) => {
 			</View>
 
 			<View style={{ flexDirection: 'row' }}>
-				<RadioButton.Group onValueChange={value => setValue(value)} value={value}>
+				<RadioButton.Group onValueChange={(value) => setFCLInfo({ ...fclInfo, type: value })} value={fclInfo.type}>
 					<RadioButton.Item label="GP" value="GP" />
 					<RadioButton.Item label="RF" value="RF" />
 					<RadioButton.Item label="FR" value="FR" />
