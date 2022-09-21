@@ -7,6 +7,7 @@ import HomeLog from './HomeLog';
 import DetailLog from './DetailLog';
 import AddLog from './AddLog';
 import UpdateLog from './UpdateLog';
+import PolicyDetail from './PolicyDetail';
 
 const Stack = createStackNavigator();
 
@@ -18,6 +19,7 @@ const ScreenLog = () => {
         <Stack.Screen name='DetailLog' component={DetailLog}/>
         <Stack.Screen name='AddLog' component={AddLog}/>
         <Stack.Screen name='UpdateLog' component={UpdateLog}/>
+        <Stack.Screen name='PolicyDetail' component={PolicyDetail}/>
     </Stack.Navigator>
    </NavigationContainer>
   )

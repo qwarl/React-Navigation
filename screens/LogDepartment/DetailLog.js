@@ -4,8 +4,9 @@ import color from "../../contains/color";
 
 const DetailLog = ({ navigation, route }) => {
   const [data, setData] = useState(route.params.item);
-  console.log(data);
+  // console.log(data);
 
+  const titlePolicy = data.policy.substring(0,90);
   return (
     <View style={styles.detail}>
       <Text style={styles.textDisplay}>Tháng: {data.month}</Text>
@@ -23,17 +24,16 @@ const DetailLog = ({ navigation, route }) => {
       <Text style={styles.textDisplay}>Loại Hàng: {data.typeProduct}</Text>
       <Text style={styles.textDisplay}>Giá: {data.price}</Text>
       <Text style={styles.textDisplay}>Loại Hình: {data.type}</Text>
-      <View style={{ flexDirection: "row", justifyContent:'center', alignItems:"center" }}>
+      <View >
         <Text style={styles.textDisplay}>Chính Sách: </Text>
         <TouchableOpacity
-            style={[styles.buttonDetail]}
             onPress={() => {
             navigation.navigate("PolicyDetail", {
               data: data,
             });
           }}
         >
-          <Text style={{ fontSize: 18, color: "#fff" }}> Chi tiết</Text>
+          <Text style={{ fontSize: 19, color: "black", marginLeft:10 }}> {titlePolicy}... Đọc Thêm</Text>
         </TouchableOpacity>
       </View>
 

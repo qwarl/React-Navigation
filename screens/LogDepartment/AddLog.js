@@ -61,7 +61,6 @@ const AddLog = ({ route }) => {
     showMode("date");
   };
   const [logInfo, setLogInfo] = useState({
-    id:"",
     name: "",
     month: "",
     freight: "",
@@ -78,18 +77,6 @@ const AddLog = ({ route }) => {
     policy:"",
     note:"",
   });
-
-  var day = new Date().getDate();
-  var month = new Date().getMonth() + 1;
-  const code = "BGLOG"+day+month+
-//   const getCurrentDate=()=>{
- 
-//       
-//       var year = new Date().getFullYear();
- 
-//       return date + '/' + month + '/' + year;//format: dd-mm-yyyy;
-// }
- 
 
   const isValidForm = () => {
     if (!isValidObjectField(logInfo))
@@ -202,6 +189,12 @@ const AddLog = ({ route }) => {
         <FormInput
           placeholder="Chính Sách"
           label="Chính Sách"
+          value={logInfo.policy}
+          onChangeText={(value) => handleOnChangeText(value, "policy")}
+        />
+        <FormInput
+          placeholder="Phí TTHQ Tham Khảo"
+          label="Phí TTHQ Tham Khảo"
           value={logInfo.policy}
           onChangeText={(value) => handleOnChangeText(value, "policy")}
         />

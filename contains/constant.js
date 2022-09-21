@@ -28,6 +28,28 @@ export const Container = [
     {label:'OT', value: 'OT' },
     {label:'HC', value: 'HC' },
 ];
+export const Year = [
+    { key: "2022", value: "2022" },
+    { key: "2023", value: "2023" },
+]
+
+export const BeweenPrice = [
+    {key:'Từ 0 đến 2000', value:'Từ 0 đến 2000'},
+    {key:'Từ 2000 đến 4000', value:'Từ 2000 đến 4000'},
+    {key:'Từ 4000 đến 6000', value:'Từ 4000 đến 6000'},
+    {key:'Từ 6000 đến 8000', value:'Từ 6000 đến 8000'},
+    {key:'Từ 8000 đến 10000', value:'Từ 8000 đến 10000'},
+    {key:'Từ 10000 đến 12000', value:'Từ 10000 đến 12000'},
+    {key:'Từ 12000 đến 14000', value:'Từ 12000 đến 14000'},
+    {key:'Từ 14000 đến 16000', value:'Từ 14000 đến 16000'},
+    {key:'Từ 16000 đến 18000', value:'Từ 16000 đến 18000'},
+    {key:'Từ 18000 đến 20000', value:'Từ 18000 đến 20000'},
+    {key:'Từ 20000 đến 24000', value:'Từ 20000 đến 24000'},
+    {key:'Từ 24000 đến 26000', value:'Từ 24000 đến 26000'},
+    {key:'Từ 26000 đến 28000', value:'Từ 26000 đến 28000'},
+    {key:'Từ 28000 đến 30000', value:'Từ 28000 đến 30000'},
+
+]
 
 export const ShippingType = [
     { key: "Nhập Khẩu", value: "Nhập Khẩu" },

@@ -12,13 +12,18 @@ import SelectList from "react-native-dropdown-select-list";
 import color from "../../contains/color";
 import clientLog from "../../api/clientLog";
 import Icon from "react-native-vector-icons/FontAwesome";
-import { Month, ShippingType } from "../../contains/constant";
+import { BeweenPrice, Month, ShippingType, Year } from "../../contains/constant";
 
 const HomeLog = ({ navigation }) => {
   const [logInfo, setLogInfo] = useState({
     month: "",
     freight: "",
+    year:'',
+    beweenprice:'',
   });
+
+
+
   const [data, setData] = useState([]);
   // const [search, setSearch] = useState("");
   const [isLoading, setIsLoading] = useState(true);
@@ -35,11 +40,27 @@ const HomeLog = ({ navigation }) => {
       });
   }, []);
 
+  const checkPriceSearch = (eachLog)=>{
+    let result = false;
+    const end = logInfo.beweenprice.indexOf('đến');
+    const value1 = logInfo.beweenprice.substring(3, end-1);
+    const value2 = logInfo.beweenprice.substring(end+4);
+    if(eachLog.price > value1 && eachLog.price < value2){
+      result = true;
+    }else if(logInfo.beweenprice == ""){
+      result = true;
+    }
+    
+    return  result;
+  }
+
   const checkTypeSearch = (searchText, eachLog) => {
     let result = false;
     if (
       eachLog.pol.toLowerCase().includes(searchText.toLowerCase()) ||
-      eachLog.pod.toLowerCase().includes(searchText.toLowerCase())
+      eachLog.pod.toLowerCase().includes(searchText.toLowerCase()) ||
+      eachLog.hsCode.toLowerCase().includes(searchText.toLowerCase())||
+      eachLog.name.toLowerCase().includes(searchText.toLowerCase())
     ) {
       result = true;
     }
@@ -51,7 +72,8 @@ const HomeLog = ({ navigation }) => {
       (eachLog) =>
         eachLog.month.toLowerCase().includes(logInfo.month.toLowerCase()) &&
         eachLog.freight.toLowerCase().includes(logInfo.freight.toLowerCase()) &&
-        checkTypeSearch(searchText, eachLog)
+        checkTypeSearch(searchText, eachLog) 
+        && checkPriceSearch(eachLog)
     );
   const renderItem = ({ item }) => (
     <TouchableOpacity
@@ -130,6 +152,30 @@ const HomeLog = ({ navigation }) => {
           />
         </View>
       </View>
+      <View style={{ flexDirection: "row", minHeight: 100 }}>
+        <View style={styles.dropMenu}>
+          <Text style={styles.label}>Chọn Năm</Text>
+          <SelectList
+            setSelected={(value) => setLogInfo({ ...logInfo, year: value })}
+            data={Year}
+            dropdownStyles={{
+              backgroundColor: "#D9DBDB",
+              fontSize: 28,
+              fontWeight: "bold",
+            }}
+          />
+        </View>
+        <View style={styles.dropMenu}>
+          <Text style={styles.label}>Khoảng Giá</Text>
+          <SelectList
+            setSelected={(value) => setLogInfo({ ...logInfo, beweenprice: value })}
+            data={BeweenPrice}
+            dropdownStyles={{
+              backgroundColor: "#D9DBDB",
+            }}
+          />
+        </View>
+      </View>
       <View style={{ flex: 9 }}>
         <View style={styles.displayData}>
           {filteredLog().length > 0 ? (
@@ -173,7 +219,7 @@ const HomeLog = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   dropMenu: {
-    paddingHorizontal: 10,
+    paddingHorizontal: 5,
     paddingVertical: 4,
     flex: 1,
     minWidth: 190,

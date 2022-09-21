@@ -10,13 +10,13 @@ import {
   Button,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import FormInput from "../components/FormInput";
-import color from "./../contains/color";
+import FormInput from "../../components/FormInput";
+import color from "../../contains/color";
 import SelectList from "react-native-dropdown-select-list";
 import DateTimePicker from "@react-native-community/datetimepicker";
 const { width, height } = Dimensions.get("window");
-import { isValidObjectField, updateError } from "../utils/method.js";
-import { Container, Continent, Month } from "../contains/constant";
+import { isValidObjectField, updateError } from "../../utils/method.js";
+import { Container, Continent, Month } from "../../contains/constant";
 
 const Add = ({ navigation, route }) => {
   const [date, setDate] = useState(new Date());
@@ -73,7 +73,6 @@ const Add = ({ navigation, route }) => {
     lines,
     notes,
   } = route?.params || {};
-  // console.log('item', route.params)
 
   const handleOnChangeText = (value, fieldName) => {
     setFclInfo({ ...fclInfo, [fieldName]: value });
@@ -98,7 +97,7 @@ const Add = ({ navigation, route }) => {
     freeTime: freeTime,
     notes: notes,
   });
-  // console.log("hahaha", fclInfo);
+
 
   const submitForm = async () => {
     // if (isValidForm()) {
