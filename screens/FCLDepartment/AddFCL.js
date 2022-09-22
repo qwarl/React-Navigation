@@ -17,6 +17,8 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 const { width, height } = Dimensions.get("window");
 import { isValidObjectField, updateError } from "../../utils/method.js";
 import { Container, Continent, Month } from "../../contains/constant";
+import axios from "axios";
+import client from "../../api/client";
 
 const Add = ({ navigation, route }) => {
   const [date, setDate] = useState(new Date());
@@ -101,9 +103,20 @@ const Add = ({ navigation, route }) => {
 
   const submitForm = async () => {
     // if (isValidForm()) {
-    const url = `http://192.168.1.82:3001/api/quotations/create`;
+    // const url = `http://192.168.1.71:3001/api/quotations/create`;
+    // try {
+    //   const res = await axios.post(url, { ...fclInfo });
+    //   if (res.data.success) {
+    //     Alert.alert("Thêm Thành Công");
+    //   }
+    //   console.log("running");
+    //   console.log(res.data);
+    // } catch (error) {
+    //   console.log(error.message);
+    // }
+    // }
     try {
-      const res = await axios.post(url, { ...fclInfo });
+      const res = await client.post("/create", { ...fclInfo });
       if (res.data.success) {
         Alert.alert("Thêm Thành Công");
       }
@@ -112,12 +125,11 @@ const Add = ({ navigation, route }) => {
     } catch (error) {
       console.log(error.message);
     }
-    // }
   };
 
   const submitUpdateForm = async () => {
     // if (isValidForm()) {
-    const url = `http://192.168.1.104:3001/api/quotations/update/${route.params._id}`;
+    const url = `http://192.168.1.71:3001/api/quotations/update/${route.params._id}`;
     try {
       const res = await axios.post(url, { ...fclInfo });
       if (res.data.success) {
