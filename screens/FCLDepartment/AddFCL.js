@@ -102,19 +102,6 @@ const Add = ({ navigation, route }) => {
 
 
   const submitForm = async () => {
-    // if (isValidForm()) {
-    // const url = `http://192.168.1.71:3001/api/quotations/create`;
-    // try {
-    //   const res = await axios.post(url, { ...fclInfo });
-    //   if (res.data.success) {
-    //     Alert.alert("Thêm Thành Công");
-    //   }
-    //   console.log("running");
-    //   console.log(res.data);
-    // } catch (error) {
-    //   console.log(error.message);
-    // }
-    // }
     try {
       const res = await client.post("/create", { ...fclInfo });
       if (res.data.success) {
@@ -129,7 +116,7 @@ const Add = ({ navigation, route }) => {
 
   const submitUpdateForm = async () => {
     // if (isValidForm()) {
-    const url = `http://192.168.1.71:3001/api/quotations/update/${route.params._id}`;
+    const url = `http://192.168.1.23:3001/api/quotations/update/${route.params._id}`;
     try {
       const res = await axios.post(url, { ...fclInfo });
       if (res.data.success) {

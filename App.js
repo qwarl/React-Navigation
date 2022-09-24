@@ -10,11 +10,9 @@ const Stack = createStackNavigator();
 
 export default function App() {
   return (
-    // <>
     //   <StatusBar backgroundColor={color.primary} />
-    //   <ScreenLog />
-    // </>
-    <Fcl/>
+    // <ScreenLog />
+    <Fcl />
   );
 }
 

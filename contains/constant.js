@@ -21,13 +21,22 @@ export const Continent = [
     { label: 'Châu Đại Đương', value: 'Châu Đại Đương' },
 ];
 
+// export const Container = [
+//     {label:'GP', value: 'GP' },
+//     {label:'RF', value: 'RF' },
+//     {label:'FR', value: 'FR' },
+//     {label:'OT', value: 'OT' },
+//     {label:'HC', value: 'HC' },
+// ];
+
 export const Container = [
-    {label:'GP', value: 'GP' },
-    {label:'RF', value: 'RF' },
-    {label:'FR', value: 'FR' },
-    {label:'OT', value: 'OT' },
-    {label:'HC', value: 'HC' },
+    {label:'GP', value: '0' },
+    {label:'RF', value: '1' },
+    {label:'FR', value: '2' },
+    {label:'OT', value: '3' },
+    {label:'HC', value: '4' },
 ];
+
 export const Year = [
     { key: "2022", value: "2022" },
     { key: "2023", value: "2023" },
