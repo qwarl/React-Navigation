@@ -22,9 +22,9 @@ const Home = ({ navigation }) => {
   useEffect(() => {
     const url = `http://192.168.1.82:3001/api/quotations/getAll`;
     axios.get(url).then((res) => {
-      setData1(res["data"].quotations);
+      setData1(res.data.quotations);
     });
-  }, []);
+  }, [data1]);
 
   const [fclInfo, setFCLInfo] = useState({
     month: "",
@@ -34,7 +34,7 @@ const Home = ({ navigation }) => {
     type: "",
   });
   const [searchText, setSearchText] = useState("");
-  console.log(data1.container);
+  // data1.map(item => console.log(item.month))
   const ListItem = ({ item }) => {
     // console.log('month', item.month);
     return (
@@ -71,7 +71,7 @@ const Home = ({ navigation }) => {
         </View>
         <View style={{ flexDirection: "row" }}>
           <Text style={styles.textLable}>OF 20: </Text>
-          <Text style={styles.textDisplay}>{item.of20gp}</Text>
+          <Text style={styles.textDisplay}>{item.of20}</Text>
         </View>
         <View style={{ flexDirection: "row" }}>
           <Text style={styles.textLable}>SUR 20: </Text>
@@ -117,9 +117,7 @@ const Home = ({ navigation }) => {
     data1.filter(
       (eachFcl) =>
         eachFcl.month.toLowerCase().includes(fclInfo.month.toLowerCase()) &&
-        eachFcl.continent
-          .toLowerCase()
-          .includes(fclInfo.continent.toLowerCase()) &&
+        eachFcl.continent.toLowerCase().includes(fclInfo.continent.toLowerCase()) &&
         checkTypeSearch(searchText, eachFcl) &&
         checkPriceSearch(eachFcl)
     );
@@ -197,7 +195,7 @@ const Home = ({ navigation }) => {
           />
         </View>
       </View>
-	  
+
       {/* <View style={{ flexDirection: "row" }}>
         <RadioButton.Group
           onValueChange={(value) => setFCLInfo({ ...fclInfo, type: value })}
@@ -210,7 +208,7 @@ const Home = ({ navigation }) => {
           <RadioButton.Item label="HC" value="HC" />
         </RadioButton.Group>
       </View> */}
-      <View style={{ flex: 4 }}>
+      <View style={{flex:6}}>
         <View style={styles.displayData}>
           {filteredFCL().length > 0 ? (
             <FlatList
@@ -234,24 +232,12 @@ const Home = ({ navigation }) => {
           )}
         </View>
       </View>
-
-      {/* {data1 && (
-        <FlatList
-          keyExtractor={(item) => item._id}
-          style={{ backgroundColor: "coral", height: height * 0.5 }}
-          data={data1}
-          renderItem={
-            // ({ item }) => <ListItem item={item} />
-            ListItem
-          }
-        />
-      )} */}
       <View
         style={{
-          flex: 1,
+          flex: 0.4,
           justifyContent: "center",
-          marginTop: -10,
-          marginBottom: 30,
+          marginTop: -20,
+          marginBottom: 40,
         }}
       >
         <TouchableOpacity

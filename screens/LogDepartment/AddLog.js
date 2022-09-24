@@ -7,6 +7,8 @@ import {
   Platform,
   Dimensions,
   Alert,
+  Image,
+  Button,
 } from "react-native";
 import React, { useState } from "react";
 import color from "../../contains/color";
@@ -15,6 +17,8 @@ import FormInput from "../../components/FormInput";
 import clientLog from "../../api/clientLog";
 import { isValidObjectField, updateError } from "../../utils/method";
 import { Month, ShippingType, Type } from "../../contains/constant";
+import * as ImagePicker from "expo-image-picker";
+import Icon from "react-native-vector-icons/FontAwesome";
 
 const { width, height } = Dimensions.get("window");
 
@@ -24,6 +28,7 @@ const AddLog = ({ route }) => {
   };
 
   const [error, setError] = useState("");
+  const [imageGallery, setImageGallery] = useState(null);
 
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState("date");
@@ -66,7 +71,7 @@ const AddLog = ({ route }) => {
     freight: "",
     hsCode: "",
     function: "",
-    image: "",
+    image: imageGallery,
     pol: "",
     pod: "",
     typeProduct: "",
@@ -74,9 +79,29 @@ const AddLog = ({ route }) => {
     requirement: "",
     price: "",
     type: "",
-    policy:"",
-    note:"",
+    policy: "",
+    note: "",
   });
+
+  // console.log(logInfo);
+
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    // console.log(result);
+
+    if (!result.cancelled) {
+      setImageGallery(result.uri);
+    }
+  };
+
+  // console.log(image);
 
   const isValidForm = () => {
     if (!isValidObjectField(logInfo))
@@ -145,12 +170,6 @@ const AddLog = ({ route }) => {
           value={logInfo.function}
         />
         <FormInput
-          placeholder="Hình Ảnh"
-          label="Hình Ảnh"
-          onChangeText={(value) => handleOnChangeText(value, "image")}
-          value={logInfo.image}
-        />
-        <FormInput
           placeholder="POL"
           label="POL"
           onChangeText={(value) => handleOnChangeText(value, "pol")}
@@ -167,12 +186,6 @@ const AddLog = ({ route }) => {
           label="Loại Hàng"
           onChangeText={(value) => handleOnChangeText(value, "typeProduct")}
           value={logInfo.typeProduct}
-        />
-        <FormInput
-          placeholder="Số Lượng Cụ Thể"
-          label="Số Lượng Cụ Thể"
-          onChangeText={(value) => handleOnChangeText(value, "quantity")}
-          value={logInfo.quantity}
         />
         <FormInput
           placeholder="Yêu Cầu Đặc Biệt"
@@ -198,14 +211,25 @@ const AddLog = ({ route }) => {
           value={logInfo.policy}
           onChangeText={(value) => handleOnChangeText(value, "policy")}
         />
-         <FormInput
+        <FormInput
           placeholder="Ghi Chú"
           label="Ghi Chú"
           value={logInfo.note}
           onChangeText={(value) => handleOnChangeText(value, "note")}
         />
-
-
+        {/* <Button title="Pick an image from camera roll" onPress={pickImage} style={[styles.buttonInsert]} /> */}
+        <TouchableOpacity style={[styles.buttonImage]} onPress={pickImage}>
+          <Icon
+            name="image"
+            size={30}
+            color="black"
+            style={{ position: "absolute", top: 12, left: 30 }}
+          />
+          <Text style={{fontSize:20, fontWeight:"600"}}>Chọn hình ảnh</Text>
+        </TouchableOpacity>
+        {imageGallery && (
+          <Image style={styles.styleImage} source={{ uri: imageGallery }} />
+        )}
         <View
           style={{
             flex: 1,
@@ -215,7 +239,7 @@ const AddLog = ({ route }) => {
           }}
         >
           <TouchableOpacity style={[styles.buttonInsert]} onPress={submitForm}>
-            <Text style={{ fontSize: 18, color: "#fff" }}>Insert</Text>
+            <Text style={{ fontSize: 18, color: "#fff" }}>Thêm</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -262,6 +286,26 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 30,
+  },
+  buttonImage: {
+    height: 50,
+    borderRadius: 8,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 30,
+    marginHorizontal: 40,
+  },
+  styleButton: {
+    padding: 20,
+    marginLeft: 50,
+  },
+  styleImage: {
+    width: 200,
+    height: 200,
+    alignItems:'center',
+    justifyContent:'center',
+    marginLeft:20,
+
   },
 });
 

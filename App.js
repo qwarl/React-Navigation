@@ -5,16 +5,19 @@ import { createStackNavigator } from "@react-navigation/stack";
 import ScreenLog from "./screens/LogDepartment/ScreenLog";
 import color from "./contains/color";
 import Fcl from './screens/FCLDepartment/ScreenFCL';
+import ScreenAIR from "./screens/AIRDepartment/ScreenAIR";
 
 const Stack = createStackNavigator();
 
 export default function App() {
   return (
-    // <>
-    //   <StatusBar backgroundColor={color.primary} />
-    //   <ScreenLog />
-    // </>
-    <Fcl/>
+    <>
+      <StatusBar backgroundColor={color.primary} />
+      {/* <ScreenLog /> */}
+       <Fcl/>
+       {/* <ScreenAIR/> */}
+    </>
+    
   );
 }
 
