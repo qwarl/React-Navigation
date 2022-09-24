@@ -11,9 +11,6 @@ import {
 import React, { useState } from "react";
 import color from "../../contains/color";
 import SelectList from "react-native-dropdown-select-list";
-// import { ShippingType } from "../../contains/ShippingType";
-// import { Type } from "../../contains/Type";
-// import { Month } from "../../contains/month";
 import FormInput from "../../components/FormInput";
 import clientLog from "../../api/clientLog";
 
@@ -57,7 +54,6 @@ const UpdateLog = ({ route }) => {
     }
   };
 
-  console.log("123", updateData.month);
 
   return (
     <View style={StyleSheet.container}>
@@ -138,12 +134,6 @@ const UpdateLog = ({ route }) => {
           value={updateData.typeProduct}
         />
         <FormInput
-          placeholder="Số Lượng Cụ Thể"
-          label="Số Lượng Cụ Thể"
-          onChangeText={(value) => handleOnChangeText(value, "quantity")}
-          value={updateData.quantity}
-        />
-        <FormInput
           placeholder="Yêu Cầu Đặc Biệt"
           label="Yêu Cầu Đặc Biệt"
           onChangeText={(value) => handleOnChangeText(value, "requirement")}
@@ -164,7 +154,7 @@ const UpdateLog = ({ route }) => {
           }}
         >
           <TouchableOpacity style={[styles.buttonInsert]} onPress={submitForm}>
-            <Text style={{ fontSize: 18, color: "#fff" }}>Update</Text>
+            <Text style={{ fontSize: 18, color: "#fff" }}>Cập Nhật</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>

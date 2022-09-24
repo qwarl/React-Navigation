@@ -100,7 +100,6 @@ const Add = ({ navigation, route }) => {
     notes: notes,
   });
 
-
   const submitForm = async () => {
     try {
       const res = await client.post("/create", { ...fclInfo });
@@ -116,7 +115,9 @@ const Add = ({ navigation, route }) => {
 
   const submitUpdateForm = async () => {
     // if (isValidForm()) {
+
     const url = `http://192.168.1.23:3001/api/quotations/update/${route.params._id}`;
+
     try {
       const res = await axios.post(url, { ...fclInfo });
       if (res.data.success) {

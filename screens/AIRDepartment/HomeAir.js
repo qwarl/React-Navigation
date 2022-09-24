@@ -10,59 +10,51 @@ import {
 import React, { useEffect, useState } from "react";
 import SelectList from "react-native-dropdown-select-list";
 import color from "../../contains/color";
-import clientLog from "../../api/clientLog";
-import Icon from "react-native-vector-icons/FontAwesome";
-import {
-  BeweenPrice,
-  Month,
-  ShippingType,
-  Year,
-} from "../../contains/constant";
 
-const HomeLog = ({ navigation }) => {
-  const [logInfo, setLogInfo] = useState({
+const HomeAir = () => {
+  const [airInfo, setAirInfo] = useState({
     month: "",
-    freight: "",
+    continent: "",
     year: "",
     beweenprice: "",
   });
   const [data, setData] = useState([]);
-  // const [search, setSearch] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [searchText, setSearchText] = useState("");
 
-  useEffect(() => {
-    clientLog
-      .get("/getAll")
-      .then((res) => {
-        setData(res.data.phongLogs);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+  // call api get Log
+  // useEffect(() => {
+  //   clientLog
+  //     .get("/getAll")
+  //     .then((res) => {
+  //       setData(res.data.phongLogs);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, []);
 
-  const checkPriceSearch = (eachLog) => {
+  const checkPriceSearch = (eachAir) => {
     let result = false;
-    const end = logInfo.beweenprice.indexOf("đến");
-    const value1 = logInfo.beweenprice.substring(3, end - 1);
-    const value2 = logInfo.beweenprice.substring(end + 4);
-    if (eachLog.price > value1 && eachLog.price < value2) {
+    const end = airInfo.beweenprice.indexOf("đến");
+    const value1 = airInfo.beweenprice.substring(3, end - 1);
+    const value2 = airInfo.beweenprice.substring(end + 4);
+    if (eachAir.price > value1 && eachAir.price < value2) {
       result = true;
-    } else if (logInfo.beweenprice == "") {
+    } else if (airInfo.beweenprice == "") {
       result = true;
     }
 
     return result;
   };
 
-  const checkTypeSearch = (searchText, eachLog) => {
+  const checkTypeSearch = (searchText, eachAir) => {
     let result = false;
     if (
-      eachLog.pol.toLowerCase().includes(searchText.toLowerCase()) ||
-      eachLog.pod.toLowerCase().includes(searchText.toLowerCase()) ||
-      eachLog.hsCode.toLowerCase().includes(searchText.toLowerCase()) ||
-      eachLog.name.toLowerCase().includes(searchText.toLowerCase())
+      eachAir.pol.toLowerCase().includes(searchText.toLowerCase()) ||
+      eachAir.pod.toLowerCase().includes(searchText.toLowerCase()) ||
+      eachAir.hsCode.toLowerCase().includes(searchText.toLowerCase()) ||
+      eachAir.name.toLowerCase().includes(searchText.toLowerCase())
     ) {
       result = true;
     }
@@ -71,7 +63,7 @@ const HomeLog = ({ navigation }) => {
 
   const filteredLog = () =>
     data.filter(
-      (eachLog) =>
+      (eachAir) =>
         eachLog.month.toLowerCase().includes(logInfo.month.toLowerCase()) &&
         eachLog.freight.toLowerCase().includes(logInfo.freight.toLowerCase()) &&
         checkTypeSearch(searchText, eachLog) &&
@@ -113,7 +105,6 @@ const HomeLog = ({ navigation }) => {
       </View>
     </TouchableOpacity>
   );
-
   return (
     <View style={{ flex: 1, backgroundColor: "white" }}>
       <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -294,4 +285,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeLog;
+export default HomeAir;

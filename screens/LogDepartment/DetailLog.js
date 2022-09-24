@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from "react-native";
 import React, { useState } from "react";
 import color from "../../contains/color";
 
@@ -7,9 +7,13 @@ const DetailLog = ({ navigation, route }) => {
   // console.log(data);
 
   const titlePolicy = data.policy.substring(0,90);
+  const referenceFee = data.referencefee.substring(0,90);
   return (
-    <View style={styles.detail}>
+    <ScrollView>
+      <View style={styles.detail}>
+      <Text style={styles.textDisplayCode}>Mã Báo Giá: {data.quotationcode}</Text>
       <Text style={styles.textDisplay}>Tháng: {data.month}</Text>
+      <Text style={styles.textDisplay}>Năm: {data.year}</Text>
       <Text style={styles.textDisplay}>Loại Vận Chuyển: {data.freight}</Text>
       <Text style={styles.textDisplay}>Tên Hàng: {data.name}</Text>
       <Text style={styles.textDisplay}>H/S Code: {data.hsCode}</Text>
@@ -36,7 +40,18 @@ const DetailLog = ({ navigation, route }) => {
           <Text style={{ fontSize: 19, color: "black", marginLeft:10 }}> {titlePolicy}... Đọc Thêm</Text>
         </TouchableOpacity>
       </View>
-
+      <View >
+        <Text style={styles.textDisplay}>Phí TTHQ Tham Khảo: </Text>
+        <TouchableOpacity
+            onPress={() => {
+            navigation.navigate("PolicyDetail", {
+              data: data,
+            });
+          }}
+        >
+          <Text style={{ fontSize: 19, color: "black", marginLeft:10 }}> {referenceFee}</Text>
+        </TouchableOpacity>
+      </View>
       <Text style={styles.textDisplay}>Ghi Chú: {data.note}</Text>
       <View style={styles.styleButton}>
         <TouchableOpacity
@@ -61,6 +76,7 @@ const DetailLog = ({ navigation, route }) => {
         </TouchableOpacity>
       </View>
     </View>
+    </ScrollView>
   );
 };
 
@@ -115,6 +131,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  textDisplayCode:{
+    fontSize: 20,
+    fontWeight: "bold",
+    lineHeight: 25,
+    marginRight: 9,
+    justifyContent: "flex-end",
+    alignItems: "flex-end",
+  }
 });
 
 export default DetailLog;
