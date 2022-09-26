@@ -11,7 +11,7 @@ import React, { useEffect, useState } from "react";
 // import { RadioButton } from "react-native-paper";
 import axios from "axios";
 import color from "../../contains/color";
-import { Continent, Month, Year, BeweenPrice, Container } from "../../contains/constant";
+import { Continent, Month, Year, BeweenPrice, ContainerHome } from "../../contains/constant";
 import SelectList from "react-native-dropdown-select-list";
 import Icon from "react-native-vector-icons/FontAwesome";
 import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
@@ -36,7 +36,8 @@ const Home = ({ navigation }) => {
     continent: "",
     year: "",
     beweenprice: "",
-    type: "",
+    // type: "",
+    type: "0",
   });
   console.log(fclInfo);
 
@@ -129,6 +130,7 @@ const Home = ({ navigation }) => {
           .includes(fclInfo.continent.toLowerCase()) &&
         checkTypeSearch(searchText, eachFcl) &&
         checkPriceSearch(eachFcl)
+        // &&eachFcl.type.toLowerCase().includes(fclInfo.type.toLowerCase())
     );
 
   return (
@@ -223,11 +225,11 @@ const Home = ({ navigation }) => {
           formHorizontal={true}
           style={{ padding: 10 }}
           wrapStyle={{ padding: 5 }}
-          buttonSize={17}
-          radio_props={Container}
+          // buttonSize={7}
+          radio_props={ContainerHome}
           initial={0}
-          labelStyle={{ fontSize: 20, color: '#2ecc71', paddingLeft: 10, padding: 8 }}
-          onPress={val => setFCLInfo({ ...fclInfo, type: Container[val].label })}
+          // labelStyle={{ fontSize: 20, color: '#2ecc71', paddingLeft: 10, padding: 8 }}
+          onPress={val => setFCLInfo({ ...fclInfo, type: ContainerHome[val].label })}
         />
       </View>
 

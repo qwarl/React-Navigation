@@ -21,15 +21,16 @@ export const Continent = [
     { label: 'Châu Đại Đương', value: 'Châu Đại Đương' },
 ];
 
-// export const Container = [
-//     {label:'GP', value: 'GP' },
-//     {label:'RF', value: 'RF' },
-//     {label:'FR', value: 'FR' },
-//     {label:'OT', value: 'OT' },
-//     {label:'HC', value: 'HC' },
-// ];
-
 export const Container = [
+    {label:'GP', value: 'GP' },
+    {label:'RF', value: 'RF' },
+    {label:'FR', value: 'FR' },
+    {label:'OT', value: 'OT' },
+    {label:'HC', value: 'HC' },
+];
+
+// use this export in Home screen
+export const ContainerHome = [
     {label:'GP', value: '0' },
     {label:'RF', value: '1' },
     {label:'FR', value: '2' },
