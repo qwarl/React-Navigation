@@ -22,22 +22,22 @@ const Home = ({ navigation }) => {
   const [data1, setData1] = useState([]);
 
 
-  const [type, setType] = useState('0');
-  
+  const [type, setType] = useState('');
+
   useEffect(() => {
     const url = `http://192.168.1.72:3001/api/quotations/getAll`;
     axios.get(url).then((res) => {
       setData1(res["data"].quotations);
     });
   }, []);
-  
+
   const [fclInfo, setFCLInfo] = useState({
     month: "",
     continent: "",
     year: "",
     beweenprice: "",
-    // type: "",
-    type: "0",
+    type: "",
+    // type: "0",
   });
   console.log(fclInfo);
 
@@ -121,6 +121,7 @@ const Home = ({ navigation }) => {
     return result;
   };
 
+
   const filteredFCL = () =>
     data1.filter(
       (eachFcl) =>
@@ -130,7 +131,7 @@ const Home = ({ navigation }) => {
           .includes(fclInfo.continent.toLowerCase()) &&
         checkTypeSearch(searchText, eachFcl) &&
         checkPriceSearch(eachFcl)
-        // &&eachFcl.type.toLowerCase().includes(fclInfo.type.toLowerCase())
+      &&eachFcl.type.toLowerCase().includes(fclInfo.type.toLowerCase())
     );
 
   return (

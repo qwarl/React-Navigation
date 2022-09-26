@@ -9,7 +9,7 @@ import {
     Alert,
     Button
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import color from "../../contains/color";
 import SelectList from "react-native-dropdown-select-list";
 import FormInput from "../../components/FormInput";
@@ -26,34 +26,36 @@ const UpdateFCL = ({ route }) => {
     const [date, setDate] = useState(new Date());
     const [mode, setMode] = useState("date");
     const [show, setShow] = useState(false);
-  
+
     const onChange = (event, selectedDate) => {
-      const currentDate = selectedDate;
-      setShow(false);
-      setDate(currentDate);
-  
-      // setShow(Platform.OS === 'ios');
-      // if (mode == 'date') {
-      //   const currentDate = selectedDate || new Date();
-      //   setDate(currentDate);
-      // }
+        const currentDate = selectedDate;
+        setShow(false);
+        setDate(currentDate);
+
+        // setShow(Platform.OS === 'ios');
+        // if (mode == 'date') {
+        //   const currentDate = selectedDate || new Date();
+        //   setDate(currentDate);
+        // }
     };
-  
+
     const showMode = (currentMode) => {
-      // if (Platform.OS === 'ios') {
-      setShow(true);
-      // for iOS, add a button that closes the picker
-      // }
-      setMode(currentMode);
+        // if (Platform.OS === 'ios') {
+        setShow(true);
+        // for iOS, add a button that closes the picker
+        // }
+        setMode(currentMode);
     };
-  
+
     const showDatepicker = () => {
-      showMode("date");
+        showMode("date");
     };
-  
-    const showTimepicker = () => {
-      showMode("time");
-    };
+
+    // useEffect(() => {
+    //     setUpdateData((prev) => {
+    //         return { ...prev, valid: date };
+    //     });
+    // }, [date]);
 
     const handleOnChangeText = (value, fieldName) => {
         setUpdateData({ ...updateData, [fieldName]: value });
@@ -212,7 +214,7 @@ const UpdateFCL = ({ route }) => {
                         justifyContent: "center",
                     }}
                 >
-                    <TouchableOpacity style={[styles.buttonInsert]} onPress={submitForm}>
+                    <TouchableOpacity style={styles.buttonInsert} onPress={submitForm}>
                         <Text style={{ fontSize: 18, color: "#fff" }}>Update</Text>
                     </TouchableOpacity>
                 </View>
