@@ -7,6 +7,7 @@ import {
     Platform,
     Dimensions,
     Alert,
+    Button
 } from "react-native";
 import React, { useState } from "react";
 import color from "../../contains/color";
@@ -182,7 +183,7 @@ const UpdateFCL = ({ route }) => {
                 <FormInput
                     placeholder="VALID"
                     label="VALID"
-                    value={updateData.toLocaleDateString()}
+                    value={updateData.valid}
                 />
                 <View>
                     <Button onPress={showDatepicker} title="Show date picker!" />
