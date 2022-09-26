@@ -60,7 +60,7 @@ const Add = ({ navigation, route }) => {
   }, [date]);
 
   let {
-    container,
+    type,
     continent,
     month,
     pol,
@@ -86,7 +86,7 @@ const Add = ({ navigation, route }) => {
   const [fclInfo, setFclInfo] = useState({
     month: month,
     continent: continent,
-    container: container,
+    type: type,
     pol: pol,
     pod: pod,
     of20: of20,
@@ -158,10 +158,10 @@ const Add = ({ navigation, route }) => {
             <Text style={styles.label}>Chọn Loại Container</Text>
             <SelectList
               setSelected={(value) =>
-                setFclInfo({ ...fclInfo, container: value })
+                setFclInfo({ ...fclInfo, type: value })
               }
               data={Container}
-              defaultOption={{ key: container, value: container }}
+              defaultOption={{ key: type, value: type }}
             />
           </View>
         </View>

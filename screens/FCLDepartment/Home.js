@@ -59,7 +59,7 @@ const Home = ({ navigation }) => {
   const renderItem = ({ item }) => (
     <TouchableOpacity
       onPress={() => {
-        navigation.navigate("DetailLog", {
+        navigation.navigate("Detail", {
           item: item,
         });
       }}
