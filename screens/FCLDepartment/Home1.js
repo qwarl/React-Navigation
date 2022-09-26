@@ -20,7 +20,7 @@ const { width, height } = Dimensions.get("window");
 const Home = ({ navigation }) => {
   const [data1, setData1] = useState([]);
   useEffect(() => {
-    const url = `http://192.168.1.82:3001/api/quotations/getAll`;
+    const url = `http://192.168.1.11:3001/api/quotations/getAll`;
     axios.get(url).then((res) => {
       setData1(res["data"].quotations);
     });

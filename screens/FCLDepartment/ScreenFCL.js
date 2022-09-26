@@ -15,7 +15,7 @@ export default function fcl () {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Home1" component={Home1}/>
+        {/* <Stack.Screen name="Home1" component={Home1}/> */}
         <Stack.Screen name="Home" component={Home}/>
         <Stack.Screen name="Detail" component={Detail}/>
         <Stack.Screen name="Add" component={Add}/>

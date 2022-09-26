@@ -11,26 +11,26 @@ import React, { useEffect, useState } from "react";
 // import { RadioButton } from "react-native-paper";
 import axios from "axios";
 import color from "../../contains/color";
-import { Continent, Month, Year, BeweenPrice } from "../../contains/constant";
+import { Continent, Month, Year, BeweenPrice, Container } from "../../contains/constant";
 import SelectList from "react-native-dropdown-select-list";
 import Icon from "react-native-vector-icons/FontAwesome";
-import RadioForm, {
-  RadioButton,
-  RadioButtonInput,
-  RadioButtonLabel,
-} from "react-native-simple-radio-button";
+import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
 
 const { width, height } = Dimensions.get("window");
 
 const Home = ({ navigation }) => {
   const [data1, setData1] = useState([]);
+
+
+  const [type, setType] = useState('0');
+  
   useEffect(() => {
-    const url = `http://192.168.1.23:3001/api/quotations/getAll`;
+    const url = `http://192.168.1.72:3001/api/quotations/getAll`;
     axios.get(url).then((res) => {
       setData1(res["data"].quotations);
     });
   }, []);
-
+  
   const [fclInfo, setFCLInfo] = useState({
     month: "",
     continent: "",
@@ -38,8 +38,10 @@ const Home = ({ navigation }) => {
     beweenprice: "",
     type: "",
   });
+  console.log(fclInfo);
+
   const [searchText, setSearchText] = useState("");
-  console.log(data1.container);
+  // console.log(data1.container);
   const ListItem = ({ item }) => {
     // console.log('month', item.month);
     return (
@@ -56,7 +58,7 @@ const Home = ({ navigation }) => {
   const renderItem = ({ item }) => (
     <TouchableOpacity
       onPress={() => {
-        navigation.navigate("Detail", {
+        navigation.navigate("DetailLog", {
           item: item,
         });
       }}
@@ -203,7 +205,7 @@ const Home = ({ navigation }) => {
         </View>
       </View>
 
-      {/* <View>
+      {/* <View style={{ flexDirection: "row" }}>
         <RadioButton.Group
           onValueChange={(value) => setFCLInfo({ ...fclInfo, type: value })}
           value={fclInfo.type}
@@ -215,7 +217,21 @@ const Home = ({ navigation }) => {
           <RadioButton.Item label="HC" value="HC" />
         </RadioButton.Group>
       </View> */}
-      <View style={{ flex: 6 }}>
+
+      <View>
+        <RadioForm
+          formHorizontal={true}
+          style={{ padding: 10 }}
+          wrapStyle={{ padding: 5 }}
+          buttonSize={17}
+          radio_props={Container}
+          initial={0}
+          labelStyle={{ fontSize: 20, color: '#2ecc71', paddingLeft: 10, padding: 8 }}
+          onPress={val => setFCLInfo({ ...fclInfo, type: Container[val].label })}
+        />
+      </View>
+
+      <View style={{ flex: 4 }}>
         <View style={styles.displayData}>
           {filteredFCL().length > 0 ? (
             <FlatList
@@ -239,12 +255,24 @@ const Home = ({ navigation }) => {
           )}
         </View>
       </View>
+
+      {/* {data1 && (
+        <FlatList
+          keyExtractor={(item) => item._id}
+          style={{ backgroundColor: "coral", height: height * 0.5 }}
+          data={data1}
+          renderItem={
+            // ({ item }) => <ListItem item={item} />
+            ListItem
+          }
+        />
+      )} */}
       <View
         style={{
-          flex: 0.4,
+          flex: 1,
           justifyContent: "center",
-          marginTop: -20,
-          marginBottom: 40,
+          marginTop: -10,
+          marginBottom: 30,
         }}
       >
         <TouchableOpacity
