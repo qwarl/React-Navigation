@@ -9,6 +9,7 @@ const Detail = ({ navigation, route }) => {
 	// const titlePolicy = data.policy.substring(0, 90);
 	return (
 		<View style={styles.detail}>
+			<Text style={styles.textDisplay}>{data.code}</Text>
 			<Text style={styles.textDisplay}>Tháng: {data.month}</Text>
 			<Text style={styles.textDisplay}>Châu: {data.continent}</Text>
 			<Text style={styles.textDisplay}>Loại Container: {data.type}</Text>

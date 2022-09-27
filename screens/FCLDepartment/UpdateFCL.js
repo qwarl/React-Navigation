@@ -21,6 +21,7 @@ import { Month, Continent, Type } from "../../contains/constant";
 const UpdateFCL = ({ route }) => {
     const [updateData, setUpdateData] = useState(route.params.data);
     const [open, setOpen] = useState(false);
+    console.log("123", updateData.month);
 
 
     const [date, setDate] = useState(new Date());
@@ -51,11 +52,11 @@ const UpdateFCL = ({ route }) => {
         showMode("date");
     };
 
-    // useEffect(() => {
-    //     setUpdateData((prev) => {
-    //         return { ...prev, valid: date };
-    //     });
-    // }, [date]);
+    useEffect(() => {
+        setUpdateData((prev) => {
+            return { ...prev, valid: date };
+        });
+    }, [date]);
 
     const handleOnChangeText = (value, fieldName) => {
         setUpdateData({ ...updateData, [fieldName]: value });
@@ -90,7 +91,6 @@ const UpdateFCL = ({ route }) => {
         }
     };
 
-    // console.log("123", updateData.month);
 
     return (
         <View style={StyleSheet.container}>
@@ -113,8 +113,7 @@ const UpdateFCL = ({ route }) => {
                         }
                         data={Continent}
                         defaultOption={{
-                            key: updateData.continent,
-                            value: updateData.continent,
+                            key: updateData.continent, value: updateData.continent,
                         }}
                     />
                 </View>
@@ -177,19 +176,13 @@ const UpdateFCL = ({ route }) => {
                     value={updateData.lines}
                 />
                 <FormInput
-                    placeholder="FREE TIME"
-                    label="FREE TIME"
-                    onChangeText={(value) => handleOnChangeText(value, "freeTime")}
-                    value={updateData.freeTime}
-                />
-                <FormInput
                     placeholder="VALID"
                     label="VALID"
+                    onChangeText={(value) => handleOnChangeText(value, "valid")}
                     value={updateData.valid}
                 />
                 <View>
                     <Button onPress={showDatepicker} title="Show date picker!" />
-                    {/* <Text>selected: {date.toLocaleDateString()}</Text> */}
                     {show && (
                         <DateTimePicker
                             testID="dateTimePicker"
@@ -200,6 +193,12 @@ const UpdateFCL = ({ route }) => {
                         />
                     )}
                 </View>
+                <FormInput
+                    placeholder="FREE TIME"
+                    label="FREE TIME"
+                    onChangeText={(value) => handleOnChangeText(value, "freeTime")}
+                    value={updateData.freeTime}
+                />
                 <FormInput
                     placeholder="NOTES"
                     label="NOTES"
