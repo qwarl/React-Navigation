@@ -10,8 +10,11 @@ import {
 import React, { useEffect, useState } from "react";
 import SelectList from "react-native-dropdown-select-list";
 import color from "../../contains/color";
+import { BeweenPrice, Continent, Month, Year } from "../../contains/constant";
+import Icon from "react-native-vector-icons/FontAwesome";
+import clientAir from "../../api/clientAir";
 
-const HomeAir = () => {
+const HomeAir = ({ navigation }) => {
   const [airInfo, setAirInfo] = useState({
     month: "",
     continent: "",
@@ -23,16 +26,16 @@ const HomeAir = () => {
   const [searchText, setSearchText] = useState("");
 
   // call api get Log
-  // useEffect(() => {
-  //   clientLog
-  //     .get("/getAll")
-  //     .then((res) => {
-  //       setData(res.data.phongLogs);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }, []);
+  useEffect(() => {
+    clientAir
+      .get("/getAll")
+      .then((res) => {
+        setData(res.data.air);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [data]);
 
   const checkPriceSearch = (eachAir) => {
     let result = false;
@@ -51,10 +54,10 @@ const HomeAir = () => {
   const checkTypeSearch = (searchText, eachAir) => {
     let result = false;
     if (
-      eachAir.pol.toLowerCase().includes(searchText.toLowerCase()) ||
-      eachAir.pod.toLowerCase().includes(searchText.toLowerCase()) ||
-      eachAir.hsCode.toLowerCase().includes(searchText.toLowerCase()) ||
-      eachAir.name.toLowerCase().includes(searchText.toLowerCase())
+      eachAir.aol.toLowerCase().includes(searchText.toLowerCase()) ||
+      eachAir.aod.toLowerCase().includes(searchText.toLowerCase())
+      // || eachAir.hsCode.toLowerCase().includes(searchText.toLowerCase()) ||
+      // eachAir.name.toLowerCase().includes(searchText.toLowerCase())
     ) {
       result = true;
     }
@@ -64,44 +67,42 @@ const HomeAir = () => {
   const filteredLog = () =>
     data.filter(
       (eachAir) =>
-        eachLog.month.toLowerCase().includes(logInfo.month.toLowerCase()) &&
-        eachLog.freight.toLowerCase().includes(logInfo.freight.toLowerCase()) &&
-        checkTypeSearch(searchText, eachLog) &&
-        checkPriceSearch(eachLog)
+        eachAir.month.toLowerCase().includes(airInfo.month.toLowerCase()) &&
+        eachAir.continent
+          .toLowerCase()
+          .includes(airInfo.continent.toLowerCase()) &&
+        checkTypeSearch(searchText, eachAir)
+      // && checkPriceSearch(eachLog)
     );
   const renderItem = ({ item }) => (
     <TouchableOpacity
       onPress={() => {
-        navigation.navigate("DetailLog", {
+        navigation.navigate("DetailAir", {
           item: item,
         });
       }}
     >
       <View style={styles.detail}>
-        <View style={{ flexDirection: "row" }}>
-          <Text style={styles.textLable}>Tên Hàng: </Text>
-          <Text style={styles.textDisplay}>{item.name}</Text>
-        </View>
-        <View style={{ flexDirection: "row" }}>
-          <Text style={styles.textLable}>H/S Code: </Text>
-          <Text style={styles.textDisplay}>{item.hsCode}</Text>
-        </View>
-        <View style={{ flexDirection: "row" }}>
-          <Text style={styles.textLable}>Cảng Đi: </Text>
-          <Text style={styles.textDisplay}>{item.pol}</Text>
-        </View>
-        <View style={{ flexDirection: "row" }}>
-          <Text style={styles.textLable}>Cảng Đến: </Text>
-          <Text style={styles.textDisplay}>{item.pod}</Text>
-        </View>
-        <View style={{ flexDirection: "row" }}>
-          <Text style={styles.textLable}>Giá: </Text>
-          <Text style={styles.textDisplay}>{item.price}</Text>
-        </View>
-        <View style={{ flexDirection: "row" }}>
-          <Text style={styles.textLable}>Loại Hình: </Text>
-          <Text style={styles.textDisplay}>{item.type}</Text>
-        </View>
+          <View style={{ flexDirection: "row" }}>
+            <Text style={styles.textLable}>Aol: </Text>
+            <Text style={styles.textDisplay}>{item.aol}</Text>
+          </View>
+          <View style={{ flexDirection: "row" }}>
+            <Text style={styles.textLable}>Aod: </Text>
+            <Text style={styles.textDisplay}>{item.aod}</Text>
+          </View>
+          <View style={{ flexDirection: "row" }}>
+            <Text style={styles.textLable}>Dim: </Text>
+            <Text style={styles.textDisplay}>{item.dim}</Text>
+          </View>
+          <View style={{ flexDirection: "row" }}>
+            <Text style={styles.textLable}>Schedule: </Text>
+            <Text style={styles.textDisplay}>{item.schedule}</Text>
+          </View>
+          <View style={{ flexDirection: "row" }}>
+            <Text style={styles.textLable}>Châu: </Text>
+            <Text style={styles.textDisplay}>{item.continent}</Text>
+          </View>
       </View>
     </TouchableOpacity>
   );
@@ -125,7 +126,7 @@ const HomeAir = () => {
         <View style={styles.dropMenu}>
           <Text style={styles.label}>Chọn Tháng</Text>
           <SelectList
-            setSelected={(value) => setLogInfo({ ...logInfo, month: value })}
+            setSelected={(value) => setLogInfo({ ...airInfo, month: value })}
             data={Month}
             dropdownStyles={{
               backgroundColor: "#D9DBDB",
@@ -137,8 +138,10 @@ const HomeAir = () => {
         <View style={styles.dropMenu}>
           <Text style={styles.label}>Loại Vận Chuyển</Text>
           <SelectList
-            setSelected={(value) => setLogInfo({ ...logInfo, freight: value })}
-            data={ShippingType}
+            setSelected={(value) =>
+              setLogInfo({ ...airInfo, continent: value })
+            }
+            data={Continent}
             dropdownStyles={{
               backgroundColor: "#D9DBDB",
             }}
@@ -198,8 +201,8 @@ const HomeAir = () => {
       <View style={{ flex: 0.5 }}>
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate("AddLog", {
-              logInfo: logInfo,
+            navigation.navigate("AddAir", {
+              airInfo: airInfo,
             });
           }}
         >
