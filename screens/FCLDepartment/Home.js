@@ -38,7 +38,7 @@ const Home = ({ navigation }) => {
 		beweenprice: "",
 		type: "",
 	});
-	console.log(fclInfo);
+	// console.log(fclInfo);
 
 	const [searchText, setSearchText] = useState("");
 	// console.log(data1.container);
@@ -78,7 +78,7 @@ const Home = ({ navigation }) => {
 				</View>
 				<View style={{ flexDirection: "row" }}>
 					<Text style={styles.textLable}>OF 20: </Text>
-					<Text style={styles.textDisplay}>{item.of20gp}</Text>
+					<Text style={styles.textDisplay}>{item.of20}</Text>
 				</View>
 				<View style={{ flexDirection: "row" }}>
 					<Text style={styles.textLable}>SUR 20: </Text>

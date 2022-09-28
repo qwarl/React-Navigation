@@ -18,10 +18,12 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 
 import { isValidObjectField, updateError } from "../../utils/method";
 import { Month, Continent, Type } from "../../contains/constant";
+import axios from "axios";
+
 const UpdateFCL = ({ route }) => {
     const [updateData, setUpdateData] = useState(route.params.data);
     const [open, setOpen] = useState(false);
-    console.log("123", updateData.month);
+    console.log("123", updateData);
 
 
     const [date, setDate] = useState(new Date());
@@ -94,7 +96,15 @@ const UpdateFCL = ({ route }) => {
     const AddForm = async () => {
         // if (isValidForm()) {
         try {
-            const res = await client.post("/create", { ...updateData });
+            const res = await client.post("/create",  updateData ,
+                {
+                    headers: {
+                        Accept: 'application/json',
+                        // Use the correct Content Type to send data to Stripe
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    }
+                }
+                )
             if (res.data.success) {
                 Alert.alert("Thêm Thành Công");
             }
@@ -104,6 +114,26 @@ const UpdateFCL = ({ route }) => {
             console.log(error.message);
         }
         // }
+
+        // axios
+        //     .post(
+        //         "http://192.168.1.72:3001/api/quotations/create",
+        //         { ...updateData },
+        // {
+        //     headers: {
+        //         Accept: 'application/json',
+        // Use the correct Content Type to send data to Stripe
+        //         'Content-Type': 'application/x-www-form-urlencoded',
+        //     }
+        // })
+        //     .then((res) => {
+        //         console.log('???');
+        //         console.log(res);
+        //     })
+        //     .catch(error => {
+        //         console.log('fail');
+        //         console.log(error.response)
+        //     })
     };
 
     return (
@@ -205,7 +235,7 @@ const UpdateFCL = ({ route }) => {
                     placeholder="VALID"
                     label="VALID"
                     onChangeText={(value) => handleOnChangeText(value, "valid")}
-                    value={date.toLocaleDateString()}
+                    value={updateData.valid}
                 />
                 <View>
                     <Button onPress={showDatepicker} title="Show date picker!" />

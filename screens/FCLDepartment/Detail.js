@@ -4,7 +4,7 @@ import color from "../../contains/color";
 
 const Detail = ({ navigation, route }) => {
 	const [data, setData] = useState(route.params.item);
-	console.log(data);
+	// console.log(data);
 
 	// const titlePolicy = data.policy.substring(0, 90);
 	return (
