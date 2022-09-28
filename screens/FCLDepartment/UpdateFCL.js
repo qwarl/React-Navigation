@@ -62,35 +62,49 @@ const UpdateFCL = ({ route }) => {
         setUpdateData({ ...updateData, [fieldName]: value });
     };
 
-    const isValidForm = () => {
-        if (!isValidObjectField(updateData))
-            return updateError("Required all fields!", setError);
-        //only valid email id is allowed
-        // if (!isValidEmail(email)) return updateError("Invalid email!", setError);
-        // // password must have 8 or more characters
-        // if (!password.trim() || password.length < 8)
-        //   return updateError("Password is too short!", setError);
-        return true;
-    };
+    // const isValidForm = () => {
+    //     if (!isValidObjectField(updateData))
+    //         return updateError("Required all fields!", setError);
+    //only valid email id is allowed
+    // if (!isValidEmail(email)) return updateError("Invalid email!", setError);
+    // password must have 8 or more characters
+    // if (!password.trim() || password.length < 8)
+    //   return updateError("Password is too short!", setError);
+    //     return true;
+    // };
 
 
     const submitForm = async () => {
-        if (isValidForm()) {
-            try {
-                const url = "/update/";
-                const id = updateData._id;
-                const res = await client.post(url + id, { ...updateData });
-                if (res.data.success) {
-                    Alert.alert("Cập Nhật Thành Công");
-                }
-                console.log("running");
-                console.log(res.data);
-            } catch (error) {
-                console.log(error.message);
+        // if (isValidForm()) {
+        try {
+            const url = "/update/";
+            const id = updateData._id;
+            const res = await client.post(url + id, { ...updateData });
+            if (res.data.success) {
+                Alert.alert("Cập Nhật Thành Công");
             }
+            console.log("running");
+            console.log(res.data);
+        } catch (error) {
+            console.log(error.message);
         }
+        // }
     };
 
+    const AddForm = async () => {
+        // if (isValidForm()) {
+        try {
+            const res = await client.post("/create", { ...updateData });
+            if (res.data.success) {
+                Alert.alert("Thêm Thành Công");
+            }
+            console.log("running");
+            console.log(res.data);
+        } catch (error) {
+            console.log(error.message);
+        }
+        // }
+    };
 
     return (
         <View style={StyleSheet.container}>
@@ -127,6 +141,12 @@ const UpdateFCL = ({ route }) => {
                         defaultOption={{ key: updateData.container, value: updateData.container }}
                     />
                 </View>
+                <FormInput
+                    placeholder="HÃNG TÀU"
+                    label="HÃNG TÀU"
+                    onChangeText={(value) => handleOnChangeText(value, "carrier")}
+                    value={updateData.carrier}
+                />
                 <FormInput
                     placeholder="POL"
                     label="POL"
@@ -176,10 +196,16 @@ const UpdateFCL = ({ route }) => {
                     value={updateData.lines}
                 />
                 <FormInput
+                    placeholder="FREE TIME"
+                    label="FREE TIME"
+                    onChangeText={(value) => handleOnChangeText(value, "freeTime")}
+                    value={updateData.freeTime}
+                />
+                <FormInput
                     placeholder="VALID"
                     label="VALID"
                     onChangeText={(value) => handleOnChangeText(value, "valid")}
-                    value={updateData.valid}
+                    value={date.toLocaleDateString()}
                 />
                 <View>
                     <Button onPress={showDatepicker} title="Show date picker!" />
@@ -194,18 +220,12 @@ const UpdateFCL = ({ route }) => {
                     )}
                 </View>
                 <FormInput
-                    placeholder="FREE TIME"
-                    label="FREE TIME"
-                    onChangeText={(value) => handleOnChangeText(value, "freeTime")}
-                    value={updateData.freeTime}
-                />
-                <FormInput
                     placeholder="NOTES"
                     label="NOTES"
                     onChangeText={(value) => handleOnChangeText(value, "notes")}
                     value={updateData.notes}
                 />
-                <View
+                {/* <View
                     style={{
                         flex: 1,
                         marginVertical: 30,
@@ -215,6 +235,23 @@ const UpdateFCL = ({ route }) => {
                 >
                     <TouchableOpacity style={styles.buttonInsert} onPress={submitForm}>
                         <Text style={{ fontSize: 18, color: "#fff" }}>Update</Text>
+                    </TouchableOpacity>
+                </View> */}
+                <View
+                    style={{
+                        flex: 1,
+                        marginVertical: 30,
+                        marginHorizontal: 80,
+                        justifyContent: "center",
+                        alignItems: 'center',
+                        flexDirection: 'row',
+                    }}
+                >
+                    <TouchableOpacity style={[styles.buttonUpdate]} onPress={submitForm}>
+                        <Text style={{ fontSize: 18, color: "black" }}>Cập Nhật</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={[styles.buttonInsert]} onPress={AddForm}>
+                        <Text style={{ fontSize: 18, color: "black" }}>Thêm</Text>
                     </TouchableOpacity>
                 </View>
             </ScrollView>
@@ -265,5 +302,26 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         justifyContent: "center",
         alignItems: "center",
+    },
+    buttonInsert: {
+        height: 50,
+        width: 150,
+        borderColor: color.borderColor,
+        borderWidth: 2,
+        borderRadius: 8,
+        justifyContent: "center",
+        alignItems: "center",
+        borderRadius: 30,
+        marginLeft: 10,
+    },
+    buttonUpdate: {
+        height: 50,
+        width: 150,
+        borderColor: color.borderColor,
+        borderWidth: 2,
+        borderRadius: 8,
+        justifyContent: "center",
+        alignItems: "center",
+        borderRadius: 30,
     },
 })

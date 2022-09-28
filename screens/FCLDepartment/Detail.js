@@ -13,6 +13,7 @@ const Detail = ({ navigation, route }) => {
 			<Text style={styles.textDisplay}>Tháng: {data.month}</Text>
 			<Text style={styles.textDisplay}>Châu: {data.continent}</Text>
 			<Text style={styles.textDisplay}>Loại Container: {data.type}</Text>
+			<Text style={styles.textDisplay}>Hãng tàu: {data.carrier}</Text>
 			<Text style={styles.textDisplay}>POL: {data.pol}</Text>
 			<Text style={styles.textDisplay}>POD: {data.pod}</Text>
 			<Text style={styles.textDisplay}>O/F 20: {data.of20}</Text>
@@ -80,9 +81,11 @@ const styles = StyleSheet.create({
 		alignContent: "center",
 	},
 	buttonUpdate: {
+		marginTop: 20,
 		height: 45,
-		backgroundColor: color.borderColor,
-		borderRadius: 8,
+		borderColor: color.borderColor,
+		borderWidth: 2,
+		borderRadius: 20,
 		justifyContent: "center",
 		alignItems: "center",
 		width: 170,

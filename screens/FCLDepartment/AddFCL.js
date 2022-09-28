@@ -60,6 +60,7 @@ const Add = ({ navigation, route }) => {
 		continent,
 		month,
 		pol,
+		carrier,
 		pod,
 		of20,
 		of40,
@@ -85,6 +86,7 @@ const Add = ({ navigation, route }) => {
 		type: type,
 		pol: pol,
 		pod: pod,
+		carrier: carrier,
 		of20: of20,
 		of40: of40,
 		of45: of45,
@@ -162,6 +164,12 @@ const Add = ({ navigation, route }) => {
 					</View>
 				</View>
 
+				<FormInput
+					label="HÃNG TÀU"
+					placeholder="HÃNG TÀU"
+					onChangeText={(value) => handleOnChangeText(value, "carrier")}
+					value={fclInfo.carrier}
+				/>
 				<FormInput
 					label="POL"
 					placeholder="pol"
