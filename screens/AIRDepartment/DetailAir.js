@@ -14,10 +14,11 @@ const DetailAir = ({ navigation, route }) => {
     <ScrollView>
       <View style={styles.detail}>
         <Text style={styles.textDisplayCode}>
-          Mã Báo Giá: {data.quotationcode}
+          Mã Báo Giá: {data.code}
         </Text>
         <Text style={styles.textDisplay}>Tháng: {data.month}</Text>
         <Text style={styles.textDisplay}>Châu: {data.continent}</Text>
+        <Text style={styles.textDisplay}>Loại Vận Chuyển: {data.shippingtype}</Text>
         <Text style={styles.textDisplay}>Aol: {data.aol}</Text>
         <Text style={styles.textDisplay}>Aod: {data.aod}</Text>
         <Text style={styles.textDisplay}>Dim: {data.dim}</Text>

@@ -6,6 +6,7 @@ import ScreenLog from "./screens/LogDepartment/ScreenLog";
 import color from "./contains/color";
 import Fcl from './screens/FCLDepartment/ScreenFCL';
 import ScreenAIR from "./screens/AIRDepartment/ScreenAIR";
+import ScreenLCL from "./screens/AIRDepartment/LCL/ScreenLCL";
 
 const Stack = createStackNavigator();
 
@@ -16,6 +17,7 @@ export default function App() {
       {/* <ScreenLog /> */}
        {/* <Fcl/> */}
        <ScreenAIR/>
+       {/* <ScreenLCL/> */}
     </>
     
   );

@@ -11,20 +11,18 @@ import {
   Button,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import { Continent, Month, ShippingType } from "../../contains/constant";
-import { isValidObjectField, updateError } from "../../utils/method";
-import clientAir from "../../api/clientAir";
+import color from "../../../contains/color";
 import SelectList from "react-native-dropdown-select-list";
-import FormInput from "../../components/FormInput";
-import color from "../../contains/color";
+import { Continent, Month } from "../../../contains/constant";
+import FormInput from "../../../components/FormInput";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import clientLCL from "../../../api/clientLCL";
 
-const AddAir = () => {
+const UpdateLCL = ({ route }) => {
+  const [lclInfo, setLCLInfo] = useState(route.params.data);
   const handleOnChangeText = (value, fieldName) => {
-    setAirInfo({ ...airInfo, [fieldName]: value });
+    setLCLInfo({ ...lclInfo, [fieldName]: value });
   };
-
-  const [error, setError] = useState("");
 
   //handle time picker
   const [date, setDate] = useState(new Date());
@@ -54,34 +52,26 @@ const AddAir = () => {
     setMode(currentMode);
   };
 
-  const [airInfo, setAirInfo] = useState({
-    continent: "",
-    month: "",
-    shippingtype:"",
-    dim: "",
-    grossweight: "",
-    aol: "",
-    aod: "",
-    typeofcargo: "",
-    airfreight: "",
-    sur: "",
-    airlines: "",
-    schedule: "",
-    transittime: "",
-    valid: "",
-    note: "",
-  });
-
-  const isValidForm = () => {
-    if (!isValidObjectField(airInfo))
-      return updateError("Required all fields!", setError);
-    return true;
-  };
-
   const submitForm = async () => {
     // if (isValidForm()) {
     try {
-      const res = await clientAir.post("/create", { ...airInfo });
+      const url = "/update/";
+      const id = lclInfo._id;
+      const res = await clientLCL.post(url + id, { ...lclInfo });
+      if (res.data.success) {
+        Alert.alert("Cập Nhật Thành Công");
+      }
+      console.log("running");
+      console.log(res.data);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const AddForm = async () => {
+    // if (isValidForm()) {
+    try {
+      const res = await clientLCL.post("/create", { ...lclInfo });
       if (res.data.success) {
         Alert.alert("Thêm Thành Công");
       }
@@ -92,94 +82,90 @@ const AddAir = () => {
     }
     // }
   };
+
   return (
     <View style={StyleSheet.container}>
       <ScrollView>
         <View style={styles.dropMenu}>
           <Text style={styles.label}>Chọn Tháng</Text>
           <SelectList
-            setSelected={(value) => setAirInfo({ ...airInfo, month: value })}
+            setSelected={(value) => setLCLInfo({ ...lclInfo, month: value })}
             data={Month}
           />
         </View>
         <View style={styles.dropMenu}>
           <Text style={styles.label}>Chọn Châu</Text>
           <SelectList
-            setSelected={(value) => setAirInfo({ ...airInfo, continent: value })}
+            setSelected={(value) =>
+              setLCLInfo({ ...lclInfo, continent: value })
+            }
             data={Continent}
           />
         </View>
-        <View style={styles.dropMenu}>
-          <Text style={styles.label}>Chọn Loại Vận Chuyển</Text>
-          <SelectList
-            setSelected={(value) => setAirInfo({ ...airInfo, shippingtype: value })}
-            data={ShippingType}
-          />
-        </View>
         <FormInput
-          label="Aol"
-          placeholder="Aol"
-          onChangeText={(value) => handleOnChangeText(value, "aol")}
-          value={airInfo.aol}
+          label="Pol"
+          placeholder="Pol"
+          onChangeText={(value) => handleOnChangeText(value, "pol")}
+          value={lclInfo.pol}
         />
         <FormInput
-          placeholder="Aod"
-          label="Aod"
-          onChangeText={(value) => handleOnChangeText(value, "aod")}
-          value={airInfo.aod}
+          placeholder="Pod"
+          label="Pod"
+          onChangeText={(value) => handleOnChangeText(value, "pod")}
+          value={lclInfo.pod}
         />
         <FormInput
           label="Dim"
           placeholder="Dim"
           onChangeText={(value) => handleOnChangeText(value, "dim")}
-          value={airInfo.dim}
+          value={lclInfo.dim}
         />
         <FormInput
           label="Gross Weight"
           placeholder="Gross Weight"
           onChangeText={(value) => handleOnChangeText(value, "grossweight")}
-          value={airInfo.grossweight}
+          value={lclInfo.grossweight}
         />
         <FormInput
           placeholder="Type Of Cargo"
           label="Type Of Cargo"
           onChangeText={(value) => handleOnChangeText(value, "typeofcargo")}
-          value={airInfo.typeofcargo}
+          value={lclInfo.typeofcargo}
         />
         <FormInput
-          placeholder="Air Freight"
-          label="Air Freight"
-          onChangeText={(value) => handleOnChangeText(value, "airfreight")}
-          value={airInfo.airfreight}
+          placeholder="Ocean Freight"
+          label="Ocean Freight"
+          onChangeText={(value) => handleOnChangeText(value, "oceanfreight")}
+          value={lclInfo.oceanfreight}
         />
         <FormInput
-          placeholder="Sur"
-          label="Sur"
-          onChangeText={(value) => handleOnChangeText(value, "sur")}
-          value={airInfo.sur}
+          placeholder="Local Charge"
+          label="Local Charge"
+          onChangeText={(value) => handleOnChangeText(value, "localcharge")}
+          value={lclInfo.localcharge}
         />
         <FormInput
-          placeholder="Air Lines"
-          label="Air Lines"
-          value={airInfo.airlines}
-          onChangeText={(value) => handleOnChangeText(value, "airlines")}
+          placeholder="Carrier"
+          label="Carrier"
+          value={lclInfo.carrier}
+          onChangeText={(value) => handleOnChangeText(value, "carrier")}
         />
         <FormInput
           placeholder="Schedule"
           label="Schedule"
-          value={airInfo.schedule}
+          value={lclInfo.schedule}
           onChangeText={(value) => handleOnChangeText(value, "schedule")}
         />
         <FormInput
-          placeholder="Transittime"
-          label="Transittime"
-          value={airInfo.transittime}
+          placeholder="Transit Time"
+          label="Transit Time"
+          value={lclInfo.transittime}
           onChangeText={(value) => handleOnChangeText(value, "transittime")}
         />
         <FormInput
-          placeholder="VALID"
-          label="VALID"
-          value={date.toLocaleDateString()}
+          placeholder="Valid"
+          label="Valid"
+          value={lclInfo.valid}
           onChangeText={(value) => handleOnChangeText(value, "valid")}
         />
         <View>
@@ -203,19 +189,24 @@ const AddAir = () => {
         <FormInput
           placeholder="Ghi Chú"
           label="Ghi Chú"
-          value={airInfo.note}
+          value={lclInfo.note}
           onChangeText={(value) => handleOnChangeText(value, "note")}
         />
-        <View
+          <View
           style={{
             flex: 1,
             marginVertical: 30,
             marginHorizontal: 80,
             justifyContent: "center",
+            alignItems:'center',
+            flexDirection:'row',
           }}
         >
-          <TouchableOpacity style={[styles.buttonInsert]} onPress={submitForm}>
-            <Text style={{ fontSize: 18, color: "#fff" }}>Thêm</Text>
+          <TouchableOpacity style={[styles.buttonUpdate]} onPress={submitForm}>
+            <Text style={{ fontSize: 18, color: "black" }}>Cập Nhật</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.buttonInsert]} onPress={AddForm}>
+            <Text style={{ fontSize: 18, color: "black" }}>Thêm</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -256,7 +247,20 @@ const styles = StyleSheet.create({
   },
   buttonInsert: {
     height: 50,
-    backgroundColor: color.borderColor,
+    width:150,
+    borderColor: color.borderColor,
+    borderWidth:2,
+    borderRadius: 8,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 30,
+    marginLeft:10,
+  },
+  buttonUpdate: {
+    height: 50,
+    width:150,
+    borderColor: color.borderColor,
+    borderWidth:2,
     borderRadius: 8,
     justifyContent: "center",
     alignItems: "center",
@@ -293,4 +297,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AddAir;
+export default UpdateLCL;

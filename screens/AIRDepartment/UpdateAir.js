@@ -27,38 +27,32 @@ const UpdateAir = ({ route }) => {
 
   const [error, setError] = useState("");
 
+  //handle time picker
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState("date");
   const [show, setShow] = useState(false);
 
+  //handle time picker
   const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate;
-    setShow(false);
+    const currentDate = selectedDate || date;
+    setShow(Platform.OS === "ios");
     setDate(currentDate);
 
-    // setShow(Platform.OS === 'ios');
-    // if (mode == 'date') {
-    //   const currentDate = selectedDate || new Date();
-    //   setDate(currentDate);
-    // }
+    let tempDate = new Date(currentDate);
+    let fDate =
+      tempDate.getDate() +
+      "/" +
+      (tempDate.getMonth() + 1) +
+      "/" +
+      tempDate.getFullYear();
+
+    handleOnChangeText(fDate, "valid");
   };
 
-  useEffect(() => {
-    setAirInfo((prev) => {
-      return { ...prev, valid: date };
-    });
-  }, [date]);
-
+  //handle time picker
   const showMode = (currentMode) => {
-    // if (Platform.OS === 'ios') {
     setShow(true);
-    // for iOS, add a button that closes the picker
-    // }
     setMode(currentMode);
-  };
-
-  const showDatepicker = () => {
-    showMode("date");
   };
   
   const submitForm = async () => {
@@ -173,15 +167,13 @@ const UpdateAir = ({ route }) => {
         <FormInput
           placeholder="VALID"
           label="VALID"
-          value={date.toLocaleDateString()}
+          value={airInfo.valid}
           onChangeText={(value) => handleOnChangeText(value, "valid")}
         />
         <View>
-          {/* <Button onPress={showDatepicker} title="Show date picker!" style={{marginHorizontal:20, backgroundColor:'red'}} /> */}
-          {/* <Text>selected: {date.toLocaleDateString()}</Text> */}
           <TouchableOpacity
             style={[styles.buttonTime]}
-            onPress={showDatepicker}
+            onPress={() => showMode("date")}
           >
             <Text style={{ fontSize: 18, color: "#000" }}>Chọn Ngày</Text>
           </TouchableOpacity>
@@ -191,6 +183,7 @@ const UpdateAir = ({ route }) => {
               value={date}
               mode={mode}
               is24Hour={true}
+              desplay="default"
               onChange={onChange}
             />
           )}

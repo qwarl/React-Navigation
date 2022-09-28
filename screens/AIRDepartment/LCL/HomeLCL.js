@@ -9,79 +9,82 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import SelectList from "react-native-dropdown-select-list";
-import color from "../../contains/color";
-import clientLog from "../../api/clientLog";
 import Icon from "react-native-vector-icons/FontAwesome";
+import color from "../../../contains/color";
 import {
   BeweenPrice,
+  Continent,
   Month,
-  ShippingType,
   Year,
-} from "../../contains/constant";
+} from "../../../contains/constant";
+import clientLCL from "../../../api/clientLCL";
 
-const HomeLog = ({ navigation }) => {
-  const [logInfo, setLogInfo] = useState({
+const HomeLCL = ({ navigation }) => {
+  const [lclInfo, setLCLInfo] = useState({
     month: "",
-    freight: "",
+    continent: "",
     year: "",
     beweenprice: "",
   });
   const [data, setData] = useState([]);
-  // const [search, setSearch] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
-    clientLog
+    data.map((item) => console.log(item.shippingtype));
+  }, []);
+  // call api get Log
+  useEffect(() => {
+    clientLCL
       .get("/getAll")
       .then((res) => {
-        setData(res.data.phongLogs);
+        setData(res.data.lcl);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [data]);
 
-  const checkPriceSearch = (eachLog) => {
-    let result = false;
-    const end = logInfo.beweenprice.indexOf("đến");
-    const value1 = logInfo.beweenprice.substring(3, end - 1);
-    const value2 = logInfo.beweenprice.substring(end + 4);
-    if (eachLog.price > value1 && eachLog.price < value2) {
-      result = true;
-    } else if (logInfo.beweenprice == "") {
-      result = true;
-    }
-
-    return result;
-  };
-
-  const checkTypeSearch = (searchText, eachLog) => {
+  const checkDropdownValue = (eachAir) => {
     let result = false;
     if (
-      eachLog.pol.toLowerCase().includes(searchText.toLowerCase()) ||
-      eachLog.pod.toLowerCase().includes(searchText.toLowerCase()) ||
-      eachLog.hsCode.toLowerCase().includes(searchText.toLowerCase()) ||
-      eachLog.name.toLowerCase().includes(searchText.toLowerCase()) ||
-      eachLog.code.toLowerCase().includes(searchText.toLowerCase())
+      eachAir.shippingtype
+        .toLowerCase()
+        .includes(airInfo.shippingtype.toLowerCase())
     ) {
       result = true;
     }
     return result;
   };
 
-  const filteredLog = () =>
+  const checkTypeSearch = (searchText, eachLCL) => {
+    let result = false;
+    if (
+      eachLCL.pol.toLowerCase().includes(searchText.toLowerCase()) ||
+      eachLCL.pod.toLowerCase().includes(searchText.toLowerCase()) ||
+      eachLCL.code.toLowerCase().includes(searchText.toLowerCase())
+      // || eachAir.hsCode.toLowerCase().includes(searchText.toLowerCase()) ||
+      // eachAir.name.toLowerCase().includes(searchText.toLowerCase())
+    ) {
+      result = true;
+    }
+    return result;
+  };
+
+  const filteredLCL = () =>
     data.filter(
-      (eachLog) =>
-        eachLog.month.toLowerCase().includes(logInfo.month.toLowerCase()) &&
-        eachLog.freight.toLowerCase().includes(logInfo.freight.toLowerCase()) &&
-        checkTypeSearch(searchText, eachLog) &&
-        checkPriceSearch(eachLog)
+      (eachLCL) =>
+        eachLCL.month.toLowerCase().includes(lclInfo.month.toLowerCase()) &&
+        eachLCL.continent
+          .toLowerCase()
+          .includes(lclInfo.continent.toLowerCase()) &&
+        checkTypeSearch(searchText, eachLCL)
+      // && checkPriceSearch(eachLog)
     );
   const renderItem = ({ item }) => (
     <TouchableOpacity
       onPress={() => {
-        navigation.navigate("DetailLog", {
+        navigation.navigate("DetailLCL", {
           item: item,
         });
       }}
@@ -91,33 +94,28 @@ const HomeLog = ({ navigation }) => {
           <Text style={styles.textDisplayCode}>{item.code}</Text>
         </View>
         <View style={{ flexDirection: "row" }}>
-          <Text style={styles.textLable}>Tên Hàng: </Text>
-          <Text style={styles.textDisplay}>{item.name}</Text>
-        </View>
-        <View style={{ flexDirection: "row" }}>
-          <Text style={styles.textLable}>H/S Code: </Text>
-          <Text style={styles.textDisplay}>{item.hsCode}</Text>
-        </View>
-        <View style={{ flexDirection: "row" }}>
-          <Text style={styles.textLable}>Cảng Đi: </Text>
+          <Text style={styles.textLable}>Pol: </Text>
           <Text style={styles.textDisplay}>{item.pol}</Text>
         </View>
         <View style={{ flexDirection: "row" }}>
-          <Text style={styles.textLable}>Cảng Đến: </Text>
+          <Text style={styles.textLable}>Pod: </Text>
           <Text style={styles.textDisplay}>{item.pod}</Text>
         </View>
         <View style={{ flexDirection: "row" }}>
-          <Text style={styles.textLable}>Giá: </Text>
-          <Text style={styles.textDisplay}>{item.price}</Text>
+          <Text style={styles.textLable}>Dim: </Text>
+          <Text style={styles.textDisplay}>{item.dim}</Text>
         </View>
         <View style={{ flexDirection: "row" }}>
-          <Text style={styles.textLable}>Loại Hình: </Text>
-          <Text style={styles.textDisplay}>{item.type}</Text>
+          <Text style={styles.textLable}>Schedule: </Text>
+          <Text style={styles.textDisplay}>{item.schedule}</Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.textLable}>Châu: </Text>
+          <Text style={styles.textDisplay}>{item.continent}</Text>
         </View>
       </View>
     </TouchableOpacity>
   );
-
   return (
     <View style={{ flex: 1, backgroundColor: "white" }}>
       <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -138,7 +136,7 @@ const HomeLog = ({ navigation }) => {
         <View style={styles.dropMenu}>
           <Text style={styles.label}>Chọn Tháng</Text>
           <SelectList
-            setSelected={(value) => setLogInfo({ ...logInfo, month: value })}
+            setSelected={(value) => setLCLInfo({ ...lclInfo, month: value })}
             data={Month}
             dropdownStyles={{
               backgroundColor: "#D9DBDB",
@@ -148,10 +146,12 @@ const HomeLog = ({ navigation }) => {
           />
         </View>
         <View style={styles.dropMenu}>
-          <Text style={styles.label}>Loại Vận Chuyển</Text>
+          <Text style={styles.label}>Chọn Châu</Text>
           <SelectList
-            setSelected={(value) => setLogInfo({ ...logInfo, freight: value })}
-            data={ShippingType}
+            setSelected={(value) =>
+              setLCLInfo({ ...lclInfo, continent: value })
+            }
+            data={Continent}
             dropdownStyles={{
               backgroundColor: "#D9DBDB",
             }}
@@ -162,7 +162,7 @@ const HomeLog = ({ navigation }) => {
         <View style={styles.dropMenu}>
           <Text style={styles.label}>Chọn Năm</Text>
           <SelectList
-            setSelected={(value) => setLogInfo({ ...logInfo, year: value })}
+            setSelected={(value) => setLCLInfo({ ...lclInfo, year: value })}
             data={Year}
             dropdownStyles={{
               backgroundColor: "#D9DBDB",
@@ -172,10 +172,10 @@ const HomeLog = ({ navigation }) => {
           />
         </View>
         <View style={styles.dropMenu}>
-          <Text style={styles.label}>Khoảng Giá</Text>
+          <Text style={styles.label}>Loại Vận Chuyển</Text>
           <SelectList
             setSelected={(value) =>
-              setLogInfo({ ...logInfo, beweenprice: value })
+              setLCLInfo({ ...lclInfo, beweenprice: value })
             }
             data={BeweenPrice}
             dropdownStyles={{
@@ -186,10 +186,10 @@ const HomeLog = ({ navigation }) => {
       </View>
       <View style={{ flex: 9 }}>
         <View style={styles.displayData}>
-          {filteredLog().length > 0 ? (
+          {filteredLCL().length > 0 ? (
             <FlatList
               style={styles.list}
-              data={filteredLog()}
+              data={filteredLCL()}
               renderItem={renderItem}
               keyExtractor={(item) => item._id}
             />
@@ -211,8 +211,8 @@ const HomeLog = ({ navigation }) => {
       <View style={{ flex: 0.5 }}>
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate("AddLog", {
-              logInfo: logInfo,
+            navigation.navigate("AddLCL", {
+              lclInfo: lclInfo,
             });
           }}
         >
@@ -304,4 +304,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeLog;
+export default HomeLCL;

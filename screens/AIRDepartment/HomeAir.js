@@ -10,7 +10,13 @@ import {
 import React, { useEffect, useState } from "react";
 import SelectList from "react-native-dropdown-select-list";
 import color from "../../contains/color";
-import { BeweenPrice, Continent, Month, Year } from "../../contains/constant";
+import {
+  BeweenPrice,
+  Continent,
+  Month,
+  ShippingType,
+  Year,
+} from "../../contains/constant";
 import Icon from "react-native-vector-icons/FontAwesome";
 import clientAir from "../../api/clientAir";
 
@@ -19,12 +25,15 @@ const HomeAir = ({ navigation }) => {
     month: "",
     continent: "",
     year: "",
-    beweenprice: "",
+    shippingtype: "",
   });
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchText, setSearchText] = useState("");
 
+  useEffect(() => {
+    data.map((item) => console.log(item.shippingtype));
+  }, []);
   // call api get Log
   useEffect(() => {
     clientAir
@@ -37,17 +46,33 @@ const HomeAir = ({ navigation }) => {
       });
   }, [data]);
 
-  const checkPriceSearch = (eachAir) => {
+  // const checkPriceSearch = (eachAir) => {
+  //   let result = false;
+  //   const end = airInfo.beweenprice.indexOf("đến");
+  //   const value1 = airInfo.beweenprice.substring(3, end - 1);
+  //   const value2 = airInfo.beweenprice.substring(end + 4);
+  //   if (eachAir.price > value1 && eachAir.price < value2) {
+  //     result = true;
+  //   } else if (airInfo.beweenprice == "") {
+  //     result = true;
+  //   }
+
+  //   return result;
+  // };
+
+  const checkDropdownValue = (eachAir) => {
     let result = false;
-    const end = airInfo.beweenprice.indexOf("đến");
-    const value1 = airInfo.beweenprice.substring(3, end - 1);
-    const value2 = airInfo.beweenprice.substring(end + 4);
-    if (eachAir.price > value1 && eachAir.price < value2) {
-      result = true;
-    } else if (airInfo.beweenprice == "") {
+    if (
+      eachAir.month.toLowerCase().includes(airInfo.month.toLowerCase()) &&
+      eachAir.continent
+        .toLowerCase()
+        .includes(airInfo.continent.toLowerCase()) &&
+      eachAir.shippingtype
+        .toLowerCase()
+        .includes(airInfo.shippingtype.toLowerCase())
+    ) {
       result = true;
     }
-
     return result;
   };
 
@@ -55,7 +80,8 @@ const HomeAir = ({ navigation }) => {
     let result = false;
     if (
       eachAir.aol.toLowerCase().includes(searchText.toLowerCase()) ||
-      eachAir.aod.toLowerCase().includes(searchText.toLowerCase())
+      eachAir.aod.toLowerCase().includes(searchText.toLowerCase()) ||
+      eachAir.code.toLowerCase().includes(searchText.toLowerCase())
       // || eachAir.hsCode.toLowerCase().includes(searchText.toLowerCase()) ||
       // eachAir.name.toLowerCase().includes(searchText.toLowerCase())
     ) {
@@ -66,12 +92,7 @@ const HomeAir = ({ navigation }) => {
 
   const filteredLog = () =>
     data.filter(
-      (eachAir) =>
-        eachAir.month.toLowerCase().includes(airInfo.month.toLowerCase()) &&
-        eachAir.continent
-          .toLowerCase()
-          .includes(airInfo.continent.toLowerCase()) &&
-        checkTypeSearch(searchText, eachAir)
+      (eachAir) => checkTypeSearch(searchText, eachAir)
       // && checkPriceSearch(eachLog)
     );
   const renderItem = ({ item }) => (
@@ -83,26 +104,29 @@ const HomeAir = ({ navigation }) => {
       }}
     >
       <View style={styles.detail}>
-          <View style={{ flexDirection: "row" }}>
-            <Text style={styles.textLable}>Aol: </Text>
-            <Text style={styles.textDisplay}>{item.aol}</Text>
-          </View>
-          <View style={{ flexDirection: "row" }}>
-            <Text style={styles.textLable}>Aod: </Text>
-            <Text style={styles.textDisplay}>{item.aod}</Text>
-          </View>
-          <View style={{ flexDirection: "row" }}>
-            <Text style={styles.textLable}>Dim: </Text>
-            <Text style={styles.textDisplay}>{item.dim}</Text>
-          </View>
-          <View style={{ flexDirection: "row" }}>
-            <Text style={styles.textLable}>Schedule: </Text>
-            <Text style={styles.textDisplay}>{item.schedule}</Text>
-          </View>
-          <View style={{ flexDirection: "row" }}>
-            <Text style={styles.textLable}>Châu: </Text>
-            <Text style={styles.textDisplay}>{item.continent}</Text>
-          </View>
+      <View>
+          <Text style={styles.textDisplayCode}>{item.code}</Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.textLable}>Aol: </Text>
+          <Text style={styles.textDisplay}>{item.aol}</Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.textLable}>Aod: </Text>
+          <Text style={styles.textDisplay}>{item.aod}</Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.textLable}>Dim: </Text>
+          <Text style={styles.textDisplay}>{item.dim}</Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.textLable}>Schedule: </Text>
+          <Text style={styles.textDisplay}>{item.schedule}</Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.textLable}>Châu: </Text>
+          <Text style={styles.textDisplay}>{item.continent}</Text>
+        </View>
       </View>
     </TouchableOpacity>
   );
@@ -126,7 +150,7 @@ const HomeAir = ({ navigation }) => {
         <View style={styles.dropMenu}>
           <Text style={styles.label}>Chọn Tháng</Text>
           <SelectList
-            setSelected={(value) => setLogInfo({ ...airInfo, month: value })}
+            setSelected={(value) => setAirInfo({ ...airInfo, month: value })}
             data={Month}
             dropdownStyles={{
               backgroundColor: "#D9DBDB",
@@ -136,10 +160,10 @@ const HomeAir = ({ navigation }) => {
           />
         </View>
         <View style={styles.dropMenu}>
-          <Text style={styles.label}>Loại Vận Chuyển</Text>
+          <Text style={styles.label}>Chọn Châu</Text>
           <SelectList
             setSelected={(value) =>
-              setLogInfo({ ...airInfo, continent: value })
+              setAirInfo({ ...airInfo, continent: value })
             }
             data={Continent}
             dropdownStyles={{
@@ -152,7 +176,7 @@ const HomeAir = ({ navigation }) => {
         <View style={styles.dropMenu}>
           <Text style={styles.label}>Chọn Năm</Text>
           <SelectList
-            setSelected={(value) => setLogInfo({ ...logInfo, year: value })}
+            setSelected={(value) => setAirInfo({ ...airInfo, year: value })}
             data={Year}
             dropdownStyles={{
               backgroundColor: "#D9DBDB",
@@ -162,12 +186,12 @@ const HomeAir = ({ navigation }) => {
           />
         </View>
         <View style={styles.dropMenu}>
-          <Text style={styles.label}>Khoảng Giá</Text>
+          <Text style={styles.label}>Loại Vận Chuyển</Text>
           <SelectList
             setSelected={(value) =>
-              setLogInfo({ ...logInfo, beweenprice: value })
+              setAirInfo({ ...airInfo, shippingtype: value })
             }
-            data={BeweenPrice}
+            data={ShippingType}
             dropdownStyles={{
               backgroundColor: "#D9DBDB",
             }}
@@ -285,6 +309,12 @@ const styles = StyleSheet.create({
     fontSize: 19,
     lineHeight: 25,
     alignItems: "center",
+  },
+  textDisplayCode: {
+    textAlign: "right",
+    marginRight: 5,
+    fontSize: 17,
+    fontWeight: "500",
   },
 });
 
