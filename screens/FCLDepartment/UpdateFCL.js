@@ -14,8 +14,7 @@ import color from "../../contains/color";
 import SelectList from "react-native-dropdown-select-list";
 import FormInput from "../../components/FormInput";
 import client from "../../api/client";
-import DateTimePicker from "@react-native-community/datetimepicker";
-
+import DateTimePicker from "@react-native-community/datetimepicker";  
 import { isValidObjectField, updateError } from "../../utils/method";
 import { Month, Continent, Type } from "../../contains/constant";
 import axios from "axios";
@@ -23,6 +22,7 @@ import axios from "axios";
 const UpdateFCL = ({ route }) => {
     const [updateData, setUpdateData] = useState(route.params.data);
     const [open, setOpen] = useState(false);
+    
     console.log("123", updateData);
 
 
@@ -30,35 +30,28 @@ const UpdateFCL = ({ route }) => {
     const [mode, setMode] = useState("date");
     const [show, setShow] = useState(false);
 
+    //handle time picker
     const onChange = (event, selectedDate) => {
-        const currentDate = selectedDate;
-        setShow(false);
+        const currentDate = selectedDate || date;
+        setShow(Platform.OS === "ios");
         setDate(currentDate);
 
-        // setShow(Platform.OS === 'ios');
-        // if (mode == 'date') {
-        //   const currentDate = selectedDate || new Date();
-        //   setDate(currentDate);
-        // }
+        let tempDate = new Date(currentDate);
+        let fDate =
+            tempDate.getDate() +
+            "/" +
+            (tempDate.getMonth() + 1) +
+            "/" +
+            tempDate.getFullYear();
+
+        handleOnChangeText(fDate, "valid");
     };
 
+    //handle time picker
     const showMode = (currentMode) => {
-        // if (Platform.OS === 'ios') {
         setShow(true);
-        // for iOS, add a button that closes the picker
-        // }
         setMode(currentMode);
     };
-
-    const showDatepicker = () => {
-        showMode("date");
-    };
-
-    useEffect(() => {
-        setUpdateData((prev) => {
-            return { ...prev, valid: date };
-        });
-    }, [date]);
 
     const handleOnChangeText = (value, fieldName) => {
         setUpdateData({ ...updateData, [fieldName]: value });
@@ -96,15 +89,16 @@ const UpdateFCL = ({ route }) => {
     const AddForm = async () => {
         // if (isValidForm()) {
         try {
-            const res = await client.post("/create",  updateData ,
-                {
-                    headers: {
-                        Accept: 'application/json',
-                        // Use the correct Content Type to send data to Stripe
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    }
-                }
-                )
+            delete updateData._id
+            const res = await client.post("/create", updateData,
+                // {
+                //     headers: {
+                //         Accept: 'application/json',
+                //         // Use the correct Content Type to send data to Stripe
+                //         'Content-Type': 'application/x-www-form-urlencoded',
+                //     }
+                // }
+            )
             if (res.data.success) {
                 Alert.alert("Thêm Thành Công");
             }
@@ -114,26 +108,6 @@ const UpdateFCL = ({ route }) => {
             console.log(error.message);
         }
         // }
-
-        // axios
-        //     .post(
-        //         "http://192.168.1.72:3001/api/quotations/create",
-        //         { ...updateData },
-        // {
-        //     headers: {
-        //         Accept: 'application/json',
-        // Use the correct Content Type to send data to Stripe
-        //         'Content-Type': 'application/x-www-form-urlencoded',
-        //     }
-        // })
-        //     .then((res) => {
-        //         console.log('???');
-        //         console.log(res);
-        //     })
-        //     .catch(error => {
-        //         console.log('fail');
-        //         console.log(error.response)
-        //     })
     };
 
     return (
@@ -146,7 +120,9 @@ const UpdateFCL = ({ route }) => {
                             setUpdateData({ ...updateData, month: value })
                         }
                         data={Month}
-                        defaultOption={{ key: updateData.month, value: updateData.month }}
+                        // defaultOption={{ key: updateData.month, value: updateData.month }}
+                        defaultOption={{ key: 'Jan', value: 'January' }}
+
                     />
                 </View>
                 <View style={styles.dropMenu}>
@@ -238,13 +214,14 @@ const UpdateFCL = ({ route }) => {
                     value={updateData.valid}
                 />
                 <View>
-                    <Button onPress={showDatepicker} title="Show date picker!" />
+                    <Button onPress={() => showMode("date")} title="Show date picker!" />
                     {show && (
                         <DateTimePicker
                             testID="dateTimePicker"
                             value={date}
                             mode={mode}
                             is24Hour={true}
+                            // display="default"
                             onChange={onChange}
                         />
                     )}

@@ -21,39 +21,33 @@ import axios from "axios";
 import client from "../../api/client";
 
 const Add = ({ navigation, route }) => {
+
 	const [date, setDate] = useState(new Date());
 	const [mode, setMode] = useState("date");
 	const [show, setShow] = useState(false);
 
+	//handle time picker
 	const onChange = (event, selectedDate) => {
-		const currentDate = selectedDate;
-		setShow(false);
+		const currentDate = selectedDate || date;
+		setShow(Platform.OS === "ios");
 		setDate(currentDate);
 
-		// setShow(Platform.OS === 'ios');
-		// if (mode == 'date') {
-		//   const currentDate = selectedDate || new Date();
-		//   setDate(currentDate);
-		// }
+		let tempDate = new Date(currentDate);
+		let fDate =
+			tempDate.getDate() +
+			"/" +
+			(tempDate.getMonth() + 1) +
+			"/" +
+			tempDate.getFullYear();
+
+		handleOnChangeText(fDate, "valid");
 	};
 
+	//handle time picker
 	const showMode = (currentMode) => {
-		// if (Platform.OS === 'ios') {
 		setShow(true);
-		// for iOS, add a button that closes the picker
-		// }
 		setMode(currentMode);
 	};
-
-	const showDatepicker = () => {
-		showMode("date");
-	};
-
-	useEffect(() => {
-		setFclInfo((prev) => {
-			return { ...prev, valid: date };
-		});
-	}, [date]);
 
 	let {
 		type,
@@ -114,7 +108,7 @@ const Add = ({ navigation, route }) => {
 	const submitUpdateForm = async () => {
 		// if (isValidForm()) {
 
-		const url = `http://192.168.1.23:3001/api/quotations/update/${route.params._id}`;
+		const url = `http://192.168.1.72:3001/api/quotations/update/${route.params._id}`;
 
 		try {
 			const res = await axios.post(url, { ...fclInfo });
@@ -230,7 +224,7 @@ const Add = ({ navigation, route }) => {
 					value={date.toLocaleDateString()}
 				/>
 				<View>
-					<Button onPress={showDatepicker} title="Show date picker!" />
+					<Button onPress={() => showMode("date")} title="Show date picker!" />
 					{/* <Text>selected: {date.toLocaleDateString()}</Text> */}
 					{show && (
 						<DateTimePicker
@@ -249,40 +243,18 @@ const Add = ({ navigation, route }) => {
 					onChangeText={(value) => handleOnChangeText(value, "notes")}
 					value={fclInfo.notes}
 				/>
-				{!route.params && (
-					<View
-						style={{
-							flex: 1,
-							marginVertical: 30,
-							marginHorizontal: 80,
-							justifyContent: "center",
-						}}
-					>
-						<TouchableOpacity style={styles.buttonInsert} onPress={submitForm}>
-							<Text style={{ fontSize: 18, color: "#fff" }}>Insert</Text>
-						</TouchableOpacity>
-					</View>
-				)}
-				{
-					// insertOrUpdate==1&&
-					route.params && (
-						<View
-							style={{
-								flex: 1,
-								marginVertical: 30,
-								marginHorizontal: 80,
-								justifyContent: "center",
-							}}
-						>
-							<TouchableOpacity
-								style={styles.buttonUpdate}
-								onPress={submitUpdateForm}
-							>
-								<Text style={{ fontSize: 18, color: "#fff" }}>Update</Text>
-							</TouchableOpacity>
-						</View>
-					)
-				}
+				<View
+					style={{
+						flex: 1,
+						marginVertical: 30,
+						marginHorizontal: 80,
+						justifyContent: "center",
+					}}
+				>
+					<TouchableOpacity style={styles.buttonInsert} onPress={submitForm}>
+						<Text style={{ fontSize: 18, color: "#fff" }}>Insert</Text>
+					</TouchableOpacity>
+				</View>
 			</ScrollView>
 		</View>
 	);
@@ -321,13 +293,12 @@ const styles = StyleSheet.create({
 		marginBottom: 5,
 	},
 	buttonInsert: {
-		height: 45,
-		backgroundColor: "rgba(27,27,51,1)",
+		height: 50,
+		backgroundColor: color.borderColor,
 		borderRadius: 8,
 		justifyContent: "center",
 		alignItems: "center",
-		// opacity: 0.5,
-		// zIndex:-1
+		borderRadius: 30,
 	},
 	buttonUpdate: {
 		height: 45,
