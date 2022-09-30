@@ -1,5 +1,5 @@
 export const Month = [
-    { key: 'Jan', value: 'January' },
+    { key: 'Tháng 1', value: 'Tháng 1' },
     { key: 'Tháng 2', value: 'Tháng 2' },
     { key: 'Tháng 3', value: 'Tháng 3' },
     { key: 'Tháng 4', value: 'Tháng 4' },

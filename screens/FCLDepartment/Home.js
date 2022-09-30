@@ -21,6 +21,9 @@ const { width, height } = Dimensions.get("window");
 const Home = ({ navigation }) => {
 	const [data1, setData1] = useState([]);
 
+	// console.log('data1', data1[0].valid);
+	// console.log('data2', data1[0].valid.toString().length);
+	// console.log('data1', data1[0].valid.slice(data1[0].valid.toString().length - 4)==fclInfo.valid);
 
 	const [type, setType] = useState('');
 
@@ -38,7 +41,7 @@ const Home = ({ navigation }) => {
 		beweenprice: "",
 		type: "",
 	});
-	// console.log(fclInfo);
+	console.log('log',fclInfo.year);
 
 	const [searchText, setSearchText] = useState("");
 	// console.log(data1.container);
@@ -64,6 +67,10 @@ const Home = ({ navigation }) => {
 			}}
 		>
 			<View style={styles.detail}>
+				<View style={{ flexDirection: "row" }}>
+					{/* <Text style={styles.textLable}>Loại Container: </Text> */}
+					<Text style={styles.textDisplay}>{item.code}</Text>
+				</View>
 				<View style={{ flexDirection: "row" }}>
 					<Text style={styles.textLable}>Loại Container: </Text>
 					<Text style={styles.textDisplay}>{item.type}</Text>
@@ -109,11 +116,11 @@ const Home = ({ navigation }) => {
 	const checkTypeSearch = (searchText, eachFcl) => {
 		let result = false;
 		if (
-			eachFcl.pol.toLowerCase().includes(searchText.toLowerCase()) ||
-			eachFcl.pod.toLowerCase().includes(searchText.toLowerCase())
-			//   ||
-			//   eachLog.hsCode.toLowerCase().includes(searchText.toLowerCase())||
-			//   eachLog.name.toLowerCase().includes(searchText.toLowerCase())
+			eachFcl.pol.toLowerCase().includes(searchText.toLowerCase())
+			|| eachFcl.pod.toLowerCase().includes(searchText.toLowerCase())
+			|| eachFcl.code.toLowerCase().includes(searchText.toLowerCase())
+			|| eachFcl.carrier.toLowerCase().includes(searchText.toLowerCase())
+			// || eachFcl.valid.toLowerCase().includes(searchText.toLowerCase())
 		) {
 			result = true;
 		}
@@ -125,12 +132,11 @@ const Home = ({ navigation }) => {
 		data1.filter(
 			(eachFcl) =>
 				eachFcl.month.toLowerCase().includes(fclInfo.month.toLowerCase()) &&
-				eachFcl.continent
-					.toLowerCase()
-					.includes(fclInfo.continent.toLowerCase()) &&
+				eachFcl.continent.toLowerCase().includes(fclInfo.continent.toLowerCase()) &&
 				checkTypeSearch(searchText, eachFcl) &&
-				checkPriceSearch(eachFcl)
-				&& eachFcl.type.toLowerCase().includes(fclInfo.type.toLowerCase())
+				checkPriceSearch(eachFcl) &&
+				eachFcl.type.toLowerCase().includes(fclInfo.type.toLowerCase())
+				&& eachFcl.valid.slice(eachFcl.valid.length - 4).includes(fclInfo.year)
 		);
 
 	return (
