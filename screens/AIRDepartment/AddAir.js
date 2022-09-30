@@ -74,7 +74,7 @@ const AddAir = () => {
 
   const isValidForm = () => {
     if (!isValidObjectField(airInfo))
-      return updateError("Required all fields!", setError);
+      return updateError("Nhập thiếu trường dữ liệu!", setError);
     return true;
   };
 
@@ -94,6 +94,11 @@ const AddAir = () => {
   };
   return (
     <View style={StyleSheet.container}>
+      {error ? (
+        <Text style={{ color: "red", fontSize: 18, textAlign: "center" }}>
+          {error}
+        </Text>
+      ) : null}
       <ScrollView>
         <View style={styles.dropMenu}>
           <Text style={styles.label}>Chọn Tháng</Text>

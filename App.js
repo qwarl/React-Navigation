@@ -7,6 +7,7 @@ import color from "./contains/color";
 import Fcl from './screens/FCLDepartment/ScreenFCL';
 import ScreenAIR from "./screens/AIRDepartment/ScreenAIR";
 import ScreenLCL from "./screens/AIRDepartment/LCL/ScreenLCL";
+import ScreenTruck from "./screens/DOMDepartment/Truck/ScreenTruck";
 
 const Stack = createStackNavigator();
 
@@ -16,8 +17,9 @@ export default function App() {
       <StatusBar backgroundColor={color.primary} />
       {/* <ScreenLog /> */}
        {/* <Fcl/> */}
-       <ScreenAIR/>
+       {/* <ScreenAIR/> */}
        {/* <ScreenLCL/> */}
+       <ScreenTruck/>
     </>
     
   );

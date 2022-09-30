@@ -90,7 +90,7 @@ const HomeAir = ({ navigation }) => {
     return result;
   };
 
-  const filteredLog = () =>
+  const filteredAir = () =>
     data.filter(
       (eachAir) => checkTypeSearch(searchText, eachAir)
       // && checkPriceSearch(eachLog)
@@ -200,10 +200,10 @@ const HomeAir = ({ navigation }) => {
       </View>
       <View style={{ flex: 9 }}>
         <View style={styles.displayData}>
-          {filteredLog().length > 0 ? (
+          {filteredAir().length > 0 ? (
             <FlatList
               style={styles.list}
-              data={filteredLog()}
+              data={filteredAir()}
               renderItem={renderItem}
               keyExtractor={(item) => item._id}
             />

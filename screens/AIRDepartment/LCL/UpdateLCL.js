@@ -71,6 +71,7 @@ const UpdateLCL = ({ route }) => {
   const AddForm = async () => {
     // if (isValidForm()) {
     try {
+      delete lclInfo._id;
       const res = await clientLCL.post("/create", { ...lclInfo });
       if (res.data.success) {
         Alert.alert("Thêm Thành Công");
@@ -249,7 +250,7 @@ const styles = StyleSheet.create({
     height: 50,
     width:150,
     borderColor: color.borderColor,
-    borderWidth:2,
+    borderWidth:3,
     borderRadius: 8,
     justifyContent: "center",
     alignItems: "center",
@@ -260,7 +261,7 @@ const styles = StyleSheet.create({
     height: 50,
     width:150,
     borderColor: color.borderColor,
-    borderWidth:2,
+    borderWidth:3,
     borderRadius: 8,
     justifyContent: "center",
     alignItems: "center",

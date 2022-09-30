@@ -25,7 +25,16 @@ const UpdateLog = ({ route }) => {
     setUpdateData({ ...updateData, [fieldName]: value });
   };
 
+
   const isValidForm = () => {
+
+    // const obi = {
+    //   name: "kk",
+    //   age: 22
+    // }
+
+    // obi.name = obi.name || "No name"; // Falsy: false, 0, null, undefined
+
     if (!isValidObjectField(updateData))
       return updateError("Required all fields!", setError);
     //only valid email id is allowed
@@ -35,6 +44,7 @@ const UpdateLog = ({ route }) => {
     //   return updateError("Password is too short!", setError);
     return true;
   };
+
 
 
   const submitForm = async () => {

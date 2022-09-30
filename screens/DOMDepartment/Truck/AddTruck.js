@@ -11,35 +11,22 @@ import {
   Button,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import clientLCL from "../../../api/clientLCL";
 import color from "../../../contains/color";
 import SelectList from "react-native-dropdown-select-list";
-import { Continent, Month } from "../../../contains/constant";
+import {
+  Continent,
+  Month,
+  TypeContainerTruck,
+  TypeTruck,
+} from "../../../contains/constant";
 import FormInput from "../../../components/FormInput";
-import DateTimePicker from "@react-native-community/datetimepicker";
+import clientTruck from "../../../api/clientTruck";
 import { isValidObjectField, updateError } from "../../../utils/method";
 
-const AddLCL = () => {
+const AddTruck = () => {
   const handleOnChangeText = (value, fieldName) => {
-    setLCLInfo({ ...lclInfo, [fieldName]: value });
+    setTruckInfo({ ...truckInfo, [fieldName]: value });
   };
-
-  const [lclInfo, setLCLInfo] = useState({
-    continent: "",
-    month: "",
-    dim: "",
-    grossweight: "",
-    pol: "",
-    pod: "",
-    typeofcargo: "",
-    oceanfreight: "",
-    localcharge: "",
-    carrier: "",
-    schedule: "",
-    transittime: "",
-    valid: "",
-    note: "",
-  });
 
   const [error, setError] = useState("");
 
@@ -71,18 +58,32 @@ const AddLCL = () => {
     setMode(currentMode);
   };
 
+  const [truckInfo, setTruckInfo] = useState({
+    month: "",
+    continent: "",
+    container: "",
+    typetruck: "",
+    productname: "",
+    weight: "",
+    width: "",
+    height: "",
+    length: "",
+    quantitycarton: "",
+    quantitypallet: "",
+    addressdelivery: "",
+    addressreceive: "",
+  });
+
   const isValidForm = () => {
-    if (!isValidObjectField(lclInfo))
+    if (!isValidObjectField(truckInfo))
       return updateError("Nhập thiếu trường dữ liệu!", setError);
-    // if(lclInfo.pol === null)
-    // return updateError("Nhập pol", setError);
     return true;
   };
 
   const submitForm = async () => {
     if (isValidForm()) {
       try {
-        const res = await clientLCL.post("/create", { ...lclInfo });
+        const res = await clientTruck.post("/create", { ...truckInfo });
         if (res.data.success) {
           Alert.alert("Thêm Thành Công");
         }
@@ -93,7 +94,6 @@ const AddLCL = () => {
       }
     }
   };
-
   return (
     <View style={StyleSheet.container}>
       {error ? (
@@ -105,7 +105,7 @@ const AddLCL = () => {
         <View style={styles.dropMenu}>
           <Text style={styles.label}>Chọn Tháng</Text>
           <SelectList
-            setSelected={(value) => setLCLInfo({ ...lclInfo, month: value })}
+            setSelected={(value) => setTruckInfo({ ...truckInfo, month: value })}
             data={Month}
           />
         </View>
@@ -113,100 +113,82 @@ const AddLCL = () => {
           <Text style={styles.label}>Chọn Châu</Text>
           <SelectList
             setSelected={(value) =>
-              setLCLInfo({ ...lclInfo, continent: value })
+              setTruckInfo({ ...truckInfo, continent: value })
             }
             data={Continent}
           />
         </View>
-        <FormInput
-          label="Pol"
-          placeholder="Pol"
-          onChangeText={(value) => handleOnChangeText(value, "pol")}
-          value={lclInfo.pol}
-        />
-        <FormInput
-          placeholder="Pod"
-          label="Pod"
-          onChangeText={(value) => handleOnChangeText(value, "pod")}
-          value={lclInfo.pod}
-        />
-        <FormInput
-          label="Dim"
-          placeholder="Dim"
-          onChangeText={(value) => handleOnChangeText(value, "dim")}
-          value={lclInfo.dim}
-        />
-        <FormInput
-          label="Gross Weight"
-          placeholder="Gross Weight"
-          onChangeText={(value) => handleOnChangeText(value, "grossweight")}
-          value={lclInfo.grossweight}
-        />
-        <FormInput
-          placeholder="Type Of Cargo"
-          label="Type Of Cargo"
-          onChangeText={(value) => handleOnChangeText(value, "typeofcargo")}
-          value={lclInfo.typeofcargo}
-        />
-        <FormInput
-          placeholder="Ocean Freight"
-          label="Ocean Freight"
-          onChangeText={(value) => handleOnChangeText(value, "oceanfreight")}
-          value={lclInfo.oceanfreight}
-        />
-        <FormInput
-          placeholder="Local Charge"
-          label="Local Charge"
-          onChangeText={(value) => handleOnChangeText(value, "localcharge")}
-          value={lclInfo.localcharge}
-        />
-        <FormInput
-          placeholder="Carrier"
-          label="Carrier"
-          value={lclInfo.carrier}
-          onChangeText={(value) => handleOnChangeText(value, "carrier")}
-        />
-        <FormInput
-          placeholder="Schedule"
-          label="Schedule"
-          value={lclInfo.schedule}
-          onChangeText={(value) => handleOnChangeText(value, "schedule")}
-        />
-        <FormInput
-          placeholder="Transit Time"
-          label="Transit Time"
-          value={lclInfo.transittime}
-          onChangeText={(value) => handleOnChangeText(value, "transittime")}
-        />
-        <FormInput
-          placeholder="Valid"
-          label="Valid"
-          value={lclInfo.valid}
-          onChangeText={(value) => handleOnChangeText(value, "valid")}
-        />
-        <View>
-          <TouchableOpacity
-            style={[styles.buttonTime]}
-            onPress={() => showMode("date")}
-          >
-            <Text style={{ fontSize: 18, color: "#000" }}>Chọn Ngày</Text>
-          </TouchableOpacity>
-          {show && (
-            <DateTimePicker
-              testID="dateTimePicker"
-              value={date}
-              mode={mode}
-              is24Hour={true}
-              desplay="default"
-              onChange={onChange}
-            />
-          )}
+        <View style={styles.dropMenu}>
+          <Text style={styles.label}>Chọn Loại Xe Vận Chuyển</Text>
+          <SelectList
+            setSelected={(value) =>
+              setTruckInfo({ ...truckInfo, typetruck: value })
+            }
+            data={TypeTruck}
+          />
+        </View>
+        <View style={styles.dropMenu}>
+          <Text style={styles.label}>Chọn Loại Container</Text>
+          <SelectList
+            setSelected={(value) =>
+              setTruckInfo({ ...truckInfo, container: value })
+            }
+            data={TypeContainerTruck}
+          />
         </View>
         <FormInput
-          placeholder="Ghi Chú"
-          label="Ghi Chú"
-          value={lclInfo.note}
-          onChangeText={(value) => handleOnChangeText(value, "note")}
+          label="Tên Hàng"
+          placeholder="Tên Hàng"
+          onChangeText={(value) => handleOnChangeText(value, "productname")}
+          value={truckInfo.productname}
+        />
+        <FormInput
+          placeholder="Trọng Lượng"
+          label="Trọng Lượng"
+          onChangeText={(value) => handleOnChangeText(value, "weight")}
+          value={truckInfo.weight}
+        />
+        <FormInput
+          label="SL Kiện"
+          placeholder="SL Kiện"
+          onChangeText={(value) => handleOnChangeText(value, "quantitypallet")}
+          value={truckInfo.quantitypallet}
+        />
+        <FormInput
+          label="SL Carton"
+          placeholder="SL Carton"
+          onChangeText={(value) => handleOnChangeText(value, "quantitycarton")}
+          value={truckInfo.quantitycarton}
+        />
+        <FormInput
+          placeholder="ĐC Lấy Hàng"
+          label="ĐC Lấy Hàng"
+          onChangeText={(value) => handleOnChangeText(value, "addressdelivery")}
+          value={truckInfo.addressdelivery}
+        />
+        <FormInput
+          placeholder="ĐC Nhận Hàng"
+          label="ĐC Nhận Hàng"
+          onChangeText={(value) => handleOnChangeText(value, "addressreceive")}
+          value={truckInfo.addressreceive}
+        />
+        <FormInput
+          placeholder="Chiều Dài"
+          label="Chiều Dài"
+          onChangeText={(value) => handleOnChangeText(value, "length")}
+          value={truckInfo.length}
+        />
+        <FormInput
+          placeholder="Chiều Cao"
+          label="Chiều Cao"
+          value={truckInfo.height}
+          onChangeText={(value) => handleOnChangeText(value, "height")}
+        />
+        <FormInput
+          placeholder="Chiều Rộng"
+          label="Chiều Rộng"
+          value={truckInfo.width}
+          onChangeText={(value) => handleOnChangeText(value, "width")}
         />
         <View
           style={{
@@ -214,10 +196,11 @@ const AddLCL = () => {
             marginVertical: 30,
             marginHorizontal: 80,
             justifyContent: "center",
+            alignItems:'center'
           }}
         >
           <TouchableOpacity style={[styles.buttonInsert]} onPress={submitForm}>
-            <Text style={{ fontSize: 18, color: "#fff" }}>Thêm</Text>
+            <Text style={{ fontSize: 18, color: "black" }}>Thêm</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -258,11 +241,14 @@ const styles = StyleSheet.create({
   },
   buttonInsert: {
     height: 50,
-    backgroundColor: color.borderColor,
+    width:150,
+    borderColor: color.borderColor,
+    borderWidth:2,
     borderRadius: 8,
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 30,
+    
   },
   buttonTime: {
     height: 40,
@@ -295,4 +281,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AddLCL;
+export default AddTruck;

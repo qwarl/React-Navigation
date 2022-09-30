@@ -74,6 +74,7 @@ const UpdateAir = ({ route }) => {
   const AddForm = async () => {
     // if (isValidForm()) {
     try {
+      delete airInfo._id;
       const res = await clientAir.post("/create", { ...airInfo });
       if (res.data.success) {
         Alert.alert("Thêm Thành Công");

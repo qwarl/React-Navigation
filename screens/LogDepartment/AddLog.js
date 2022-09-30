@@ -30,41 +30,35 @@ const AddLog = ({ route }) => {
   const [error, setError] = useState("");
   const [imageGallery, setImageGallery] = useState(null);
 
-  const [date, setDate] = useState(new Date());
-  const [mode, setMode] = useState("date");
-  const [show, setShow] = useState(false);
-  const [valid, setValid] = useState("Empty");
+  
+   //handle time picker
+   const [date, setDate] = useState(new Date());
+   const [mode, setMode] = useState("date");
+   const [show, setShow] = useState(false);
+ 
+   //handle time picker
+   const onChange = (event, selectedDate) => {
+     const currentDate = selectedDate || date;
+     setShow(Platform.OS === "ios");
+     setDate(currentDate);
+ 
+     let tempDate = new Date(currentDate);
+     let fDate =
+       tempDate.getDate() +
+       "/" +
+       (tempDate.getMonth() + 1) +
+       "/" +
+       tempDate.getFullYear();
+ 
+     handleOnChangeText(fDate, "valid");
+   };
+ 
+   //handle time picker
+   const showMode = (currentMode) => {
+     setShow(true);
+     setMode(currentMode);
+   };
 
-  const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate || date;
-    setShow(Platform.OS === "ios");
-    setDate(currentDate);
-
-    let tempDate = new Date(currentDate);
-    let fDate =
-      tempDate.getDate() +
-      "/" +
-      (tempDate.getMonth() + 1) +
-      "/" +
-      tempDate.getFullYear() +
-      " " +
-      tempDate.getHours() +
-      ":" +
-      tempDate.getMinutes();
-    let fTime =
-      "Hours: " + tempDate.getHours() + "| Minutes: " + tempDate.getMinutes();
-    setValid(fDate);
-    console.log(fDate + " (" + fTime + ")");
-  };
-
-  const showMode = (currentMode) => {
-    setShow(true);
-    setMode(currentMode);
-  };
-
-  const addDate = () => {
-    showMode("date");
-  };
   const [logInfo, setLogInfo] = useState({
     name: "",
     month: "",
@@ -105,29 +99,34 @@ const AddLog = ({ route }) => {
 
   const isValidForm = () => {
     if (!isValidObjectField(logInfo))
-      return updateError("Required all fields!", setError);
+      return updateError("Nhập Thiếu trường dữ liệu!", setError);
     return true;
   };
 
   const submitForm = async () => {
-    // if (isValidForm()) {
-    try {
-      const res = await clientLog.post("/create", { ...logInfo });
-      if (res.data.success) {
-        Alert.alert("Thêm Thành Công");
+    if (isValidForm()) {
+      try {
+        const res = await clientLog.post("/create", { ...logInfo });
+        if (res.data.success) {
+          Alert.alert("Thêm Thành Công");
+        }
+        console.log("running");
+        console.log(res.data);
+      } catch (error) {
+        console.log(error.message);
       }
-      console.log("running");
-      console.log(res.data);
-    } catch (error) {
-      console.log(error.message);
     }
-    // }
   };
 
   // console.log("sssss",logInfo);
 
   return (
     <View style={StyleSheet.container}>
+      {error ? (
+        <Text style={{ color: "red", fontSize: 18, textAlign: "center" }}>
+          {error}
+        </Text>
+      ) : null}
       <ScrollView>
         <View style={styles.dropMenu}>
           <Text style={styles.label}>Chọn Tháng</Text>
@@ -225,7 +224,7 @@ const AddLog = ({ route }) => {
             color="black"
             style={{ position: "absolute", top: 12, left: 30 }}
           />
-          <Text style={{fontSize:20, fontWeight:"600"}}>Chọn hình ảnh</Text>
+          <Text style={{ fontSize: 20, fontWeight: "600" }}>Chọn hình ảnh</Text>
         </TouchableOpacity>
         {imageGallery && (
           <Image style={styles.styleImage} source={{ uri: imageGallery }} />
@@ -302,10 +301,9 @@ const styles = StyleSheet.create({
   styleImage: {
     width: 200,
     height: 200,
-    alignItems:'center',
-    justifyContent:'center',
-    marginLeft:20,
-
+    alignItems: "center",
+    justifyContent: "center",
+    marginLeft: 20,
   },
 });
 

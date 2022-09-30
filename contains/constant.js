@@ -83,3 +83,20 @@ export const ShippingType = [
     { key: "Thay remark", value: "Thay remark" },
   ];
 
+  export const TypeTruck = [
+    { key: "Xe Tải Khô", value: "Xe Tải Khô" },
+    { key: "Xe Tải Lạnh", value: "Xe Tải Lạnh" },
+  ];
+
+  export const TypeContainerTruck = [
+    { key: "500 KGS", value: "500 KGS" },
+    { key: "1 Tấn", value: "1 Tấn" },
+    { key: "2 Tấn", value: "2 Tấn" },
+    { key: "3 Tấn", value: "3 Tấn" },
+    { key: "5 Tấn", value: "5 Tấn" },
+    { key: "8 Tấn", value: "8 Tấn" },
+    { key: "10 Tấn", value: "10 Tấn" },
+    { key: "13 Tấn", value: "13 Tấn" },
+    { key: "15 Tấn", value: "15 Tấn" },
+  ]
+
