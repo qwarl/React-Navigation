@@ -11,10 +11,11 @@ import React, { useEffect, useState } from "react";
 // import { RadioButton } from "react-native-paper";
 import axios from "axios";
 import color from "../../contains/color";
-import { Continent, Month, Year, BeweenPrice, ContainerHome } from "../../contains/constant";
+import { Continent, Month, Month1, Year, Year1, BetweenPrice1, ContainerHome } from "../../contains/constant";
 import SelectList from "react-native-dropdown-select-list";
 import Icon from "react-native-vector-icons/FontAwesome";
 import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
+import { Dropdown } from 'react-native-element-dropdown';
 
 const { width, height } = Dimensions.get("window");
 
@@ -25,10 +26,13 @@ const Home = ({ navigation }) => {
 	// console.log('data2', data1[0].valid.toString().length);
 	// console.log('data1', data1[0].valid.slice(data1[0].valid.toString().length - 4)==fclInfo.valid);
 
+	const [value, setValue] = useState(null);
+
+
 	const [type, setType] = useState('');
 
 	useEffect(() => {
-		const url = `http://192.168.1.72:3001/api/quotations/getAll`;
+		const url = `http://192.168.1.77:3001/api/quotations/getAll`;
 		axios.get(url).then((res) => {
 			setData1(res["data"].quotations);
 		});
@@ -38,10 +42,10 @@ const Home = ({ navigation }) => {
 		month: "",
 		continent: "",
 		year: "",
-		beweenprice: "",
+		betweenprice: "",
 		type: "",
 	});
-	console.log('log',fclInfo.year);
+	console.log('log', fclInfo);
 
 	const [searchText, setSearchText] = useState("");
 	// console.log(data1.container);
@@ -101,12 +105,12 @@ const Home = ({ navigation }) => {
 
 	const checkPriceSearch = (eachFcl) => {
 		let result = false;
-		const end = fclInfo.beweenprice.indexOf("đến");
-		const value1 = fclInfo.beweenprice.substring(3, end - 1);
-		const value2 = fclInfo.beweenprice.substring(end + 4);
+		const end = fclInfo.betweenprice.indexOf("đến");
+		const value1 = fclInfo.betweenprice.substring(3, end - 1);
+		const value2 = fclInfo.betweenprice.substring(end + 4);
 		if (eachFcl.price > value1 && eachFcl.price < value2) {
 			result = true;
-		} else if (fclInfo.beweenprice == "") {
+		} else if (fclInfo.betweenprice == "") {
 			result = true;
 		}
 
@@ -163,7 +167,7 @@ const Home = ({ navigation }) => {
 			>
 				<View style={styles.dropMenu}>
 					<Text style={styles.label}>Chọn Tháng</Text>
-					<SelectList
+					{/* <SelectList
 						setSelected={(value) => setFCLInfo({ ...fclInfo, month: value })}
 						data={Month}
 						dropdownStyles={{
@@ -171,11 +175,32 @@ const Home = ({ navigation }) => {
 							fontSize: 28,
 							fontWeight: "bold",
 						}}
-					/>
+					/> */}
+
+					<View style={styles.containerDropDown}>
+						<Dropdown
+							style={[styles.dropdown]}
+							placeholderStyle={styles.placeholderStyle}
+							selectedTextStyle={styles.selectedTextStyle}
+							inputSearchStyle={styles.inputSearchStyle}
+							iconStyle={styles.iconStyle}
+							data={Month1}
+							search
+							maxHeight={300}
+							labelField="label"
+							valueField="value"
+							searchPlaceholder="Search..."
+							value={value}
+							onChange={value => {
+								setFCLInfo({ ...fclInfo, month: value.value })
+							}}
+
+						/>
+					</View>
 				</View>
 				<View style={styles.dropMenu}>
 					<Text style={styles.label}>Chọn Châu</Text>
-					<SelectList
+					{/* <SelectList
 						setSelected={(value) =>
 							setFCLInfo({ ...fclInfo, continent: value })
 						}
@@ -183,13 +208,32 @@ const Home = ({ navigation }) => {
 						dropdownStyles={{
 							backgroundColor: "#D9DBDB",
 						}}
+					/> */}
+
+					<Dropdown
+						style={[styles.dropdown]}
+						placeholderStyle={styles.placeholderStyle}
+						selectedTextStyle={styles.selectedTextStyle}
+						inputSearchStyle={styles.inputSearchStyle}
+						iconStyle={styles.iconStyle}
+						data={Continent}
+						search
+						maxHeight={300}
+						labelField="label"
+						valueField="value"
+						searchPlaceholder="Search..."
+						value={value}
+						onChange={value => {
+							setFCLInfo({ ...fclInfo, continent: value.value })
+						}}
+
 					/>
 				</View>
 			</View>
 			<View style={{ flexDirection: "row", minHeight: 100 }}>
 				<View style={styles.dropMenu}>
 					<Text style={styles.label}>Chọn Năm</Text>
-					<SelectList
+					{/* <SelectList
 						setSelected={(value) => setFCLInfo({ ...fclInfo, year: value })}
 						data={Year}
 						dropdownStyles={{
@@ -197,11 +241,30 @@ const Home = ({ navigation }) => {
 							fontSize: 28,
 							fontWeight: "bold",
 						}}
+					/> */}
+
+					<Dropdown
+						style={[styles.dropdown]}
+						placeholderStyle={styles.placeholderStyle}
+						selectedTextStyle={styles.selectedTextStyle}
+						inputSearchStyle={styles.inputSearchStyle}
+						iconStyle={styles.iconStyle}
+						data={Year1}
+						search
+						maxHeight={300}
+						labelField="label"
+						valueField="value"
+						searchPlaceholder="Search..."
+						value={value}
+						onChange={value => {
+							setFCLInfo({ ...fclInfo, year: value.value })
+						}}
+
 					/>
 				</View>
 				<View style={styles.dropMenu}>
 					<Text style={styles.label}>Khoảng Giá</Text>
-					<SelectList
+					{/* <SelectList
 						setSelected={(value) =>
 							setFCLInfo({ ...fclInfo, beweenprice: value })
 						}
@@ -209,6 +272,24 @@ const Home = ({ navigation }) => {
 						dropdownStyles={{
 							backgroundColor: "#D9DBDB",
 						}}
+					/> */}
+					<Dropdown
+						style={[styles.dropdown]}
+						placeholderStyle={styles.placeholderStyle}
+						selectedTextStyle={styles.selectedTextStyle}
+						inputSearchStyle={styles.inputSearchStyle}
+						iconStyle={styles.iconStyle}
+						data={BetweenPrice1}
+						search
+						maxHeight={300}
+						labelField="label"
+						valueField="value"
+						searchPlaceholder="Search..."
+						value={value}
+						onChange={value => {
+							setFCLInfo({ ...fclInfo, betweenprice: value.value })
+						}}
+
 					/>
 				</View>
 			</View>
@@ -377,6 +458,34 @@ const styles = StyleSheet.create({
 	list: {
 		flex: 1,
 		padding: 8,
+	},
+	// containerDropDown: {
+	//     // backgroundColor: 'white',
+	//     padding: 16,
+	//     width: 200,
+	//     // flex: 1,
+	//     // justifyContent: 'center',
+	// },
+	dropdown: {
+		height: 50,
+		borderColor: 'gray',
+		borderWidth: 0.5,
+		borderRadius: 8,
+		paddingHorizontal: 8,
+	},
+	placeholderStyle: {
+		fontSize: 16,
+	},
+	selectedTextStyle: {
+		fontSize: 16,
+	},
+	iconStyle: {
+		width: 20,
+		height: 20,
+	},
+	inputSearchStyle: {
+		height: 40,
+		fontSize: 16,
 	},
 });
 

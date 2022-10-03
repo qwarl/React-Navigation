@@ -12,6 +12,20 @@ export const Month = [
     { key: 'Tháng 11', value: 'Tháng 11' },
     { key: 'Tháng 12', value: 'Tháng 12' },
 ];
+export const Month1 = [
+    { label: 'Tháng 1', value: 'Tháng 1' },
+    { label: 'Tháng 2', value: 'Tháng 2' },
+    { label: 'Tháng 3', value: 'Tháng 3' },
+    { label: 'Tháng 4', value: 'Tháng 4' },
+    { label: 'Tháng 5', value: 'Tháng 5' },
+    { label: 'Tháng 6', value: 'Tháng 6' },
+    { label: 'Tháng 7', value: 'Tháng 7' },
+    { label: 'Tháng 8', value: 'Tháng 8' },
+    { label: 'Tháng 9', value: 'Tháng 9' },
+    { label: 'Tháng 10', value: 'Tháng 10' },
+    { label: 'Tháng 11', value: 'Tháng 11' },
+    { label: 'Tháng 12', value: 'Tháng 12' },
+];
 
 export const Continent = [
     { label: 'Châu Á', value: 'Châu Á' },
@@ -42,6 +56,10 @@ export const Year = [
     { key: "2022", value: "2022" },
     { key: "2023", value: "2023" },
 ]
+export const Year1 = [
+    { label: "2022", value: "2022" },
+    { label: "2023", value: "2023" },
+]
 
 export const BeweenPrice = [
     {key:'Từ 0 đến 2000', value:'Từ 0 đến 2000'},
@@ -58,6 +76,23 @@ export const BeweenPrice = [
     {key:'Từ 24000 đến 26000', value:'Từ 24000 đến 26000'},
     {key:'Từ 26000 đến 28000', value:'Từ 26000 đến 28000'},
     {key:'Từ 28000 đến 30000', value:'Từ 28000 đến 30000'},
+
+]
+export const BetweenPrice1 = [
+    {label:'Từ 0 đến 2000', value:'Từ 0 đến 2000'},
+    {label:'Từ 2000 đến 4000', value:'Từ 2000 đến 4000'},
+    {label:'Từ 4000 đến 6000', value:'Từ 4000 đến 6000'},
+    {label:'Từ 6000 đến 8000', value:'Từ 6000 đến 8000'},
+    {label:'Từ 8000 đến 10000', value:'Từ 8000 đến 10000'},
+    {label:'Từ 10000 đến 12000', value:'Từ 10000 đến 12000'},
+    {label:'Từ 12000 đến 14000', value:'Từ 12000 đến 14000'},
+    {label:'Từ 14000 đến 16000', value:'Từ 14000 đến 16000'},
+    {label:'Từ 16000 đến 18000', value:'Từ 16000 đến 18000'},
+    {label:'Từ 18000 đến 20000', value:'Từ 18000 đến 20000'},
+    {label:'Từ 20000 đến 24000', value:'Từ 20000 đến 24000'},
+    {label:'Từ 24000 đến 26000', value:'Từ 24000 đến 26000'},
+    {label:'Từ 26000 đến 28000', value:'Từ 26000 đến 28000'},
+    {label:'Từ 28000 đến 30000', value:'Từ 28000 đến 30000'},
 
 ]
 

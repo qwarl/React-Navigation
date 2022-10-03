@@ -14,15 +14,18 @@ import color from "../../contains/color";
 import SelectList from "react-native-dropdown-select-list";
 import FormInput from "../../components/FormInput";
 import client from "../../api/client";
-import DateTimePicker from "@react-native-community/datetimepicker";  
+import DateTimePicker from "@react-native-community/datetimepicker";
 import { isValidObjectField, updateError } from "../../utils/method";
-import { Month, Continent, Type } from "../../contains/constant";
+import { Month, Month1, Continent, Type, Year1, Container } from "../../contains/constant";
 import axios from "axios";
+import { Dropdown } from 'react-native-element-dropdown';
 
 const UpdateFCL = ({ route }) => {
     const [updateData, setUpdateData] = useState(route.params.data);
     const [open, setOpen] = useState(false);
-    
+
+    // const [value, setValue] = useState(null);
+
     console.log("123", updateData);
 
 
@@ -90,15 +93,7 @@ const UpdateFCL = ({ route }) => {
         // if (isValidForm()) {
         try {
             delete updateData._id
-            const res = await client.post("/create", updateData,
-                // {
-                //     headers: {
-                //         Accept: 'application/json',
-                //         // Use the correct Content Type to send data to Stripe
-                //         'Content-Type': 'application/x-www-form-urlencoded',
-                //     }
-                // }
-            )
+            const res = await client.post("/create", updateData)
             if (res.data.success) {
                 Alert.alert("Thêm Thành Công");
             }
@@ -115,7 +110,7 @@ const UpdateFCL = ({ route }) => {
             <ScrollView>
                 <View style={styles.dropMenu}>
                     <Text style={styles.label}>Chọn Tháng</Text>
-                    <SelectList
+                    {/* <SelectList
                         setSelected={(value) =>
                             setUpdateData({ ...updateData, month: value })
                         }
@@ -123,11 +118,29 @@ const UpdateFCL = ({ route }) => {
                         // defaultOption={{ key: updateData.month, value: updateData.month }}
                         defaultOption={{ key: 'Jan', value: 'January' }}
 
+                    /> */}
+
+                    <Dropdown
+                        style={[styles.dropdown]}
+                        placeholderStyle={styles.placeholderStyle}
+                        selectedTextStyle={styles.selectedTextStyle}
+                        inputSearchStyle={styles.inputSearchStyle}
+                        iconStyle={styles.iconStyle}
+                        data={Month1}
+                        search={true}
+                        maxHeight={300}
+                        labelField="label"
+                        valueField="value"
+                        searchPlaceholder="Search..."
+                        value={updateData.month}
+                        onChange={value => {
+                            setUpdateData({ ...updateData, month: value.value })
+                        }}
                     />
                 </View>
                 <View style={styles.dropMenu}>
                     <Text style={styles.label}>Chọn Châu</Text>
-                    <SelectList
+                    {/* <SelectList
                         setSelected={(value) =>
                             setUpdateData({ ...updateData, continent: value })
                         }
@@ -135,16 +148,52 @@ const UpdateFCL = ({ route }) => {
                         defaultOption={{
                             key: updateData.continent, value: updateData.continent,
                         }}
+                    /> */}
+
+                    <Dropdown
+                        style={[styles.dropdown]}
+                        placeholderStyle={styles.placeholderStyle}
+                        selectedTextStyle={styles.selectedTextStyle}
+                        inputSearchStyle={styles.inputSearchStyle}
+                        iconStyle={styles.iconStyle}
+                        data={Continent}
+                        search={true}
+                        maxHeight={300}
+                        labelField="label"
+                        valueField="value"
+                        searchPlaceholder="Search..."
+                        value={updateData.continent}
+                        onChange={value => {
+                            setUpdateData({ ...updateData, continent: value.value })
+                        }}
                     />
                 </View>
                 <View style={styles.dropMenu}>
                     <Text style={styles.label}>Chọn Loại Container</Text>
-                    <SelectList
+                    {/* <SelectList
                         setSelected={(value) =>
                             setUpdateData({ ...updateData, container: value })
                         }
                         data={Type}
                         defaultOption={{ key: updateData.container, value: updateData.container }}
+                    /> */}
+
+                    <Dropdown
+                        style={[styles.dropdown]}
+                        placeholderStyle={styles.placeholderStyle}
+                        selectedTextStyle={styles.selectedTextStyle}
+                        inputSearchStyle={styles.inputSearchStyle}
+                        iconStyle={styles.iconStyle}
+                        data={Container}
+                        search={true}
+                        maxHeight={300}
+                        labelField="label"
+                        valueField="value"
+                        searchPlaceholder="Search..."
+                        value={updateData.type}
+                        onChange={value => {
+                            setUpdateData({ ...updateData, type: value.value })
+                        }}
                     />
                 </View>
                 <FormInput
@@ -330,5 +379,33 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         borderRadius: 30,
+    },
+    containerDropDown: {
+        backgroundColor: 'white',
+        padding: 16,
+        width: 200,
+        // flex: 1,
+        // justifyContent: 'center',
+    },
+    dropdown: {
+        height: 50,
+        borderColor: 'gray',
+        borderWidth: 0.5,
+        borderRadius: 8,
+        paddingHorizontal: 8,
+    },
+    placeholderStyle: {
+        fontSize: 16,
+    },
+    selectedTextStyle: {
+        fontSize: 16,
+    },
+    iconStyle: {
+        width: 20,
+        height: 20,
+    },
+    inputSearchStyle: {
+        height: 40,
+        fontSize: 16,
     },
 })

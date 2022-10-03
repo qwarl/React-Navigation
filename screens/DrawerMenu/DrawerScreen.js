@@ -11,7 +11,7 @@ const Drawer = createDrawerNavigator();
 const DrawerScreen = () => {
     return (
         <NavigationContainer>
-            <Drawer.Navigator initialRouteName="HomeFcl">
+            <Drawer.Navigator>
                 <Drawer.Screen name="HomeFcl" component={Home} />
                 <Drawer.Screen name="HomeLog" component={HomeLog} />
                 <Drawer.Screen name="HomeAir" component={HomeAir} />
