@@ -12,14 +12,14 @@ const Stack = createStackNavigator();
 
 const ScreenAIR = () => {
   return (
-    <NavigationContainer>
+    // <NavigationContainer>
     <Stack.Navigator>
         <Stack.Screen name='HomeAir' component={HomeAir}/>
         <Stack.Screen name='DetailAir' component={DetailAir}/>
         <Stack.Screen name='AddAir' component={AddAir}/>
         <Stack.Screen name='UpdateAir' component={UpdateAir}/>
     </Stack.Navigator>
-   </NavigationContainer>
+//    </NavigationContainer>
   )
 }
 

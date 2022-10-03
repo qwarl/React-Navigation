@@ -12,7 +12,7 @@ const Stack = createStackNavigator();
 
 const ScreenLog = () => {
   return (
-   <NavigationContainer>
+//    <NavigationContainer>
     <Stack.Navigator>
         <Stack.Screen name='HomeLog' component={HomeLog}/>
         <Stack.Screen name='DetailLog' component={DetailLog}/>
@@ -20,7 +20,7 @@ const ScreenLog = () => {
         <Stack.Screen name='UpdateLog' component={UpdateLog}/>
         <Stack.Screen name='PolicyDetail' component={PolicyDetail}/>
     </Stack.Navigator>
-   </NavigationContainer>
+    // </NavigationContainer> 
   )
 }
 

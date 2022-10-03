@@ -15,9 +15,9 @@ export default function App() {
     <>
       <StatusBar backgroundColor={color.primary} />
       {/* <ScreenLog /> */}
-      <Fcl />
+      {/* <Fcl /> */}
       {/* <ScreenAIR/> */}
-      {/* <DrawerScreen/> */}
+      <DrawerScreen/>
     </>
   );
 }
