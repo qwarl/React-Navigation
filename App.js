@@ -8,6 +8,7 @@ import Fcl from './screens/FCLDepartment/ScreenFCL';
 import ScreenAIR from "./screens/AIRDepartment/ScreenAIR";
 import ScreenLCL from "./screens/AIRDepartment/LCL/ScreenLCL";
 import ScreenTruck from "./screens/DOMDepartment/Truck/ScreenTruck";
+import ScreenCy from "./screens/DOMDepartment/SEA/CY/ScreenCy";
 
 const Stack = createStackNavigator();
 
@@ -19,7 +20,8 @@ export default function App() {
        {/* <Fcl/> */}
        {/* <ScreenAIR/> */}
        {/* <ScreenLCL/> */}
-       <ScreenTruck/>
+       {/* <ScreenTruck/> */}
+       <ScreenCy/>
     </>
     
   );

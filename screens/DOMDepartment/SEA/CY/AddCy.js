@@ -11,37 +11,25 @@ import {
   Button,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import clientLCL from "../../../api/clientLCL";
-import color from "../../../contains/color";
+import FormInput from "../../../../components/FormInput";
+import color from "../../../../contains/color";
 import SelectList from "react-native-dropdown-select-list";
-import { Continent, Month } from "../../../contains/constant";
-import FormInput from "../../../components/FormInput";
-import DateTimePicker from "@react-native-community/datetimepicker";
-import { isValidObjectField, updateError } from "../../../utils/method";
+import { Continent, Month, TypeSeaCY } from "../../../../contains/constant";
+import clientSeaCy from "../../../../api/clientSeaCy";
 
-const AddLCL = () => {
-  const handleOnChangeText = (value, fieldName) => {
-    setLCLInfo({ ...lclInfo, [fieldName]: value });
-  };
-
-  const [lclInfo, setLCLInfo] = useState({
-    continent: "",
+const AddCy = ({ navigation }) => {
+  const [error, setError] = useState("");
+  const [seaCyInfo, setSeaCyInfo] = useState({
     month: "",
-    dim: "",
-    grossweight: "",
+    continent: "",
+    container: "",
+    productname: "",
+    weight: "",
+    quantitycont: "",
+    etd: "",
     pol: "",
     pod: "",
-    typeofcargo: "",
-    oceanfreight: "",
-    localcharge: "",
-    carrier: "",
-    schedule: "",
-    transittime: "",
-    valid: "",
-    note: "",
   });
-
-  const [error, setError] = useState("");
 
   //handle time picker
   const [date, setDate] = useState(new Date());
@@ -72,17 +60,15 @@ const AddLCL = () => {
   };
 
   const isValidForm = () => {
-    if (!isValidObjectField(lclInfo))
+    if (!isValidObjectField(airInfo))
       return updateError("Nhập thiếu trường dữ liệu!", setError);
-    // if(lclInfo.pol === null)
-    // return updateError("Nhập pol", setError);
     return true;
   };
 
   const submitForm = async () => {
     if (isValidForm()) {
       try {
-        const res = await clientLCL.post("/create", { ...lclInfo });
+        const res = await clientSeaCy.post("/create", { ...seaCyInfo });
         if (res.data.success) {
           Alert.alert("Thêm Thành Công");
         }
@@ -93,7 +79,6 @@ const AddLCL = () => {
       }
     }
   };
-
   return (
     <View style={StyleSheet.container}>
       {error ? (
@@ -105,7 +90,9 @@ const AddLCL = () => {
         <View style={styles.dropMenu}>
           <Text style={styles.label}>Chọn Tháng</Text>
           <SelectList
-            setSelected={(value) => setLCLInfo({ ...lclInfo, month: value })}
+            setSelected={(value) =>
+              setSeaCyInfo({ ...seaCyInfo, month: value })
+            }
             data={Month}
           />
         </View>
@@ -113,100 +100,55 @@ const AddLCL = () => {
           <Text style={styles.label}>Chọn Châu</Text>
           <SelectList
             setSelected={(value) =>
-              setLCLInfo({ ...lclInfo, continent: value })
+              setSeaCyInfo({ ...seaCyInfo, continent: value })
             }
             data={Continent}
           />
         </View>
-        <FormInput
-          label="Pol"
-          placeholder="Pol"
-          onChangeText={(value) => handleOnChangeText(value, "pol")}
-          value={lclInfo.pol}
-        />
-        <FormInput
-          placeholder="Pod"
-          label="Pod"
-          onChangeText={(value) => handleOnChangeText(value, "pod")}
-          value={lclInfo.pod}
-        />
-        <FormInput
-          label="Dim"
-          placeholder="Dim"
-          onChangeText={(value) => handleOnChangeText(value, "dim")}
-          value={lclInfo.dim}
-        />
-        <FormInput
-          label="Gross Weight"
-          placeholder="Gross Weight"
-          onChangeText={(value) => handleOnChangeText(value, "grossweight")}
-          value={lclInfo.grossweight}
-        />
-        <FormInput
-          placeholder="Type Of Cargo"
-          label="Type Of Cargo"
-          onChangeText={(value) => handleOnChangeText(value, "typeofcargo")}
-          value={lclInfo.typeofcargo}
-        />
-        <FormInput
-          placeholder="Ocean Freight"
-          label="Ocean Freight"
-          onChangeText={(value) => handleOnChangeText(value, "oceanfreight")}
-          value={lclInfo.oceanfreight}
-        />
-        <FormInput
-          placeholder="Local Charge"
-          label="Local Charge"
-          onChangeText={(value) => handleOnChangeText(value, "localcharge")}
-          value={lclInfo.localcharge}
-        />
-        <FormInput
-          placeholder="Carrier"
-          label="Carrier"
-          value={lclInfo.carrier}
-          onChangeText={(value) => handleOnChangeText(value, "carrier")}
-        />
-        <FormInput
-          placeholder="Schedule"
-          label="Schedule"
-          value={lclInfo.schedule}
-          onChangeText={(value) => handleOnChangeText(value, "schedule")}
-        />
-        <FormInput
-          placeholder="Transit Time"
-          label="Transit Time"
-          value={lclInfo.transittime}
-          onChangeText={(value) => handleOnChangeText(value, "transittime")}
-        />
-        <FormInput
-          placeholder="Valid"
-          label="Valid"
-          value={lclInfo.valid}
-          onChangeText={(value) => handleOnChangeText(value, "valid")}
-        />
-        <View>
-          <TouchableOpacity
-            style={[styles.buttonTime]}
-            onPress={() => showMode("date")}
-          >
-            <Text style={{ fontSize: 18, color: "#000" }}>Chọn Ngày</Text>
-          </TouchableOpacity>
-          {show && (
-            <DateTimePicker
-              testID="dateTimePicker"
-              value={date}
-              mode={mode}
-              is24Hour={true}
-              desplay="default"
-              onChange={onChange}
-            />
-          )}
+        <View style={styles.dropMenu}>
+          <Text style={styles.label}>Chọn Container</Text>
+          <SelectList
+            setSelected={(value) =>
+              setSeaCyInfo({ ...seaCyInfo, container: value })
+            }
+            data={TypeSeaCY}
+          />
         </View>
         <FormInput
-          placeholder="Ghi Chú"
-          label="Ghi Chú"
-          value={lclInfo.note}
-          onChangeText={(value) => handleOnChangeText(value, "note")}
+          label="Cảng Đi"
+          placeholder="Cảng Đi"
+          onChangeText={(value) => handleOnChangeText(value, "pol")}
+          value={seaCyInfo.pol}
+        />
+        <FormInput
+          placeholder="Cảng Đến"
+          label="Cảng Đến"
+          onChangeText={(value) => handleOnChangeText(value, "aod")}
+          value={seaCyInfo.pod}
+        />
+        <FormInput
+          label="Tên Hàng"
+          placeholder="Tên Hàng"
+          onChangeText={(value) => handleOnChangeText(value, "productname")}
+          value={seaCyInfo.productname}
+        />
+        <FormInput
+          label="Trọng Lượng"
+          placeholder="Trọng Lượng"
+          onChangeText={(value) => handleOnChangeText(value, "weight")}
+          value={seaCyInfo.weight}
+        />
+        <FormInput
+          placeholder="SL Cont"
+          label="SL Cont"
+          onChangeText={(value) => handleOnChangeText(value, "typeofcargo")}
+          value={seaCyInfo.quantitycont}
+        />
+        <FormInput
+          placeholder="ETD"
+          label="ETD"
+          onChangeText={(value) => handleOnChangeText(value, "etd")}
+          value={seaCyInfo.etd}
         />
         <View
           style={{
@@ -299,4 +241,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AddLCL;
+export default AddCy;

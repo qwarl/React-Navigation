@@ -217,10 +217,11 @@ const AddAir = () => {
             marginVertical: 30,
             marginHorizontal: 80,
             justifyContent: "center",
+            alignItems:'center',
           }}
         >
           <TouchableOpacity style={[styles.buttonInsert]} onPress={submitForm}>
-            <Text style={{ fontSize: 18, color: "#fff" }}>Thêm</Text>
+            <Text style={{ fontSize: 18, color: "black" }}>Thêm</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -261,11 +262,14 @@ const styles = StyleSheet.create({
   },
   buttonInsert: {
     height: 50,
-    backgroundColor: color.borderColor,
+    width:150,
+    borderColor: color.borderColor,
+    borderWidth:3,
     borderRadius: 8,
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 30,
+    marginLeft:10,
   },
   buttonTime: {
     height: 40,

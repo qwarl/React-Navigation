@@ -88,6 +88,11 @@ export const ShippingType = [
     { key: "Xe Tải Lạnh", value: "Xe Tải Lạnh" },
   ];
 
+  export const TypeSeaCY = [
+    { key: "FT", value: "FT" },
+    { key: "RF", value: "RF" },
+  ];
+
   export const TypeContainerTruck = [
     { key: "500 KGS", value: "500 KGS" },
     { key: "1 Tấn", value: "1 Tấn" },
