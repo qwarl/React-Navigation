@@ -8,17 +8,16 @@ import {
   TextInput,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import SelectList from "react-native-dropdown-select-list";
 import color from "../../contains/color";
-import {
-  BeweenPrice,
-  Continent,
-  Month,
-  ShippingType,
-  Year,
-} from "../../contains/constant";
 import Icon from "react-native-vector-icons/FontAwesome";
 import clientAir from "../../api/clientAir";
+import { Dropdown } from "react-native-element-dropdown";
+import {
+  Continent,
+  Month1,
+  ShippingType,
+  Year1,
+} from "../../contains/constant";
 
 const HomeAir = ({ navigation }) => {
   const [airInfo, setAirInfo] = useState({
@@ -27,13 +26,15 @@ const HomeAir = ({ navigation }) => {
     year: "",
     shippingtype: "",
   });
+
+  const [value, setValue] = useState(null);
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchText, setSearchText] = useState("");
 
-  useEffect(() => {
-    data.map((item) => console.log(item.shippingtype));
-  }, []);
+  // useEffect(() => {
+  //   data.map((item) => console.log(item.shippingtype));
+  // }, []);
   // call api get Log
   useEffect(() => {
     clientAir
@@ -60,22 +61,6 @@ const HomeAir = ({ navigation }) => {
   //   return result;
   // };
 
-  const checkDropdownValue = (eachAir) => {
-    let result = false;
-    if (
-      eachAir.month.toLowerCase().includes(airInfo.month.toLowerCase()) &&
-      eachAir.continent
-        .toLowerCase()
-        .includes(airInfo.continent.toLowerCase()) &&
-      eachAir.shippingtype
-        .toLowerCase()
-        .includes(airInfo.shippingtype.toLowerCase())
-    ) {
-      result = true;
-    }
-    return result;
-  };
-
   const checkTypeSearch = (searchText, eachAir) => {
     let result = false;
     if (
@@ -92,7 +77,15 @@ const HomeAir = ({ navigation }) => {
 
   const filteredAir = () =>
     data.filter(
-      (eachAir) => checkTypeSearch(searchText, eachAir)
+      (eachAir) =>
+        checkTypeSearch(searchText, eachAir) &&
+        eachAir.month.toLowerCase().includes(airInfo.month.toLowerCase()) &&
+        eachAir.continent
+          .toLowerCase()
+          .includes(airInfo.continent.toLowerCase()) &&
+        eachAir.shippingtype
+          .toLowerCase()
+          .includes(airInfo.shippingtype.toLowerCase())
       // && checkPriceSearch(eachLog)
     );
   const renderItem = ({ item }) => (
@@ -104,7 +97,7 @@ const HomeAir = ({ navigation }) => {
       }}
     >
       <View style={styles.detail}>
-      <View>
+        <View>
           <Text style={styles.textDisplayCode}>{item.code}</Text>
         </View>
         <View style={{ flexDirection: "row" }}>
@@ -149,53 +142,93 @@ const HomeAir = ({ navigation }) => {
       <View style={{ flexDirection: "row", minHeight: 100 }}>
         <View style={styles.dropMenu}>
           <Text style={styles.label}>Chọn Tháng</Text>
-          <SelectList
-            setSelected={(value) => setAirInfo({ ...airInfo, month: value })}
-            data={Month}
-            dropdownStyles={{
-              backgroundColor: "#D9DBDB",
-              fontSize: 28,
-              fontWeight: "bold",
-            }}
-          />
+          <View style={styles.containerDropDown}>
+            <Dropdown
+              style={[styles.dropdown]}
+              placeholderStyle={styles.placeholderStyle}
+              selectedTextStyle={styles.selectedTextStyle}
+              inputSearchStyle={styles.inputSearchStyle}
+              iconStyle={styles.iconStyle}
+              data={Month1}
+              search
+              maxHeight={300}
+              labelField="label"
+              valueField="value"
+              searchPlaceholder="Search..."
+              value={value}
+              onChange={(value) => {
+                setAirInfo({ ...airInfo, month: value.value });
+              }}
+            />
+          </View>
         </View>
         <View style={styles.dropMenu}>
           <Text style={styles.label}>Chọn Châu</Text>
-          <SelectList
-            setSelected={(value) =>
-              setAirInfo({ ...airInfo, continent: value })
-            }
-            data={Continent}
-            dropdownStyles={{
-              backgroundColor: "#D9DBDB",
-            }}
-          />
+          <View style={styles.containerDropDown}>
+            <Dropdown
+              style={[styles.dropdown]}
+              placeholderStyle={styles.placeholderStyle}
+              selectedTextStyle={styles.selectedTextStyle}
+              inputSearchStyle={styles.inputSearchStyle}
+              iconStyle={styles.iconStyle}
+              data={Continent}
+              search
+              maxHeight={300}
+              labelField="label"
+              valueField="value"
+              searchPlaceholder="Search..."
+              value={value}
+              onChange={(value) => {
+                setAirInfo({ ...airInfo, continent: value.value });
+              }}
+            />
+          </View>
         </View>
       </View>
       <View style={{ flexDirection: "row", minHeight: 100 }}>
         <View style={styles.dropMenu}>
           <Text style={styles.label}>Chọn Năm</Text>
-          <SelectList
-            setSelected={(value) => setAirInfo({ ...airInfo, year: value })}
-            data={Year}
-            dropdownStyles={{
-              backgroundColor: "#D9DBDB",
-              fontSize: 28,
-              fontWeight: "bold",
-            }}
-          />
+          <View style={styles.containerDropDown}>
+            <Dropdown
+              style={[styles.dropdown]}
+              placeholderStyle={styles.placeholderStyle}
+              selectedTextStyle={styles.selectedTextStyle}
+              inputSearchStyle={styles.inputSearchStyle}
+              iconStyle={styles.iconStyle}
+              data={Year1}
+              search
+              maxHeight={300}
+              labelField="label"
+              valueField="value"
+              searchPlaceholder="Search..."
+              value={value}
+              onChange={(value) => {
+                setAirInfo({ ...airInfo, year: value.value });
+              }}
+            />
+          </View>
         </View>
         <View style={styles.dropMenu}>
           <Text style={styles.label}>Loại Vận Chuyển</Text>
-          <SelectList
-            setSelected={(value) =>
-              setAirInfo({ ...airInfo, shippingtype: value })
-            }
-            data={ShippingType}
-            dropdownStyles={{
-              backgroundColor: "#D9DBDB",
-            }}
-          />
+          <View style={styles.containerDropDown}>
+            <Dropdown
+              style={[styles.dropdown]}
+              placeholderStyle={styles.placeholderStyle}
+              selectedTextStyle={styles.selectedTextStyle}
+              inputSearchStyle={styles.inputSearchStyle}
+              iconStyle={styles.iconStyle}
+              data={ShippingType}
+              search
+              maxHeight={300}
+              labelField="label"
+              valueField="value"
+              searchPlaceholder="Search..."
+              value={value}
+              onChange={(value) => {
+                setAirInfo({ ...airInfo, shippingtype: value.value });
+              }}
+            />
+          </View>
         </View>
       </View>
       <View style={{ flex: 9 }}>
@@ -315,6 +348,27 @@ const styles = StyleSheet.create({
     marginRight: 5,
     fontSize: 17,
     fontWeight: "500",
+  },
+  dropdown: {
+    height: 50,
+    borderColor: "gray",
+    borderWidth: 0.5,
+    borderRadius: 8,
+    paddingHorizontal: 8,
+  },
+  placeholderStyle: {
+    fontSize: 16,
+  },
+  selectedTextStyle: {
+    fontSize: 16,
+  },
+  iconStyle: {
+    width: 20,
+    height: 20,
+  },
+  inputSearchStyle: {
+    height: 40,
+    fontSize: 16,
   },
 });
 

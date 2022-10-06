@@ -11,13 +11,18 @@ import {
   Button,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import { Continent, Month } from "../../contains/constant";
+import {
+  Continent,
+  Month,
+  Month1,
+  ShippingType,
+} from "../../contains/constant";
 import { isValidObjectField, updateError } from "../../utils/method";
 import clientAir from "../../api/clientAir";
-import SelectList from "react-native-dropdown-select-list";
 import FormInput from "../../components/FormInput";
 import color from "../../contains/color";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import { Dropdown } from "react-native-element-dropdown";
 
 const UpdateAir = ({ route }) => {
   const [airInfo, setAirInfo] = useState(route.params.data);
@@ -54,21 +59,21 @@ const UpdateAir = ({ route }) => {
     setShow(true);
     setMode(currentMode);
   };
-  
+
   const submitForm = async () => {
     // if (isValidForm()) {
-      try {
-        const url = "/update/";
-        const id = airInfo._id;
-        const res = await clientAir.post(url+id, { ...airInfo });
-        if (res.data.success) {
-          Alert.alert("Cập Nhật Thành Công");
-        }
-        console.log("running");
-        console.log(res.data);
-      } catch (error) {
-        console.log(error.message);
+    try {
+      const url = "/update/";
+      const id = airInfo._id;
+      const res = await clientAir.post(url + id, { ...airInfo });
+      if (res.data.success) {
+        Alert.alert("Cập Nhật Thành Công");
       }
+      console.log("running");
+      console.log(res.data);
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
   const AddForm = async () => {
@@ -92,17 +97,62 @@ const UpdateAir = ({ route }) => {
       <ScrollView>
         <View style={styles.dropMenu}>
           <Text style={styles.label}>Chọn Tháng</Text>
-          <SelectList
-            setSelected={(value) => setAirInfo({ ...airInfo, month: value })}
-            data={Month}
-            // defaultOption={{key:airInfo.month, value:airInfo.month}}
+          <Dropdown
+            style={[styles.dropdown]}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
+            data={Month1}
+            search={true}
+            maxHeight={300}
+            labelField="label"
+            valueField="value"
+            searchPlaceholder="Search..."
+            value={airInfo.month}
+            onChange={(value) => {
+              setAirInfo({ ...airInfo, month: value.value });
+            }}
           />
         </View>
         <View style={styles.dropMenu}>
           <Text style={styles.label}>Chọn Châu</Text>
-          <SelectList
-            setSelected={(value) => setAirInfo({ ...airInfo, continent: value })}
+          <Dropdown
+            style={[styles.dropdown]}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
             data={Continent}
+            search={true}
+            maxHeight={300}
+            labelField="label"
+            valueField="value"
+            searchPlaceholder="Search..."
+            value={airInfo.continent}
+            onChange={(value) => {
+              setAirInfo({ ...airInfo, continent: value.value });
+            }}
+          />
+        </View>
+        <View style={styles.dropMenu}>
+          <Text style={styles.label}>Chọn Loại Vận Chuyển</Text>
+          <Dropdown
+            style={[styles.dropdown]}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
+            data={ShippingType}
+            search={true}
+            maxHeight={300}
+            labelField="label"
+            valueField="value"
+            searchPlaceholder="Search..."
+            value={airInfo.shippingtype}
+            onChange={(value) => {
+              setAirInfo({ ...airInfo, shippingtype: value.value });
+            }}
           />
         </View>
         <FormInput
@@ -201,8 +251,8 @@ const UpdateAir = ({ route }) => {
             marginVertical: 30,
             marginHorizontal: 80,
             justifyContent: "center",
-            alignItems:'center',
-            flexDirection:'row',
+            alignItems: "center",
+            flexDirection: "row",
           }}
         >
           <TouchableOpacity style={[styles.buttonUpdate]} onPress={submitForm}>
@@ -250,20 +300,20 @@ const styles = StyleSheet.create({
   },
   buttonInsert: {
     height: 50,
-    width:150,
+    width: 150,
     borderColor: color.borderColor,
-    borderWidth:2,
+    borderWidth: 2,
     borderRadius: 8,
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 30,
-    marginLeft:10,
+    marginLeft: 10,
   },
   buttonUpdate: {
     height: 50,
-    width:150,
+    width: 150,
     borderColor: color.borderColor,
-    borderWidth:2,
+    borderWidth: 2,
     borderRadius: 8,
     justifyContent: "center",
     alignItems: "center",
@@ -297,6 +347,27 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginLeft: 20,
+  },
+  dropdown: {
+    height: 50,
+    borderColor: "gray",
+    borderWidth: 0.5,
+    borderRadius: 8,
+    paddingHorizontal: 8,
+  },
+  placeholderStyle: {
+    fontSize: 16,
+  },
+  selectedTextStyle: {
+    fontSize: 16,
+  },
+  iconStyle: {
+    width: 20,
+    height: 20,
+  },
+  inputSearchStyle: {
+    height: 40,
+    fontSize: 16,
   },
 });
 

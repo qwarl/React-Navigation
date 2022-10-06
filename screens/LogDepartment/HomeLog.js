@@ -12,12 +12,8 @@ import SelectList from "react-native-dropdown-select-list";
 import color from "../../contains/color";
 import clientLog from "../../api/clientLog";
 import Icon from "react-native-vector-icons/FontAwesome";
-import {
-  BeweenPrice,
-  Month,
-  ShippingType,
-  Year,
-} from "../../contains/constant";
+import { BetweenPrice1, Month1, ShippingType, Year1 } from "../../contains/constant";
+import { Dropdown } from "react-native-element-dropdown";
 
 const HomeLog = ({ navigation }) => {
   const [logInfo, setLogInfo] = useState({
@@ -26,6 +22,8 @@ const HomeLog = ({ navigation }) => {
     year: "",
     beweenprice: "",
   });
+
+  const [value, setValue] = useState(null);
   const [data, setData] = useState([]);
   // const [search, setSearch] = useState("");
   const [isLoading, setIsLoading] = useState(true);
@@ -40,7 +38,7 @@ const HomeLog = ({ navigation }) => {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [data]);
 
   const checkPriceSearch = (eachLog) => {
     let result = false;
@@ -137,51 +135,93 @@ const HomeLog = ({ navigation }) => {
       <View style={{ flexDirection: "row", minHeight: 100 }}>
         <View style={styles.dropMenu}>
           <Text style={styles.label}>Chọn Tháng</Text>
-          <SelectList
-            setSelected={(value) => setLogInfo({ ...logInfo, month: value })}
-            data={Month}
-            dropdownStyles={{
-              backgroundColor: "#D9DBDB",
-              fontSize: 28,
-              fontWeight: "bold",
-            }}
-          />
+          <View style={styles.containerDropDown}>
+            <Dropdown
+              style={[styles.dropdown]}
+              placeholderStyle={styles.placeholderStyle}
+              selectedTextStyle={styles.selectedTextStyle}
+              inputSearchStyle={styles.inputSearchStyle}
+              iconStyle={styles.iconStyle}
+              data={Month1}
+              search
+              maxHeight={300}
+              labelField="label"
+              valueField="value"
+              searchPlaceholder="Search..."
+              value={value}
+              onChange={(value) => {
+                setLogInfo({ ...logInfo, month: value.value });
+              }}
+            />
+          </View>
         </View>
         <View style={styles.dropMenu}>
           <Text style={styles.label}>Loại Vận Chuyển</Text>
-          <SelectList
-            setSelected={(value) => setLogInfo({ ...logInfo, freight: value })}
-            data={ShippingType}
-            dropdownStyles={{
-              backgroundColor: "#D9DBDB",
-            }}
-          />
+          <View style={styles.containerDropDown}>
+            <Dropdown
+              style={[styles.dropdown]}
+              placeholderStyle={styles.placeholderStyle}
+              selectedTextStyle={styles.selectedTextStyle}
+              inputSearchStyle={styles.inputSearchStyle}
+              iconStyle={styles.iconStyle}
+              data={ShippingType}
+              search
+              maxHeight={300}
+              labelField="label"
+              valueField="value"
+              searchPlaceholder="Search..."
+              value={value}
+              onChange={(value) => {
+                setLogInfo({ ...logInfo, freight: value.value });
+              }}
+            />
+          </View>
         </View>
       </View>
       <View style={{ flexDirection: "row", minHeight: 100 }}>
         <View style={styles.dropMenu}>
           <Text style={styles.label}>Chọn Năm</Text>
-          <SelectList
-            setSelected={(value) => setLogInfo({ ...logInfo, year: value })}
-            data={Year}
-            dropdownStyles={{
-              backgroundColor: "#D9DBDB",
-              fontSize: 28,
-              fontWeight: "bold",
-            }}
-          />
+          <View style={styles.containerDropDown}>
+            <Dropdown
+              style={[styles.dropdown]}
+              placeholderStyle={styles.placeholderStyle}
+              selectedTextStyle={styles.selectedTextStyle}
+              inputSearchStyle={styles.inputSearchStyle}
+              iconStyle={styles.iconStyle}
+              data={Year1}
+              search
+              maxHeight={300}
+              labelField="label"
+              valueField="value"
+              searchPlaceholder="Search..."
+              value={value}
+              onChange={(value) => {
+                setLogInfo({ ...logInfo, year: value.value });
+              }}
+            />
+          </View>
         </View>
         <View style={styles.dropMenu}>
           <Text style={styles.label}>Khoảng Giá</Text>
-          <SelectList
-            setSelected={(value) =>
-              setLogInfo({ ...logInfo, beweenprice: value })
-            }
-            data={BeweenPrice}
-            dropdownStyles={{
-              backgroundColor: "#D9DBDB",
-            }}
-          />
+          <View style={styles.containerDropDown}>
+            <Dropdown
+              style={[styles.dropdown]}
+              placeholderStyle={styles.placeholderStyle}
+              selectedTextStyle={styles.selectedTextStyle}
+              inputSearchStyle={styles.inputSearchStyle}
+              iconStyle={styles.iconStyle}
+              data={BetweenPrice1}
+              search
+              maxHeight={300}
+              labelField="label"
+              valueField="value"
+              searchPlaceholder="Search..."
+              value={value}
+              onChange={(value) => {
+                setLogInfo({ ...logInfo, beweenprice: value.value });
+              }}
+            />
+          </View>
         </View>
       </View>
       <View style={{ flex: 9 }}>
@@ -301,6 +341,27 @@ const styles = StyleSheet.create({
     marginRight: 5,
     fontSize: 17,
     fontWeight: "500",
+  },
+  dropdown: {
+    height: 50,
+    borderColor: "gray",
+    borderWidth: 0.5,
+    borderRadius: 8,
+    paddingHorizontal: 8,
+  },
+  placeholderStyle: {
+    fontSize: 16,
+  },
+  selectedTextStyle: {
+    fontSize: 16,
+  },
+  iconStyle: {
+    width: 20,
+    height: 20,
+  },
+  inputSearchStyle: {
+    height: 40,
+    fontSize: 16,
   },
 });
 

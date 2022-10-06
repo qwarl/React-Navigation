@@ -65,7 +65,7 @@ const AddLog = ({ route }) => {
     freight: "",
     hsCode: "",
     function: "",
-    image: imageGallery,
+    image: "",
     pol: "",
     pod: "",
     typeProduct: "",
@@ -74,6 +74,7 @@ const AddLog = ({ route }) => {
     price: "",
     type: "",
     policy: "",
+    referencefee:"",
     note: "",
   });
 
@@ -104,7 +105,7 @@ const AddLog = ({ route }) => {
   };
 
   const submitForm = async () => {
-    if (isValidForm()) {
+    // if (isValidForm()) {
       try {
         const res = await clientLog.post("/create", { ...logInfo });
         if (res.data.success) {
@@ -115,7 +116,7 @@ const AddLog = ({ route }) => {
       } catch (error) {
         console.log(error.message);
       }
-    }
+    // }
   };
 
   // console.log("sssss",logInfo);
@@ -207,8 +208,8 @@ const AddLog = ({ route }) => {
         <FormInput
           placeholder="Phí TTHQ Tham Khảo"
           label="Phí TTHQ Tham Khảo"
-          value={logInfo.policy}
-          onChangeText={(value) => handleOnChangeText(value, "policy")}
+          value={logInfo.referencefee}
+          onChangeText={(value) => handleOnChangeText(value, "referencefee")}
         />
         <FormInput
           placeholder="Ghi Chú"

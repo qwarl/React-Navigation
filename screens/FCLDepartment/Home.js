@@ -12,7 +12,6 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import color from "../../contains/color";
 import { Continent, Month, Month1, Year, Year1, BetweenPrice1, ContainerHome } from "../../contains/constant";
-import SelectList from "react-native-dropdown-select-list";
 import Icon from "react-native-vector-icons/FontAwesome";
 import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel } from 'react-native-simple-radio-button';
 import { Dropdown } from 'react-native-element-dropdown';
@@ -167,16 +166,6 @@ const Home = ({ navigation }) => {
 			>
 				<View style={styles.dropMenu}>
 					<Text style={styles.label}>Chọn Tháng</Text>
-					{/* <SelectList
-						setSelected={(value) => setFCLInfo({ ...fclInfo, month: value })}
-						data={Month}
-						dropdownStyles={{
-							backgroundColor: "#D9DBDB",
-							fontSize: 28,
-							fontWeight: "bold",
-						}}
-					/> */}
-
 					<View style={styles.containerDropDown}>
 						<Dropdown
 							style={[styles.dropdown]}
@@ -194,22 +183,11 @@ const Home = ({ navigation }) => {
 							onChange={value => {
 								setFCLInfo({ ...fclInfo, month: value.value })
 							}}
-
 						/>
 					</View>
 				</View>
 				<View style={styles.dropMenu}>
 					<Text style={styles.label}>Chọn Châu</Text>
-					{/* <SelectList
-						setSelected={(value) =>
-							setFCLInfo({ ...fclInfo, continent: value })
-						}
-						data={Continent}
-						dropdownStyles={{
-							backgroundColor: "#D9DBDB",
-						}}
-					/> */}
-
 					<Dropdown
 						style={[styles.dropdown]}
 						placeholderStyle={styles.placeholderStyle}
@@ -226,7 +204,6 @@ const Home = ({ navigation }) => {
 						onChange={value => {
 							setFCLInfo({ ...fclInfo, continent: value.value })
 						}}
-
 					/>
 				</View>
 			</View>
@@ -295,7 +272,6 @@ const Home = ({ navigation }) => {
 			</View>
 
 			<View
-			// style={{ alignItems: 'center' }}
 			>
 				<RadioForm
 					formHorizontal={true}

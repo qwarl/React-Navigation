@@ -8,7 +8,7 @@ import {
 import React, { useState } from "react";
 import color from "../../../../contains/color";
 
-const DetailCy = ({ navigation, route }) => {
+const DetailDoor = ({ navigation, route }) => {
   const [data, setData] = useState(route.params.item);
   return (
     <ScrollView>
@@ -17,18 +17,24 @@ const DetailCy = ({ navigation, route }) => {
         <Text style={styles.textDisplay}>Tháng: {data.month}</Text>
         <Text style={styles.textDisplay}>Châu: {data.continent}</Text>
         <Text style={styles.textDisplay}>Loại Container: {data.container}</Text>
-        <Text style={styles.textDisplay}>Loại Vận Chuyển: {data.cytype}</Text>
+        <Text style={styles.textDisplay}>Loại Hình Vận Chuyển: {data.doortype}</Text>
         <Text style={styles.textDisplay}>Cảng Đi: {data.pol}</Text>
         <Text style={styles.textDisplay}>Cảng Đến: {data.pod}</Text>
         <Text style={styles.textDisplay}>Tên Hàng: {data.productname}</Text>
         <Text style={styles.textDisplay}>Trọng Lượng: {data.weight}</Text>
         <Text style={styles.textDisplay}>SL Cont: {data.quantitycont}</Text>
         <Text style={styles.textDisplay}>ETD: {data.etd}</Text>
+        <Text style={styles.textDisplay}>
+          ĐC Đóng Hàng: {data.addresspacking}
+        </Text>
+        <Text style={styles.textDisplay}>
+          ĐC Giao Hàng: {data.addressdelivery}
+        </Text>
         <View style={styles.styleButton}>
           <TouchableOpacity
             style={[styles.buttonUpdate]}
             onPress={() => {
-              navigation.navigate("UpdateCy", {
+              navigation.navigate("UpdateDoor", {
                 data: data,
               });
             }}
@@ -104,4 +110,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default DetailCy;
+export default DetailDoor;

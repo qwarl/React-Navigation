@@ -8,25 +8,21 @@ import {
   TextInput,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import SelectList from "react-native-dropdown-select-list";
+import { Dropdown } from "react-native-element-dropdown";
 import Icon from "react-native-vector-icons/FontAwesome";
 import color from "../../../../contains/color";
-import {
-  Continent,
-  Month,
-  TypeSeaCY,
-  container,
-  Year,
-} from "../../../../contains/constant";
 import clientSeaCy from "../../../../api/clientSeaCy";
+import { Continent, DomType, Month1, TypeSeaCY, Year1 } from "../../../../contains/constant";
 
 const HomeCy = ({ navigation }) => {
   const [seaCyInfo, setSeaCyInfo] = useState({
     month: "",
     continent: "",
     year: "",
-    container: "",
+    cytype: "",
   });
+
+  const [value, setValue] = useState(null);
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchText, setSearchText] = useState("");
@@ -80,9 +76,9 @@ const HomeCy = ({ navigation }) => {
         eachSeaCy.continent
           .toLowerCase()
           .includes(seaCyInfo.continent.toLowerCase()) &&
-        eachSeaCy.container
+        eachSeaCy.cytype
           .toLowerCase()
-          .includes(seaCyInfo.container.toLowerCase()) &&
+          .includes(seaCyInfo.cytype.toLowerCase()) &&
         checkTypeSearch(searchText, eachSeaCy)
       // && checkPriceSearch(eachLog)
     );
@@ -140,55 +136,93 @@ const HomeCy = ({ navigation }) => {
       <View style={{ flexDirection: "row", minHeight: 100 }}>
         <View style={styles.dropMenu}>
           <Text style={styles.label}>Chọn Tháng</Text>
-          <SelectList
-            setSelected={(value) =>
-              setSeaCyInfo({ ...seaCyInfo, month: value })
-            }
-            data={Month}
-            dropdownStyles={{
-              backgroundColor: "#D9DBDB",
-              fontSize: 28,
-              fontWeight: "bold",
-            }}
-          />
+          <View style={styles.containerDropDown}>
+            <Dropdown
+              style={[styles.dropdown]}
+              placeholderStyle={styles.placeholderStyle}
+              selectedTextStyle={styles.selectedTextStyle}
+              inputSearchStyle={styles.inputSearchStyle}
+              iconStyle={styles.iconStyle}
+              data={Month1}
+              search
+              maxHeight={300}
+              labelField="label"
+              valueField="value"
+              searchPlaceholder="Search..."
+              value={value}
+              onChange={(value) => {
+                setSeaCyInfo({ ...seaCyInfo, month: value.value });
+              }}
+            />
+          </View>
         </View>
         <View style={styles.dropMenu}>
           <Text style={styles.label}>Chọn Châu</Text>
-          <SelectList
-            setSelected={(value) =>
-              setSeaCyInfo({ ...seaCyInfo, continent: value })
-            }
-            data={Continent}
-            dropdownStyles={{
-              backgroundColor: "#D9DBDB",
-            }}
-          />
+          <View style={styles.containerDropDown}>
+            <Dropdown
+              style={[styles.dropdown]}
+              placeholderStyle={styles.placeholderStyle}
+              selectedTextStyle={styles.selectedTextStyle}
+              inputSearchStyle={styles.inputSearchStyle}
+              iconStyle={styles.iconStyle}
+              data={Continent}
+              search
+              maxHeight={300}
+              labelField="label"
+              valueField="value"
+              searchPlaceholder="Search..."
+              value={value}
+              onChange={(value) => {
+                setSeaCyInfo({ ...seaCyInfo, continent: value.value });
+              }}
+            />
+          </View>
         </View>
       </View>
       <View style={{ flexDirection: "row", minHeight: 100 }}>
         <View style={styles.dropMenu}>
           <Text style={styles.label}>Chọn Năm</Text>
-          <SelectList
-            setSelected={(value) => setSeaCyInfo({ ...seaCyInfo, year: value })}
-            data={Year}
-            dropdownStyles={{
-              backgroundColor: "#D9DBDB",
-              fontSize: 28,
-              fontWeight: "bold",
-            }}
-          />
+          <View style={styles.containerDropDown}>
+            <Dropdown
+              style={[styles.dropdown]}
+              placeholderStyle={styles.placeholderStyle}
+              selectedTextStyle={styles.selectedTextStyle}
+              inputSearchStyle={styles.inputSearchStyle}
+              iconStyle={styles.iconStyle}
+              data={Year1}
+              search
+              maxHeight={300}
+              labelField="label"
+              valueField="value"
+              searchPlaceholder="Search..."
+              value={value}
+              onChange={(value) => {
+                setSeaCyInfo({ ...seaCyInfo, year: value.value });
+              }}
+            />
+          </View>
         </View>
         <View style={styles.dropMenu}>
-          <Text style={styles.label}>Loại Container</Text>
-          <SelectList
-            setSelected={(value) =>
-              setSeaCyInfo({ ...seaCyInfo, container: value })
-            }
-            data={TypeSeaCY}
-            dropdownStyles={{
-              backgroundColor: "#D9DBDB",
-            }}
-          />
+          <Text style={styles.label}>Loại Vận Chuyển</Text>
+          <View style={styles.containerDropDown}>
+            <Dropdown
+              style={[styles.dropdown]}
+              placeholderStyle={styles.placeholderStyle}
+              selectedTextStyle={styles.selectedTextStyle}
+              inputSearchStyle={styles.inputSearchStyle}
+              iconStyle={styles.iconStyle}
+              data={DomType}
+              search
+              maxHeight={300}
+              labelField="label"
+              valueField="value"
+              searchPlaceholder="Search..."
+              value={value}
+              onChange={(value) => {
+                setSeaCyInfo({ ...seaCyInfo, cytype: value.value });
+              }}
+            />
+          </View>
         </View>
       </View>
       <View style={{ flex: 9 }}>
@@ -308,6 +342,27 @@ const styles = StyleSheet.create({
     marginRight: 5,
     fontSize: 17,
     fontWeight: "500",
+  },
+  dropdown: {
+    height: 50,
+    borderColor: "gray",
+    borderWidth: 0.5,
+    borderRadius: 8,
+    paddingHorizontal: 8,
+  },
+  placeholderStyle: {
+    fontSize: 16,
+  },
+  selectedTextStyle: {
+    fontSize: 16,
+  },
+  iconStyle: {
+    width: 20,
+    height: 20,
+  },
+  inputSearchStyle: {
+    height: 40,
+    fontSize: 16,
   },
 });
 

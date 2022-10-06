@@ -12,11 +12,11 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import color from "../../../contains/color";
-import SelectList from "react-native-dropdown-select-list";
-import { Continent, Month } from "../../../contains/constant";
 import FormInput from "../../../components/FormInput";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import clientLCL from "../../../api/clientLCL";
+import { Dropdown } from "react-native-element-dropdown";
+import { Continent, Month1 } from "../../../contains/constant";
 
 const UpdateLCL = ({ route }) => {
   const [lclInfo, setLCLInfo] = useState(route.params.data);
@@ -89,18 +89,42 @@ const UpdateLCL = ({ route }) => {
       <ScrollView>
         <View style={styles.dropMenu}>
           <Text style={styles.label}>Chọn Tháng</Text>
-          <SelectList
-            setSelected={(value) => setLCLInfo({ ...lclInfo, month: value })}
-            data={Month}
+          <Dropdown
+            style={[styles.dropdown]}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
+            data={Month1}
+            search={true}
+            maxHeight={300}
+            labelField="label"
+            valueField="value"
+            searchPlaceholder="Search..."
+            value={lclInfo.month}
+            onChange={(value) => {
+              setLCLInfo({ ...lclInfo, month: value.value });
+            }}
           />
         </View>
         <View style={styles.dropMenu}>
           <Text style={styles.label}>Chọn Châu</Text>
-          <SelectList
-            setSelected={(value) =>
-              setLCLInfo({ ...lclInfo, continent: value })
-            }
+          <Dropdown
+            style={[styles.dropdown]}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
             data={Continent}
+            search={true}
+            maxHeight={300}
+            labelField="label"
+            valueField="value"
+            searchPlaceholder="Search..."
+            value={lclInfo.continent}
+            onChange={(value) => {
+              setLCLInfo({ ...lclInfo, continent: value.value });
+            }}
           />
         </View>
         <FormInput
@@ -295,6 +319,27 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginLeft: 20,
+  },
+  dropdown: {
+    height: 50,
+    borderColor: "gray",
+    borderWidth: 0.5,
+    borderRadius: 8,
+    paddingHorizontal: 8,
+  },
+  placeholderStyle: {
+    fontSize: 16,
+  },
+  selectedTextStyle: {
+    fontSize: 16,
+  },
+  iconStyle: {
+    width: 20,
+    height: 20,
+  },
+  inputSearchStyle: {
+    height: 40,
+    fontSize: 16,
   },
 });
 

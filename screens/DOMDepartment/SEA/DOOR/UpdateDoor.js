@@ -12,24 +12,24 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Dropdown } from "react-native-element-dropdown";
-import clientSeaCy from "../../../../api/clientSeaCy";
 import color from "../../../../contains/color";
-import FormInput from "../../../../components/FormInput";
 import { Continent, DomType, Month1, TypeSeaCY } from "../../../../contains/constant";
+import clientSeaDoor from "../../../../api/clientSeaDoor";
+import FormInput from "../../../../components/FormInput";
 
-const UpdateCy = ({ route }) => {
-  const [seaCyInfo, setSeaCyInfo] = useState(route.params.data);
+const UpdateDoor = ({route}) => {
+  const [seaDoorInfo, setSeaDoorInfo] = useState(route.params.data);
   const handleOnChangeText = (value, fieldName) => {
-    setSeaCyInfo({ ...seaCyInfo, [fieldName]: value });
+    setSeaDoorInfo({ ...seaDoorInfo, [fieldName]: value });
   };
   
-  console.log(seaCyInfo.month);
+  console.log(seaDoorInfo.month);
   const submitForm = async () => {
     // if (isValidForm()) {
     try {
       const url = "/update/";
-      const id = seaCyInfo._id;
-      const res = await clientSeaCy.post(url + id, { ...seaCyInfo });
+      const id = seaDoorInfo._id;
+      const res = await clientSeaDoor.post(url + id, { ...seaDoorInfo });
       if (res.data.success) {
         Alert.alert("Cập Nhật Thành Công");
       }
@@ -43,8 +43,8 @@ const UpdateCy = ({ route }) => {
   const AddForm = async () => {
     // if (isValidForm()) {
     try {
-      delete seaCyInfo._id;
-      const res = await clientSeaCy.post("/create", { ...seaCyInfo });
+      delete seaDoorInfo._id;
+      const res = await clientSeaDoor.post("/create", { ...seaDoorInfo });
       if (res.data.success) {
         Alert.alert("Thêm Thành Công");
       }
@@ -55,7 +55,6 @@ const UpdateCy = ({ route }) => {
     }
     // }
   };
-
   return (
     <ScrollView>
       <View style={styles.dropMenu}>
@@ -72,9 +71,9 @@ const UpdateCy = ({ route }) => {
             labelField="label"
             valueField="value"
             searchPlaceholder="Search..."
-            value={seaCyInfo.month}
+            value={seaDoorInfo.month}
             onChange={(value) => {
-              setSeaCyInfo({ ...seaCyInfo, month: value.value });
+              setSeaDoorInfo({ ...seaDoorInfo, month: value.value });
             }}
           />
       </View>
@@ -92,9 +91,9 @@ const UpdateCy = ({ route }) => {
             labelField="label"
             valueField="value"
             searchPlaceholder="Search..."
-            value={seaCyInfo.continent}
+            value={seaDoorInfo.continent}
             onChange={(value) => {
-              setSeaCyInfo({ ...seaCyInfo, continent: value.value });
+              setSeaDoorInfo({ ...seaDoorInfo, continent: value.value });
             }}
           />
       </View>
@@ -112,14 +111,14 @@ const UpdateCy = ({ route }) => {
             labelField="label"
             valueField="value"
             searchPlaceholder="Search..."
-            value={seaCyInfo.container}
+            value={seaDoorInfo.container}
             onChange={(value) => {
-              setSeaCyInfo({ ...seaCyInfo, container: value.value });
+              setSeaDoorInfo({ ...seaDoorInfo, container: value.value });
             }}
           />
       </View>
       <View style={styles.dropMenu}>
-        <Text style={styles.label}>Chọn Loại Vận Chuyển</Text>
+        <Text style={styles.label}>Chọn Loại Hình Vận Chuyển</Text>
         <Dropdown
             style={[styles.dropdown]}
             placeholderStyle={styles.placeholderStyle}
@@ -132,9 +131,9 @@ const UpdateCy = ({ route }) => {
             labelField="label"
             valueField="value"
             searchPlaceholder="Search..."
-            value={seaCyInfo.cytype}
+            value={seaDoorInfo.doortype}
             onChange={(value) => {
-              setSeaCyInfo({ ...seaCyInfo, cytype: value.value });
+              setSeaDoorInfo({ ...seaDoorInfo, doortype: value.value });
             }}
           />
       </View>
@@ -142,37 +141,49 @@ const UpdateCy = ({ route }) => {
         label="Điểm Đi"
         placeholder="Điểm Đi"
         onChangeText={(value) => handleOnChangeText(value, "pol")}
-        value={seaCyInfo.pol}
+        value={seaDoorInfo.pol}
       />
       <FormInput
         placeholder="Điểm Đến"
         label="Điểm Đến"
         onChangeText={(value) => handleOnChangeText(value, "aod")}
-        value={seaCyInfo.pod}
+        value={seaDoorInfo.pod}
       />
       <FormInput
         label="Tên Hàng"
         placeholder="Tên Hàng"
         onChangeText={(value) => handleOnChangeText(value, "productname")}
-        value={seaCyInfo.productname}
+        value={seaDoorInfo.productname}
       />
       <FormInput
         label="Trọng Lượng"
         placeholder="Trọng Lượng"
         onChangeText={(value) => handleOnChangeText(value, "weight")}
-        value={seaCyInfo.weight}
+        value={seaDoorInfo.weight}
       />
       <FormInput
         placeholder="SL Cont"
         label="SL Cont"
         onChangeText={(value) => handleOnChangeText(value, "quantitycont")}
-        value={seaCyInfo.quantitycont}
+        value={seaDoorInfo.quantitycont}
       />
       <FormInput
         placeholder="ETD"
         label="ETD"
         onChangeText={(value) => handleOnChangeText(value, "etd")}
-        value={seaCyInfo.etd}
+        value={seaDoorInfo.etd}
+      />
+      <FormInput
+        placeholder="ĐC Đóng Hàng"
+        label="ĐC Đóng Hàng"
+        onChangeText={(value) => handleOnChangeText(value, "addresspacking")}
+        value={seaDoorInfo.addresspacking}
+      />
+      <FormInput
+        placeholder="ĐC Giao Hàng"
+        label="ĐC Giao Hàng"
+        onChangeText={(value) => handleOnChangeText(value, "addressdelivery")}
+        value={seaDoorInfo.addressdelivery}
       />
       <View
         style={{
@@ -192,8 +203,8 @@ const UpdateCy = ({ route }) => {
         </TouchableOpacity>
       </View>
     </ScrollView>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -298,5 +309,4 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 });
-
-export default UpdateCy;
+export default UpdateDoor

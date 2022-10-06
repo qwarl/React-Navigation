@@ -35,6 +35,11 @@ export const Continent = [
     { label: 'Châu Đại Đương', value: 'Châu Đại Đương' },
 ];
 
+export const DomType = [
+    { label: 'Đường Biển', value: 'Đường Biển' },
+    { label: 'Đường Sắt', value: 'Đường Sắt' },
+]
+
 export const Container = [
     {label:'GP', value: 'GP' },
     {label:'RF', value: 'RF' },
@@ -62,20 +67,20 @@ export const Year1 = [
 ]
 
 export const BeweenPrice = [
-    {key:'Từ 0 đến 2000', value:'Từ 0 đến 2000'},
-    {key:'Từ 2000 đến 4000', value:'Từ 2000 đến 4000'},
-    {key:'Từ 4000 đến 6000', value:'Từ 4000 đến 6000'},
-    {key:'Từ 6000 đến 8000', value:'Từ 6000 đến 8000'},
-    {key:'Từ 8000 đến 10000', value:'Từ 8000 đến 10000'},
-    {key:'Từ 10000 đến 12000', value:'Từ 10000 đến 12000'},
-    {key:'Từ 12000 đến 14000', value:'Từ 12000 đến 14000'},
-    {key:'Từ 14000 đến 16000', value:'Từ 14000 đến 16000'},
-    {key:'Từ 16000 đến 18000', value:'Từ 16000 đến 18000'},
-    {key:'Từ 18000 đến 20000', value:'Từ 18000 đến 20000'},
-    {key:'Từ 20000 đến 24000', value:'Từ 20000 đến 24000'},
-    {key:'Từ 24000 đến 26000', value:'Từ 24000 đến 26000'},
-    {key:'Từ 26000 đến 28000', value:'Từ 26000 đến 28000'},
-    {key:'Từ 28000 đến 30000', value:'Từ 28000 đến 30000'},
+    {label:'Từ 0 đến 2000', value:'Từ 0 đến 2000'},
+    {label:'Từ 2000 đến 4000', value:'Từ 2000 đến 4000'},
+    {label:'Từ 4000 đến 6000', value:'Từ 4000 đến 6000'},
+    {label:'Từ 6000 đến 8000', value:'Từ 6000 đến 8000'},
+    {label:'Từ 8000 đến 10000', value:'Từ 8000 đến 10000'},
+    {label:'Từ 10000 đến 12000', value:'Từ 10000 đến 12000'},
+    {label:'Từ 12000 đến 14000', value:'Từ 12000 đến 14000'},
+    {label:'Từ 14000 đến 16000', value:'Từ 14000 đến 16000'},
+    {label:'Từ 16000 đến 18000', value:'Từ 16000 đến 18000'},
+    {label:'Từ 18000 đến 20000', value:'Từ 18000 đến 20000'},
+    {label:'Từ 20000 đến 24000', value:'Từ 20000 đến 24000'},
+    {label:'Từ 24000 đến 26000', value:'Từ 24000 đến 26000'},
+    {label:'Từ 26000 đến 28000', value:'Từ 26000 đến 28000'},
+    {label:'Từ 28000 đến 30000', value:'Từ 28000 đến 30000'},
 
 ]
 export const BetweenPrice1 = [
@@ -97,56 +102,56 @@ export const BetweenPrice1 = [
 ]
 
 export const ShippingType = [
-    { key: "Nhập Khẩu", value: "Nhập Khẩu" },
-    { key: "Xuất Khẩu", value: "Xuất Khẩu" },
+    { label: "Nhập Khẩu", value: "Nhập Khẩu" },
+    { label: "Xuất Khẩu", value: "Xuất Khẩu" },
   ];
 
   export const Type = [
-    { key: "Xuất kinh doanh", value: "Xuất kinh doanh" },
-    { key: "Xuất gia công", value: "Xuất gia công" },
-    { key: "Xuất SXXK", value: "Xuất SXXK" },
-    { key: "Xuất PMD CTY", value: "Xuất PMD CTY" },
-    { key: "Xuất PMD CN", value: "Xuất PMD CN" },
-    { key: "Xuất tại chổ", value: "Xuất tại chổ" },
-    { key: "Di lý", value: "Di lý" },
-    { key: "Quá cảnh", value: "Quá cảnh" },
-    { key: "Nhập kinh doanh", value: "Nhập kinh doanh" },
-    { key: "Nhập gia công", value: "Nhập gia công" },
-    { key: "Nhập SXXK", value: "Nhập SXXK" },
-    { key: "Nhập PMD CTY", value: "Nhập PMD CTY" },
-    { key: "Nhập PMD CN", value: "Nhập PMD CN" },
-    { key: "Nhập tại chỗ", value: "Nhập tại chỗ" },
-    { key: "Giấy Phép", value: "Giấy Phép" },
-    { key: "Vận chuyển", value: "Vận chuyển" },
-    { key: "Kiểm định", value: "Kiểm định" },
-    { key: "Kiểm dịch", value: "Kiểm dịch" },
-    { key: "Xin C/O", value: "Xin C/O" },
-    { key: "Kiểm Điếm", value: "Kiểm Điếm" },
-    { key: "Thanh lý", value: "Thanh lý" },
-    { key: "Lashing", value: "Lashing" },
-    { key: "Tái xuất", value: "Tái xuất" },
-    { key: "Thay remark", value: "Thay remark" },
+    { label: "Xuất kinh doanh", value: "Xuất kinh doanh" },
+    { label: "Xuất gia công", value: "Xuất gia công" },
+    { label: "Xuất SXXK", value: "Xuất SXXK" },
+    { label: "Xuất PMD CTY", value: "Xuất PMD CTY" },
+    { label: "Xuất PMD CN", value: "Xuất PMD CN" },
+    { label: "Xuất tại chổ", value: "Xuất tại chổ" },
+    { label: "Di lý", value: "Di lý" },
+    { label: "Quá cảnh", value: "Quá cảnh" },
+    { label: "Nhập kinh doanh", value: "Nhập kinh doanh" },
+    { label: "Nhập gia công", value: "Nhập gia công" },
+    { label: "Nhập SXXK", value: "Nhập SXXK" },
+    { label: "Nhập PMD CTY", value: "Nhập PMD CTY" },
+    { label: "Nhập PMD CN", value: "Nhập PMD CN" },
+    { label: "Nhập tại chỗ", value: "Nhập tại chỗ" },
+    { label: "Giấy Phép", value: "Giấy Phép" },
+    { label: "Vận chuyển", value: "Vận chuyển" },
+    { label: "Kiểm định", value: "Kiểm định" },
+    { label: "Kiểm dịch", value: "Kiểm dịch" },
+    { label: "Xin C/O", value: "Xin C/O" },
+    { label: "Kiểm Điếm", value: "Kiểm Điếm" },
+    { label: "Thanh lý", value: "Thanh lý" },
+    { label: "Lashing", value: "Lashing" },
+    { label: "Tái xuất", value: "Tái xuất" },
+    { label: "Thay remark", value: "Thay remark" },
   ];
 
   export const TypeTruck = [
-    { key: "Xe Tải Khô", value: "Xe Tải Khô" },
-    { key: "Xe Tải Lạnh", value: "Xe Tải Lạnh" },
+    { label: "Xe Tải Khô", value: "Xe Tải Khô" },
+    { label: "Xe Tải Lạnh", value: "Xe Tải Lạnh" },
   ];
 
   export const TypeSeaCY = [
-    { key: "FT", value: "FT" },
-    { key: "RF", value: "RF" },
+    { label: "FT", value: "FT" },
+    { label: "RF", value: "RF" },
   ];
 
   export const TypeContainerTruck = [
-    { key: "500 KGS", value: "500 KGS" },
-    { key: "1 Tấn", value: "1 Tấn" },
-    { key: "2 Tấn", value: "2 Tấn" },
-    { key: "3 Tấn", value: "3 Tấn" },
-    { key: "5 Tấn", value: "5 Tấn" },
-    { key: "8 Tấn", value: "8 Tấn" },
-    { key: "10 Tấn", value: "10 Tấn" },
-    { key: "13 Tấn", value: "13 Tấn" },
-    { key: "15 Tấn", value: "15 Tấn" },
+    { label: "500 KGS", value: "500 KGS" },
+    { label: "1 Tấn", value: "1 Tấn" },
+    { label: "2 Tấn", value: "2 Tấn" },
+    { label: "3 Tấn", value: "3 Tấn" },
+    { label: "5 Tấn", value: "5 Tấn" },
+    { label: "8 Tấn", value: "8 Tấn" },
+    { label: "10 Tấn", value: "10 Tấn" },
+    { label: "13 Tấn", value: "13 Tấn" },
+    { label: "15 Tấn", value: "15 Tấn" },
   ]
 

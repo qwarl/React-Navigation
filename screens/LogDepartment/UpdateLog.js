@@ -15,7 +15,8 @@ import FormInput from "../../components/FormInput";
 import clientLog from "../../api/clientLog";
 
 import { isValidObjectField, updateError } from "../../utils/method";
-import { Month, ShippingType, Type } from "../../contains/constant";
+import { Month1, ShippingType, Type } from "../../contains/constant";
+import { Dropdown } from "react-native-element-dropdown";
 
 const UpdateLog = ({ route }) => {
   const [updateData, setUpdateData] = useState(route.params.data);
@@ -25,9 +26,7 @@ const UpdateLog = ({ route }) => {
     setUpdateData({ ...updateData, [fieldName]: value });
   };
 
-
   const isValidForm = () => {
-
     // const obi = {
     //   name: "kk",
     //   age: 22
@@ -45,60 +44,105 @@ const UpdateLog = ({ route }) => {
     return true;
   };
 
-
-
   const submitForm = async () => {
-    if (isValidForm()) {
+    // if (isValidForm()) {
+    try {
+      const url = "/update/";
+      const id = updateData._id;
+      const res = await clientLog.post(url + id, { ...updateData });
+      if (res.data.success) {
+        Alert.alert("Cập Nhật Thành Công");
+      }
+      console.log("running");
+      console.log(res.data);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+  const AddForm = async () => {
+    // if (isValidForm()) {
       try {
-        const url = "/update/";
-        const id = updateData._id;
-        const res = await clientLog.post(url+id, { ...updateData });
+        delete updateData._id;
+        const res = await clientLog.post("/create", { ...updateData });
         if (res.data.success) {
-          Alert.alert("Cập Nhật Thành Công");
+          Alert.alert("Thêm Thành Công");
         }
         console.log("running");
         console.log(res.data);
       } catch (error) {
         console.log(error.message);
       }
-    }
+    // }
   };
-
 
   return (
     <View style={StyleSheet.container}>
       <ScrollView>
         <View style={styles.dropMenu}>
           <Text style={styles.label}>Chọn Tháng</Text>
-          <SelectList
-            setSelected={(value) =>
-              setUpdateData({ ...updateData, month: value })
-            }
-            data={Month}
-            defaultOption={{ key: updateData.month, value: updateData.month }}
+          <Dropdown
+            style={[styles.dropdown]}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
+            data={Month1}
+            search={true}
+            maxHeight={300}
+            labelField="label"
+            valueField="value"
+            searchPlaceholder="Search..."
+            value={updateData.month}
+            onChange={(value) => {
+              setUpdateData({ ...updateData, month: value.value });
+            }}
           />
         </View>
         <View style={styles.dropMenu}>
           <Text style={styles.label}>Chọn Loại Vận Chuyển</Text>
-          <SelectList
-            setSelected={(value) =>
-              setUpdateData({ ...updateData, freight: value })
-            }
+          <Dropdown
+            style={[styles.dropdown]}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
             data={ShippingType}
-            defaultOption={{
-              key: updateData.freight,
-              value: updateData.freight,
+            search={true}
+            maxHeight={300}
+            labelField="label"
+            valueField="value"
+            searchPlaceholder="Search..."
+            value={updateData.freight}
+            onChange={(value) => {
+              setUpdateData({ ...updateData, freight: value.value });
             }}
           />
         </View>
         <View style={styles.dropMenu}>
           <Text style={styles.label}>Chọn Loại Hình</Text>
-          <SelectList
+          {/* <SelectList
             setSelected={(value) =>
               setUpdateData({ ...updateData, type: value })
             }
             data={Type}
             defaultOption={{ key: updateData.type, value: updateData.type }}
+          /> */}
+          <Dropdown
+            style={[styles.dropdown]}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
+            data={Type}
+            search={true}
+            maxHeight={300}
+            labelField="label"
+            valueField="value"
+            searchPlaceholder="Search..."
+            value={updateData.type}
+            onChange={(value) => {
+              setUpdateData({ ...updateData, type: value.value });
+            }}
           />
         </View>
         <FormInput
@@ -161,10 +205,15 @@ const UpdateLog = ({ route }) => {
             marginVertical: 30,
             marginHorizontal: 80,
             justifyContent: "center",
+            alignItems: "center",
+            flexDirection: "row",
           }}
         >
-          <TouchableOpacity style={[styles.buttonInsert]} onPress={submitForm}>
-            <Text style={{ fontSize: 18, color: "#fff" }}>Cập Nhật</Text>
+          <TouchableOpacity style={[styles.buttonUpdate]} onPress={submitForm}>
+            <Text style={{ fontSize: 18, color: "black" }}>Cập Nhật</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.buttonInsert]} onPress={AddForm}>
+            <Text style={{ fontSize: 18, color: "black" }}>Thêm</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -213,6 +262,69 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     justifyContent: "center",
     alignItems: "center",
+  },
+  dropdown: {
+    height: 50,
+    borderColor: "gray",
+    borderWidth: 0.5,
+    borderRadius: 8,
+    paddingHorizontal: 8,
+  },
+  placeholderStyle: {
+    fontSize: 16,
+  },
+  selectedTextStyle: {
+    fontSize: 16,
+  },
+  iconStyle: {
+    width: 20,
+    height: 20,
+  },
+  inputSearchStyle: {
+    height: 40,
+    fontSize: 16,
+  },
+  dropdown: {
+    height: 50,
+    borderColor: "gray",
+    borderWidth: 0.5,
+    borderRadius: 8,
+    paddingHorizontal: 8,
+  },
+  placeholderStyle: {
+    fontSize: 16,
+  },
+  selectedTextStyle: {
+    fontSize: 16,
+  },
+  iconStyle: {
+    width: 20,
+    height: 20,
+  },
+  inputSearchStyle: {
+    height: 40,
+    fontSize: 16,
+  },
+  buttonInsert: {
+    height: 50,
+    width: 150,
+    borderColor: color.borderColor,
+    borderWidth: 2,
+    borderRadius: 8,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 30,
+    marginLeft: 10,
+  },
+  buttonUpdate: {
+    height: 50,
+    width: 150,
+    borderColor: color.borderColor,
+    borderWidth: 2,
+    borderRadius: 8,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 30,
   },
 });
 

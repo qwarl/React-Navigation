@@ -8,59 +8,65 @@ import {
   TextInput,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import SelectList from "react-native-dropdown-select-list";
-import Icon from "react-native-vector-icons/FontAwesome";
-import color from "../../../contains/color";
-import clientLCL from "../../../api/clientLCL";
-import { Continent, Month1 } from "../../../contains/constant";
 import { Dropdown } from "react-native-element-dropdown";
+import Icon from "react-native-vector-icons/FontAwesome";
+import color from "../../../../contains/color";
+import {
+  Continent,
+  DomType,
+  Month1,
+  Year1,
+} from "../../../../contains/constant";
+import clientSeaDoor from "../../../../api/clientSeaDoor";
 
-const HomeLCL = ({ navigation }) => {
-  const [lclInfo, setLCLInfo] = useState({
+const HomeDoor = ({ navigation }) => {
+  const [seaDoorInfo, setSeaDoorInfo] = useState({
     month: "",
     continent: "",
     year: "",
-    beweenprice: "",
+    container: "",
+    doortype: "",
   });
 
   const [value, setValue] = useState(null);
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchText, setSearchText] = useState("");
-
-  useEffect(() => {
-    data.map((item) => console.log(item.shippingtype));
-  }, []);
+  //   useEffect(() => {
+  //     data.map((item) => console.log(item.shippingtype));
+  //   }, []);
   // call api get Log
   useEffect(() => {
-    clientLCL
+    clientSeaDoor
       .get("/getAll")
       .then((res) => {
-        setData(res.data.lcl);
+        setData(res.data.seaDoor);
       })
       .catch((err) => {
         console.log(err);
       });
   }, [data]);
 
-  const checkDropdownValue = (eachAir) => {
-    let result = false;
-    if (
-      eachAir.shippingtype
-        .toLowerCase()
-        .includes(airInfo.shippingtype.toLowerCase())
-    ) {
-      result = true;
-    }
-    return result;
-  };
+  // const checkPriceSearch = (eachAir) => {
+  //   let result = false;
+  //   const end = seaDoorInfo.beweenprice.indexOf("đến");
+  //   const value1 = seaDoorInfo.beweenprice.substring(3, end - 1);
+  //   const value2 = seaDoorInfo.beweenprice.substring(end + 4);
+  //   if (eachAir.price > value1 && eachAir.price < value2) {
+  //     result = true;
+  //   } else if (seaDoorInfo.beweenprice == "") {
+  //     result = true;
+  //   }
 
-  const checkTypeSearch = (searchText, eachLCL) => {
+  //   return result;
+  // };
+
+  const checkTypeSearch = (searchText, eachSeaCy) => {
     let result = false;
     if (
-      eachLCL.pol.toLowerCase().includes(searchText.toLowerCase()) ||
-      eachLCL.pod.toLowerCase().includes(searchText.toLowerCase()) ||
-      eachLCL.code.toLowerCase().includes(searchText.toLowerCase())
+      eachSeaCy.pol.toLowerCase().includes(searchText.toLowerCase()) ||
+      eachSeaCy.pod.toLowerCase().includes(searchText.toLowerCase()) ||
+      eachSeaCy.productname.toLowerCase().includes(searchText.toLowerCase())
       // || eachAir.hsCode.toLowerCase().includes(searchText.toLowerCase()) ||
       // eachAir.name.toLowerCase().includes(searchText.toLowerCase())
     ) {
@@ -69,20 +75,28 @@ const HomeLCL = ({ navigation }) => {
     return result;
   };
 
-  const filteredLCL = () =>
+  const filteredSeaDoor = () =>
     data.filter(
-      (eachLCL) =>
-        eachLCL.month.toLowerCase().includes(lclInfo.month.toLowerCase()) &&
-        eachLCL.continent
+      (eachSeaDoor) =>
+        eachSeaDoor.month
           .toLowerCase()
-          .includes(lclInfo.continent.toLowerCase()) &&
-        checkTypeSearch(searchText, eachLCL)
+          .includes(seaDoorInfo.month.toLowerCase()) &&
+        eachSeaDoor.continent
+          .toLowerCase()
+          .includes(seaDoorInfo.continent.toLowerCase()) &&
+        eachSeaDoor.container
+          .toLowerCase()
+          .includes(seaDoorInfo.container.toLowerCase()) &&
+        eachSeaDoor.doortype
+          .toLowerCase()
+          .includes(seaDoorInfo.doortype.toLowerCase()) &&
+        checkTypeSearch(searchText, eachSeaDoor)
       // && checkPriceSearch(eachLog)
     );
   const renderItem = ({ item }) => (
     <TouchableOpacity
       onPress={() => {
-        navigation.navigate("DetailLCL", {
+        navigation.navigate("DetailDoor", {
           item: item,
         });
       }}
@@ -92,20 +106,20 @@ const HomeLCL = ({ navigation }) => {
           <Text style={styles.textDisplayCode}>{item.code}</Text>
         </View>
         <View style={{ flexDirection: "row" }}>
-          <Text style={styles.textLable}>Pol: </Text>
+          <Text style={styles.textLable}>Tên Hàng: </Text>
+          <Text style={styles.textDisplay}>{item.productname}</Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.textLable}>Cảng Đi: </Text>
           <Text style={styles.textDisplay}>{item.pol}</Text>
         </View>
         <View style={{ flexDirection: "row" }}>
-          <Text style={styles.textLable}>Pod: </Text>
+          <Text style={styles.textLable}>Cảng Đến: </Text>
           <Text style={styles.textDisplay}>{item.pod}</Text>
         </View>
         <View style={{ flexDirection: "row" }}>
-          <Text style={styles.textLable}>Dim: </Text>
-          <Text style={styles.textDisplay}>{item.dim}</Text>
-        </View>
-        <View style={{ flexDirection: "row" }}>
-          <Text style={styles.textLable}>Schedule: </Text>
-          <Text style={styles.textDisplay}>{item.schedule}</Text>
+          <Text style={styles.textLable}>Loại Container: </Text>
+          <Text style={styles.textDisplay}>{item.container}</Text>
         </View>
         <View style={{ flexDirection: "row" }}>
           <Text style={styles.textLable}>Châu: </Text>
@@ -120,8 +134,8 @@ const HomeLCL = ({ navigation }) => {
         <Icon
           name="search"
           size={25}
-          color="black"
-          style={{ position: "absolute", top: 20, left: 30 }}
+          color="#8a9191"
+          style={{ position: "absolute", top: 10, left: 30 }}
         />
         <TextInput
           style={styles.textInputStyle}
@@ -148,7 +162,7 @@ const HomeLCL = ({ navigation }) => {
               searchPlaceholder="Search..."
               value={value}
               onChange={(value) => {
-                setLCLInfo({ ...lclInfo, month: value.value });
+                setSeaDoorInfo({ ...seaDoorInfo, month: value.value });
               }}
             />
           </View>
@@ -170,7 +184,53 @@ const HomeLCL = ({ navigation }) => {
               searchPlaceholder="Search..."
               value={value}
               onChange={(value) => {
-                setLCLInfo({ ...lclInfo, continent: value.value });
+                setSeaDoorInfo({ ...seaDoorInfo, continent: value.value });
+              }}
+            />
+          </View>
+        </View>
+      </View>
+      <View style={{ flexDirection: "row", minHeight: 100 }}>
+        <View style={styles.dropMenu}>
+          <Text style={styles.label}>Chọn Năm</Text>
+          <View style={styles.containerDropDown}>
+            <Dropdown
+              style={[styles.dropdown]}
+              placeholderStyle={styles.placeholderStyle}
+              selectedTextStyle={styles.selectedTextStyle}
+              inputSearchStyle={styles.inputSearchStyle}
+              iconStyle={styles.iconStyle}
+              data={Year1}
+              search
+              maxHeight={300}
+              labelField="label"
+              valueField="value"
+              searchPlaceholder="Search..."
+              value={value}
+              onChange={(value) => {
+                setSeaDoorInfo({ ...seaDoorInfo, year: value.value });
+              }}
+            />
+          </View>
+        </View>
+        <View style={styles.dropMenu}>
+          <Text style={styles.label}>Loại Vận Chuyển</Text>
+          <View style={styles.containerDropDown}>
+            <Dropdown
+              style={[styles.dropdown]}
+              placeholderStyle={styles.placeholderStyle}
+              selectedTextStyle={styles.selectedTextStyle}
+              inputSearchStyle={styles.inputSearchStyle}
+              iconStyle={styles.iconStyle}
+              data={DomType}
+              search
+              maxHeight={300}
+              labelField="label"
+              valueField="value"
+              searchPlaceholder="Search..."
+              value={value}
+              onChange={(value) => {
+                setSeaDoorInfo({ ...seaDoorInfo, doortype: value.value });
               }}
             />
           </View>
@@ -178,10 +238,10 @@ const HomeLCL = ({ navigation }) => {
       </View>
       <View style={{ flex: 9 }}>
         <View style={styles.displayData}>
-          {filteredLCL().length > 0 ? (
+          {filteredSeaDoor().length > 0 ? (
             <FlatList
               style={styles.list}
-              data={filteredLCL()}
+              data={filteredSeaDoor()}
               renderItem={renderItem}
               keyExtractor={(item) => item._id}
             />
@@ -203,8 +263,8 @@ const HomeLCL = ({ navigation }) => {
       <View style={{ flex: 0.5 }}>
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate("AddLCL", {
-              lclInfo: lclInfo,
+            navigation.navigate("AddDoor", {
+              seaDoorInfo: seaDoorInfo,
             });
           }}
         >
@@ -219,8 +279,8 @@ const HomeLCL = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   dropMenu: {
-    paddingHorizontal: 5,
-    paddingVertical: 4,
+    paddingHorizontal: 8,
+    paddingVertical: 2,
     flex: 1,
     minWidth: 190,
     minHeight: 40,
@@ -277,8 +337,8 @@ const styles = StyleSheet.create({
     height: 50,
     borderWidth: 1.5,
     paddingLeft: 35,
-    marginVertical: 10,
     marginHorizontal: 20,
+    marginBottom:4,
     borderColor: color.borderColor,
     borderRadius: 30,
     fontSize: 18,
@@ -317,4 +377,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeLCL;
+export default HomeDoor;
