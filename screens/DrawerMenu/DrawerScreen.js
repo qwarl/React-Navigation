@@ -40,7 +40,7 @@ const DrawerScreen = () => {
                         {openQuotation ? (
 
                             <View>
-                                <TouchableOpacity onPress={() => { navigation.navigate('Add'); setOpenQuotation(!openQuotation) }}>
+                                <TouchableOpacity onPress={() => { navigation.navigate('Home'); setOpenQuotation(!openQuotation) }}>
                                     <Text style={{ fontSize: 20,opacity:80 }}>FCL</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity onPress={() => { setOpenDOM(!openDOM) }}>
