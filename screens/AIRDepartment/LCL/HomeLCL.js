@@ -25,7 +25,6 @@ const HomeLCL = ({ navigation }) => {
 
   const [value, setValue] = useState(null);
   const [data, setData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [searchText, setSearchText] = useState("");
 
   useEffect(() => {

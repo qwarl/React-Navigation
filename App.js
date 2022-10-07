@@ -11,6 +11,7 @@ import ScreenCy from "./screens/DOMDepartment/SEA/CY/ScreenCy";
 import Fcl from "./screens/FCLDepartment/ScreenFCL";
 import DrawerScreen from "./screens/DrawerMenu/DrawerScreen";
 import ScreenDoor from "./screens/DOMDepartment/SEA/DOOR/ScreenDoor";
+import ScreenImport from "./screens/ImportDeparment/ImportD/ScreenImport";
 // import ScreenAIR from "./screens/AIRDepartment/ScreenAIR";
 
 const Stack = createStackNavigator();
@@ -20,14 +21,14 @@ export default function App() {
     <>
       <StatusBar backgroundColor={color.primary} />
       {/* <ScreenLog /> */}
-       {/* <Fcl/>
-       <ScreenAIR/>
-       {/* <ScreenLCL/> */}
-       {/* <ScreenTruck/> */}
-       {/* <ScreenCy/> */}
+      {/* <Fcl /> */}
+      {/* <ScreenLCL/> */}
+      {/* <ScreenTruck/> */}
+      {/* <ScreenCy/> */}
       {/* <ScreenDoor/> */}
       {/* <ScreenAIR/> */}
-      <DrawerScreen/>
+      {/* <DrawerScreen/> */}
+      <ScreenImport />
     </>
   );
 }

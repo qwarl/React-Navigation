@@ -57,6 +57,16 @@ export const ContainerHome = [
     {label:'HC', value: '4' },
 ];
 
+export const ContainerImport = [
+    {label:'ALL', value: '0' },
+    {label:'GP', value: '1' },
+    {label:'RF', value: '2' },
+    {label:'FR', value: '3' },
+    {label:'OT', value: '4' },
+    {label:'HQ', value: '5' },
+    {label:'TK', value: '6' },
+];
+
 export const Year = [
     { key: "2022", value: "2022" },
     { key: "2023", value: "2023" },

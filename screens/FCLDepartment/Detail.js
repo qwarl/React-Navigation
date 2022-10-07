@@ -35,7 +35,7 @@ const Detail = ({ navigation, route }) => {
 						});
 					}}
 				>
-					<Text style={{ fontSize: 18, color: "#fff" }}>Update</Text>
+					<Text style={{ fontSize: 18, color: "black" }}>Update</Text>
 				</TouchableOpacity>
 			</View>
 		</View>

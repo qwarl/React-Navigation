@@ -8,18 +8,7 @@ import {
   TextInput,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-// import { RadioButton } from "react-native-paper";
-import axios from "axios";
-import color from "../../contains/color";
-import {
-  Continent,
-  Month,
-  Month1,
-  Year,
-  Year1,
-  BetweenPrice1,
-  ContainerHome,
-} from "../../contains/constant";
+import color from "../../../contains/color";
 import Icon from "react-native-vector-icons/FontAwesome";
 import RadioForm, {
   RadioButton,
@@ -27,133 +16,114 @@ import RadioForm, {
   RadioButtonLabel,
 } from "react-native-simple-radio-button";
 import { Dropdown } from "react-native-element-dropdown";
+import {
+  BetweenPrice1,
+  ContainerHome,
+  ContainerImport,
+  Continent,
+  Month1,
+  Year1,
+} from "../../../contains/constant";
+import clientImport from "../../../api/clientImport";
 
-const { width, height } = Dimensions.get("window");
-
-const Home = ({ navigation }) => {
-  const [data1, setData1] = useState([]);
-
-  // console.log('data1', data1[0].valid);
-  // console.log('data2', data1[0].valid.toString().length);
-  // console.log('data1', data1[0].valid.slice(data1[0].valid.toString().length - 4)==fclInfo.valid);
-
-  const [value, setValue] = useState(null);
-
-  const [type, setType] = useState("");
-
-  useEffect(() => {
-    const url = `http://192.168.1.77:3001/api/quotations/getAll`;
-    axios.get(url).then((res) => {
-      setData1(res["data"].quotations);
-    });
-  }, []);
-
-  const [fclInfo, setFCLInfo] = useState({
+const HomeImport = () => {
+  const [importInfo, setImportInfo] = useState({
     month: "",
     continent: "",
     year: "",
-    betweenprice: "",
-    type: "",
+    beweenprice: "",
   });
-  console.log("log", fclInfo);
 
+  const [value, setValue] = useState(null);
+  const [data, setData] = useState([]);
   const [searchText, setSearchText] = useState("");
-  // console.log(data1.container);
-  const ListItem = ({ item }) => {
-    // console.log('month', item.month);
-    return (
-      <TouchableOpacity onPress={() => navigation.navigate("Add", item)}>
-        <Text style={{ marginLeft: 10, fontSize: 20 }}>
-          Tháng: {item.month}
-        </Text>
-        <Text style={styles.item}>Cảng đi: {item.pol}</Text>
-        <Text style={styles.item}>Cảng đến: {item.pod}</Text>
-      </TouchableOpacity>
-    );
-  };
 
-  const renderItem = ({ item }) => (
-    <TouchableOpacity
-      onPress={() => {
-        navigation.navigate("Detail", {
-          item: item,
-        });
-      }}
-    >
-      <View style={styles.detail}>
-        <View style={{ flexDirection: "row" }}>
-          {/* <Text style={styles.textLable}>Loại Container: </Text> */}
-          <Text style={styles.textDisplay}>{item.code}</Text>
-        </View>
-        <View style={{ flexDirection: "row" }}>
-          <Text style={styles.textLable}>Loại Container: </Text>
-          <Text style={styles.textDisplay}>{item.type}</Text>
-        </View>
-        <View style={{ flexDirection: "row" }}>
-          <Text style={styles.textLable}>Cảng Đi: </Text>
-          <Text style={styles.textDisplay}>{item.pol}</Text>
-        </View>
-        <View style={{ flexDirection: "row" }}>
-          <Text style={styles.textLable}>Cảng Đến: </Text>
-          <Text style={styles.textDisplay}>{item.pod}</Text>
-        </View>
-        <View style={{ flexDirection: "row" }}>
-          <Text style={styles.textLable}>OF 20: </Text>
-          <Text style={styles.textDisplay}>{item.of20}</Text>
-        </View>
-        <View style={{ flexDirection: "row" }}>
-          <Text style={styles.textLable}>SUR 20: </Text>
-          <Text style={styles.textDisplay}>{item.sur20}</Text>
-        </View>
-        <View style={{ flexDirection: "row" }}>
-          <Text style={styles.textLable}>Ngày: </Text>
-          <Text style={styles.textDisplay}>{item.valid}</Text>
-        </View>
-      </View>
-    </TouchableOpacity>
-  );
+  useEffect(() => {
+    data.map((item) => console.log(item.shippingtype));
+  }, []);
+  // call api get Log
+  useEffect(() => {
+    clientImport
+      .get("/getAll")
+      .then((res) => {
+        setData(res.data.dataImport);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [data]);
 
-  const checkPriceSearch = (eachFcl) => {
-    let result = false;
-    const end = fclInfo.betweenprice.indexOf("đến");
-    const value1 = fclInfo.betweenprice.substring(3, end - 1);
-    const value2 = fclInfo.betweenprice.substring(end + 4);
-    if (eachFcl.price > value1 && eachFcl.price < value2) {
-      result = true;
-    } else if (fclInfo.betweenprice == "") {
-      result = true;
-    }
-
-    return result;
-  };
-
-  const checkTypeSearch = (searchText, eachFcl) => {
+  const checkDropdownValue = (eachAir) => {
     let result = false;
     if (
-      eachFcl.pol.toLowerCase().includes(searchText.toLowerCase()) ||
-      eachFcl.pod.toLowerCase().includes(searchText.toLowerCase()) ||
-      eachFcl.code.toLowerCase().includes(searchText.toLowerCase()) ||
-      eachFcl.carrier.toLowerCase().includes(searchText.toLowerCase())
-      // || eachFcl.valid.toLowerCase().includes(searchText.toLowerCase())
+      eachAir.shippingtype
+        .toLowerCase()
+        .includes(airInfo.shippingtype.toLowerCase())
     ) {
       result = true;
     }
     return result;
   };
 
-  const filteredFCL = () =>
-    data1.filter(
-      (eachFcl) =>
-        eachFcl.month.toLowerCase().includes(fclInfo.month.toLowerCase()) &&
-        eachFcl.continent
-          .toLowerCase()
-          .includes(fclInfo.continent.toLowerCase()) &&
-        checkTypeSearch(searchText, eachFcl) &&
-        checkPriceSearch(eachFcl) &&
-        eachFcl.type.toLowerCase().includes(fclInfo.type.toLowerCase()) &&
-        eachFcl.valid.slice(eachFcl.valid.length - 4).includes(fclInfo.year)
-    );
+  const checkTypeSearch = (searchText, eachLCL) => {
+    let result = false;
+    if (
+      eachLCL.pol.toLowerCase().includes(searchText.toLowerCase()) ||
+      eachLCL.pod.toLowerCase().includes(searchText.toLowerCase()) ||
+      eachLCL.code.toLowerCase().includes(searchText.toLowerCase())
+      // || eachAir.hsCode.toLowerCase().includes(searchText.toLowerCase()) ||
+      // eachAir.name.toLowerCase().includes(searchText.toLowerCase())
+    ) {
+      result = true;
+    }
+    return result;
+  };
 
+  const filteredImport = () =>
+    data.filter(
+      (eachLCL) =>
+        eachLCL.month.toLowerCase().includes(importInfo.month.toLowerCase()) &&
+        eachLCL.continent
+          .toLowerCase()
+          .includes(importInfo.continent.toLowerCase()) &&
+        checkTypeSearch(searchText, eachLCL)
+      // && checkPriceSearch(eachLog)
+    );
+  const renderItem = ({ item }) => (
+    <TouchableOpacity
+      onPress={() => {
+        navigation.navigate("DetailLCL", {
+          item: item,
+        });
+      }}
+    >
+      <View style={styles.detail}>
+        <View>
+          <Text style={styles.textDisplayCode}>{item.code}</Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.textLable}>Pol: </Text>
+          <Text style={styles.textDisplay}>{item.pol}</Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.textLable}>Pod: </Text>
+          <Text style={styles.textDisplay}>{item.pod}</Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.textLable}>Loại Container: </Text>
+          <Text style={styles.textDisplay}>{item.container}</Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.textLable}>Schedule: </Text>
+          <Text style={styles.textDisplay}>{item.schedule}</Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.textLable}>Châu: </Text>
+          <Text style={styles.textDisplay}>{item.continent}</Text>
+        </View>
+      </View>
+    </TouchableOpacity>
+  );
   return (
     <View style={{ flex: 1 }}>
       <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -193,7 +163,7 @@ const Home = ({ navigation }) => {
               searchPlaceholder="Search..."
               value={value}
               onChange={(value) => {
-                setFCLInfo({ ...fclInfo, month: value.value });
+                setImportInfo({ ...importInfo, month: value.value });
               }}
             />
           </View>
@@ -214,13 +184,13 @@ const Home = ({ navigation }) => {
             searchPlaceholder="Search..."
             value={value}
             onChange={(value) => {
-              setFCLInfo({ ...fclInfo, continent: value.value });
+              setImportInfo({ ...importInfo, continent: value.value });
             }}
           />
         </View>
       </View>
-      {/* <View style={{ flexDirection: "row", minHeight: 100 }}> */}
-        {/* <View style={styles.dropMenu}>
+      <View style={{ flexDirection: "row", minHeight: 100 }}>
+        <View style={styles.dropMenu}>
           <Text style={styles.label}>Chọn Năm</Text>
           <Dropdown
             style={[styles.dropdown]}
@@ -236,11 +206,11 @@ const Home = ({ navigation }) => {
             searchPlaceholder="Search..."
             value={value}
             onChange={(value) => {
-              setFCLInfo({ ...fclInfo, year: value.value });
+              setImportInfo({ ...importInfo, year: value.value });
             }}
           />
-        </View> */}
-        {/* <View style={styles.dropMenu}>
+        </View>
+        <View style={styles.dropMenu}>
           <Text style={styles.label}>Khoảng Giá</Text>
           <Dropdown
             style={[styles.dropdown]}
@@ -256,33 +226,31 @@ const Home = ({ navigation }) => {
             searchPlaceholder="Search..."
             value={value}
             onChange={(value) => {
-              setFCLInfo({ ...fclInfo, betweenprice: value.value });
+              setImportInfo({ ...importInfo, betweenprice: value.value });
             }}
           />
-        </View> */}
-      {/* </View> */}
-
+        </View>
+      </View>
       <View>
         <RadioForm
           formHorizontal={true}
-          style={{ margin: 5 }}
-          labelStyle={{ fontSize: 16, marginRight: 10 }}
-          buttonSize={11}
+          style={{ margin: 2 }}
+          labelStyle={{ fontSize: 16, marginRight: 5 }}
+          buttonSize={8}
           buttonColor={"black"}
-          radio_props={ContainerHome}
+          radio_props={ContainerImport}
           initial={-1}
           onPress={(val) =>
-            setFCLInfo({ ...fclInfo, type: ContainerHome[val].label })
+            setImportInfo({ ...importInfo, type: ContainerImport[val].label })
           }
         />
       </View>
-
       <View style={{ flex: 4 }}>
         <View style={styles.displayData}>
-          {filteredFCL().length > 0 ? (
+          {filteredImport().length > 0 ? (
             <FlatList
               style={styles.list}
-              data={filteredFCL()}
+              data={filteredImport()}
               renderItem={renderItem}
               keyExtractor={(item) => item._id}
             />
@@ -301,18 +269,6 @@ const Home = ({ navigation }) => {
           )}
         </View>
       </View>
-
-      {/* {data1 && (
-        <FlatList
-          keyExtractor={(item) => item._id}
-          style={{ backgroundColor: "coral", height: height * 0.5 }}
-          data={data1}
-          renderItem={
-            // ({ item }) => <ListItem item={item} />
-            ListItem
-          }
-        />
-      )} */}
       <View
         style={{
           flex: 1,
@@ -357,14 +313,6 @@ const styles = StyleSheet.create({
   },
   item: {
     marginLeft: 10,
-  },
-  listContainer: {
-    backgroundColor: "b",
-    // flexDirection:'row',
-    margin: (width * 3.6) / 187.5,
-    padding: (width * 3.6) / 187.5,
-    borderRadius: (width * 3.6) / 187.5,
-    width: "100%",
   },
   dropMenu: {
     paddingHorizontal: 5,
@@ -427,13 +375,6 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 8,
   },
-  // containerDropDown: {
-  //     // backgroundColor: 'white',
-  //     padding: 16,
-  //     width: 200,
-  //     // flex: 1,
-  //     // justifyContent: 'center',
-  // },
   dropdown: {
     height: 50,
     borderColor: "gray",
@@ -454,7 +395,14 @@ const styles = StyleSheet.create({
   inputSearchStyle: {
     height: 40,
     fontSize: 16,
+  }
+  ,
+  textDisplayCode: {
+    textAlign: "right",
+    marginRight: 5,
+    fontSize: 17,
+    fontWeight: "500",
   },
 });
 
-export default Home;
+export default HomeImport;
