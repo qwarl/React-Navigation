@@ -41,13 +41,6 @@ const Home = ({ navigation }) => {
 
   const [type, setType] = useState("");
 
-  useEffect(() => {
-    const url = `http://192.168.1.77:3001/api/quotations/getAll`;
-    axios.get(url).then((res) => {
-      setData1(res["data"].quotations);
-    });
-  }, []);
-
   const [fclInfo, setFCLInfo] = useState({
     month: "",
     continent: "",
@@ -220,7 +213,7 @@ const Home = ({ navigation }) => {
         </View>
       </View>
       {/* <View style={{ flexDirection: "row", minHeight: 100 }}> */}
-        {/* <View style={styles.dropMenu}>
+      {/* <View style={styles.dropMenu}>
           <Text style={styles.label}>Chọn Năm</Text>
           <Dropdown
             style={[styles.dropdown]}
@@ -240,7 +233,7 @@ const Home = ({ navigation }) => {
             }}
           />
         </View> */}
-        {/* <View style={styles.dropMenu}>
+      {/* <View style={styles.dropMenu}>
           <Text style={styles.label}>Khoảng Giá</Text>
           <Dropdown
             style={[styles.dropdown]}
