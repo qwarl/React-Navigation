@@ -12,6 +12,7 @@ import ScreenFCL from '../FCLDepartment/ScreenFCL';
 import ScreenLog from '../LogDepartment/ScreenLog';
 import ScreenAIR from '../AIRDepartment/ScreenAIR';
 import Add from '../FCLDepartment/AddFCL';
+import UpdateFCL from '../FCLDepartment/UpdateFCL';
 const Drawer = createDrawerNavigator();
 
 const DrawerScreen = () => {
@@ -84,8 +85,8 @@ const DrawerScreen = () => {
                                 <TouchableOpacity onPress={() => { navigation.navigate('Add'); setOpenInfo(!opInfo) }}>
                                     <Text style={{ fontSize: 20 }}>Add</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity onPress={() => { navigation.navigate('ScreenLog'); setOpenInfo(!opInfo) }}>
-                                    <Text style={{ fontSize: 20 }}>Log</Text>
+                                <TouchableOpacity onPress={() => { navigation.navigate('ScreenFCL'); setOpenInfo(!opInfo) }}>
+                                    <Text style={{ fontSize: 20 }}>UpdateFCL</Text>
                                 </TouchableOpacity>
                             </View>
 
@@ -100,7 +101,7 @@ const DrawerScreen = () => {
     return (
         <NavigationContainer>
             <Drawer.Navigator drawerContent={props => <CustomDrawerContent {...props} />}>
-                <Drawer.Screen name="ScreenFCL" component={ScreenFCL} />
+                <Drawer.Screen name="ScreenFCL" component={ScreenFCL}  />
                 <Drawer.Screen name="Add" component={Add} />
                 <Drawer.Screen name="ScreenLog" component={ScreenLog} />
                 <Drawer.Screen name="ScreenAIR" component={ScreenAIR} />
