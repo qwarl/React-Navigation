@@ -50,6 +50,17 @@ const Home = ({ navigation }) => {
   });
   console.log("log", fclInfo);
 
+  function getData() {
+    const url = `http://192.168.1.77:3001/api/quotations/getAll`;
+    axios.get(url).then((res) => {
+      setData1(res["data"].quotations);
+    });
+  }
+
+  useEffect(() => {
+    getData();
+  }, []);
+
   const [searchText, setSearchText] = useState("");
   // console.log(data1.container);
   const ListItem = ({ item }) => {
