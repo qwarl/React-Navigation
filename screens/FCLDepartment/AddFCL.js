@@ -91,7 +91,7 @@ const Add = ({ navigation, route }) => {
 		freeTime: freeTime,
 		notes: notes,
 	});
-
+	console.log('valid', fclInfo.valid);
 	const submitForm = async () => {
 		try {
 			const res = await client.post("/create", { ...fclInfo });
@@ -221,10 +221,11 @@ const Add = ({ navigation, route }) => {
 				<FormInput
 					placeholder="VALID"
 					label="VALID"
-					value={date.toLocaleDateString()}
+					value={fclInfo.valid}
+				// value={date.toLocaleDateString()}
 				/>
 				<View>
-					<Button onPress={() => showMode("date")} title="Show date picker!" />
+					<Button onPress={() => { showMode("date"); setShow(!show) }} title="Show date picker!" />
 					{/* <Text>selected: {date.toLocaleDateString()}</Text> */}
 					{show && (
 						<DateTimePicker

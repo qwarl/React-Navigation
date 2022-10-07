@@ -31,12 +31,17 @@ const Home = ({ navigation }) => {
 
 	const [type, setType] = useState('');
 
-	useEffect(() => {
+	function getData() {
 		const url = `http://192.168.1.77:3001/api/quotations/getAll`;
 		axios.get(url).then((res) => {
 			setData1(res["data"].quotations);
 		});
-	}, []);
+
+	}
+
+	useEffect(() => {
+		getData()
+	},[]);
 
 	const [fclInfo, setFCLInfo] = useState({
 		month: "",
