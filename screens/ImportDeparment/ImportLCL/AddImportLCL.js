@@ -13,18 +13,17 @@ import {
 import React, { useEffect, useState } from "react";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import SelectList from "react-native-dropdown-select-list";
-import { Continent, Month1, TypeImport } from "../../../contains/constant";
-import FormInput from "../../../components/FormInput";
 import color from "../../../contains/color";
-import { isValidObjectField, updateError } from "../../../utils/method";
-import clientImport from "../../../api/clientImport";
+import { Cargo, Continent, Month1 } from "../../../contains/constant";
+import FormInput from "../../../components/FormInput";
+import clientImportLCL from "../../../api/clientImportLCL";
 
-const AddImport = () => {
+const AddImportLCL = () => {
   const handleOnChangeText = (fieldName, ...values) => {
     values.length === 1
-      ? setImportInfo({ ...importInfo, [fieldName]: values[0] })
-      : setImportInfo({
-          ...importInfo,
+      ? setImportLCLInfo({ ...importLCLInfo, [fieldName]: values[0] })
+      : setImportLCLInfo({
+          ...importLCLInfo,
           [fieldName]: values[0],
           totalfreight: values[1],
         });
@@ -66,19 +65,16 @@ const AddImport = () => {
     return num1 + num2;
   };
 
-  const [importInfo, setImportInfo] = useState({
+  const [importLCLInfo, setImportLCLInfo] = useState({
     pol: "",
     pod: "",
     month: "",
     continent: "",
-    container: "",
-    of20: "",
-    of40: "",
-    of45: "",
-    sur20: "",
-    sur40: "",
-    sur45: "",
-    totalfreight: "",
+    cargo: "",
+    of: "",
+    localpol: "",
+    localpod: "",
+    term: "",
     carrier: "",
     schedule: "",
     transittime: "",
@@ -86,16 +82,16 @@ const AddImport = () => {
     notes: "",
   });
 
-  // console.log(importInfo);
+  // console.log(importLCLInfo);
   const isValidForm = () => {
-    if (!isValidObjectField(importInfo))
+    if (!isValidObjectField(importLCLInfo))
       return updateError("Nhập thiếu trường dữ liệu!", setError);
     return true;
   };
   const submitForm = async () => {
     // if (isValidForm()) {
     try {
-      const res = await clientImport.post("/create", { ...importInfo });
+      const res = await clientImportLCL.post("/create", { ...importLCLInfo });
       if (res.data.success) {
         Alert.alert("Thêm Thành Công");
       }
@@ -106,7 +102,6 @@ const AddImport = () => {
     }
     // }
   };
-
   return (
     <View style={StyleSheet.container}>
       {error ? (
@@ -119,7 +114,7 @@ const AddImport = () => {
           <Text style={styles.label}>Chọn Tháng</Text>
           <SelectList
             setSelected={(value) =>
-              setImportInfo({ ...importInfo, month: value })
+              setImportLCLInfo({ ...importLCLInfo, month: value })
             }
             data={Month1}
           />
@@ -128,105 +123,79 @@ const AddImport = () => {
           <Text style={styles.label}>Chọn Châu</Text>
           <SelectList
             setSelected={(value) =>
-              setImportInfo({ ...importInfo, continent: value })
+              setImportLCLInfo({ ...importLCLInfo, continent: value })
             }
             data={Continent}
           />
         </View>
         <View style={styles.dropMenu}>
-          <Text style={styles.label}>Loại Container</Text>
+          <Text style={styles.label}>Cargo</Text>
           <SelectList
             setSelected={(value) =>
-              setImportInfo({ ...importInfo, container: value })
+              setImportLCLInfo({ ...importLCLInfo, cargo: value })
             }
-            data={TypeImport}
+            data={Cargo}
           />
         </View>
         <FormInput
           label="Pol"
           placeholder="Pol"
           onChangeText={(value) => handleOnChangeText("pol", value)}
-          value={importInfo.pol}
+          value={importLCLInfo.pol}
         />
         <FormInput
           placeholder="Pod"
           label="Pod"
           onChangeText={(value) => handleOnChangeText("pod", value)}
-          value={importInfo.pod}
+          value={importLCLInfo.pod}
         />
         <FormInput
-          label="OF 20"
-          placeholder="OF 20"
-          keyboardType = 'numeric'
-          onChangeText={(value) => {
-            handleOnChangeText("of20", value, plus(value, importInfo.sur20));
-          }}
-          value={importInfo.of20}
+          label="OF"
+          placeholder="OF"
+          keyboardType="numeric"
+          onChangeText={(value) => handleOnChangeText("of", value)}
+          value={importLCLInfo.of}
         />
         <FormInput
-          label="OF 40"
-          placeholder="OF 40"
-          keyboardType = 'numeric'
-          onChangeText={(value) => handleOnChangeText("of40", value)}
-          value={importInfo.of40}
+          label="Term"
+          placeholder="Term"
+          onChangeText={(value) => handleOnChangeText("term", value)}
+          value={importLCLInfo.term}
         />
         <FormInput
-          placeholder="OF 45"
-          label="OF 45"
-          keyboardType = 'numeric'
-          onChangeText={(value) => handleOnChangeText("of45", value)}
-          value={importInfo.of45}
+          placeholder="Local_Pol"
+          label="Local_Pol"
+          onChangeText={(value) => handleOnChangeText("localpol", value)}
+          value={importLCLInfo.localpol}
         />
         <FormInput
-          placeholder="Sur 20"
-          label="Sur 20"
-          keyboardType = 'numeric'
-          onChangeText={(value) => {
-            handleOnChangeText("sur20", value, plus(value, importInfo.of20));
-          }}
-          value={importInfo.sur20}
-        />
-        <FormInput
-          placeholder="Sur 40"
-          label="Sur 40"
-          keyboardType = 'numeric'
-          onChangeText={(value) => handleOnChangeText("sur40", value)}
-          value={importInfo.sur40}
-        />
-        <FormInput
-          placeholder="Sur 45"
-          label="Sur 45"
-          keyboardType = 'numeric'
-          value={importInfo.sur45}
-          onChangeText={(value) => handleOnChangeText("sur45", value)}
-        />
-        <FormInput
-          placeholder="Total Freight"
-          label="Total Freight"
-          value={`${Number(importInfo.sur20) + Number(importInfo.of20)}`}
+          placeholder="Local_Pod"
+          label="Local_Pod"
+          onChangeText={(value) => handleOnChangeText("localpod", value)}
+          value={importLCLInfo.localpod}
         />
         <FormInput
           placeholder="Carrier"
           label="Carrier"
-          value={importInfo.carrier}
+          value={importLCLInfo.carrier}
           onChangeText={(value) => handleOnChangeText("carrier", value)}
         />
         <FormInput
           placeholder="Schedule"
           label="Schedule"
-          value={importInfo.schedule}
+          value={importLCLInfo.schedule}
           onChangeText={(value) => handleOnChangeText("schedule", value)}
         />
         <FormInput
           placeholder="Transittime"
           label="Transittime"
-          value={importInfo.transittime}
+          value={importLCLInfo.transittime}
           onChangeText={(value) => handleOnChangeText("transittime", value)}
         />
         <FormInput
           placeholder="VALID"
           label="VALID"
-          value={importInfo.valid}
+          value={importLCLInfo.valid}
           onChangeText={(value) => handleOnChangeText(value, "valid")}
         />
         <View>
@@ -250,7 +219,7 @@ const AddImport = () => {
         <FormInput
           placeholder="Ghi Chú"
           label="Ghi Chú"
-          value={importInfo.notes}
+          value={importLCLInfo.notes}
           onChangeText={(value) => handleOnChangeText("notes", value)}
         />
         <View
@@ -344,4 +313,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AddImport;
+export default AddImportLCL;

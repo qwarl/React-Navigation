@@ -12,6 +12,7 @@ import Fcl from "./screens/FCLDepartment/ScreenFCL";
 import DrawerScreen from "./screens/DrawerMenu/DrawerScreen";
 import ScreenDoor from "./screens/DOMDepartment/SEA/DOOR/ScreenDoor";
 import ScreenImport from "./screens/ImportDeparment/ImportD/ScreenImport";
+import ScreenImportLCL from "./screens/ImportDeparment/ImportLCL/ScreenImportLCL";
 // import ScreenAIR from "./screens/AIRDepartment/ScreenAIR";
 
 const Stack = createStackNavigator();
@@ -28,7 +29,8 @@ export default function App() {
       {/* <ScreenDoor/> */}
       {/* <ScreenAIR/> */}
       {/* <DrawerScreen/> */}
-      <ScreenImport />
+      {/* <ScreenImport /> */}
+      <ScreenImportLCL/>
     </>
   );
 }

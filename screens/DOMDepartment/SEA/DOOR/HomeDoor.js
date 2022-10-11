@@ -66,7 +66,8 @@ const HomeDoor = ({ navigation }) => {
     if (
       eachSeaCy.pol.toLowerCase().includes(searchText.toLowerCase()) ||
       eachSeaCy.pod.toLowerCase().includes(searchText.toLowerCase()) ||
-      eachSeaCy.productname.toLowerCase().includes(searchText.toLowerCase())
+      eachSeaCy.productname.toLowerCase().includes(searchText.toLowerCase())||
+      eachSeaCy.code.toLowerCase().includes(searchText.toLowerCase())
       // || eachAir.hsCode.toLowerCase().includes(searchText.toLowerCase()) ||
       // eachAir.name.toLowerCase().includes(searchText.toLowerCase())
     ) {

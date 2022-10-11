@@ -11,13 +11,14 @@ import {
   Button,
 } from "react-native";
 import React, { useEffect, useState } from "react";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import SelectList from "react-native-dropdown-select-list";
+import FormInput from "../../components/FormInput";
 import { Continent, Month, ShippingType } from "../../contains/constant";
 import { isValidObjectField, updateError } from "../../utils/method";
 import clientAir from "../../api/clientAir";
-import SelectList from "react-native-dropdown-select-list";
-import FormInput from "../../components/FormInput";
 import color from "../../contains/color";
-import DateTimePicker from "@react-native-community/datetimepicker";
+
 
 const AddAir = () => {
   const handleOnChangeText = (value, fieldName) => {

@@ -17,12 +17,13 @@ import {
   Month1,
   ShippingType,
 } from "../../contains/constant";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import { Dropdown } from "react-native-element-dropdown";
 import { isValidObjectField, updateError } from "../../utils/method";
 import clientAir from "../../api/clientAir";
 import FormInput from "../../components/FormInput";
 import color from "../../contains/color";
-import DateTimePicker from "@react-native-community/datetimepicker";
-import { Dropdown } from "react-native-element-dropdown";
+
 
 const UpdateAir = ({ route }) => {
   const [airInfo, setAirInfo] = useState(route.params.data);

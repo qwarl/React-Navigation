@@ -8,26 +8,14 @@ import {
   TextInput,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import color from "../../../contains/color";
 import Icon from "react-native-vector-icons/FontAwesome";
-import RadioForm, {
-  RadioButton,
-  RadioButtonInput,
-  RadioButtonLabel,
-} from "react-native-simple-radio-button";
 import { Dropdown } from "react-native-element-dropdown";
-import {
-  BetweenPrice1,
-  ContainerHome,
-  ContainerImport,
-  Continent,
-  Month1,
-  Year1,
-} from "../../../contains/constant";
-import clientImport from "../../../api/clientImport";
+import clientImportLCL from "../../../api/clientImportLCL";
+import { Continent, Month1 } from "../../../contains/constant";
+import color from "../../../contains/color";
 
-const HomeImport = ({ navigation }) => {
-  const [importInfo, setImportInfo] = useState({
+const HomeImportLCL = ({navigation}) => {
+  const [importLCLInfo, setImportLCLInfo] = useState({
     month: "",
     continent: "",
     year: "",
@@ -43,36 +31,23 @@ const HomeImport = ({ navigation }) => {
   // }, []);
   // call api get Log
   useEffect(() => {
-    clientImport
+    clientImportLCL
       .get("/getAll")
       .then((res) => {
-        setData(res.data.dataImport);
+        setData(res.data.importLCL);
       })
       .catch((err) => {
         console.log(err);
       });
   }, [data]);
 
-  const checkDropdownValue = (eachAir) => {
-    let result = false;
-    if (
-      eachAir.shippingtype
-        .toLowerCase()
-        .includes(airInfo.shippingtype.toLowerCase())
-    ) {
-      result = true;
-    }
-    return result;
-  };
 
-  const checkTypeSearch = (searchText, eachImport) => {
+  const checkTypeSearch = (searchText, eachImportLCL) => {
     let result = false;
     if (
-      eachImport.pol.toLowerCase().includes(searchText.toLowerCase()) ||
-      eachImport.pod.toLowerCase().includes(searchText.toLowerCase()) ||
-      eachImport.code.toLowerCase().includes(searchText.toLowerCase())
-      // || eachAir.hsCode.toLowerCase().includes(searchText.toLowerCase()) ||
-      // eachAir.name.toLowerCase().includes(searchText.toLowerCase())
+      eachImportLCL.pol.toLowerCase().includes(searchText.toLowerCase()) ||
+      eachImportLCL.pod.toLowerCase().includes(searchText.toLowerCase()) ||
+      eachImportLCL.code.toLowerCase().includes(searchText.toLowerCase())
     ) {
       result = true;
     }
@@ -81,17 +56,23 @@ const HomeImport = ({ navigation }) => {
 
   const filteredImport = () =>
     data.filter(
-      (eachImport) =>
-        eachImport.month.toLowerCase().includes(importInfo.month.toLowerCase()) &&
-        eachImport.continent.toLowerCase().includes(importInfo.continent.toLowerCase()) &&
-        eachImport.container.toLowerCase().includes(importInfo.container.toLowerCase()) &&
-        checkTypeSearch(searchText, eachImport)
+      (eachImportLCL) =>
+        eachImportLCL.month
+          .toLowerCase()
+          .includes(importLCLInfo.month.toLowerCase()) &&
+        eachImportLCL.continent
+          .toLowerCase()
+          .includes(importLCLInfo.continent.toLowerCase()) &&
+        eachImportLCL.cargo
+          .toLowerCase()
+          .includes(importLCLInfo.container.toLowerCase()) &&
+        checkTypeSearch(searchText, eachImportLCL)
       // && checkPriceSearch(eachLog)
     );
   const renderItem = ({ item }) => (
     <TouchableOpacity
       onPress={() => {
-        navigation.navigate("DetailImport", {
+        navigation.navigate("DetailImportLCL", {
           item: item,
         });
       }}
@@ -109,8 +90,8 @@ const HomeImport = ({ navigation }) => {
           <Text style={styles.textDisplay}>{item.pod}</Text>
         </View>
         <View style={{ flexDirection: "row" }}>
-          <Text style={styles.textLable}>Loại Container: </Text>
-          <Text style={styles.textDisplay}>{item.container}</Text>
+          <Text style={styles.textLable}>Cargo: </Text>
+          <Text style={styles.textDisplay}>{item.cargo}</Text>
         </View>
         <View style={{ flexDirection: "row" }}>
           <Text style={styles.textLable}>Schedule: </Text>
@@ -162,7 +143,7 @@ const HomeImport = ({ navigation }) => {
               searchPlaceholder="Search..."
               value={value}
               onChange={(value) => {
-                setImportInfo({ ...importInfo, month: value.value });
+                setImportLCLInfo({ ...importLCLInfo, month: value.value });
               }}
             />
           </View>
@@ -183,66 +164,10 @@ const HomeImport = ({ navigation }) => {
             searchPlaceholder="Search..."
             value={value}
             onChange={(value) => {
-              setImportInfo({ ...importInfo, continent: value.value });
+              setImportLCLInfo({ ...importLCLInfo, continent: value.value });
             }}
           />
         </View>
-      </View>
-      <View style={{ flexDirection: "row", minHeight: 100 }}>
-        <View style={styles.dropMenu}>
-          <Text style={styles.label}>Chọn Năm</Text>
-          <Dropdown
-            style={[styles.dropdown]}
-            placeholderStyle={styles.placeholderStyle}
-            selectedTextStyle={styles.selectedTextStyle}
-            inputSearchStyle={styles.inputSearchStyle}
-            iconStyle={styles.iconStyle}
-            data={Year1}
-            search
-            maxHeight={300}
-            labelField="label"
-            valueField="value"
-            searchPlaceholder="Search..."
-            value={value}
-            onChange={(value) => {
-              setImportInfo({ ...importInfo, year: value.value });
-            }}
-          />
-        </View>
-        <View style={styles.dropMenu}>
-          <Text style={styles.label}>Khoảng Giá</Text>
-          <Dropdown
-            style={[styles.dropdown]}
-            placeholderStyle={styles.placeholderStyle}
-            selectedTextStyle={styles.selectedTextStyle}
-            inputSearchStyle={styles.inputSearchStyle}
-            iconStyle={styles.iconStyle}
-            data={BetweenPrice1}
-            search
-            maxHeight={300}
-            labelField="label"
-            valueField="value"
-            searchPlaceholder="Search..."
-            value={value}
-            onChange={(value) => {
-              setImportInfo({ ...importInfo, betweenprice: value.value });
-            }}
-          />
-        </View>
-      </View>
-      <View>
-        <RadioForm
-          formHorizontal={true}
-          style={{ margin: 2 }}
-          labelStyle={{ fontSize: 16, marginRight: 5 }}
-          buttonSize={8}
-          buttonColor={"black"}
-          radio_props={ContainerImport}
-          initial={-1}
-          onPress={(val) =>
-            setImportInfo({ ...importInfo, container: ContainerImport[val].label })
-          }
-        />
       </View>
       <View style={{ flex: 4 }}>
         <View style={styles.displayData}>
@@ -278,7 +203,7 @@ const HomeImport = ({ navigation }) => {
       >
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate("AddImport");
+            navigation.navigate("AddImportLCL");
           }}
         >
           <View style={styles.iconWrapper}>
@@ -403,4 +328,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeImport;
+export default HomeImportLCL;

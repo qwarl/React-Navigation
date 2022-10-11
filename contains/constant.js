@@ -40,6 +40,11 @@ export const DomType = [
     { label: 'Đường Sắt', value: 'Đường Sắt' },
 ]
 
+export const Cargo = [
+    { label: 'DG', value: 'DG' },
+    { label: 'NON-DG', value: 'NON-DG' },
+]
+
 export const Container = [
     {label:'GP', value: 'GP' },
     {label:'RF', value: 'RF' },
@@ -65,6 +70,15 @@ export const ContainerImport = [
     {label:'OT', value: '4' },
     {label:'HQ', value: '5' },
     {label:'TK', value: '6' },
+];
+
+export const TypeImport = [
+    {label:'GP', value: 'GP' },
+    {label:'RF', value: 'RF' },
+    {label:'FR', value: 'FR' },
+    {label:'OT', value: 'OT' },
+    {label:'HQ', value: 'HQ' },
+    {label:'TK', value: 'TK' },
 ];
 
 export const Year = [

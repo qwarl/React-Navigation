@@ -63,7 +63,8 @@ const HomeTruck = ({ navigation }) => {
         if (
             eachTruck.addressdelivery.toLowerCase().includes(searchText.toLowerCase()) ||
             eachTruck.addressreceive.toLowerCase().includes(searchText.toLowerCase()) ||
-            eachTruck.productname.toLowerCase().includes(searchText.toLowerCase())
+            eachTruck.productname.toLowerCase().includes(searchText.toLowerCase())||
+            eachTruck.code.toLowerCase().includes(searchText.toLowerCase())
           // || eachAir.hsCode.toLowerCase().includes(searchText.toLowerCase()) ||
           // eachAir.name.toLowerCase().includes(searchText.toLowerCase())
         ) {
