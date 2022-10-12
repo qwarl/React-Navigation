@@ -11,14 +11,14 @@ const Stack = createStackNavigator();
 
 const ScreenImportLCL = () => {
   return (
-    <NavigationContainer>
+    // <NavigationContainer>
     <Stack.Navigator>
-      <Stack.Screen name="HomeImportLCL" component={HomeImportLCL} />
-      <Stack.Screen name="DetailImportLCL" component={DetailImportLCL} />
-      <Stack.Screen name="AddImportLCL" component={AddImportLCL} />
-      <Stack.Screen name="UpdateImportLCL" component={UpdateImportLCL} />
+      <Stack.Screen name="HomeImportLCL" component={HomeImportLCL} options={{ headerShown: false }} />
+      <Stack.Screen name="DetailImportLCL" component={DetailImportLCL} options={{ headerShown: false }} />
+      <Stack.Screen name="AddImportLCL" component={AddImportLCL} options={{ headerShown: false }} />
+      <Stack.Screen name="UpdateImportLCL" component={UpdateImportLCL} options={{ headerShown: false }} />
     </Stack.Navigator>
-  </NavigationContainer>
+    // </NavigationContainer>
   )
 }
 

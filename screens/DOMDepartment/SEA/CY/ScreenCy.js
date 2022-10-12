@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react'
 import HomeCy from './HomeCy';
 import DetailCy from './DetailCy';
@@ -11,14 +11,14 @@ const Stack = createStackNavigator();
 
 const ScreenCy = () => {
   return (
-    <NavigationContainer>
+    // <NavigationContainer>
     <Stack.Navigator>
-        <Stack.Screen name='HomeCy' component={HomeCy}/>
-        <Stack.Screen name='DetailCy' component={DetailCy}/>
-        <Stack.Screen name='AddCy' component={AddCy}/>
-        <Stack.Screen name='UpdateCy' component={UpdateCy}/>
+      <Stack.Screen name='HomeCy' component={HomeCy} options={{ headerShown: false }} />
+      <Stack.Screen name='DetailCy' component={DetailCy} options={{ headerShown: false }} />
+      <Stack.Screen name='AddCy' component={AddCy} options={{ headerShown: false }} />
+      <Stack.Screen name='UpdateCy' component={UpdateCy} options={{ headerShown: false }} />
     </Stack.Navigator>
-   </NavigationContainer>
+    //  </NavigationContainer>
   )
 }
 
