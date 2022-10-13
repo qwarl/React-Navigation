@@ -51,7 +51,7 @@ const Home = ({ navigation }) => {
 
 
   function getData() {
-    const url = `http://192.168.1.77:3001/api/quotations/getAll`;
+    const url = `http://192.168.1.101:3001/api/quotations/getAll`;
     axios.get(url).then((res) => {
       setData1(res["data"].quotations);
     });
@@ -397,7 +397,7 @@ const styles = StyleSheet.create({
   detail: {
     borderRadius: 15,
     borderColor: "#000",
-    backgroundColor: color.backgrounDisplayData,
+    backgroundColor: color.backgrounDisplayDetail,
     marginBottom: 10,
     padding: 5,
   },

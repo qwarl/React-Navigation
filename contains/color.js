@@ -9,7 +9,7 @@ export default{
     borderColor:'#0176e4',
     backgroundInput:'#ededf2',
     backgrounDisplayData:'#F0F0F0',
-    backgrounDisplayDetail:'#D1D1D1',
+    backgrounDisplayDetail:'#DAE0E0',
 
 
 

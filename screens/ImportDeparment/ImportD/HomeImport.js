@@ -340,7 +340,7 @@ const styles = StyleSheet.create({
   detail: {
     borderRadius: 15,
     borderColor: "#000",
-    backgroundColor: color.backgrounDisplayData,
+    backgroundColor: color.backgrounDisplayDetail,
     marginBottom: 10,
     padding: 5,
   },
