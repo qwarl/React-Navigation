@@ -51,7 +51,11 @@ const Home = ({ navigation }) => {
 
 
   function getData() {
+<<<<<<< HEAD
     const url = `http://192.168.1.101:3001/api/quotations/getAll`;
+=======
+    const url = `http://192.168.1.83:3001/api/quotations/getAll`;
+>>>>>>> 843719a5db7d19067b75ffc19bc742a6b46cdb1f
     axios.get(url).then((res) => {
       setData1(res["data"].quotations);
     });

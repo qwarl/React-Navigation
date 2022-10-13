@@ -24,45 +24,51 @@ const Drawer = createDrawerNavigator();
 const DrawerScreen = () => {
 
     function CustomDrawerContent({ navigation, progress, ...rest }) {
-        const translateX = Animated.interpolateNode(progress, {
-            inputRange: [0, 1],
-            outputRange: [30, 0],
-        });
-        const [openQuotation, setOpenQuotation] = useState(false)
-        const [openDOM, setOpenDOM] = useState(false)
-        const [openInfo, setOpenInfo] = useState(false)
-        const [openImport, setOpenImport] = useState(false)
-        const [openAir, setOpenAir] = useState(false)
-
+        // const translateX = Animated.interpolateNode(progress, {
+        //     inputRange: [0, 1],
+        //     outputRange: [30, 0],
+        // });
+        console.time('doSomething')
+        const [open, setOpen] = useState(
+            {
+                openQuotation: false,
+                openDOM: false,
+                openInfo: false,
+                openImport: false,
+                openAir: false,
+            }
+        )
+        console.log(open);
+        console.timeEnd('doSomething')
         return (
             <DrawerContentScrollView {...rest}>
                 {/* <Animated.View
                     style={{ transform: [{ translateX }] }}
                 > */}
                 <View style={styles.mainMenu}>
-                    <TouchableOpacity onPress={() => { setOpenQuotation(!openQuotation) }} style={{ backgroundColor: 'rgb(172, 231, 250)' }}>
+                    <TouchableOpacity onPress={() => setOpen({ ...open, openQuotation: !open.openQuotation })} style={{ backgroundColor: 'rgb(172, 231, 250)' }}>
                         <Text style={{ color: 'red', fontSize: 20 }}>
                             Bảng giá
                         </Text>
                     </TouchableOpacity>
                     <View style={{ marginLeft: 20 }}>
-                        {openQuotation ? (
+                        {open.openQuotation ? (
 
                             <View>
-                                <TouchableOpacity onPress={() => { navigation.navigate('ScreenFCL'); setOpenQuotation(!openQuotation) }}>
+                                <TouchableOpacity onPress={() => { navigation.navigate('ScreenFCL'); setOpen(!open.openQuotation) }}>
                                     <Text style={{ fontSize: 20, opacity: 80 }}>FCL Department</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity onPress={() => { setOpenImport(!openImport) }}>
+                                <TouchableOpacity onPress={() => { setOpen({ ...open, openImport: !open.openImport }) }}>
                                     <Text style={{ fontSize: 20 }}>IMPORT Department</Text>
                                 </TouchableOpacity>
-                                <View style={{marginLeft:20}}>
-                                    {openImport ? (
+                                <View style={{ marginLeft: 20 }}>
+                                    {open.openImport ? (
 
                                         <View >
-                                            <TouchableOpacity onPress={() => { navigation.navigate('ScreenImport'); setOpenImport(!openImport) }}>
+                                            <TouchableOpacity onPress={() => { navigation.navigate('ScreenImport'); setOpen(!open.openImport) }}>
                                                 <Text style={{ fontSize: 20 }}>ImportD</Text>
                                             </TouchableOpacity>
-                                            <TouchableOpacity onPress={() => { navigation.navigate('ScreenImportLCL'); setOpenImport(!openImport) }}>
+                                            <TouchableOpacity onPress={() => { navigation.navigate('ScreenImportLCL'); setOpen(!open.openImport) }}>
                                                 <Text style={{ fontSize: 20 }}>ImportLCL</Text>
                                             </TouchableOpacity>
                                         </View>
@@ -72,38 +78,38 @@ const DrawerScreen = () => {
                                 <TouchableOpacity onPress={() => { navigation.navigate('ScreenLog'); }}>
                                     <Text style={{ fontSize: 20 }}>LOG Department</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity onPress={() => setOpenAir(!openAir)}>
+                                <TouchableOpacity onPress={() => setOpen({ ...open, openAir: !open.openAir })}>
                                     <Text style={{ fontSize: 20 }}>AIR Department</Text>
                                 </TouchableOpacity>
                                 <View>
-                                    {openAir ? (
+                                    {open.openAir ? (
 
                                         <View style={{ marginLeft: 20 }}>
-                                            <TouchableOpacity onPress={() => { navigation.navigate('ScreenLCL'); setOpenAir(!openAir) }}>
+                                            <TouchableOpacity onPress={() => { navigation.navigate('ScreenLCL'); setOpen({ ...open, openAir: !open.openAir }) }}>
                                                 <Text style={{ fontSize: 20 }}>LCL</Text>
                                             </TouchableOpacity>
-                                            <TouchableOpacity onPress={() => { navigation.navigate('ScreenAIR'); setOpenAir(!openAir) }}>
+                                            <TouchableOpacity onPress={() => { navigation.navigate('ScreenAIR'); setOpen({ ...open, openAir: !open.openAir }) }}>
                                                 <Text style={{ fontSize: 20 }}>AIR</Text>
                                             </TouchableOpacity>
                                         </View>
 
                                     ) : null}
                                 </View>
-                                <TouchableOpacity onPress={() => { setOpenDOM(!openDOM) }}>
+                                <TouchableOpacity onPress={() => { setOpen({...open,openDOM:!open.openDOM}) }}>
                                     <Text style={{ fontSize: 20 }}>DOM Department</Text>
                                 </TouchableOpacity>
                                 <View>
-                                    {openDOM ? (
+                                    {open.openDOM ? (
 
                                         <View style={{ marginLeft: 20 }}>
-                                            <TouchableOpacity onPress={() => { navigation.navigate('ScreenCy');setOpenDOM(!openDOM) }}>
+                                            <TouchableOpacity onPress={() => { navigation.navigate('ScreenCy'); setOpen({...open,openDOM:!open.openDOM}) }}>
                                                 <Text style={{ fontSize: 20 }}>CY</Text>
                                             </TouchableOpacity>
-                                            <TouchableOpacity onPress={() => { navigation.navigate('ScreenDoor');setOpenDOM(!openDOM) }}>
+                                            <TouchableOpacity onPress={() => { navigation.navigate('ScreenDoor'); setOpen({...open,openDOM:!open.openDOM}) }}>
                                                 <Text style={{ fontSize: 20 }}>DOOR</Text>
                                             </TouchableOpacity>
 
-                                            <TouchableOpacity onPress={() => { navigation.navigate('ScreenTruck');setOpenDOM(!openDOM) }}>
+                                            <TouchableOpacity onPress={() => { navigation.navigate('ScreenTruck'); setOpen({...open,openDOM:!open.openDOM}) }}>
                                                 <Text style={{ fontSize: 20 }}>TRUCK</Text>
                                             </TouchableOpacity>
                                         </View>
@@ -114,19 +120,19 @@ const DrawerScreen = () => {
 
                         ) : null}
                     </View>
-                    <TouchableOpacity onPress={() => { setOpenInfo(!openInfo) }}>
+                    <TouchableOpacity onPress={() => { setOpen({...open,openInfo:!open.openInfo}) }}>
                         <Text style={{ color: 'red', fontSize: 20 }}>
                             Tạo Thông Tin
                         </Text>
                     </TouchableOpacity>
                     <View style={{ marginLeft: 20 }}>
-                        {openInfo ? (
+                        {open.openInfo ? (
 
                             <View>
-                                <TouchableOpacity onPress={() => { navigation.navigate('Add'); setOpenInfo(!openInfo) }}>
+                                <TouchableOpacity onPress={() => { navigation.navigate('Add'); setOpen({...open,openInfo:!open.openInfo}) }}>
                                     <Text style={{ fontSize: 20 }}>Add</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity onPress={() => { navigation.navigate('ScreenFCL'); setOpenInfo(!openInfo) }}>
+                                <TouchableOpacity onPress={() => { navigation.navigate('ScreenFCL'); setOpen({...open,openInfo:!open.openInfo}) }}>
                                     <Text style={{ fontSize: 20 }}>UpdateFCL</Text>
                                 </TouchableOpacity>
                             </View>
@@ -160,9 +166,9 @@ const DrawerScreen = () => {
 export default DrawerScreen
 
 const styles = StyleSheet.create({
-    mainMenu:{
+    mainMenu: {
         // marginLeft:20,
-padding:5,
-// backgroundColor: 'rgb(172, 231, 250)'
+        padding: 5,
+        // backgroundColor: 'rgb(172, 231, 250)'
     },
 })

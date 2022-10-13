@@ -108,7 +108,11 @@ const Add = ({ navigation, route }) => {
 	const submitUpdateForm = async () => {
 		// if (isValidForm()) {
 
+<<<<<<< HEAD
 		const url = `http://192.168.1.101:3001/api/quotations/update/${route.params._id}`;
+=======
+		const url = `http://192.168.1.83:3001/api/quotations/update/${route.params._id}`;
+>>>>>>> 843719a5db7d19067b75ffc19bc742a6b46cdb1f
 
 		try {
 			const res = await axios.post(url, { ...fclInfo });
