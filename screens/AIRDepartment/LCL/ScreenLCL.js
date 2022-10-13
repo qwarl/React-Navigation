@@ -12,14 +12,14 @@ const Stack = createStackNavigator();
 
 const ScreenLCL = () => {
   return (
-    <NavigationContainer>
+    // <NavigationContainer>
     <Stack.Navigator>
         <Stack.Screen name='HomeLCL' component={HomeLCL}/>
         <Stack.Screen name='DetailLCL' component={DetailLCL}/>
         <Stack.Screen name='AddLCL' component={AddLCL}/>
         <Stack.Screen name='UpdateLCL' component={UpdateLCL}/>
     </Stack.Navigator>
-   </NavigationContainer>
+  //  </NavigationContainer>
   )
 }
 

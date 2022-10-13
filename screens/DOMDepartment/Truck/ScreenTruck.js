@@ -1,6 +1,6 @@
 import 'react-native-gesture-handler';
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react'
 import HomeTruck from './HomeTruck';
 import DetailTruck from './DetailTruck';
@@ -10,16 +10,16 @@ import UpdateTruck from './UpdateTruck';
 const Stack = createStackNavigator();
 
 const ScreenTruck = () => {
-    
+
   return (
-    <NavigationContainer>
+    // <NavigationContainer>
     <Stack.Navigator>
-        <Stack.Screen name='HomeTruck' component={HomeTruck}/>
-        <Stack.Screen name='DetailTruck' component={DetailTruck}/>
-        <Stack.Screen name='AddTruck' component={AddTruck}/>
-        <Stack.Screen name='UpdateTruck' component={UpdateTruck}/>
+      <Stack.Screen name='HomeTruck' component={HomeTruck} options={{ headerShown: false }} />
+      <Stack.Screen name='DetailTruck' component={DetailTruck} options={{ headerShown: false }} />
+      <Stack.Screen name='AddTruck' component={AddTruck} options={{ headerShown: false }} />
+      <Stack.Screen name='UpdateTruck' component={UpdateTruck} options={{ headerShown: false }} />
     </Stack.Navigator>
-   </NavigationContainer>
+    //  </NavigationContainer>
   )
 }
 

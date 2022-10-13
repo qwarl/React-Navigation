@@ -28,9 +28,9 @@ export default function App() {
       {/* <ScreenCy/> */}
       {/* <ScreenDoor/> */}
       {/* <ScreenAIR/> */}
-      {/* <DrawerScreen/> */}
+      <DrawerScreen/>
       {/* <ScreenImport /> */}
-      <ScreenImportLCL/>
+      {/* <ScreenImportLCL/> */}
     </>
   );
 }

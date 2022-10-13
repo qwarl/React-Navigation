@@ -12,15 +12,35 @@ const Stack = createStackNavigator();
 
 const ScreenLog = () => {
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="HomeLog" component={HomeLog} />
-        <Stack.Screen name="DetailLog" component={DetailLog} />
-        <Stack.Screen name="AddLog" component={AddLog} />
-        <Stack.Screen name="UpdateLog" component={UpdateLog} />
-        <Stack.Screen name="PolicyDetail" component={PolicyDetail} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    //    <NavigationContainer>
+    <Stack.Navigator>
+      <Stack.Screen
+        name="HomeLog"
+        component={HomeLog}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="DetailLog"
+        component={DetailLog}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="AddLog"
+        component={AddLog}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="UpdateLog"
+        component={UpdateLog}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="PolicyDetail"
+        component={PolicyDetail}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
+    // </NavigationContainer>
   );
 };
 
