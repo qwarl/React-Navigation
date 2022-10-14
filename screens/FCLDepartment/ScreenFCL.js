@@ -11,13 +11,13 @@ const Stack = createStackNavigator();
 
 export default function Fcl() {
   return (
-    <NavigationContainer>
+    // <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name="Home" component={Home} options={{headerShown:false}}/>
         <Stack.Screen name="Detail" component={Detail} options={{headerShown:false}}/>
         <Stack.Screen name="Add" component={Add} options={{headerShown:false}}/>
         <Stack.Screen name="Update" component={Update} options={{headerShown:false}}/>
       </Stack.Navigator>
-    </NavigationContainer>
+    // </NavigationContainer>
   );
 }

@@ -28,7 +28,7 @@ const DrawerScreen = () => {
         //     inputRange: [0, 1],
         //     outputRange: [30, 0],
         // });
-        console.time('doSomething')
+        // console.time('doSomething')
         const [open, setOpen] = useState(
             {
                 openQuotation: false,
@@ -39,7 +39,7 @@ const DrawerScreen = () => {
             }
         )
         console.log(open);
-        console.timeEnd('doSomething')
+        // console.timeEnd('doSomething')
         return (
             <DrawerContentScrollView {...rest}>
                 {/* <Animated.View

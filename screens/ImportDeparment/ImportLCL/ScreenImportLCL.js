@@ -14,7 +14,6 @@ const Tab = createBottomTabNavigator();
 
 const ScreenImportLCL = () => {
   return (
-    <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
           name="HomeImportLCL"
@@ -37,7 +36,6 @@ const ScreenImportLCL = () => {
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
-    </NavigationContainer>
   );
 };
 
