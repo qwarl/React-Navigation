@@ -8,6 +8,7 @@ import AddImportLCL from "./AddImportLCL";
 import UpdateImportLCL from "./UpdateImportLCL";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import HomeTabImportLCL from "./HomeTabImportLCL";
+import AddCheckPriceImportLCL from "./AddCheckPriceImportLCL";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -16,8 +17,13 @@ const ScreenImportLCL = () => {
   return (
       <Stack.Navigator>
         <Stack.Screen
-          name="HomeImportLCL"
-          component={HomeImportLCL}
+          name="HomeTabImportLCL"
+          component={HomeTabImportLCL}
+          options={{ headerShown: false }}
+        />
+         <Stack.Screen
+          name="AddCheckPriceImportLCL"
+          component={AddCheckPriceImportLCL}
           options={{ headerShown: false }}
         />
         <Stack.Screen

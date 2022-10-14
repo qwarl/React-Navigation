@@ -15,6 +15,7 @@ const HomeTabImportLCL = () => {
         name="HomeImportLCL"
         component={HomeImportLCL}
         options={{
+          headerShown: false,
           tabBarIcon: () => <Icon name="home" size={20} color="black" />,
         }}
       />
@@ -22,6 +23,7 @@ const HomeTabImportLCL = () => {
         name="CheckPriceImportLCL"
         component={CheckPriceImportLCL}
         options={{
+          headerShown: false,
           tabBarIcon: () => <Icon name="check" size={20} color="black" />,
         }}
       />
