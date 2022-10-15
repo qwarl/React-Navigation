@@ -12,13 +12,14 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import SelectList from "react-native-dropdown-select-list";
+import { Dropdown } from "react-native-element-dropdown";
 import color from "../../../contains/color";
 import { Cargo, Continent, Month1 } from "../../../contains/constant";
 import FormInput from "../../../components/FormInput";
 import clientImportLCL from "../../../api/clientImportLCL";
+import clientCheckPriceImportLCL from "../../../api/clientCheckPriceImportLCL";
 
-const AddImportLCL = () => {
+const AddImportLCL = ({ route }) => {
   const handleOnChangeText = (fieldName, ...values) => {
     values.length === 1
       ? setImportLCLInfo({ ...importLCLInfo, [fieldName]: values[0] })
@@ -65,21 +66,23 @@ const AddImportLCL = () => {
     return num1 + num2;
   };
 
+  let data = route.params.item;
+  console.log(data);
   const [importLCLInfo, setImportLCLInfo] = useState({
-    pol: "",
-    pod: "",
-    month: "",
-    continent: "",
-    cargo: "",
-    of: "",
-    localpol: "",
-    localpod: "",
-    term: "",
-    carrier: "",
-    schedule: "",
-    transittime: "",
-    valid: "",
-    notes: "",
+    pol: data.pol,
+    pod: data.pod,
+    month: data.month,
+    continent: data.continent,
+    cargo: data.cargo,
+    of: data.of,
+    localpol: data.localpol,
+    localpod: data.localpod,
+    term: data.term,
+    carrier: data.carrier,
+    schedule: data.schedule,
+    transittime: data.transittime,
+    valid: data.valid,
+    notes: data.notes,
   });
 
   // console.log(importLCLInfo);
@@ -91,12 +94,15 @@ const AddImportLCL = () => {
   const submitForm = async () => {
     // if (isValidForm()) {
     try {
+      const url = "/delete/";
+      const id = importLCLInfo._id;
+      const res1 = await clientCheckPriceImportLCL.delete(url + id);
       const res = await clientImportLCL.post("/create", { ...importLCLInfo });
-      if (res.data.success) {
+      if (res1.data.success && res.data.success) {
         Alert.alert("Thêm Thành Công");
       }
       console.log("running");
-      console.log(res.data);
+      console.log(res1.data);
     } catch (error) {
       console.log(error.message);
     }
@@ -112,29 +118,62 @@ const AddImportLCL = () => {
       <ScrollView>
         <View style={styles.dropMenu}>
           <Text style={styles.label}>Chọn Tháng</Text>
-          <SelectList
-            setSelected={(value) =>
-              setImportLCLInfo({ ...importLCLInfo, month: value })
-            }
+          <Dropdown
+            style={[styles.dropdown]}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
             data={Month1}
+            search={true}
+            maxHeight={300}
+            labelField="label"
+            valueField="value"
+            searchPlaceholder="Search..."
+            value={importLCLInfo.month}
+            onChange={(value) => {
+              setImportLCLInfo({ ...importLCLInfo, month: value.value });
+            }}
           />
         </View>
         <View style={styles.dropMenu}>
           <Text style={styles.label}>Chọn Châu</Text>
-          <SelectList
-            setSelected={(value) =>
-              setImportLCLInfo({ ...importLCLInfo, continent: value })
-            }
+          <Dropdown
+            style={[styles.dropdown]}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
             data={Continent}
+            search={true}
+            maxHeight={300}
+            labelField="label"
+            valueField="value"
+            searchPlaceholder="Search..."
+            value={importLCLInfo.continent}
+            onChange={(value) => {
+              setImportLCLInfo({ ...importLCLInfo, continent: value.value });
+            }}
           />
         </View>
         <View style={styles.dropMenu}>
           <Text style={styles.label}>Cargo</Text>
-          <SelectList
-            setSelected={(value) =>
-              setImportLCLInfo({ ...importLCLInfo, cargo: value })
-            }
+          <Dropdown
+            style={[styles.dropdown]}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
             data={Cargo}
+            search={true}
+            maxHeight={300}
+            labelField="label"
+            valueField="value"
+            searchPlaceholder="Search..."
+            value={importLCLInfo.cargo}
+            onChange={(value) => {
+              setImportLCLInfo({ ...importLCLInfo, cargo: value.value });
+            }}
           />
         </View>
         <FormInput
@@ -310,6 +349,27 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginLeft: 20,
+  },
+  dropdown: {
+    height: 50,
+    borderColor: "gray",
+    borderWidth: 0.5,
+    borderRadius: 8,
+    paddingHorizontal: 8,
+  },
+  placeholderStyle: {
+    fontSize: 16,
+  },
+  selectedTextStyle: {
+    fontSize: 16,
+  },
+  iconStyle: {
+    width: 20,
+    height: 20,
+  },
+  inputSearchStyle: {
+    height: 40,
+    fontSize: 16,
   },
 });
 

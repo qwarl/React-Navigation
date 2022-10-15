@@ -1,33 +1,33 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import HomeImportLCL from "./HomeImportLCL";
-import CheckPriceImportLCL from "./CheckPriceImportLCL";
 import Icon from "react-native-vector-icons/FontAwesome";
+import HomeImport from './HomeImport';
+import CheckPriceImport from "./CheckPriceImport";
 const Tab = createBottomTabNavigator();
 
-const HomeTabImportLCL = () => {
+const HomeTabImport = () => {
   return (
     <Tab.Navigator
       tabBarOptions={{ labelStyle: { fontSize: 16, marginBottom: 5 } }}
     >
       <Tab.Screen
-        name="HomeImportLCL"
-        component={HomeImportLCL}
+        name="HomeImport"
+        component={HomeImport}
         options={{
           headerShown: false,
           tabBarIcon: () => <Icon name="home" size={20} color="black" />,
         }}
       />
       <Tab.Screen
-        name="CheckPriceImportLCL"
-        component={CheckPriceImportLCL}
+        name="CheckPriceImport"
+        component={CheckPriceImport}
         options={{
           headerShown: false,
           tabBarIcon: () => <Icon name="check" size={20} color="black" />,
         }}
       />
     </Tab.Navigator>
-  );
-};
+  )
+}
 
-export default HomeTabImportLCL;
+export default HomeTabImport

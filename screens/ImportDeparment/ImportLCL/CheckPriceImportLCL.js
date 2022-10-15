@@ -6,14 +6,14 @@ import {
   Dimensions,
   FlatList,
   TextInput,
+  Alert,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import Icon from "react-native-vector-icons/FontAwesome";
 import color from "../../../contains/color";
 import clientCheckPriceImportLCL from "../../../api/clientCheckPriceImportLCL";
 
-
-const CheckPriceImportLCL = ({navigation}) => {
+const CheckPriceImportLCL = ({ navigation }) => {
   const [importLCLInfo, setImportLCLInfo] = useState({
     month: "",
     continent: "",
@@ -39,7 +39,6 @@ const CheckPriceImportLCL = ({navigation}) => {
         console.log(err);
       });
   }, [data]);
-
 
   const checkTypeSearch = (searchText, eachImportLCL) => {
     let result = false;
@@ -71,9 +70,21 @@ const CheckPriceImportLCL = ({navigation}) => {
   const renderItem = ({ item }) => (
     <TouchableOpacity
       onPress={() => {
-        navigation.navigate("DetailImportLCL", {
-          item: item,
-        });
+        Alert.alert("Thông Báo", "Bạn có muốn tạo một báo giá mới theo yêu cầu sale không?", [
+          {
+            text: "Hủy",
+            onPress: () => console.log("Cancel required"),
+            style: "cancel",
+          },
+          {
+            text: "Phản hồi",
+            onPress: () => {
+              navigation.navigate("AddImportLCL", {
+                item: item,
+              });
+            },
+          },
+        ]);
       }}
     >
       <View style={styles.detail}>
