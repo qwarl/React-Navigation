@@ -12,19 +12,26 @@ import {
   TextInput,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import color from "../../../contains/color";
-import FormInput from "../../../components/FormInput";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import clientLCL from "../../../api/clientLCL";
 import { Dropdown } from "react-native-element-dropdown";
-import { Continent, Month1 } from "../../../contains/constant";
 import Icon from "react-native-vector-icons/FontAwesome";
+import color from "../../../../contains/color";
+import FormInput from "../../../../components/FormInput";
+import { Cargo, Continent, Month1 } from "../../../../contains/constant";
+import clientCheckPriceImportLCL from "../../../../api/clientCheckPriceImportLCL";
 
-const UpdateLCL = ({ route }) => {
-  const [lclInfo, setLCLInfo] = useState(route.params.data);
-  const handleOnChangeText = (value, fieldName) => {
-    setLCLInfo({ ...lclInfo, [fieldName]: value });
+const AddCheckPriceImportLCL = () => {
+  const handleOnChangeText = (fieldName, ...values) => {
+    values.length === 1
+      ? setImportLCLInfo({ ...importLCLInfo, [fieldName]: values[0] })
+      : setImportLCLInfo({
+          ...importLCLInfo,
+          [fieldName]: values[0],
+          totalfreight: values[1],
+        });
   };
+
+  const [error, setError] = useState("");
 
   //handle time picker
   const [date, setDate] = useState(new Date());
@@ -45,7 +52,7 @@ const UpdateLCL = ({ route }) => {
       "/" +
       tempDate.getFullYear();
 
-    handleOnChangeText(fDate, "valid");
+    handleOnChangeText("valid", fDate);
   };
 
   //handle time picker
@@ -54,27 +61,41 @@ const UpdateLCL = ({ route }) => {
     setMode(currentMode);
   };
 
+  const plus = function (a = 0, b = 0) {
+    const num1 = Number(a);
+    const num2 = Number(b);
+    return num1 + num2;
+  };
+
+  const [importLCLInfo, setImportLCLInfo] = useState({
+    pol: "",
+    pod: "",
+    month: "",
+    continent: "",
+    cargo: "",
+    of: "",
+    localpol: "",
+    localpod: "",
+    term: "",
+    carrier: "",
+    schedule: "",
+    transittime: "",
+    valid: "",
+    notes: "",
+  });
+
+  // console.log(importLCLInfo);
+  const isValidForm = () => {
+    if (!isValidObjectField(importLCLInfo))
+      return updateError("Nhập thiếu trường dữ liệu!", setError);
+    return true;
+  };
   const submitForm = async () => {
     // if (isValidForm()) {
     try {
-      const url = "/update/";
-      const id = lclInfo._id;
-      const res = await clientLCL.post(url + id, { ...lclInfo });
-      if (res.data.success) {
-        Alert.alert("Cập Nhật Thành Công");
-      }
-      console.log("running");
-      console.log(res.data);
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-
-  const AddForm = async () => {
-    // if (isValidForm()) {
-    try {
-      delete lclInfo._id;
-      const res = await clientLCL.post("/create", { ...lclInfo });
+      const res = await clientCheckPriceImportLCL.post("/create", {
+        ...importLCLInfo,
+      });
       if (res.data.success) {
         Alert.alert("Thêm Thành Công");
       }
@@ -85,9 +106,13 @@ const UpdateLCL = ({ route }) => {
     }
     // }
   };
-
   return (
     <View style={StyleSheet.container}>
+      {error ? (
+        <Text style={{ color: "red", fontSize: 18, textAlign: "center" }}>
+          {error}
+        </Text>
+      ) : null}
       <ScrollView>
         <View style={styles.dropMenu}>
           <Text style={styles.label}>Chọn Tháng</Text>
@@ -103,9 +128,9 @@ const UpdateLCL = ({ route }) => {
             labelField="label"
             valueField="value"
             searchPlaceholder="Search..."
-            value={lclInfo.month}
+            value={importLCLInfo.month}
             onChange={(value) => {
-              setLCLInfo({ ...lclInfo, month: value.value });
+              setImportLCLInfo({ ...importLCLInfo, month: value.value });
             }}
           />
         </View>
@@ -123,71 +148,86 @@ const UpdateLCL = ({ route }) => {
             labelField="label"
             valueField="value"
             searchPlaceholder="Search..."
-            value={lclInfo.continent}
+            value={importLCLInfo.continent}
             onChange={(value) => {
-              setLCLInfo({ ...lclInfo, continent: value.value });
+              setImportLCLInfo({ ...importLCLInfo, continent: value.value });
+            }}
+          />
+        </View>
+        <View style={styles.dropMenu}>
+          <Text style={styles.label}>Cargo</Text>
+          <Dropdown
+            style={[styles.dropdown]}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
+            data={Cargo}
+            search={true}
+            maxHeight={300}
+            labelField="label"
+            valueField="value"
+            searchPlaceholder="Search..."
+            value={importLCLInfo.cargo}
+            onChange={(value) => {
+              setImportLCLInfo({ ...importLCLInfo, cargo: value.value });
             }}
           />
         </View>
         <FormInput
           label="Pol"
           placeholder="Pol"
-          onChangeText={(value) => handleOnChangeText(value, "pol")}
-          value={lclInfo.pol}
+          onChangeText={(value) => handleOnChangeText("pol", value)}
+          value={importLCLInfo.pol}
         />
         <FormInput
           placeholder="Pod"
           label="Pod"
-          onChangeText={(value) => handleOnChangeText(value, "pod")}
-          value={lclInfo.pod}
+          onChangeText={(value) => handleOnChangeText("pod", value)}
+          value={importLCLInfo.pod}
         />
         <FormInput
-          label="Dim"
-          placeholder="Dim"
-          onChangeText={(value) => handleOnChangeText(value, "dim")}
-          value={lclInfo.dim}
+          label="OF"
+          placeholder="OF"
+          keyboardType="numeric"
+          onChangeText={(value) => handleOnChangeText("of", value)}
+          value={importLCLInfo.of}
         />
         <FormInput
-          label="Gross Weight"
-          placeholder="Gross Weight"
-          onChangeText={(value) => handleOnChangeText(value, "grossweight")}
-          value={lclInfo.grossweight}
+          label="Term"
+          placeholder="Term"
+          onChangeText={(value) => handleOnChangeText("term", value)}
+          value={importLCLInfo.term}
         />
         <FormInput
-          placeholder="Type Of Cargo"
-          label="Type Of Cargo"
-          onChangeText={(value) => handleOnChangeText(value, "typeofcargo")}
-          value={lclInfo.typeofcargo}
+          placeholder="Local_Pol"
+          label="Local_Pol"
+          onChangeText={(value) => handleOnChangeText("localpol", value)}
+          value={importLCLInfo.localpol}
         />
         <FormInput
-          placeholder="Ocean Freight"
-          label="Ocean Freight"
-          onChangeText={(value) => handleOnChangeText(value, "oceanfreight")}
-          value={lclInfo.oceanfreight}
-        />
-        <FormInput
-          placeholder="Local Charge"
-          label="Local Charge"
-          onChangeText={(value) => handleOnChangeText(value, "localcharge")}
-          value={lclInfo.localcharge}
+          placeholder="Local_Pod"
+          label="Local_Pod"
+          onChangeText={(value) => handleOnChangeText("localpod", value)}
+          value={importLCLInfo.localpod}
         />
         <FormInput
           placeholder="Carrier"
           label="Carrier"
-          value={lclInfo.carrier}
-          onChangeText={(value) => handleOnChangeText(value, "carrier")}
+          value={importLCLInfo.carrier}
+          onChangeText={(value) => handleOnChangeText("carrier", value)}
         />
         <FormInput
           placeholder="Schedule"
           label="Schedule"
-          value={lclInfo.schedule}
-          onChangeText={(value) => handleOnChangeText(value, "schedule")}
+          value={importLCLInfo.schedule}
+          onChangeText={(value) => handleOnChangeText("schedule", value)}
         />
         <FormInput
-          placeholder="Transit Time"
-          label="Transit Time"
-          value={lclInfo.transittime}
-          onChangeText={(value) => handleOnChangeText(value, "transittime")}
+          placeholder="Transittime"
+          label="Transittime"
+          value={importLCLInfo.transittime}
+          onChangeText={(value) => handleOnChangeText("transittime", value)}
         />
         <View style={{ flexDirection: "row" }}>
           <View style={{ width: "100%", marginRight: 20 }}>
@@ -196,7 +236,7 @@ const UpdateLCL = ({ route }) => {
               style={styles.validStyle}
               placeholder="VALID"
               label="VALID"
-              value={lclInfo.valid}
+              value={importLCLInfo.valid}
               onChangeText={(value) => handleOnChangeText(value, "valid")}
             />
           </View>
@@ -228,8 +268,8 @@ const UpdateLCL = ({ route }) => {
         <FormInput
           placeholder="Ghi Chú"
           label="Ghi Chú"
-          value={lclInfo.note}
-          onChangeText={(value) => handleOnChangeText(value, "note")}
+          value={importLCLInfo.notes}
+          onChangeText={(value) => handleOnChangeText("notes", value)}
         />
         <View
           style={{
@@ -238,17 +278,9 @@ const UpdateLCL = ({ route }) => {
             marginHorizontal: 80,
             justifyContent: "center",
             alignItems: "center",
-            flexDirection: "row",
           }}
         >
-          <TouchableOpacity style={[styles.buttonUpdate]} onPress={submitForm}>
-            <Text
-              style={{ fontSize: 18, color: color.primary, fontWeight: "bold" }}
-            >
-              Cập Nhật
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={[styles.buttonInsert]} onPress={AddForm}>
+          <TouchableOpacity style={[styles.buttonInsert]} onPress={submitForm}>
             <Text
               style={{ fontSize: 18, color: color.primary, fontWeight: "bold" }}
             >
@@ -296,22 +328,12 @@ const styles = StyleSheet.create({
     height: 50,
     width: 150,
     borderColor: color.borderColor,
-    borderWidth: 2,
+    borderWidth: 1.5,
     borderRadius: 8,
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 30,
     marginLeft: 10,
-  },
-  buttonUpdate: {
-    height: 50,
-    width: 150,
-    borderColor: color.borderColor,
-    borderWidth: 2,
-    borderRadius: 8,
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 30,
   },
   buttonTime: {
     height: 40,
@@ -380,4 +402,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default UpdateLCL;
+export default AddCheckPriceImportLCL;

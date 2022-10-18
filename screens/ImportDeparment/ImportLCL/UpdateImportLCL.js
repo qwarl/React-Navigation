@@ -9,6 +9,7 @@ import {
   Alert,
   Image,
   Button,
+  TextInput,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -17,8 +18,9 @@ import color from "../../../contains/color";
 import { Cargo, Continent, Month1 } from "../../../contains/constant";
 import FormInput from "../../../components/FormInput";
 import clientImportLCL from "../../../api/clientImportLCL";
+import Icon from "react-native-vector-icons/FontAwesome";
 
-const UpdateImportLCL = ({route}) => {
+const UpdateImportLCL = ({ route }) => {
   const [importLCLInfo, setImportLCLInfo] = useState(route.params.data);
 
   const handleOnChangeText = (fieldName, ...values) => {
@@ -100,68 +102,68 @@ const UpdateImportLCL = ({route}) => {
   };
   return (
     <View style={StyleSheet.container}>
-    <ScrollView>
-      <View style={styles.dropMenu}>
-        <Text style={styles.label}>Chọn Tháng</Text>
-        <Dropdown
-          style={[styles.dropdown]}
-          placeholderStyle={styles.placeholderStyle}
-          selectedTextStyle={styles.selectedTextStyle}
-          inputSearchStyle={styles.inputSearchStyle}
-          iconStyle={styles.iconStyle}
-          data={Month1}
-          search={true}
-          maxHeight={300}
-          labelField="label"
-          valueField="value"
-          searchPlaceholder="Search..."
-          value={importLCLInfo.month}
-          onChange={(value) => {
-            setImportLCLInfo({ ...importLCLInfo, month: value.value });
-          }}
-        />
-      </View>
-      <View style={styles.dropMenu}>
-        <Text style={styles.label}>Chọn Châu</Text>
-        <Dropdown
-          style={[styles.dropdown]}
-          placeholderStyle={styles.placeholderStyle}
-          selectedTextStyle={styles.selectedTextStyle}
-          inputSearchStyle={styles.inputSearchStyle}
-          iconStyle={styles.iconStyle}
-          data={Continent}
-          search={true}
-          maxHeight={300}
-          labelField="label"
-          valueField="value"
-          searchPlaceholder="Search..."
-          value={importLCLInfo.continent}
-          onChange={(value) => {
-            setImportLCLInfo({ ...importLCLInfo, continent: value.value });
-          }}
-        />
-      </View>
-      <View style={styles.dropMenu}>
-        <Text style={styles.label}>Cargo</Text>
-        <Dropdown
-          style={[styles.dropdown]}
-          placeholderStyle={styles.placeholderStyle}
-          selectedTextStyle={styles.selectedTextStyle}
-          inputSearchStyle={styles.inputSearchStyle}
-          iconStyle={styles.iconStyle}
-          data={Cargo}
-          search={true}
-          maxHeight={300}
-          labelField="label"
-          valueField="value"
-          searchPlaceholder="Search..."
-          value={importLCLInfo.cargo}
-          onChange={(value) => {
-            setImportLCLInfo({ ...importLCLInfo, cargo: value.value });
-          }}
-        />
-      </View>
-      <FormInput
+      <ScrollView>
+        <View style={styles.dropMenu}>
+          <Text style={styles.label}>Chọn Tháng</Text>
+          <Dropdown
+            style={[styles.dropdown]}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
+            data={Month1}
+            search={true}
+            maxHeight={300}
+            labelField="label"
+            valueField="value"
+            searchPlaceholder="Search..."
+            value={importLCLInfo.month}
+            onChange={(value) => {
+              setImportLCLInfo({ ...importLCLInfo, month: value.value });
+            }}
+          />
+        </View>
+        <View style={styles.dropMenu}>
+          <Text style={styles.label}>Chọn Châu</Text>
+          <Dropdown
+            style={[styles.dropdown]}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
+            data={Continent}
+            search={true}
+            maxHeight={300}
+            labelField="label"
+            valueField="value"
+            searchPlaceholder="Search..."
+            value={importLCLInfo.continent}
+            onChange={(value) => {
+              setImportLCLInfo({ ...importLCLInfo, continent: value.value });
+            }}
+          />
+        </View>
+        <View style={styles.dropMenu}>
+          <Text style={styles.label}>Cargo</Text>
+          <Dropdown
+            style={[styles.dropdown]}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
+            data={Cargo}
+            search={true}
+            maxHeight={300}
+            labelField="label"
+            valueField="value"
+            searchPlaceholder="Search..."
+            value={importLCLInfo.cargo}
+            onChange={(value) => {
+              setImportLCLInfo({ ...importLCLInfo, cargo: value.value });
+            }}
+          />
+        </View>
+        <FormInput
           label="Pol"
           placeholder="Pol"
           onChangeText={(value) => handleOnChangeText("pol", value)}
@@ -216,18 +218,30 @@ const UpdateImportLCL = ({route}) => {
           value={importLCLInfo.transittime}
           onChangeText={(value) => handleOnChangeText("transittime", value)}
         />
-        <FormInput
-          placeholder="VALID"
-          label="VALID"
-          value={importLCLInfo.valid}
-          onChangeText={(value) => handleOnChangeText(value, "valid")}
-        />
-        <View>
-          <TouchableOpacity
-            style={[styles.buttonTime]}
-            onPress={() => showMode("date")}
-          >
-            <Text style={{ fontSize: 18, color: "#000" }}>Chọn Ngày</Text>
+        <View style={{ flexDirection: "row" }}>
+          <View style={{ width: "100%", marginRight: 20 }}>
+            <Text style={styles.textValid}>Valid</Text>
+            <TextInput
+              style={styles.validStyle}
+              placeholder="VALID"
+              label="VALID"
+              value={importLCLInfo.valid}
+              onChangeText={(value) => handleOnChangeText(value, "valid")}
+            />
+          </View>
+          <TouchableOpacity onPress={() => showMode("date")}>
+            <Icon
+              name="calendar"
+              size={35}
+              color="#7F7F7F"
+              style={{
+                top: 30,
+                position: "absolute",
+                right: 40,
+                marginBottom: 0,
+                zIndex: 1000,
+              }}
+            />
           </TouchableOpacity>
           {show && (
             <DateTimePicker
@@ -246,25 +260,33 @@ const UpdateImportLCL = ({route}) => {
           value={importLCLInfo.notes}
           onChangeText={(value) => handleOnChangeText("notes", value)}
         />
-      <View
-        style={{
-          flex: 1,
-          marginVertical: 30,
-          marginHorizontal: 80,
-          justifyContent: "center",
-          alignItems: "center",
-          flexDirection: "row",
-        }}
-      >
-        <TouchableOpacity style={[styles.buttonUpdate]} onPress={submitForm}>
-          <Text style={{ fontSize: 18, color: "black" }}>Cập Nhật</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={[styles.buttonInsert]} onPress={AddForm}>
-          <Text style={{ fontSize: 18, color: "black" }}>Thêm</Text>
-        </TouchableOpacity>
-      </View>
-    </ScrollView>
-  </View>
+        <View
+          style={{
+            flex: 1,
+            marginVertical: 30,
+            marginHorizontal: 80,
+            justifyContent: "center",
+            alignItems: "center",
+            flexDirection: "row",
+          }}
+        >
+          <TouchableOpacity style={[styles.buttonUpdate]} onPress={submitForm}>
+            <Text
+              style={{ fontSize: 18, color: color.primary, fontWeight: "bold" }}
+            >
+              Cập Nhật
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.buttonInsert]} onPress={AddForm}>
+            <Text
+              style={{ fontSize: 18, color: color.primary, fontWeight: "bold" }}
+            >
+              Thêm
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    </View>
   );
 };
 
@@ -369,6 +391,21 @@ const styles = StyleSheet.create({
   inputSearchStyle: {
     height: 40,
     fontSize: 16,
+  },
+  validStyle: {
+    height: 35,
+    width: "90%",
+    fontSize: 14,
+    padding: 5,
+    marginBottom: 10,
+    height: 50,
+    marginLeft: 17,
+    marginRight: 17,
+    borderBottomWidth: 1,
+  },
+  textValid: {
+    fontWeight: "bold",
+    marginLeft: 17,
   },
 });
 

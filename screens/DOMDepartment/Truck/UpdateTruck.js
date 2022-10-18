@@ -206,10 +206,18 @@ const UpdateTruck = ({ route }) => {
         }}
       >
         <TouchableOpacity style={[styles.buttonUpdate]} onPress={submitForm}>
-          <Text style={{ fontSize: 18, color: "black" }}>Cập Nhật</Text>
+          <Text
+            style={{ fontSize: 18, color: color.primary, fontWeight: "bold" }}
+          >
+            Cập Nhật
+          </Text>
         </TouchableOpacity>
         <TouchableOpacity style={[styles.buttonInsert]} onPress={AddForm}>
-          <Text style={{ fontSize: 18, color: "black" }}>Thêm</Text>
+          <Text
+            style={{ fontSize: 18, color: color.primary, fontWeight: "bold" }}
+          >
+            Thêm
+          </Text>
         </TouchableOpacity>
       </View>
     </ScrollView>

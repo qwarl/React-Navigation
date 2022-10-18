@@ -9,6 +9,7 @@ import {
   Alert,
   Image,
   Button,
+  TextInput,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -17,6 +18,7 @@ import color from "../../../contains/color";
 import { Continent, Month1, TypeImport } from "../../../contains/constant";
 import FormInput from "../../../components/FormInput";
 import clientImport from "../../../api/clientImport";
+import Icon from "react-native-vector-icons/FontAwesome";
 
 const UpdateImport = ({ route }) => {
   const [importInfo, setImportInfo] = useState(route.params.data);
@@ -237,18 +239,30 @@ const UpdateImport = ({ route }) => {
           value={importInfo.transittime}
           onChangeText={(value) => handleOnChangeText("transittime", value)}
         />
-        <FormInput
-          placeholder="VALID"
-          label="VALID"
-          value={importInfo.valid}
-          onChangeText={(value) => handleOnChangeText(value, "valid")}
-        />
-        <View>
-          <TouchableOpacity
-            style={[styles.buttonTime]}
-            onPress={() => showMode("date")}
-          >
-            <Text style={{ fontSize: 18, color: "#000" }}>Chọn Ngày</Text>
+        <View style={{ flexDirection: "row" }}>
+          <View style={{ width: "100%", marginRight: 20 }}>
+            <Text style={styles.textValid}>Valid</Text>
+            <TextInput
+              style={styles.validStyle}
+              placeholder="VALID"
+              label="VALID"
+              value={importInfo.valid}
+              onChangeText={(value) => handleOnChangeText(value, "valid")}
+            />
+          </View>
+          <TouchableOpacity onPress={() => showMode("date")}>
+            <Icon
+              name="calendar"
+              size={35}
+              color="#7F7F7F"
+              style={{
+                top: 30,
+                position: "absolute",
+                right: 40,
+                marginBottom: 0,
+                zIndex: 1000,
+              }}
+            />
           </TouchableOpacity>
           {show && (
             <DateTimePicker
@@ -278,10 +292,18 @@ const UpdateImport = ({ route }) => {
           }}
         >
           <TouchableOpacity style={[styles.buttonUpdate]} onPress={submitForm}>
-            <Text style={{ fontSize: 18, color: "black" }}>Cập Nhật</Text>
+            <Text
+              style={{ fontSize: 18, color: color.primary, fontWeight: "bold" }}
+            >
+              Cập Nhật
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity style={[styles.buttonInsert]} onPress={AddForm}>
-            <Text style={{ fontSize: 18, color: "black" }}>Thêm</Text>
+            <Text
+              style={{ fontSize: 18, color: color.primary, fontWeight: "bold" }}
+            >
+              Thêm
+            </Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -390,6 +412,21 @@ const styles = StyleSheet.create({
   inputSearchStyle: {
     height: 40,
     fontSize: 16,
+  },
+  validStyle: {
+    height: 35,
+    width: "90%",
+    fontSize: 14,
+    padding: 5,
+    marginBottom: 10,
+    height: 50,
+    marginLeft: 17,
+    marginRight: 17,
+    borderBottomWidth: 1,
+  },
+  textValid: {
+    fontWeight: "bold",
+    marginLeft: 17,
   },
 });
 

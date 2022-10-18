@@ -1,14 +1,13 @@
 import React from "react";
 import "react-native-gesture-handler";
-import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import HomeImportLCL from "./HomeImportLCL";
 import DetailImportLCL from "./DetailImportLCL";
 import AddImportLCL from "./AddImportLCL";
 import UpdateImportLCL from "./UpdateImportLCL";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import HomeTabImportLCL from "./HomeTabImportLCL";
-import AddCheckPriceImportLCL from "./AddCheckPriceImportLCL";
+import HomeTabImportLCL from "./checkprice/HomeTabImportLCL";
+import AddCheckPriceImportLCL from "./checkprice/AddCheckPriceImportLCL";
+import AddRequiteSale from "./checkprice/AddRequiteSale";
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -24,6 +23,11 @@ const ScreenImportLCL = () => {
          <Stack.Screen
           name="AddCheckPriceImportLCL"
           component={AddCheckPriceImportLCL}
+          options={{ headerShown: false }}
+        />
+         <Stack.Screen
+          name="AddRequiteSale"
+          component={AddRequiteSale}
           options={{ headerShown: false }}
         />
         <Stack.Screen

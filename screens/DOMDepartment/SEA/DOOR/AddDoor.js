@@ -14,7 +14,12 @@ import React, { useEffect, useState } from "react";
 import FormInput from "../../../../components/FormInput";
 import SelectList from "react-native-dropdown-select-list";
 import color from "../../../../contains/color";
-import { Continent, DomType, Month1, TypeSeaCY } from "../../../../contains/constant";
+import {
+  Continent,
+  DomType,
+  Month1,
+  TypeSeaCY,
+} from "../../../../contains/constant";
 import clientSeaDoor from "../../../../api/clientSeaDoor";
 import { isValidObjectField, updateError } from "../../../../utils/method";
 
@@ -32,7 +37,7 @@ const AddDoor = () => {
     pod: "",
     addresspacking: "",
     addressdelivery: "",
-    doortype:"",
+    doortype: "",
   });
 
   const handleOnChangeText = (value, fieldName) => {
@@ -87,7 +92,7 @@ const AddDoor = () => {
     }
   };
   return (
-    <View style={StyleSheet.container}>
+    <View style={{ flex: 1, backgroundColor: "white" }}>
       {error ? (
         <Text style={{ color: "red", fontSize: 18, textAlign: "center" }}>
           {error}
@@ -188,7 +193,11 @@ const AddDoor = () => {
           }}
         >
           <TouchableOpacity style={[styles.buttonInsert]} onPress={submitForm}>
-            <Text style={{ fontSize: 18, color: "black" }}>Thêm</Text>
+            <Text
+              style={{ fontSize: 18, color: color.primary, fontWeight: "bold" }}
+            >
+              Thêm
+            </Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -197,9 +206,6 @@ const AddDoor = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   iconWrapper: {
     width: 44,
     height: 44,

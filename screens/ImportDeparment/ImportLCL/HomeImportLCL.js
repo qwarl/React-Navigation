@@ -14,7 +14,7 @@ import clientImportLCL from "../../../api/clientImportLCL";
 import { Continent, Month1 } from "../../../contains/constant";
 import color from "../../../contains/color";
 
-const HomeImportLCL = ({navigation}) => {
+const HomeImportLCL = ({ navigation }) => {
   const [importLCLInfo, setImportLCLInfo] = useState({
     month: "",
     continent: "",
@@ -40,7 +40,6 @@ const HomeImportLCL = ({navigation}) => {
         console.log(err);
       });
   }, [data]);
-
 
   const checkTypeSearch = (searchText, eachImportLCL) => {
     let result = false;
@@ -105,17 +104,18 @@ const HomeImportLCL = ({navigation}) => {
     </TouchableOpacity>
   );
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor: "white" }}>
       <View style={{ flexDirection: "row", alignItems: "center" }}>
         <Icon
           name="search"
-          size={25}
-          color="black"
-          style={{ position: "absolute", top: 20, left: 30 }}
+          size={28}
+          color="white"
+          style={{ position: "absolute", top: 20, left: 30, zIndex: 1000 }}
         />
         <TextInput
-          style={styles.textInputStyle}
-          placeholder="Nhập từ khóa tìm kiếm"
+          style={styles.styleSearch}
+          placeholder="Tìm kiếm"
+          placeholderTextColor={"white"}
           underlineColorAndroid="transparent"
           onChangeText={(text) => setSearchText(text)}
         />
@@ -251,23 +251,23 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 5,
   },
-  textInputStyle: {
+  styleSearch: {
     flex: 1,
     height: 50,
-    borderWidth: 1.5,
-    paddingLeft: 35,
+    paddingLeft: 40,
     marginVertical: 10,
     marginHorizontal: 20,
-    borderColor: color.borderColor,
+    backgroundColor: "#BFBFBF",
     borderRadius: 30,
     fontSize: 18,
   },
   detail: {
-    borderRadius: 15,
-    borderColor: "#000",
-    backgroundColor: color.backgrounDisplayDetail,
     marginBottom: 10,
     padding: 5,
+    borderRadius: 10,
+    borderStyle: "solid",
+    borderColor: "#0176E4",
+    borderWidth: 1,
   },
   textLable: {
     fontSize: 18,
@@ -325,6 +325,8 @@ const styles = StyleSheet.create({
     marginRight: 5,
     fontSize: 17,
     fontWeight: "500",
+    color: "#0176E4",
+    textDecorationLine: "underline",
   },
 });
 

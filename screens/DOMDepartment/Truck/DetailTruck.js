@@ -11,55 +11,103 @@ import color from "../../../contains/color";
 const DetailTruck = ({ navigation, route }) => {
   const [data, setData] = useState(route.params.item);
   return (
-    <ScrollView>
-    <View style={styles.detail}>
-      <Text style={styles.textDisplayCode}>
-        Mã Báo Giá: {data.code}
-      </Text>
-      <Text style={styles.textDisplay}>Tháng: {data.month}</Text>
-      <Text style={styles.textDisplay}>Châu: {data.continent}</Text>
-      <Text style={styles.textDisplay}>Loại Container: {data.container}</Text>
-      <Text style={styles.textDisplay}>Loại Xe: {data.typetruck}</Text>
-      <Text style={styles.textDisplay}>Tên Hàng: {data.productname}</Text>
-      <Text style={styles.textDisplay}>Trọng Lượng: {data.weight}</Text>
-      <Text style={styles.textDisplay}>SL Kiện: {data.quantitypallet}</Text>
-      <Text style={styles.textDisplay}>SL Carton: {data.quantitycarton}</Text>
-      <Text style={styles.textDisplay}>ĐC Lấy Hàng: {data.addressdelivery}</Text>
-      <Text style={styles.textDisplay}>ĐC Nhận Hàng: {data.addressreceive}</Text>
-      <Text style={styles.textDisplay}>Chiều Dài: {data.length}</Text>
-      <Text style={styles.textDisplay}>Chiều Cao: {data.height}</Text>
-      <Text style={styles.textDisplay}>Chiều Rộng: {data.width}</Text>
-      <View style={styles.styleButton}>
-        <TouchableOpacity
-          style={[styles.buttonUpdate]}
-          onPress={() => {
-            navigation.navigate("UpdateTruck", {
-              data: data,
-            });
-          }}
-        >
-          <Text style={{ fontSize: 18, color: "black" }}>Update</Text>
-        </TouchableOpacity>
-      </View>
+    <View style={{ backgroundColor: "white", width: "100%" }}>
+      <ScrollView>
+        <View style={styles.detail}>
+          <View style={{ flexDirection: "row" }}>
+            <Text style={styles.textDisplay}>Tháng:</Text>
+            <Text style={styles.textContent}>{data.month}</Text>
+          </View>
+          <View style={{ flexDirection: "row" }}>
+            <Text style={styles.textDisplay}>Châu:</Text>
+            <Text style={styles.textContent}>{data.continent}</Text>
+          </View>
+          <View style={{ flexDirection: "row" }}>
+            <Text style={styles.textDisplay}>Loại Container:</Text>
+            <Text style={styles.textContent}>{data.container}</Text>
+          </View>
+          <View style={{ flexDirection: "row" }}>
+            <Text style={styles.textDisplay}>Loại Xe:</Text>
+            <Text style={styles.textContent}>{data.typetruck}</Text>
+          </View>
+          <View style={{ flexDirection: "row" }}>
+            <Text style={styles.textDisplay}>Tên Hàng:</Text>
+            <Text style={styles.textContent}>{data.productname}</Text>
+          </View>
+          <View style={{ flexDirection: "row" }}>
+            <Text style={styles.textDisplay}>Trọng Lượng:</Text>
+            <Text style={styles.textContent}>{data.weight}</Text>
+          </View>
+          <View style={{ flexDirection: "row" }}>
+            <Text style={styles.textDisplay}>SL Kiện:</Text>
+            <Text style={styles.textContent}>{data.quantitypallet}</Text>
+          </View>
+          <View style={{ flexDirection: "row" }}>
+            <Text style={styles.textDisplay}>SL Carton:</Text>
+            <Text style={styles.textContent}>{data.quantitycarton}</Text>
+          </View>
+          <View style={{ flexDirection: "row" }}>
+            <Text style={styles.textDisplay}>ĐC Lấy Hàng:</Text>
+            <Text style={styles.textContent}>{data.addressdelivery}</Text>
+          </View>
+          <View style={{ flexDirection: "row" }}>
+            <Text style={styles.textDisplay}>ĐC Nhận Hàng:</Text>
+            <Text style={styles.textContent}>{data.addressreceive}</Text>
+          </View>
+          <View style={{ flexDirection: "row" }}>
+            <Text style={styles.textDisplay}>Chiều Dài:</Text>
+            <Text style={styles.textContent}>{data.length}</Text>
+          </View>
+          <View style={{ flexDirection: "row" }}>
+            <Text style={styles.textDisplay}>Chiều Cao:</Text>
+            <Text style={styles.textContent}>{data.height}</Text>
+          </View>
+          <View style={{ flexDirection: "row" }}>
+            <Text style={styles.textDisplay}>Chiều Rộng:</Text>
+            <Text style={styles.textContent}>{data.width}</Text>
+          </View>
+          <View style={styles.styleButton}>
+            <TouchableOpacity
+              style={[styles.buttonUpdate]}
+              onPress={() => {
+                navigation.navigate("UpdateTruck", {
+                  data: data,
+                });
+              }}
+            >
+              <Text style={{ fontSize: 18, color: color.primary }}>
+                Cập nhật
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </ScrollView>
     </View>
-  </ScrollView>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   detail: {
     borderRadius: 15,
-    borderColor: "#000",
-    backgroundColor: color.backgrounDisplayDetail,
+    borderWidth: 2,
+    borderColor: color.primary,
     marginVertical: 20,
     marginHorizontal: 10,
     padding: 20,
   },
   textDisplay: {
-    fontSize: 20,
+    fontSize: 21,
     fontWeight: "bold",
     lineHeight: 25,
     marginRight: 9,
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 9,
+  },
+  textContent: {
+    fontSize: 20,
+    lineHeight: 25,
+    marginRight: 4,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -81,32 +129,44 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: 170,
     marginVertical: 10,
-    marginLeft:30,
+    marginLeft: 30,
     alignContent: "center",
   },
   buttonUpdate: {
-    marginTop:20,
+    marginTop: 20,
     height: 45,
     borderColor: color.borderColor,
-    borderWidth:2,
+    borderWidth: 2,
     borderRadius: 20,
     justifyContent: "center",
     alignItems: "center",
     width: 170,
     marginBottom: 30,
+    color: color.primary,
   },
   styleButton: {
     alignItems: "center",
     justifyContent: "center",
   },
-  textDisplayCode:{
-    fontSize: 20,
+  textDisplayCode: {
+    fontSize: 22,
     fontWeight: "bold",
     lineHeight: 25,
     marginRight: 9,
     justifyContent: "flex-end",
     alignItems: "flex-end",
-  }
+    textAlign: "center",
+    color: color.primary,
+    fontFamily: "Roboto",
+    fontWeight: "bold",
+    marginBottom: 16,
+    textDecorationLine: "underline",
+  },
+  textUpdate: {
+    fontSize: 19,
+    color: color.primary,
+    fontWeight: "bold",
+  },
 });
 
-export default DetailTruck
+export default DetailTruck;

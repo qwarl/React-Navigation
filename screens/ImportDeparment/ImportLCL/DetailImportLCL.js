@@ -13,21 +13,63 @@ const DetailImportLCL = ({ route, navigation }) => {
   return (
     <ScrollView>
       <View style={styles.detail}>
-        <Text style={styles.textDisplayCode}>Mã Báo Giá: {data.code}</Text>
-        <Text style={styles.textDisplay}>Tháng: {data.month}</Text>
-        <Text style={styles.textDisplay}>Châu: {data.continent}</Text>
-        <Text style={styles.textDisplay}>Loại Cargo: {data.cargo}</Text>
-        <Text style={styles.textDisplay}>Pol: {data.pol}</Text>
-        <Text style={styles.textDisplay}>Pod: {data.pod}</Text>
-        <Text style={styles.textDisplay}>OF: {data.of}</Text>
-        <Text style={styles.textDisplay}>Term: {data.term}</Text>
-        <Text style={styles.textDisplay}>Local Pol: {data.localpol}</Text>
-        <Text style={styles.textDisplay}>Local Pod: {data.localpod}</Text>
-        <Text style={styles.textDisplay}>Carrier: {data.carrier}</Text>
-        <Text style={styles.textDisplay}>Schedule: {data.schedule}</Text>
-        <Text style={styles.textDisplay}>Transit Time: {data.transittime}</Text>
-        <Text style={styles.textDisplay}>Valid: {data.valid}</Text>
-        <Text style={styles.textDisplay}>Ghi Chú: {data.notes}</Text>
+        <Text style={styles.textDisplayCode}>{data.code}</Text>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.textDisplay}>Tháng:</Text>
+          <Text style={styles.textContent}>{data.month}</Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.textDisplay}>Châu:</Text>
+          <Text style={styles.textContent}>{data.continent}</Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.textDisplay}>Loại Cargo:</Text>
+          <Text style={styles.textContent}>{data.cargo}</Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.textDisplay}>Pol:</Text>
+          <Text style={styles.textContent}>{data.pol}</Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.textDisplay}>Pod: </Text>
+          <Text style={styles.textContent}>{data.pod}</Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.textDisplay}>OF:</Text>
+          <Text style={styles.textContent}>{data.of}</Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.textDisplay}>Term:</Text>
+          <Text style={styles.textContent}>{data.term}</Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.textDisplay}>Local Pol:</Text>
+          <Text style={styles.textContent}>{data.localpol}</Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.textDisplay}>Local Pod:</Text>
+          <Text style={styles.textContent}>{data.localpod}</Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.textDisplay}>Carrier:</Text>
+          <Text style={styles.textContent}>{data.carrier}</Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.textDisplay}>Schedule:</Text>
+          <Text style={styles.textContent}>{data.schedule}</Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.textDisplay}>Transit Time:</Text>
+          <Text style={styles.textContent}>{data.transittime}</Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.textDisplay}>Valid:</Text>
+          <Text style={styles.textContent}>{data.valid}</Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.textDisplay}>Ghi Chú:</Text>
+          <Text style={styles.textContent}>{data.notes}</Text>
+        </View>
         <View style={styles.styleButton}>
           <TouchableOpacity
             style={[styles.buttonUpdate]}
@@ -37,7 +79,7 @@ const DetailImportLCL = ({ route, navigation }) => {
               });
             }}
           >
-            <Text style={{ fontSize: 18, color: "black" }}>Update</Text>
+            <Text style={styles.textUpdate}>Cập nhật</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -48,17 +90,25 @@ const DetailImportLCL = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   detail: {
     borderRadius: 15,
-    borderColor: "#000",
-    backgroundColor: color.backgrounDisplayDetail,
+    borderWidth: 2,
+    borderColor: color.primary,
     marginVertical: 20,
     marginHorizontal: 10,
     padding: 20,
   },
   textDisplay: {
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: "bold",
     lineHeight: 25,
     marginRight: 9,
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 9,
+  },
+  textContent: {
+    fontSize: 20,
+    lineHeight: 25,
+    marginRight: 4,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -93,18 +143,30 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: 170,
     marginBottom: 30,
+    color: color.primary,
   },
   styleButton: {
     alignItems: "center",
     justifyContent: "center",
   },
   textDisplayCode: {
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: "bold",
     lineHeight: 25,
     marginRight: 9,
     justifyContent: "flex-end",
     alignItems: "flex-end",
+    textAlign: "center",
+    color: color.primary,
+    fontFamily: "Roboto",
+    fontWeight: "bold",
+    marginBottom: 16,
+    textDecorationLine: "underline",
+  },
+  textUpdate: {
+    fontSize: 19,
+    color: color.primary,
+    fontWeight: "bold",
   },
 });
 

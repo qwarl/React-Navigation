@@ -9,6 +9,7 @@ import {
   Alert,
   Image,
   Button,
+  TextInput,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import clientLCL from "../../../api/clientLCL";
@@ -18,6 +19,7 @@ import { Continent, Month } from "../../../contains/constant";
 import FormInput from "../../../components/FormInput";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { isValidObjectField, updateError } from "../../../utils/method";
+import Icon from "react-native-vector-icons/FontAwesome";
 
 const AddLCL = () => {
   const handleOnChangeText = (value, fieldName) => {
@@ -178,18 +180,30 @@ const AddLCL = () => {
           value={lclInfo.transittime}
           onChangeText={(value) => handleOnChangeText(value, "transittime")}
         />
-        <FormInput
-          placeholder="Valid"
-          label="Valid"
-          value={lclInfo.valid}
-          onChangeText={(value) => handleOnChangeText(value, "valid")}
-        />
-        <View>
-          <TouchableOpacity
-            style={[styles.buttonTime]}
-            onPress={() => showMode("date")}
-          >
-            <Text style={{ fontSize: 18, color: "#000" }}>Chọn Ngày</Text>
+        <View style={{ flexDirection: "row" }}>
+          <View style={{ width: "100%", marginRight: 20 }}>
+            <Text style={styles.textValid}>Valid</Text>
+            <TextInput
+              style={styles.validStyle}
+              placeholder="VALID"
+              label="VALID"
+              value={lclInfo.valid}
+              onChangeText={(value) => handleOnChangeText(value, "valid")}
+            />
+          </View>
+          <TouchableOpacity onPress={() => showMode("date")}>
+            <Icon
+              name="calendar"
+              size={35}
+              color="#7F7F7F"
+              style={{
+                top: 30,
+                position: "absolute",
+                right: 40,
+                marginBottom: 0,
+                zIndex: 1000,
+              }}
+            />
           </TouchableOpacity>
           {show && (
             <DateTimePicker
@@ -214,11 +228,15 @@ const AddLCL = () => {
             marginVertical: 30,
             marginHorizontal: 80,
             justifyContent: "center",
-            alignItems:'center',
+            alignItems: "center",
           }}
         >
           <TouchableOpacity style={[styles.buttonInsert]} onPress={submitForm}>
-            <Text style={{ fontSize: 18, color: "black" }}>Thêm</Text>
+            <Text
+              style={{ fontSize: 18, color: color.primary, fontWeight: "bold" }}
+            >
+              Thêm
+            </Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -259,14 +277,14 @@ const styles = StyleSheet.create({
   },
   buttonInsert: {
     height: 50,
-    width:150,
+    width: 150,
     borderColor: color.borderColor,
-    borderWidth:3,
+    borderWidth: 1.5,
     borderRadius: 8,
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 30,
-    marginLeft:10,
+    marginLeft: 10,
   },
   buttonTime: {
     height: 40,
@@ -296,6 +314,42 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginLeft: 20,
+  },
+  dropdown: {
+    height: 50,
+    borderColor: "gray",
+    borderWidth: 0.5,
+    borderRadius: 8,
+    paddingHorizontal: 8,
+  },
+  placeholderStyle: {
+    fontSize: 16,
+  },
+  selectedTextStyle: {
+    fontSize: 16,
+  },
+  iconStyle: {
+    width: 20,
+    height: 20,
+  },
+  inputSearchStyle: {
+    height: 40,
+    fontSize: 16,
+  },
+  validStyle: {
+    height: 35,
+    width: "90%",
+    fontSize: 14,
+    padding: 5,
+    marginBottom: 10,
+    height: 50,
+    marginLeft: 17,
+    marginRight: 17,
+    borderBottomWidth: 1,
+  },
+  textValid: {
+    fontWeight: "bold",
+    marginLeft: 17,
   },
 });
 

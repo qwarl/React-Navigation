@@ -105,7 +105,9 @@ const AddTruck = () => {
         <View style={styles.dropMenu}>
           <Text style={styles.label}>Chọn Tháng</Text>
           <SelectList
-            setSelected={(value) => setTruckInfo({ ...truckInfo, month: value })}
+            setSelected={(value) =>
+              setTruckInfo({ ...truckInfo, month: value })
+            }
             data={Month}
           />
         </View>
@@ -196,11 +198,15 @@ const AddTruck = () => {
             marginVertical: 30,
             marginHorizontal: 80,
             justifyContent: "center",
-            alignItems:'center'
+            alignItems: "center",
           }}
         >
           <TouchableOpacity style={[styles.buttonInsert]} onPress={submitForm}>
-            <Text style={{ fontSize: 18, color: "black" }}>Thêm</Text>
+            <Text
+              style={{ fontSize: 18, color: color.primary, fontWeight: "bold" }}
+            >
+              Thêm
+            </Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -233,6 +239,7 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
     flex: 1,
     minWidth: 180,
+    marginBottom: 10,
   },
   label: {
     fontSize: 18,
@@ -241,14 +248,13 @@ const styles = StyleSheet.create({
   },
   buttonInsert: {
     height: 50,
-    width:150,
+    width: 150,
     borderColor: color.borderColor,
-    borderWidth:2,
+    borderWidth: 2,
     borderRadius: 8,
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 30,
-    
   },
   buttonTime: {
     height: 40,

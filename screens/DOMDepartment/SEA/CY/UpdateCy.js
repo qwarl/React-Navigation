@@ -15,14 +15,19 @@ import { Dropdown } from "react-native-element-dropdown";
 import clientSeaCy from "../../../../api/clientSeaCy";
 import color from "../../../../contains/color";
 import FormInput from "../../../../components/FormInput";
-import { Continent, DomType, Month1, TypeSeaCY } from "../../../../contains/constant";
+import {
+  Continent,
+  DomType,
+  Month1,
+  TypeSeaCY,
+} from "../../../../contains/constant";
 
 const UpdateCy = ({ route }) => {
   const [seaCyInfo, setSeaCyInfo] = useState(route.params.data);
   const handleOnChangeText = (value, fieldName) => {
     setSeaCyInfo({ ...seaCyInfo, [fieldName]: value });
   };
-  
+
   console.log(seaCyInfo.month);
   const submitForm = async () => {
     // if (isValidForm()) {
@@ -57,10 +62,11 @@ const UpdateCy = ({ route }) => {
   };
 
   return (
-    <ScrollView>
-      <View style={styles.dropMenu}>
-        <Text style={styles.label}>Chọn Tháng</Text>
-        <Dropdown
+    <View style={{ backgroundColor: "white" }}>
+      <ScrollView>
+        <View style={styles.dropMenu}>
+          <Text style={styles.label}>Chọn Tháng</Text>
+          <Dropdown
             style={[styles.dropdown]}
             placeholderStyle={styles.placeholderStyle}
             selectedTextStyle={styles.selectedTextStyle}
@@ -77,10 +83,10 @@ const UpdateCy = ({ route }) => {
               setSeaCyInfo({ ...seaCyInfo, month: value.value });
             }}
           />
-      </View>
-      <View style={styles.dropMenu}>
-        <Text style={styles.label}>Chọn Châu</Text>
-        <Dropdown
+        </View>
+        <View style={styles.dropMenu}>
+          <Text style={styles.label}>Chọn Châu</Text>
+          <Dropdown
             style={[styles.dropdown]}
             placeholderStyle={styles.placeholderStyle}
             selectedTextStyle={styles.selectedTextStyle}
@@ -97,10 +103,10 @@ const UpdateCy = ({ route }) => {
               setSeaCyInfo({ ...seaCyInfo, continent: value.value });
             }}
           />
-      </View>
-      <View style={styles.dropMenu}>
-        <Text style={styles.label}>Chọn Container</Text>
-        <Dropdown
+        </View>
+        <View style={styles.dropMenu}>
+          <Text style={styles.label}>Chọn Container</Text>
+          <Dropdown
             style={[styles.dropdown]}
             placeholderStyle={styles.placeholderStyle}
             selectedTextStyle={styles.selectedTextStyle}
@@ -117,10 +123,10 @@ const UpdateCy = ({ route }) => {
               setSeaCyInfo({ ...seaCyInfo, container: value.value });
             }}
           />
-      </View>
-      <View style={styles.dropMenu}>
-        <Text style={styles.label}>Chọn Loại Vận Chuyển</Text>
-        <Dropdown
+        </View>
+        <View style={styles.dropMenu}>
+          <Text style={styles.label}>Chọn Loại Vận Chuyển</Text>
+          <Dropdown
             style={[styles.dropdown]}
             placeholderStyle={styles.placeholderStyle}
             selectedTextStyle={styles.selectedTextStyle}
@@ -137,61 +143,70 @@ const UpdateCy = ({ route }) => {
               setSeaCyInfo({ ...seaCyInfo, cytype: value.value });
             }}
           />
-      </View>
-      <FormInput
-        label="Điểm Đi"
-        placeholder="Điểm Đi"
-        onChangeText={(value) => handleOnChangeText(value, "pol")}
-        value={seaCyInfo.pol}
-      />
-      <FormInput
-        placeholder="Điểm Đến"
-        label="Điểm Đến"
-        onChangeText={(value) => handleOnChangeText(value, "aod")}
-        value={seaCyInfo.pod}
-      />
-      <FormInput
-        label="Tên Hàng"
-        placeholder="Tên Hàng"
-        onChangeText={(value) => handleOnChangeText(value, "productname")}
-        value={seaCyInfo.productname}
-      />
-      <FormInput
-        label="Trọng Lượng"
-        placeholder="Trọng Lượng"
-        onChangeText={(value) => handleOnChangeText(value, "weight")}
-        value={seaCyInfo.weight}
-      />
-      <FormInput
-        placeholder="SL Cont"
-        label="SL Cont"
-        onChangeText={(value) => handleOnChangeText(value, "quantitycont")}
-        value={seaCyInfo.quantitycont}
-      />
-      <FormInput
-        placeholder="ETD"
-        label="ETD"
-        onChangeText={(value) => handleOnChangeText(value, "etd")}
-        value={seaCyInfo.etd}
-      />
-      <View
-        style={{
-          flex: 1,
-          marginVertical: 30,
-          marginHorizontal: 80,
-          justifyContent: "center",
-          alignItems: "center",
-          flexDirection: "row",
-        }}
-      >
-        <TouchableOpacity style={[styles.buttonUpdate]} onPress={submitForm}>
-          <Text style={{ fontSize: 18, color: "black" }}>Cập Nhật</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={[styles.buttonInsert]} onPress={AddForm}>
-          <Text style={{ fontSize: 18, color: "black" }}>Thêm</Text>
-        </TouchableOpacity>
-      </View>
-    </ScrollView>
+        </View>
+        <FormInput
+          label="Điểm Đi"
+          placeholder="Điểm Đi"
+          onChangeText={(value) => handleOnChangeText(value, "pol")}
+          value={seaCyInfo.pol}
+        />
+        <FormInput
+          placeholder="Điểm Đến"
+          label="Điểm Đến"
+          onChangeText={(value) => handleOnChangeText(value, "aod")}
+          value={seaCyInfo.pod}
+        />
+        <FormInput
+          label="Tên Hàng"
+          placeholder="Tên Hàng"
+          onChangeText={(value) => handleOnChangeText(value, "productname")}
+          value={seaCyInfo.productname}
+        />
+        <FormInput
+          label="Trọng Lượng"
+          placeholder="Trọng Lượng"
+          onChangeText={(value) => handleOnChangeText(value, "weight")}
+          value={seaCyInfo.weight}
+        />
+        <FormInput
+          placeholder="SL Cont"
+          label="SL Cont"
+          onChangeText={(value) => handleOnChangeText(value, "quantitycont")}
+          value={seaCyInfo.quantitycont}
+        />
+        <FormInput
+          placeholder="ETD"
+          label="ETD"
+          onChangeText={(value) => handleOnChangeText(value, "etd")}
+          value={seaCyInfo.etd}
+        />
+        <View
+          style={{
+            flex: 1,
+            marginVertical: 30,
+            marginHorizontal: 80,
+            justifyContent: "center",
+            alignItems: "center",
+            flexDirection: "row",
+          }}
+        >
+          <TouchableOpacity style={[styles.buttonUpdate]} onPress={submitForm}>
+            <Text
+              style={{ fontSize: 18, color: color.primary, fontWeight: "bold" }}
+            >
+              Cập Nhật
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.buttonInsert]} onPress={AddForm}>
+            <Text
+              style={{ fontSize: 18, color: color.primary, fontWeight: "bold" }}
+            >
+              Thêm
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    </View>
   );
 };
 
@@ -282,6 +297,7 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     borderRadius: 8,
     paddingHorizontal: 8,
+    marginVertical: 10,
   },
   placeholderStyle: {
     fontSize: 16,

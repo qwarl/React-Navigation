@@ -12,13 +12,17 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import SelectList from "react-native-dropdown-select-list";
-import color from "../../../contains/color";
-import FormInput from "../../../components/FormInput";
-import { Cargo, Continent, Month1 } from "../../../contains/constant";
-import clientCheckPriceImportLCL from "../../../api/clientCheckPriceImportLCL";
+import { Dropdown } from "react-native-element-dropdown";
+import FormInput from "../../../../components/FormInput";
+import color from "../../../../contains/color";
+import { Cargo, Continent, Month1 } from "../../../../contains/constant";
+import clientImportLCL from "../../../../api/clientImportLCL";
+import clientCheckPriceImportLCL from "../../../../api/clientCheckPriceImportLCL";
+import Icon from "react-native-vector-icons/FontAwesome";
 
-const AddCheckPriceImportLCL = () => {
+const AddRequiteSale = ({ route }) => {
+  const [importLCLInfo, setImportLCLInfo] = useState(route.params.item);
+
   const handleOnChangeText = (fieldName, ...values) => {
     values.length === 1
       ? setImportLCLInfo({ ...importLCLInfo, [fieldName]: values[0] })
@@ -65,43 +69,22 @@ const AddCheckPriceImportLCL = () => {
     return num1 + num2;
   };
 
-  const [importLCLInfo, setImportLCLInfo] = useState({
-    pol: "",
-    pod: "",
-    month: "",
-    continent: "",
-    cargo: "",
-    of: "",
-    localpol: "",
-    localpod: "",
-    term: "",
-    carrier: "",
-    schedule: "",
-    transittime: "",
-    valid: "",
-    notes: "",
-  });
-
-  // console.log(importLCLInfo);
-  const isValidForm = () => {
-    if (!isValidObjectField(importLCLInfo))
-      return updateError("Nhập thiếu trường dữ liệu!", setError);
-    return true;
-  };
   const submitForm = async () => {
     // if (isValidForm()) {
     try {
-      const res = await clientCheckPriceImportLCL.post("/create", { ...importLCLInfo });
+      const url = "/delete/";
+      const id = importLCLInfo._id;
+      const res1 = await clientCheckPriceImportLCL.delete(url + id);
+      const res = await clientImportLCL.post("/create", { ...importLCLInfo });
       if (res.data.success) {
         Alert.alert("Thêm Thành Công");
       }
-      console.log("running");
       console.log(res.data);
     } catch (error) {
       console.log(error.message);
     }
-    // }
   };
+
   return (
     <View style={StyleSheet.container}>
       {error ? (
@@ -112,29 +95,62 @@ const AddCheckPriceImportLCL = () => {
       <ScrollView>
         <View style={styles.dropMenu}>
           <Text style={styles.label}>Chọn Tháng</Text>
-          <SelectList
-            setSelected={(value) =>
-              setImportLCLInfo({ ...importLCLInfo, month: value })
-            }
+          <Dropdown
+            style={[styles.dropdown]}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
             data={Month1}
+            search={true}
+            maxHeight={300}
+            labelField="label"
+            valueField="value"
+            searchPlaceholder="Search..."
+            value={importLCLInfo.month}
+            onChange={(value) => {
+              setImportLCLInfo({ ...importLCLInfo, month: value.value });
+            }}
           />
         </View>
         <View style={styles.dropMenu}>
           <Text style={styles.label}>Chọn Châu</Text>
-          <SelectList
-            setSelected={(value) =>
-              setImportLCLInfo({ ...importLCLInfo, continent: value })
-            }
+          <Dropdown
+            style={[styles.dropdown]}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
             data={Continent}
+            search={true}
+            maxHeight={300}
+            labelField="label"
+            valueField="value"
+            searchPlaceholder="Search..."
+            value={importLCLInfo.continent}
+            onChange={(value) => {
+              setImportLCLInfo({ ...importLCLInfo, continent: value.value });
+            }}
           />
         </View>
         <View style={styles.dropMenu}>
           <Text style={styles.label}>Cargo</Text>
-          <SelectList
-            setSelected={(value) =>
-              setImportLCLInfo({ ...importLCLInfo, cargo: value })
-            }
+          <Dropdown
+            style={[styles.dropdown]}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
             data={Cargo}
+            search={true}
+            maxHeight={300}
+            labelField="label"
+            valueField="value"
+            searchPlaceholder="Search..."
+            value={importLCLInfo.cargo}
+            onChange={(value) => {
+              setImportLCLInfo({ ...importLCLInfo, cargo: value.value });
+            }}
           />
         </View>
         <FormInput
@@ -192,18 +208,30 @@ const AddCheckPriceImportLCL = () => {
           value={importLCLInfo.transittime}
           onChangeText={(value) => handleOnChangeText("transittime", value)}
         />
-        <FormInput
-          placeholder="VALID"
-          label="VALID"
-          value={importLCLInfo.valid}
-          onChangeText={(value) => handleOnChangeText(value, "valid")}
-        />
-        <View>
-          <TouchableOpacity
-            style={[styles.buttonTime]}
-            onPress={() => showMode("date")}
-          >
-            <Text style={{ fontSize: 18, color: "#000" }}>Chọn Ngày</Text>
+        <View style={{ flexDirection: "row" }}>
+          <View style={{ width: "100%", marginRight: 20 }}>
+            <Text style={styles.textValid}>Valid</Text>
+            <TextInput
+              style={styles.validStyle}
+              placeholder="VALID"
+              label="VALID"
+              value={importLCLInfo.valid}
+              onChangeText={(value) => handleOnChangeText(value, "valid")}
+            />
+          </View>
+          <TouchableOpacity onPress={() => showMode("date")}>
+            <Icon
+              name="calendar"
+              size={35}
+              color="#7F7F7F"
+              style={{
+                top: 30,
+                position: "absolute",
+                right: 40,
+                marginBottom: 0,
+                zIndex: 1000,
+              }}
+            />
           </TouchableOpacity>
           {show && (
             <DateTimePicker
@@ -232,14 +260,17 @@ const AddCheckPriceImportLCL = () => {
           }}
         >
           <TouchableOpacity style={[styles.buttonInsert]} onPress={submitForm}>
-            <Text style={{ fontSize: 18, color: "black" }}>Thêm</Text>
+            <Text
+              style={{ fontSize: 18, color: color.primary, fontWeight: "bold" }}
+            >
+              Thêm
+            </Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
     </View>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -275,7 +306,7 @@ const styles = StyleSheet.create({
     height: 50,
     width: 150,
     borderColor: color.borderColor,
-    borderWidth: 3,
+    borderWidth: 1.5,
     borderRadius: 8,
     justifyContent: "center",
     alignItems: "center",
@@ -311,6 +342,41 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginLeft: 20,
   },
+  dropdown: {
+    height: 50,
+    borderColor: "gray",
+    borderWidth: 0.5,
+    borderRadius: 8,
+    paddingHorizontal: 8,
+  },
+  placeholderStyle: {
+    fontSize: 16,
+  },
+  selectedTextStyle: {
+    fontSize: 16,
+  },
+  iconStyle: {
+    width: 20,
+    height: 20,
+  },
+  inputSearchStyle: {
+    height: 40,
+    fontSize: 16,
+  },
+  validStyle: {
+    height: 35,
+    width: "90%",
+    fontSize: 14,
+    padding: 5,
+    marginBottom: 10,
+    height: 50,
+    marginLeft: 17,
+    marginRight: 17,
+    borderBottomWidth: 1,
+  },
+  textValid: {
+    fontWeight: "bold",
+    marginLeft: 17,
+  },
 });
-
-export default AddCheckPriceImportLCL;
+export default AddRequiteSale;

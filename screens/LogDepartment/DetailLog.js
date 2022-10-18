@@ -17,27 +17,61 @@ const DetailLog = ({ navigation, route }) => {
   return (
     <ScrollView>
       <View style={styles.detail}>
-        <Text style={styles.textDisplayCode}>
-          Mã Báo Giá: {data.quotationcode}
-        </Text>
-        <Text style={styles.textDisplay}>Tháng: {data.month}</Text>
-        <Text style={styles.textDisplay}>Năm: {data.year}</Text>
-        <Text style={styles.textDisplay}>Loại Vận Chuyển: {data.freight}</Text>
-        <Text style={styles.textDisplay}>Tên Hàng: {data.name}</Text>
-        <Text style={styles.textDisplay}>H/S Code: {data.hsCode}</Text>
-        <Text style={styles.textDisplay}>Công Dụng: {data.function}</Text>
-        <Text style={styles.textDisplay}>Cảng Đi: {data.pol}</Text>
-        <Text style={styles.textDisplay}>Cảng Đến: {data.pod}</Text>
-        <Text style={styles.textDisplay}>Loại Hàng: {data.typeProduct}</Text>
-        <Text style={styles.textDisplay}>Số lượng: {data.quantity}</Text>
-        <Text style={styles.textDisplay}>
-          Yêu Cầu Đặc Biệt: {data.requirement}
-        </Text>
-        <Text style={styles.textDisplay}>Loại Hàng: {data.typeProduct}</Text>
-        <Text style={styles.textDisplay}>Giá: {data.price}</Text>
-        <Text style={styles.textDisplay}>Loại Hình: {data.type}</Text>
+        <Text style={styles.textDisplayCode}>{data.code}</Text>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.textDisplay}>Tháng:</Text>
+          <Text style={styles.textContent}>{data.month}</Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.textDisplay}>Năm:</Text>
+          <Text style={styles.textContent}>{data.year}</Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.textDisplay}>Loại Vận Chuyển:</Text>
+          <Text style={styles.textContent}>{data.freight}</Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.textDisplay}>Tên Hàng:</Text>
+          <Text style={styles.textContent}>{data.name}</Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.textDisplay}>H/S Code:</Text>
+          <Text style={styles.textContent}>{data.hsCode}</Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.textDisplay}>Công Dụng:</Text>
+          <Text style={styles.textContent}>{data.function}</Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.textDisplay}>Cảng Đi:</Text>
+          <Text style={styles.textContent}>{data.pol}</Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.textDisplay}>Cảng Đến:</Text>
+          <Text style={styles.textContent}> {data.pod}</Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.textDisplay}>Loại Hàng:</Text>
+          <Text style={styles.textContent}>{data.typeProduct}</Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.textDisplay}>Yêu Cầu Đặc Biệt:</Text>
+          <Text style={styles.textContent}>{data.requirement}</Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.textDisplay}>Giá:</Text>
+          <Text style={styles.textContent}>{data.price}</Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.textDisplay}>Loại Hình:</Text>
+          <Text style={styles.textContent}>{data.type}</Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.textDisplay}>Loại Hàng:</Text>
+          <Text style={styles.textContent}>{data.typeProduct}</Text>
+        </View>
         <View>
-          <Text style={styles.textDisplay}>Chính Sách: </Text>
+          <Text style={styles.textDisplay}>Chính Sách:</Text>
           <TouchableOpacity
             onPress={() => {
               navigation.navigate("PolicyDetail", {
@@ -66,7 +100,10 @@ const DetailLog = ({ navigation, route }) => {
             </Text>
           </TouchableOpacity>
         </View>
-        <Text style={styles.textDisplay}>Ghi Chú: {data.note}</Text>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.textDisplay}>Ghi Chú:</Text>
+          <Text style={styles.textContent}>{data.note}</Text>
+        </View>
         <View style={styles.styleButton}>
           <TouchableOpacity
             style={[styles.buttonUpdate]}
@@ -76,7 +113,11 @@ const DetailLog = ({ navigation, route }) => {
               });
             }}
           >
-            <Text style={{ fontSize: 18, color: "black" }}>Update</Text>
+            <Text
+              style={{ fontSize: 18, color: color.primary, fontWeight: "bold" }}
+            >
+              Cập nhật
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -87,17 +128,25 @@ const DetailLog = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   detail: {
     borderRadius: 15,
-    borderColor: "#000",
-    backgroundColor: color.backgrounDisplayDetail,
+    borderWidth: 2,
+    borderColor: color.primary,
     marginVertical: 20,
     marginHorizontal: 10,
     padding: 20,
   },
   textDisplay: {
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: "bold",
     lineHeight: 25,
     marginRight: 9,
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 9,
+  },
+  textContent: {
+    fontSize: 20,
+    lineHeight: 25,
+    marginRight: 4,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -123,40 +172,39 @@ const styles = StyleSheet.create({
     alignContent: "center",
   },
   buttonUpdate: {
+    marginTop: 20,
     height: 45,
-    backgroundColor: color.borderColor,
-    borderRadius: 8,
+    borderColor: color.borderColor,
+    borderWidth: 2,
+    borderRadius: 20,
     justifyContent: "center",
     alignItems: "center",
     width: 170,
     marginBottom: 30,
+    color: color.primary,
   },
   styleButton: {
     alignItems: "center",
     justifyContent: "center",
   },
   textDisplayCode: {
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: "bold",
     lineHeight: 25,
     marginRight: 9,
     justifyContent: "flex-end",
     alignItems: "flex-end",
+    textAlign: "center",
+    color: color.primary,
+    fontFamily: "Roboto",
+    fontWeight: "bold",
+    marginBottom: 16,
+    textDecorationLine: "underline",
   },
-  buttonUpdate: {
-    marginTop:20,
-    height: 45,
-    borderColor: color.borderColor,
-    borderWidth:2,
-    borderRadius: 20,
-    justifyContent: "center",
-    alignItems: "center",
-    width: 170,
-    marginBottom: 30,
-  },
-  styleButton: {
-    alignItems: "center",
-    justifyContent: "center",
+  textUpdate: {
+    fontSize: 19,
+    color: color.primary,
+    fontWeight: "bold",
   },
 });
 

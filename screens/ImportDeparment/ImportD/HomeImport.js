@@ -82,9 +82,15 @@ const HomeImport = ({ navigation }) => {
   const filteredImport = () =>
     data.filter(
       (eachImport) =>
-        eachImport.month.toLowerCase().includes(importInfo.month.toLowerCase()) &&
-        eachImport.continent.toLowerCase().includes(importInfo.continent.toLowerCase()) &&
-        eachImport.container.toLowerCase().includes(importInfo.container.toLowerCase()) &&
+        eachImport.month
+          .toLowerCase()
+          .includes(importInfo.month.toLowerCase()) &&
+        eachImport.continent
+          .toLowerCase()
+          .includes(importInfo.continent.toLowerCase()) &&
+        eachImport.container
+          .toLowerCase()
+          .includes(importInfo.container.toLowerCase()) &&
         checkTypeSearch(searchText, eachImport)
       // && checkPriceSearch(eachLog)
     );
@@ -124,17 +130,18 @@ const HomeImport = ({ navigation }) => {
     </TouchableOpacity>
   );
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor: "white" }}>
       <View style={{ flexDirection: "row", alignItems: "center" }}>
         <Icon
           name="search"
-          size={25}
-          color="black"
-          style={{ position: "absolute", top: 20, left: 30 }}
+          size={28}
+          color="white"
+          style={{ position: "absolute", top: 20, left: 30, zIndex: 1000 }}
         />
         <TextInput
-          style={styles.textInputStyle}
-          placeholder="Nhập từ khóa tìm kiếm"
+          style={styles.styleSearch}
+          placeholder="Tìm kiếm"
+          placeholderTextColor={"white"}
           underlineColorAndroid="transparent"
           onChangeText={(text) => setSearchText(text)}
         />
@@ -233,14 +240,17 @@ const HomeImport = ({ navigation }) => {
       <View>
         <RadioForm
           formHorizontal={true}
-          style={{ margin: 2 }}
-          labelStyle={{ fontSize: 16, marginRight: 5 }}
+          style={{ marginLeft: 10 }}
+          labelStyle={{ fontSize: 20, marginRight: 8 }}
           buttonSize={8}
           buttonColor={"black"}
           radio_props={ContainerImport}
           initial={-1}
           onPress={(val) =>
-            setImportInfo({ ...importInfo, container: ContainerImport[val].label })
+            setImportInfo({
+              ...importInfo,
+              container: ContainerImport[val].label,
+            })
           }
         />
       </View>
@@ -326,23 +336,23 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 5,
   },
-  textInputStyle: {
+  styleSearch: {
     flex: 1,
     height: 50,
-    borderWidth: 1.5,
-    paddingLeft: 35,
+    paddingLeft: 40,
     marginVertical: 10,
     marginHorizontal: 20,
-    borderColor: color.borderColor,
+    backgroundColor: "#BFBFBF",
     borderRadius: 30,
     fontSize: 18,
   },
   detail: {
-    borderRadius: 15,
-    borderColor: "#000",
-    backgroundColor: color.backgrounDisplayDetail,
     marginBottom: 10,
     padding: 5,
+    borderRadius: 10,
+    borderStyle: "solid",
+    borderColor: "#0176E4",
+    borderWidth: 1,
   },
   textLable: {
     fontSize: 18,
@@ -400,6 +410,8 @@ const styles = StyleSheet.create({
     marginRight: 5,
     fontSize: 17,
     fontWeight: "500",
+    color: "#0176E4",
+    textDecorationLine: "underline",
   },
 });
 

@@ -9,6 +9,7 @@ import {
   Alert,
   Image,
   Button,
+  TextInput,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -17,9 +18,9 @@ import color from "../../../contains/color";
 import { Cargo, Continent, Month1 } from "../../../contains/constant";
 import FormInput from "../../../components/FormInput";
 import clientImportLCL from "../../../api/clientImportLCL";
-import clientCheckPriceImportLCL from "../../../api/clientCheckPriceImportLCL";
+import Icon from "react-native-vector-icons/FontAwesome";
 
-const AddImportLCL = ({ route }) => {
+const AddImportLCL = () => {
   const handleOnChangeText = (fieldName, ...values) => {
     values.length === 1
       ? setImportLCLInfo({ ...importLCLInfo, [fieldName]: values[0] })
@@ -66,23 +67,21 @@ const AddImportLCL = ({ route }) => {
     return num1 + num2;
   };
 
-  let data = route.params.item;
-  console.log(data);
   const [importLCLInfo, setImportLCLInfo] = useState({
-    pol: data.pol,
-    pod: data.pod,
-    month: data.month,
-    continent: data.continent,
-    cargo: data.cargo,
-    of: data.of,
-    localpol: data.localpol,
-    localpod: data.localpod,
-    term: data.term,
-    carrier: data.carrier,
-    schedule: data.schedule,
-    transittime: data.transittime,
-    valid: data.valid,
-    notes: data.notes,
+    pol: "",
+    pod: "",
+    month: "",
+    continent: "",
+    cargo: "",
+    of: "",
+    localpol: "",
+    localpod: "",
+    term: "",
+    carrier: "",
+    schedule: "",
+    transittime: "",
+    valid: "",
+    notes: "",
   });
 
   // console.log(importLCLInfo);
@@ -94,15 +93,12 @@ const AddImportLCL = ({ route }) => {
   const submitForm = async () => {
     // if (isValidForm()) {
     try {
-      const url = "/delete/";
-      const id = importLCLInfo._id;
-      const res1 = await clientCheckPriceImportLCL.delete(url + id);
       const res = await clientImportLCL.post("/create", { ...importLCLInfo });
-      if (res1.data.success && res.data.success) {
+      if (res.data.success) {
         Alert.alert("Thêm Thành Công");
       }
       console.log("running");
-      console.log(res1.data);
+      console.log(res.data);
     } catch (error) {
       console.log(error.message);
     }
@@ -231,18 +227,30 @@ const AddImportLCL = ({ route }) => {
           value={importLCLInfo.transittime}
           onChangeText={(value) => handleOnChangeText("transittime", value)}
         />
-        <FormInput
-          placeholder="VALID"
-          label="VALID"
-          value={importLCLInfo.valid}
-          onChangeText={(value) => handleOnChangeText(value, "valid")}
-        />
-        <View>
-          <TouchableOpacity
-            style={[styles.buttonTime]}
-            onPress={() => showMode("date")}
-          >
-            <Text style={{ fontSize: 18, color: "#000" }}>Chọn Ngày</Text>
+        <View style={{ flexDirection: "row" }}>
+          <View style={{ width: "100%", marginRight: 20 }}>
+            <Text style={styles.textValid}>Valid</Text>
+            <TextInput
+              style={styles.validStyle}
+              placeholder="VALID"
+              label="VALID"
+              value={importLCLInfo.valid}
+              onChangeText={(value) => handleOnChangeText(value, "valid")}
+            />
+          </View>
+          <TouchableOpacity onPress={() => showMode("date")}>
+            <Icon
+              name="calendar"
+              size={35}
+              color="#7F7F7F"
+              style={{
+                top: 30,
+                position: "absolute",
+                right: 40,
+                marginBottom: 0,
+                zIndex: 1000,
+              }}
+            />
           </TouchableOpacity>
           {show && (
             <DateTimePicker
@@ -271,7 +279,11 @@ const AddImportLCL = ({ route }) => {
           }}
         >
           <TouchableOpacity style={[styles.buttonInsert]} onPress={submitForm}>
-            <Text style={{ fontSize: 18, color: "black" }}>Thêm</Text>
+            <Text
+              style={{ fontSize: 18, color: color.primary, fontWeight: "bold" }}
+            >
+              Thêm
+            </Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -314,7 +326,7 @@ const styles = StyleSheet.create({
     height: 50,
     width: 150,
     borderColor: color.borderColor,
-    borderWidth: 3,
+    borderWidth: 1.5,
     borderRadius: 8,
     justifyContent: "center",
     alignItems: "center",
@@ -370,6 +382,21 @@ const styles = StyleSheet.create({
   inputSearchStyle: {
     height: 40,
     fontSize: 16,
+  },
+  validStyle: {
+    height: 35,
+    width: "90%",
+    fontSize: 14,
+    padding: 5,
+    marginBottom: 10,
+    height: 50,
+    marginLeft: 17,
+    marginRight: 17,
+    borderBottomWidth: 1,
+  },
+  textValid: {
+    fontWeight: "bold",
+    marginLeft: 17,
   },
 });
 

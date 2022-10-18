@@ -30,34 +30,33 @@ const AddLog = ({ route }) => {
   const [error, setError] = useState("");
   const [imageGallery, setImageGallery] = useState(null);
 
-  
-   //handle time picker
-   const [date, setDate] = useState(new Date());
-   const [mode, setMode] = useState("date");
-   const [show, setShow] = useState(false);
- 
-   //handle time picker
-   const onChange = (event, selectedDate) => {
-     const currentDate = selectedDate || date;
-     setShow(Platform.OS === "ios");
-     setDate(currentDate);
- 
-     let tempDate = new Date(currentDate);
-     let fDate =
-       tempDate.getDate() +
-       "/" +
-       (tempDate.getMonth() + 1) +
-       "/" +
-       tempDate.getFullYear();
- 
-     handleOnChangeText(fDate, "valid");
-   };
- 
-   //handle time picker
-   const showMode = (currentMode) => {
-     setShow(true);
-     setMode(currentMode);
-   };
+  //handle time picker
+  const [date, setDate] = useState(new Date());
+  const [mode, setMode] = useState("date");
+  const [show, setShow] = useState(false);
+
+  //handle time picker
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setShow(Platform.OS === "ios");
+    setDate(currentDate);
+
+    let tempDate = new Date(currentDate);
+    let fDate =
+      tempDate.getDate() +
+      "/" +
+      (tempDate.getMonth() + 1) +
+      "/" +
+      tempDate.getFullYear();
+
+    handleOnChangeText(fDate, "valid");
+  };
+
+  //handle time picker
+  const showMode = (currentMode) => {
+    setShow(true);
+    setMode(currentMode);
+  };
 
   const [logInfo, setLogInfo] = useState({
     name: "",
@@ -74,7 +73,7 @@ const AddLog = ({ route }) => {
     price: "",
     type: "",
     policy: "",
-    referencefee:"",
+    referencefee: "",
     note: "",
   });
 
@@ -106,16 +105,16 @@ const AddLog = ({ route }) => {
 
   const submitForm = async () => {
     // if (isValidForm()) {
-      try {
-        const res = await clientLog.post("/create", { ...logInfo });
-        if (res.data.success) {
-          Alert.alert("Thêm Thành Công");
-        }
-        console.log("running");
-        console.log(res.data);
-      } catch (error) {
-        console.log(error.message);
+    try {
+      const res = await clientLog.post("/create", { ...logInfo });
+      if (res.data.success) {
+        Alert.alert("Thêm Thành Công");
       }
+      console.log("running");
+      console.log(res.data);
+    } catch (error) {
+      console.log(error.message);
+    }
     // }
   };
 
@@ -236,11 +235,15 @@ const AddLog = ({ route }) => {
             marginVertical: 30,
             marginHorizontal: 80,
             justifyContent: "center",
-            alignItems:'center',
+            alignItems: "center",
           }}
         >
           <TouchableOpacity style={[styles.buttonInsert]} onPress={submitForm}>
-            <Text style={{ fontSize: 18, color: "black" }}>Thêm</Text>
+            <Text
+              style={{ fontSize: 18, color: color.primary, fontWeight: "bold" }}
+            >
+              Thêm
+            </Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -282,14 +285,14 @@ const styles = StyleSheet.create({
   },
   buttonInsert: {
     height: 50,
-    width:150,
+    width: 150,
     borderColor: color.borderColor,
-    borderWidth:3,
+    borderWidth: 3,
     borderRadius: 8,
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 30,
-    marginLeft:10,
+    marginLeft: 10,
   },
   buttonImage: {
     height: 50,

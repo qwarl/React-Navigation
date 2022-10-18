@@ -118,13 +118,14 @@ const HomeLCL = ({ navigation }) => {
       <View style={{ flexDirection: "row", alignItems: "center" }}>
         <Icon
           name="search"
-          size={25}
-          color="black"
-          style={{ position: "absolute", top: 20, left: 30 }}
+          size={28}
+          color="white"
+          style={{ position: "absolute", top: 20, left: 30, zIndex: 1000 }}
         />
         <TextInput
-          style={styles.textInputStyle}
-          placeholder="Nhập từ khóa tìm kiếm"
+          style={styles.styleSearch}
+          placeholder="Tìm kiếm"
+          placeholderTextColor={"white"}
           underlineColorAndroid="transparent"
           onChangeText={(text) => setSearchText(text)}
         />
@@ -175,7 +176,7 @@ const HomeLCL = ({ navigation }) => {
           </View>
         </View>
       </View>
-      <View style={{ flex: 9 }}>
+      <View style={{ flex: 5 }}>
         <View style={styles.displayData}>
           {filteredLCL().length > 0 ? (
             <FlatList
@@ -199,7 +200,7 @@ const HomeLCL = ({ navigation }) => {
           )}
         </View>
       </View>
-      <View style={{ flex: 0.5 }}>
+      <View style={{ flex: 0.5, marginBottom: 20 }}>
         <TouchableOpacity
           onPress={() => {
             navigation.navigate("AddLCL", {
@@ -217,6 +218,28 @@ const HomeLCL = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+  iconWrapper: {
+    width: 44,
+    height: 44,
+    backgroundColor: color.primary,
+    borderRadius: 44,
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 2,
+    borderColor: color.background,
+    position: "absolute",
+    right: 10,
+    marginBottom: 0,
+  },
+  icon: {
+    fontSize: 24,
+    color: color.white,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  item: {
+    marginLeft: 10,
+  },
   dropMenu: {
     paddingHorizontal: 5,
     paddingVertical: 4,
@@ -230,41 +253,23 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 5,
   },
-  iconWrapper: {
-    width: 44,
-    height: 44,
-    backgroundColor: color.colorbutton,
-    borderRadius: 44,
-    alignItems: "center",
-    justifyContent: "center",
-    borderWidth: 2,
-    borderColor: color.background,
-    position: "absolute",
-    right: 10,
-    marginBottom: 20,
-    marginTop: -40,
-  },
-  icon: {
-    fontSize: 24,
-    color: color.white,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  displayData: {
+  styleSearch: {
     flex: 1,
-    width: "100%",
-    padding: 10,
-  },
-  list: {
-    flex: 1,
-    padding: 8,
+    height: 50,
+    paddingLeft: 40,
+    marginVertical: 10,
+    marginHorizontal: 20,
+    backgroundColor: "#BFBFBF",
+    borderRadius: 30,
+    fontSize: 18,
   },
   detail: {
-    borderRadius: 15,
-    borderColor: "#000",
-    backgroundColor: color.backgrounDisplayData,
     marginBottom: 10,
     padding: 5,
+    borderRadius: 10,
+    borderStyle: "solid",
+    borderColor: "#0176E4",
+    borderWidth: 1,
   },
   textLable: {
     fontSize: 18,
@@ -287,11 +292,14 @@ const styles = StyleSheet.create({
     lineHeight: 25,
     alignItems: "center",
   },
-  textDisplayCode: {
-    textAlign: "right",
-    marginRight: 5,
-    fontSize: 17,
-    fontWeight: "500",
+  displayData: {
+    flex: 1,
+    width: "100%",
+    padding: 10,
+  },
+  list: {
+    flex: 1,
+    padding: 8,
   },
   dropdown: {
     height: 50,
@@ -313,6 +321,14 @@ const styles = StyleSheet.create({
   inputSearchStyle: {
     height: 40,
     fontSize: 16,
+  },
+  textDisplayCode: {
+    textAlign: "right",
+    marginRight: 5,
+    fontSize: 17,
+    fontWeight: "500",
+    color: "#0176E4",
+    textDecorationLine: "underline",
   },
 });
 

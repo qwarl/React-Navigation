@@ -49,9 +49,8 @@ const Home = ({ navigation }) => {
     type: "",
   });
 
-
   function getData() {
-    const url = `http://192.168.1.101:3001/api/quotations/getAll`;
+    const url = `http://192.168.1.77:3001/api/quotations/getAll`;
     axios.get(url).then((res) => {
       setData1(res["data"].quotations);
     });
@@ -159,17 +158,18 @@ const Home = ({ navigation }) => {
     );
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor: "white" }}>
       <View style={{ flexDirection: "row", alignItems: "center" }}>
         <Icon
           name="search"
-          size={25}
-          color="black"
-          style={{ position: "absolute", top: 20, left: 30 }}
+          size={28}
+          color="white"
+          style={{ position: "absolute", top: 20, left: 30, zIndex: 1000 }}
         />
         <TextInput
-          style={styles.textInputStyle}
-          placeholder="Nhập từ khóa tìm kiếm"
+          style={styles.styleSearch}
+          placeholder="Tìm kiếm"
+          placeholderTextColor={"white"}
           underlineColorAndroid="transparent"
           onChangeText={(text) => setSearchText(text)}
         />
@@ -178,6 +178,7 @@ const Home = ({ navigation }) => {
         style={{
           justifyContent: "space-between",
           flexDirection: "row",
+          marginVertical: 10,
         }}
       >
         <View style={styles.dropMenu}>
@@ -223,54 +224,11 @@ const Home = ({ navigation }) => {
           />
         </View>
       </View>
-      {/* <View style={{ flexDirection: "row", minHeight: 100 }}> */}
-      {/* <View style={styles.dropMenu}>
-          <Text style={styles.label}>Chọn Năm</Text>
-          <Dropdown
-            style={[styles.dropdown]}
-            placeholderStyle={styles.placeholderStyle}
-            selectedTextStyle={styles.selectedTextStyle}
-            inputSearchStyle={styles.inputSearchStyle}
-            iconStyle={styles.iconStyle}
-            data={Year1}
-            search
-            maxHeight={300}
-            labelField="label"
-            valueField="value"
-            searchPlaceholder="Search..."
-            value={value}
-            onChange={(value) => {
-              setFCLInfo({ ...fclInfo, year: value.value });
-            }}
-          />
-        </View> */}
-      {/* <View style={styles.dropMenu}>
-          <Text style={styles.label}>Khoảng Giá</Text>
-          <Dropdown
-            style={[styles.dropdown]}
-            placeholderStyle={styles.placeholderStyle}
-            selectedTextStyle={styles.selectedTextStyle}
-            inputSearchStyle={styles.inputSearchStyle}
-            iconStyle={styles.iconStyle}
-            data={BetweenPrice1}
-            search
-            maxHeight={300}
-            labelField="label"
-            valueField="value"
-            searchPlaceholder="Search..."
-            value={value}
-            onChange={(value) => {
-              setFCLInfo({ ...fclInfo, betweenprice: value.value });
-            }}
-          />
-        </View> */}
-      {/* </View> */}
-
       <View>
         <RadioForm
           formHorizontal={true}
-          style={{ margin: 5 }}
-          labelStyle={{ fontSize: 16, marginRight: 10 }}
+          style={{ marginLeft: 20, marginVertical: 10 }}
+          labelStyle={{ fontSize: 20, marginRight: 15 }}
           buttonSize={11}
           buttonColor={"black"}
           radio_props={ContainerHome}
@@ -281,7 +239,7 @@ const Home = ({ navigation }) => {
         />
       </View>
 
-      <View style={{ flex: 4 }}>
+      <View style={{ flex: 7 }}>
         <View style={styles.displayData}>
           {filteredFCL().length > 0 ? (
             <FlatList
@@ -305,23 +263,9 @@ const Home = ({ navigation }) => {
           )}
         </View>
       </View>
-
-      {/* {data1 && (
-        <FlatList
-          keyExtractor={(item) => item._id}
-          style={{ backgroundColor: "coral", height: height * 0.5 }}
-          data={data1}
-          renderItem={
-            // ({ item }) => <ListItem item={item} />
-            ListItem
-          }
-        />
-      )} */}
       <View
         style={{
-          flex: 1,
-          justifyContent: "center",
-          marginTop: -10,
+          flex: 0.5,
           marginBottom: 30,
         }}
       >
@@ -362,14 +306,6 @@ const styles = StyleSheet.create({
   item: {
     marginLeft: 10,
   },
-  listContainer: {
-    backgroundColor: "b",
-    // flexDirection:'row',
-    margin: (width * 3.6) / 187.5,
-    padding: (width * 3.6) / 187.5,
-    borderRadius: (width * 3.6) / 187.5,
-    width: "100%",
-  },
   dropMenu: {
     paddingHorizontal: 5,
     paddingVertical: 4,
@@ -383,23 +319,23 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 5,
   },
-  textInputStyle: {
+  styleSearch: {
     flex: 1,
     height: 50,
-    borderWidth: 1.5,
-    paddingLeft: 35,
+    paddingLeft: 40,
     marginVertical: 10,
     marginHorizontal: 20,
-    borderColor: color.borderColor,
+    backgroundColor: "#BFBFBF",
     borderRadius: 30,
     fontSize: 18,
   },
   detail: {
-    borderRadius: 15,
-    borderColor: "#000",
-    backgroundColor: color.backgrounDisplayDetail,
     marginBottom: 10,
     padding: 5,
+    borderRadius: 10,
+    borderStyle: "solid",
+    borderColor: "#0176E4",
+    borderWidth: 1,
   },
   textLable: {
     fontSize: 18,
@@ -431,13 +367,6 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 8,
   },
-  // containerDropDown: {
-  //     // backgroundColor: 'white',
-  //     padding: 16,
-  //     width: 200,
-  //     // flex: 1,
-  //     // justifyContent: 'center',
-  // },
   dropdown: {
     height: 50,
     borderColor: "gray",
@@ -458,6 +387,14 @@ const styles = StyleSheet.create({
   inputSearchStyle: {
     height: 40,
     fontSize: 16,
+  },
+  textDisplayCode: {
+    textAlign: "right",
+    marginRight: 5,
+    fontSize: 17,
+    fontWeight: "500",
+    color: "#0176E4",
+    textDecorationLine: "underline",
   },
 });
 

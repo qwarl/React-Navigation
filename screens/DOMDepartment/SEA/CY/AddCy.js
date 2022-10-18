@@ -14,7 +14,12 @@ import React, { useEffect, useState } from "react";
 import FormInput from "../../../../components/FormInput";
 import color from "../../../../contains/color";
 import SelectList from "react-native-dropdown-select-list";
-import { Continent, DomType, Month, TypeSeaCY } from "../../../../contains/constant";
+import {
+  Continent,
+  DomType,
+  Month,
+  TypeSeaCY,
+} from "../../../../contains/constant";
 import clientSeaCy from "../../../../api/clientSeaCy";
 import { isValidObjectField, updateError } from "../../../../utils/method";
 
@@ -30,7 +35,7 @@ const AddCy = ({ navigation }) => {
     etd: "",
     pol: "",
     pod: "",
-    cytype:"",
+    cytype: "",
   });
 
   const handleOnChangeText = (value, fieldName) => {
@@ -174,7 +179,11 @@ const AddCy = ({ navigation }) => {
           }}
         >
           <TouchableOpacity style={[styles.buttonInsert]} onPress={submitForm}>
-            <Text style={{ fontSize: 18, color: "black" }}>Thêm</Text>
+            <Text
+              style={{ fontSize: 18, color: color.primary, fontWeight: "bold" }}
+            >
+              Thêm
+            </Text>
           </TouchableOpacity>
         </View>
       </ScrollView>

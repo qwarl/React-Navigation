@@ -1,116 +1,122 @@
 import {
-    View,
-    Text,
-    TouchableOpacity,
-    StyleSheet,
-    Dimensions,
-    FlatList,
-    TextInput,
-  } from "react-native";
-  import React, { useEffect, useState } from "react";
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  Dimensions,
+  FlatList,
+  TextInput,
+} from "react-native";
+import React, { useEffect, useState } from "react";
 import color from "../../../contains/color";
 import clientImport from "../../../api/clientImport";
 
 const CheckPriceImport = () => {
-    const [importInfo, setImportInfo] = useState({
-        month: "",
-        continent: "",
-        year: "",
-        container: "",
+  const [importInfo, setImportInfo] = useState({
+    month: "",
+    continent: "",
+    year: "",
+    container: "",
+  });
+
+  const [value, setValue] = useState(null);
+  const [data, setData] = useState([]);
+  const [searchText, setSearchText] = useState("");
+
+  // useEffect(() => {
+  //   data.map((item) => console.log(item.shippingtype));
+  // }, []);
+  // call api get Log
+  useEffect(() => {
+    clientImport
+      .get("/getAll")
+      .then((res) => {
+        setData(res.data.dataImport);
+      })
+      .catch((err) => {
+        console.log(err);
       });
-    
-      const [value, setValue] = useState(null);
-      const [data, setData] = useState([]);
-      const [searchText, setSearchText] = useState("");
-    
-      // useEffect(() => {
-      //   data.map((item) => console.log(item.shippingtype));
-      // }, []);
-      // call api get Log
-      useEffect(() => {
-        clientImport
-          .get("/getAll")
-          .then((res) => {
-            setData(res.data.dataImport);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      }, [data]);
-    
-      const checkDropdownValue = (eachAir) => {
-        let result = false;
-        if (
-          eachAir.shippingtype
-            .toLowerCase()
-            .includes(airInfo.shippingtype.toLowerCase())
-        ) {
-          result = true;
-        }
-        return result;
-      };
-    
-      const checkTypeSearch = (searchText, eachImport) => {
-        let result = false;
-        if (
-          eachImport.pol.toLowerCase().includes(searchText.toLowerCase()) ||
-          eachImport.pod.toLowerCase().includes(searchText.toLowerCase()) ||
-          eachImport.code.toLowerCase().includes(searchText.toLowerCase())
-          // || eachAir.hsCode.toLowerCase().includes(searchText.toLowerCase()) ||
-          // eachAir.name.toLowerCase().includes(searchText.toLowerCase())
-        ) {
-          result = true;
-        }
-        return result;
-      };
-    
-      const filteredImport = () =>
-        data.filter(
-          (eachImport) =>
-            eachImport.month.toLowerCase().includes(importInfo.month.toLowerCase()) &&
-            eachImport.continent.toLowerCase().includes(importInfo.continent.toLowerCase()) &&
-            eachImport.container.toLowerCase().includes(importInfo.container.toLowerCase()) &&
-            checkTypeSearch(searchText, eachImport)
-          // && checkPriceSearch(eachLog)
-        );
-      const renderItem = ({ item }) => (
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate("DetailImport", {
-              item: item,
-            });
-          }}
-        >
-          <View style={styles.detail}>
-            <View>
-              <Text style={styles.textDisplayCode}>{item.code}</Text>
-            </View>
-            <View style={{ flexDirection: "row" }}>
-              <Text style={styles.textLable}>Pol: </Text>
-              <Text style={styles.textDisplay}>{item.pol}</Text>
-            </View>
-            <View style={{ flexDirection: "row" }}>
-              <Text style={styles.textLable}>Pod: </Text>
-              <Text style={styles.textDisplay}>{item.pod}</Text>
-            </View>
-            <View style={{ flexDirection: "row" }}>
-              <Text style={styles.textLable}>Loại Container: </Text>
-              <Text style={styles.textDisplay}>{item.container}</Text>
-            </View>
-            <View style={{ flexDirection: "row" }}>
-              <Text style={styles.textLable}>Schedule: </Text>
-              <Text style={styles.textDisplay}>{item.schedule}</Text>
-            </View>
-            <View style={{ flexDirection: "row" }}>
-              <Text style={styles.textLable}>Châu: </Text>
-              <Text style={styles.textDisplay}>{item.continent}</Text>
-            </View>
-          </View>
-        </TouchableOpacity>
-      );
+  }, [data]);
+
+  const checkDropdownValue = (eachAir) => {
+    let result = false;
+    if (
+      eachAir.shippingtype
+        .toLowerCase()
+        .includes(airInfo.shippingtype.toLowerCase())
+    ) {
+      result = true;
+    }
+    return result;
+  };
+
+  const checkTypeSearch = (searchText, eachImport) => {
+    let result = false;
+    if (
+      eachImport.pol.toLowerCase().includes(searchText.toLowerCase()) ||
+      eachImport.pod.toLowerCase().includes(searchText.toLowerCase()) ||
+      eachImport.code.toLowerCase().includes(searchText.toLowerCase())
+      // || eachAir.hsCode.toLowerCase().includes(searchText.toLowerCase()) ||
+      // eachAir.name.toLowerCase().includes(searchText.toLowerCase())
+    ) {
+      result = true;
+    }
+    return result;
+  };
+
+  const filteredImport = () =>
+    data.filter(
+      (eachImport) =>
+        eachImport.month
+          .toLowerCase()
+          .includes(importInfo.month.toLowerCase()) &&
+        eachImport.continent
+          .toLowerCase()
+          .includes(importInfo.continent.toLowerCase()) &&
+        eachImport.container
+          .toLowerCase()
+          .includes(importInfo.container.toLowerCase()) &&
+        checkTypeSearch(searchText, eachImport)
+      // && checkPriceSearch(eachLog)
+    );
+  const renderItem = ({ item }) => (
+    <TouchableOpacity
+      onPress={() => {
+        navigation.navigate("DetailImport", {
+          item: item,
+        });
+      }}
+    >
+      <View style={styles.detail}>
+        <View>
+          <Text style={styles.textDisplayCode}>{item.code}</Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.textLable}>Pol: </Text>
+          <Text style={styles.textDisplay}>{item.pol}</Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.textLable}>Pod: </Text>
+          <Text style={styles.textDisplay}>{item.pod}</Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.textLable}>Loại Container: </Text>
+          <Text style={styles.textDisplay}>{item.container}</Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.textLable}>Schedule: </Text>
+          <Text style={styles.textDisplay}>{item.schedule}</Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.textLable}>Châu: </Text>
+          <Text style={styles.textDisplay}>{item.continent}</Text>
+        </View>
+      </View>
+    </TouchableOpacity>
+  );
   return (
     <View style={{ flex: 1 }}>
-      <View style={{ flex: 4 }}>
+      <View style={{ flex: 9 }}>
         <View style={styles.displayData}>
           {filteredImport().length > 0 ? (
             <FlatList
@@ -192,23 +198,23 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 5,
   },
-  textInputStyle: {
+  styleSearch: {
     flex: 1,
     height: 50,
-    borderWidth: 1.5,
-    paddingLeft: 35,
+    paddingLeft: 40,
     marginVertical: 10,
     marginHorizontal: 20,
-    borderColor: color.borderColor,
+    backgroundColor: "#BFBFBF",
     borderRadius: 30,
     fontSize: 18,
   },
   detail: {
-    borderRadius: 15,
-    borderColor: "#000",
-    backgroundColor: color.backgrounDisplayDetail,
     marginBottom: 10,
     padding: 5,
+    borderRadius: 10,
+    borderStyle: "solid",
+    borderColor: "#0176E4",
+    borderWidth: 1,
   },
   textLable: {
     fontSize: 18,
@@ -266,6 +272,8 @@ const styles = StyleSheet.create({
     marginRight: 5,
     fontSize: 17,
     fontWeight: "500",
+    color: "#0176E4",
+    textDecorationLine: "underline",
   },
 });
 

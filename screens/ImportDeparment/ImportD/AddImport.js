@@ -9,6 +9,7 @@ import {
   Alert,
   Image,
   Button,
+  TextInput,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -18,6 +19,7 @@ import FormInput from "../../../components/FormInput";
 import color from "../../../contains/color";
 import { isValidObjectField, updateError } from "../../../utils/method";
 import clientImport from "../../../api/clientImport";
+import Icon from "react-native-vector-icons/FontAwesome";
 
 const AddImport = () => {
   const handleOnChangeText = (fieldName, ...values) => {
@@ -157,7 +159,7 @@ const AddImport = () => {
         <FormInput
           label="OF 20"
           placeholder="OF 20"
-          keyboardType = 'numeric'
+          keyboardType="numeric"
           onChangeText={(value) => {
             handleOnChangeText("of20", value, plus(value, importInfo.sur20));
           }}
@@ -166,21 +168,21 @@ const AddImport = () => {
         <FormInput
           label="OF 40"
           placeholder="OF 40"
-          keyboardType = 'numeric'
+          keyboardType="numeric"
           onChangeText={(value) => handleOnChangeText("of40", value)}
           value={importInfo.of40}
         />
         <FormInput
           placeholder="OF 45"
           label="OF 45"
-          keyboardType = 'numeric'
+          keyboardType="numeric"
           onChangeText={(value) => handleOnChangeText("of45", value)}
           value={importInfo.of45}
         />
         <FormInput
           placeholder="Sur 20"
           label="Sur 20"
-          keyboardType = 'numeric'
+          keyboardType="numeric"
           onChangeText={(value) => {
             handleOnChangeText("sur20", value, plus(value, importInfo.of20));
           }}
@@ -189,14 +191,14 @@ const AddImport = () => {
         <FormInput
           placeholder="Sur 40"
           label="Sur 40"
-          keyboardType = 'numeric'
+          keyboardType="numeric"
           onChangeText={(value) => handleOnChangeText("sur40", value)}
           value={importInfo.sur40}
         />
         <FormInput
           placeholder="Sur 45"
           label="Sur 45"
-          keyboardType = 'numeric'
+          keyboardType="numeric"
           value={importInfo.sur45}
           onChangeText={(value) => handleOnChangeText("sur45", value)}
         />
@@ -223,18 +225,30 @@ const AddImport = () => {
           value={importInfo.transittime}
           onChangeText={(value) => handleOnChangeText("transittime", value)}
         />
-        <FormInput
-          placeholder="VALID"
-          label="VALID"
-          value={importInfo.valid}
-          onChangeText={(value) => handleOnChangeText(value, "valid")}
-        />
-        <View>
-          <TouchableOpacity
-            style={[styles.buttonTime]}
-            onPress={() => showMode("date")}
-          >
-            <Text style={{ fontSize: 18, color: "#000" }}>Chọn Ngày</Text>
+        <View style={{ flexDirection: "row" }}>
+          <View style={{ width: "100%", marginRight: 20 }}>
+            <Text style={styles.textValid}>Valid</Text>
+            <TextInput
+              style={styles.validStyle}
+              placeholder="VALID"
+              label="VALID"
+              value={importInfo.valid}
+              onChangeText={(value) => handleOnChangeText(value, "valid")}
+            />
+          </View>
+          <TouchableOpacity onPress={() => showMode("date")}>
+            <Icon
+              name="calendar"
+              size={35}
+              color="#7F7F7F"
+              style={{
+                top: 30,
+                position: "absolute",
+                right: 40,
+                marginBottom: 0,
+                zIndex: 1000,
+              }}
+            />
           </TouchableOpacity>
           {show && (
             <DateTimePicker
@@ -263,7 +277,11 @@ const AddImport = () => {
           }}
         >
           <TouchableOpacity style={[styles.buttonInsert]} onPress={submitForm}>
-            <Text style={{ fontSize: 18, color: "black" }}>Thêm</Text>
+            <Text
+              style={{ fontSize: 18, color: color.primary, fontWeight: "bold" }}
+            >
+              Thêm
+            </Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -306,7 +324,7 @@ const styles = StyleSheet.create({
     height: 50,
     width: 150,
     borderColor: color.borderColor,
-    borderWidth: 3,
+    borderWidth: 1.5,
     borderRadius: 8,
     justifyContent: "center",
     alignItems: "center",
@@ -341,6 +359,42 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginLeft: 20,
+  },
+  dropdown: {
+    height: 50,
+    borderColor: "gray",
+    borderWidth: 0.5,
+    borderRadius: 8,
+    paddingHorizontal: 8,
+  },
+  placeholderStyle: {
+    fontSize: 16,
+  },
+  selectedTextStyle: {
+    fontSize: 16,
+  },
+  iconStyle: {
+    width: 20,
+    height: 20,
+  },
+  inputSearchStyle: {
+    height: 40,
+    fontSize: 16,
+  },
+  validStyle: {
+    height: 35,
+    width: "90%",
+    fontSize: 14,
+    padding: 5,
+    marginBottom: 10,
+    height: 50,
+    marginLeft: 17,
+    marginRight: 17,
+    borderBottomWidth: 1,
+  },
+  textValid: {
+    fontWeight: "bold",
+    marginLeft: 17,
   },
 });
 

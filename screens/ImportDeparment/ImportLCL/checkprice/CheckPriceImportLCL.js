@@ -10,8 +10,8 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import Icon from "react-native-vector-icons/FontAwesome";
-import color from "../../../contains/color";
-import clientCheckPriceImportLCL from "../../../api/clientCheckPriceImportLCL";
+import color from "../../../../contains/color";
+import clientCheckPriceImportLCL from "../../../../api/clientCheckPriceImportLCL";
 
 const CheckPriceImportLCL = ({ navigation }) => {
   const [importLCLInfo, setImportLCLInfo] = useState({
@@ -79,7 +79,7 @@ const CheckPriceImportLCL = ({ navigation }) => {
           {
             text: "Phản hồi",
             onPress: () => {
-              navigation.navigate("AddImportLCL", {
+              navigation.navigate("AddRequiteSale", {
                 item: item,
               });
             },

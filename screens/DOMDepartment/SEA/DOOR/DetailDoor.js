@@ -13,23 +13,55 @@ const DetailDoor = ({ navigation, route }) => {
   return (
     <ScrollView>
       <View style={styles.detail}>
-        <Text style={styles.textDisplayCode}>Mã Báo Giá: {data.code}</Text>
-        <Text style={styles.textDisplay}>Tháng: {data.month}</Text>
-        <Text style={styles.textDisplay}>Châu: {data.continent}</Text>
-        <Text style={styles.textDisplay}>Loại Container: {data.container}</Text>
-        <Text style={styles.textDisplay}>Loại Hình Vận Chuyển: {data.doortype}</Text>
-        <Text style={styles.textDisplay}>Cảng Đi: {data.pol}</Text>
-        <Text style={styles.textDisplay}>Cảng Đến: {data.pod}</Text>
-        <Text style={styles.textDisplay}>Tên Hàng: {data.productname}</Text>
-        <Text style={styles.textDisplay}>Trọng Lượng: {data.weight}</Text>
-        <Text style={styles.textDisplay}>SL Cont: {data.quantitycont}</Text>
-        <Text style={styles.textDisplay}>ETD: {data.etd}</Text>
-        <Text style={styles.textDisplay}>
-          ĐC Đóng Hàng: {data.addresspacking}
-        </Text>
-        <Text style={styles.textDisplay}>
-          ĐC Giao Hàng: {data.addressdelivery}
-        </Text>
+        <Text style={styles.textDisplayCode}>{data.code}</Text>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.textDisplay}>Tháng:</Text>
+          <Text style={styles.textContent}>{data.month}</Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.textDisplay}>Châu:</Text>
+          <Text style={styles.textContent}>{data.continent}</Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.textDisplay}>Loại Container:</Text>
+          <Text style={styles.textContent}>{data.container}</Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.textDisplay}>Loại Hình Vận Chuyển:</Text>
+          <Text style={styles.textContent}>{data.doortype}</Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.textDisplay}>Điểm Đi:</Text>
+          <Text style={styles.textContent}>{data.pol}</Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.textDisplay}>Điểm Đến:</Text>
+          <Text style={styles.textContent}>{data.pod}</Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.textDisplay}>Tên Hàng:</Text>
+          <Text style={styles.textContent}>{data.productname}</Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.textDisplay}>Trọng Lượng:</Text>
+          <Text style={styles.textContent}>{data.weight}</Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.textDisplay}>SL Cont:</Text>
+          <Text style={styles.textContent}>{data.quantitycont}</Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.textDisplay}>ETD:</Text>
+          <Text style={styles.textContent}> {data.etd}</Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.textDisplay}> ĐC Đóng Hàng:</Text>
+          <Text style={styles.textContent}>{data.addresspacking}</Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.textDisplay}>ĐC Giao Hàng:</Text>
+          <Text style={styles.textContent}> {data.addressdelivery}</Text>
+        </View>
         <View style={styles.styleButton}>
           <TouchableOpacity
             style={[styles.buttonUpdate]}
@@ -39,7 +71,11 @@ const DetailDoor = ({ navigation, route }) => {
               });
             }}
           >
-            <Text style={{ fontSize: 18, color: "black" }}>Update</Text>
+            <Text
+              style={{ fontSize: 18, color: color.primary, fontWeight: "bold" }}
+            >
+              Cập Nhật
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -50,17 +86,25 @@ const DetailDoor = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   detail: {
     borderRadius: 15,
-    borderColor: "#000",
-    backgroundColor: color.backgrounDisplayDetail,
+    borderWidth: 2,
+    borderColor: color.primary,
     marginVertical: 20,
     marginHorizontal: 10,
     padding: 20,
   },
   textDisplay: {
-    fontSize: 20,
+    fontSize: 21,
     fontWeight: "bold",
     lineHeight: 25,
     marginRight: 9,
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 9,
+  },
+  textContent: {
+    fontSize: 20,
+    lineHeight: 25,
+    marginRight: 4,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -95,18 +139,30 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: 170,
     marginBottom: 30,
+    color: color.primary,
   },
   styleButton: {
     alignItems: "center",
     justifyContent: "center",
   },
   textDisplayCode: {
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: "bold",
     lineHeight: 25,
     marginRight: 9,
     justifyContent: "flex-end",
     alignItems: "flex-end",
+    textAlign: "center",
+    color: color.primary,
+    fontFamily: "Roboto",
+    fontWeight: "bold",
+    marginBottom: 16,
+    textDecorationLine: "underline",
+  },
+  textUpdate: {
+    fontSize: 19,
+    color: color.primary,
+    fontWeight: "bold",
   },
 });
 

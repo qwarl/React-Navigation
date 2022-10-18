@@ -13,16 +13,21 @@ import {
 import React, { useEffect, useState } from "react";
 import { Dropdown } from "react-native-element-dropdown";
 import color from "../../../../contains/color";
-import { Continent, DomType, Month1, TypeSeaCY } from "../../../../contains/constant";
+import {
+  Continent,
+  DomType,
+  Month1,
+  TypeSeaCY,
+} from "../../../../contains/constant";
 import clientSeaDoor from "../../../../api/clientSeaDoor";
 import FormInput from "../../../../components/FormInput";
 
-const UpdateDoor = ({route}) => {
+const UpdateDoor = ({ route }) => {
   const [seaDoorInfo, setSeaDoorInfo] = useState(route.params.data);
   const handleOnChangeText = (value, fieldName) => {
     setSeaDoorInfo({ ...seaDoorInfo, [fieldName]: value });
   };
-  
+
   console.log(seaDoorInfo.month);
   const submitForm = async () => {
     // if (isValidForm()) {
@@ -56,10 +61,11 @@ const UpdateDoor = ({route}) => {
     // }
   };
   return (
-    <ScrollView>
-      <View style={styles.dropMenu}>
-        <Text style={styles.label}>Chọn Tháng</Text>
-        <Dropdown
+    <View style={{ backgroundColor: "white" }}>
+      <ScrollView>
+        <View style={styles.dropMenu}>
+          <Text style={styles.label}>Chọn Tháng</Text>
+          <Dropdown
             style={[styles.dropdown]}
             placeholderStyle={styles.placeholderStyle}
             selectedTextStyle={styles.selectedTextStyle}
@@ -76,10 +82,10 @@ const UpdateDoor = ({route}) => {
               setSeaDoorInfo({ ...seaDoorInfo, month: value.value });
             }}
           />
-      </View>
-      <View style={styles.dropMenu}>
-        <Text style={styles.label}>Chọn Châu</Text>
-        <Dropdown
+        </View>
+        <View style={styles.dropMenu}>
+          <Text style={styles.label}>Chọn Châu</Text>
+          <Dropdown
             style={[styles.dropdown]}
             placeholderStyle={styles.placeholderStyle}
             selectedTextStyle={styles.selectedTextStyle}
@@ -96,10 +102,10 @@ const UpdateDoor = ({route}) => {
               setSeaDoorInfo({ ...seaDoorInfo, continent: value.value });
             }}
           />
-      </View>
-      <View style={styles.dropMenu}>
-        <Text style={styles.label}>Chọn Container</Text>
-        <Dropdown
+        </View>
+        <View style={styles.dropMenu}>
+          <Text style={styles.label}>Chọn Container</Text>
+          <Dropdown
             style={[styles.dropdown]}
             placeholderStyle={styles.placeholderStyle}
             selectedTextStyle={styles.selectedTextStyle}
@@ -116,10 +122,10 @@ const UpdateDoor = ({route}) => {
               setSeaDoorInfo({ ...seaDoorInfo, container: value.value });
             }}
           />
-      </View>
-      <View style={styles.dropMenu}>
-        <Text style={styles.label}>Chọn Loại Hình Vận Chuyển</Text>
-        <Dropdown
+        </View>
+        <View style={styles.dropMenu}>
+          <Text style={styles.label}>Chọn Loại Hình Vận Chuyển</Text>
+          <Dropdown
             style={[styles.dropdown]}
             placeholderStyle={styles.placeholderStyle}
             selectedTextStyle={styles.selectedTextStyle}
@@ -136,75 +142,84 @@ const UpdateDoor = ({route}) => {
               setSeaDoorInfo({ ...seaDoorInfo, doortype: value.value });
             }}
           />
-      </View>
-      <FormInput
-        label="Điểm Đi"
-        placeholder="Điểm Đi"
-        onChangeText={(value) => handleOnChangeText(value, "pol")}
-        value={seaDoorInfo.pol}
-      />
-      <FormInput
-        placeholder="Điểm Đến"
-        label="Điểm Đến"
-        onChangeText={(value) => handleOnChangeText(value, "aod")}
-        value={seaDoorInfo.pod}
-      />
-      <FormInput
-        label="Tên Hàng"
-        placeholder="Tên Hàng"
-        onChangeText={(value) => handleOnChangeText(value, "productname")}
-        value={seaDoorInfo.productname}
-      />
-      <FormInput
-        label="Trọng Lượng"
-        placeholder="Trọng Lượng"
-        onChangeText={(value) => handleOnChangeText(value, "weight")}
-        value={seaDoorInfo.weight}
-      />
-      <FormInput
-        placeholder="SL Cont"
-        label="SL Cont"
-        onChangeText={(value) => handleOnChangeText(value, "quantitycont")}
-        value={seaDoorInfo.quantitycont}
-      />
-      <FormInput
-        placeholder="ETD"
-        label="ETD"
-        onChangeText={(value) => handleOnChangeText(value, "etd")}
-        value={seaDoorInfo.etd}
-      />
-      <FormInput
-        placeholder="ĐC Đóng Hàng"
-        label="ĐC Đóng Hàng"
-        onChangeText={(value) => handleOnChangeText(value, "addresspacking")}
-        value={seaDoorInfo.addresspacking}
-      />
-      <FormInput
-        placeholder="ĐC Giao Hàng"
-        label="ĐC Giao Hàng"
-        onChangeText={(value) => handleOnChangeText(value, "addressdelivery")}
-        value={seaDoorInfo.addressdelivery}
-      />
-      <View
-        style={{
-          flex: 1,
-          marginVertical: 30,
-          marginHorizontal: 80,
-          justifyContent: "center",
-          alignItems: "center",
-          flexDirection: "row",
-        }}
-      >
-        <TouchableOpacity style={[styles.buttonUpdate]} onPress={submitForm}>
-          <Text style={{ fontSize: 18, color: "black" }}>Cập Nhật</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={[styles.buttonInsert]} onPress={AddForm}>
-          <Text style={{ fontSize: 18, color: "black" }}>Thêm</Text>
-        </TouchableOpacity>
-      </View>
-    </ScrollView>
-  )
-}
+        </View>
+        <FormInput
+          label="Điểm Đi"
+          placeholder="Điểm Đi"
+          onChangeText={(value) => handleOnChangeText(value, "pol")}
+          value={seaDoorInfo.pol}
+        />
+        <FormInput
+          placeholder="Điểm Đến"
+          label="Điểm Đến"
+          onChangeText={(value) => handleOnChangeText(value, "aod")}
+          value={seaDoorInfo.pod}
+        />
+        <FormInput
+          label="Tên Hàng"
+          placeholder="Tên Hàng"
+          onChangeText={(value) => handleOnChangeText(value, "productname")}
+          value={seaDoorInfo.productname}
+        />
+        <FormInput
+          label="Trọng Lượng"
+          placeholder="Trọng Lượng"
+          onChangeText={(value) => handleOnChangeText(value, "weight")}
+          value={seaDoorInfo.weight}
+        />
+        <FormInput
+          placeholder="SL Cont"
+          label="SL Cont"
+          onChangeText={(value) => handleOnChangeText(value, "quantitycont")}
+          value={seaDoorInfo.quantitycont}
+        />
+        <FormInput
+          placeholder="ETD"
+          label="ETD"
+          onChangeText={(value) => handleOnChangeText(value, "etd")}
+          value={seaDoorInfo.etd}
+        />
+        <FormInput
+          placeholder="ĐC Đóng Hàng"
+          label="ĐC Đóng Hàng"
+          onChangeText={(value) => handleOnChangeText(value, "addresspacking")}
+          value={seaDoorInfo.addresspacking}
+        />
+        <FormInput
+          placeholder="ĐC Giao Hàng"
+          label="ĐC Giao Hàng"
+          onChangeText={(value) => handleOnChangeText(value, "addressdelivery")}
+          value={seaDoorInfo.addressdelivery}
+        />
+        <View
+          style={{
+            flex: 1,
+            marginVertical: 30,
+            marginHorizontal: 80,
+            justifyContent: "center",
+            alignItems: "center",
+            flexDirection: "row",
+          }}
+        >
+          <TouchableOpacity style={[styles.buttonUpdate]} onPress={submitForm}>
+            <Text
+              style={{ fontSize: 18, color: color.primary, fontWeight: "bold" }}
+            >
+              Cập Nhật
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.buttonInsert]} onPress={AddForm}>
+            <Text
+              style={{ fontSize: 18, color: color.primary, fontWeight: "bold" }}
+            >
+              Thêm
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -293,6 +308,7 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     borderRadius: 8,
     paddingHorizontal: 8,
+    marginVertical: 10,
   },
   placeholderStyle: {
     fontSize: 16,
@@ -309,4 +325,4 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 });
-export default UpdateDoor
+export default UpdateDoor;

@@ -1,6 +1,6 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import HomeImportLCL from "./HomeImportLCL";
+import HomeImportLCL from "../HomeImportLCL";
 import CheckPriceImportLCL from "./CheckPriceImportLCL";
 import Icon from "react-native-vector-icons/FontAwesome";
 const Tab = createBottomTabNavigator();

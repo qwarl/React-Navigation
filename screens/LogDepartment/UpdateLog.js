@@ -61,17 +61,17 @@ const UpdateLog = ({ route }) => {
   };
   const AddForm = async () => {
     // if (isValidForm()) {
-      try {
-        delete updateData._id;
-        const res = await clientLog.post("/create", { ...updateData });
-        if (res.data.success) {
-          Alert.alert("Thêm Thành Công");
-        }
-        console.log("running");
-        console.log(res.data);
-      } catch (error) {
-        console.log(error.message);
+    try {
+      delete updateData._id;
+      const res = await clientLog.post("/create", { ...updateData });
+      if (res.data.success) {
+        Alert.alert("Thêm Thành Công");
       }
+      console.log("running");
+      console.log(res.data);
+    } catch (error) {
+      console.log(error.message);
+    }
     // }
   };
 
@@ -210,10 +210,18 @@ const UpdateLog = ({ route }) => {
           }}
         >
           <TouchableOpacity style={[styles.buttonUpdate]} onPress={submitForm}>
-            <Text style={{ fontSize: 18, color: "black" }}>Cập Nhật</Text>
+            <Text
+              style={{ fontSize: 18, color: color.primary, fontWeight: "bold" }}
+            >
+              Cập Nhật
+            </Text>
           </TouchableOpacity>
           <TouchableOpacity style={[styles.buttonInsert]} onPress={AddForm}>
-            <Text style={{ fontSize: 18, color: "black" }}>Thêm</Text>
+            <Text
+              style={{ fontSize: 18, color: color.primary, fontWeight: "bold" }}
+            >
+              Thêm
+            </Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
