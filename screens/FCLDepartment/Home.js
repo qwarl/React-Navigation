@@ -84,9 +84,8 @@ const Home = ({ navigation }) => {
       }}
     >
       <View style={styles.detail}>
-        <View style={{ flexDirection: "row" }}>
-          {/* <Text style={styles.textLable}>Loại Container: </Text> */}
-          <Text style={styles.textDisplay}>{item.code}</Text>
+        <View>
+          <Text style={styles.textDisplayCode}>{item.code}</Text>
         </View>
         <View style={{ flexDirection: "row" }}>
           <Text style={styles.textLable}>Loại Container: </Text>

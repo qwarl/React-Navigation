@@ -50,7 +50,7 @@ const DrawerScreen = () => {
                 > */}
         <View style={styles.mainMenu}>
           <TouchableOpacity
-            onPress={() => navigation.navigate("BusinessMainScreen")}
+            onPress={() => navigation.navigate("Nghiệp Vụ")}
             // style={{ backgroundColor: "rgb(172, 231, 250)" }}
           >
             <Icon
@@ -123,6 +123,7 @@ const DrawerScreen = () => {
                         borderColor: "black",
                         borderStyle: "solid",
                         marginRight: 5,
+                        marginTop: 10,
                       }}
                     >
                       <TouchableOpacity
@@ -131,7 +132,12 @@ const DrawerScreen = () => {
                           setOpen(!open.openImport);
                         }}
                       >
-                        <Text style={{ fontSize: 20, marginLeft: 10 }}>
+                        <Text
+                          style={{
+                            fontSize: 20,
+                            marginLeft: 10,
+                          }}
+                        >
                           Import
                         </Text>
                       </TouchableOpacity>
@@ -142,7 +148,11 @@ const DrawerScreen = () => {
                         }}
                       >
                         <Text
-                          style={{ fontSize: 20, marginTop: 5, marginLeft: 10 }}
+                          style={{
+                            fontSize: 20,
+                            marginTop: 15,
+                            marginLeft: 10,
+                          }}
                         >
                           ImportLCL
                         </Text>
@@ -220,6 +230,7 @@ const DrawerScreen = () => {
                         borderColor: "black",
                         borderStyle: "solid",
                         marginRight: 5,
+                        marginTop: 10,
                       }}
                     >
                       <TouchableOpacity
@@ -228,7 +239,14 @@ const DrawerScreen = () => {
                           setOpen({ ...open, openDOM: !open.openDOM });
                         }}
                       >
-                        <Text style={{ fontSize: 20, marginLeft: 10 }}>CY</Text>
+                        <Text
+                          style={{
+                            fontSize: 20,
+                            marginLeft: 10,
+                          }}
+                        >
+                          CY
+                        </Text>
                       </TouchableOpacity>
                       <TouchableOpacity
                         onPress={() => {
@@ -237,7 +255,11 @@ const DrawerScreen = () => {
                         }}
                       >
                         <Text
-                          style={{ fontSize: 20, marginLeft: 10, marginTop: 5 }}
+                          style={{
+                            fontSize: 20,
+                            marginLeft: 10,
+                            marginTop: 15,
+                          }}
                         >
                           DOOR
                         </Text>
@@ -250,7 +272,11 @@ const DrawerScreen = () => {
                         }}
                       >
                         <Text
-                          style={{ fontSize: 20, marginLeft: 10, marginTop: 5 }}
+                          style={{
+                            fontSize: 20,
+                            marginLeft: 10,
+                            marginTop: 15,
+                          }}
                         >
                           TRUCK
                         </Text>
@@ -321,10 +347,7 @@ const DrawerScreen = () => {
       <Drawer.Navigator
         drawerContent={(props) => <CustomDrawerContent {...props} />}
       >
-        <Drawer.Screen
-          name="BusinessMainScreen"
-          component={BusinessMainScreen}
-        />
+        <Drawer.Screen name="Nghiệp Vụ" component={BusinessMainScreen} />
         <Drawer.Screen name="ScreenFCL" component={ScreenFCL} />
         <Drawer.Screen name="Add" component={Add} />
         <Drawer.Screen name="ScreenLog" component={ScreenLog} />
