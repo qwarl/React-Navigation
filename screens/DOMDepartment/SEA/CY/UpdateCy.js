@@ -22,7 +22,7 @@ import {
   TypeSeaCY,
 } from "../../../../contains/constant";
 
-const UpdateCy = ({ route }) => {
+const UpdateCy = ({ route, navigation }) => {
   const [seaCyInfo, setSeaCyInfo] = useState(route.params.data);
   const handleOnChangeText = (value, fieldName) => {
     setSeaCyInfo({ ...seaCyInfo, [fieldName]: value });
@@ -37,9 +37,8 @@ const UpdateCy = ({ route }) => {
       const res = await clientSeaCy.post(url + id, { ...seaCyInfo });
       if (res.data.success) {
         Alert.alert("Cập Nhật Thành Công");
+        navigation.goBack();
       }
-      console.log("running");
-      console.log(res.data);
     } catch (error) {
       console.log(error.message);
     }
@@ -52,9 +51,8 @@ const UpdateCy = ({ route }) => {
       const res = await clientSeaCy.post("/create", { ...seaCyInfo });
       if (res.data.success) {
         Alert.alert("Thêm Thành Công");
+        navigation.goBack();
       }
-      console.log("running");
-      console.log(res.data);
     } catch (error) {
       console.log(error.message);
     }

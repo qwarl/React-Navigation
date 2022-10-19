@@ -21,7 +21,7 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import { isValidObjectField, updateError } from "../../../utils/method";
 import Icon from "react-native-vector-icons/FontAwesome";
 
-const AddLCL = () => {
+const AddLCL = ({ navigation }) => {
   const handleOnChangeText = (value, fieldName) => {
     setLCLInfo({ ...lclInfo, [fieldName]: value });
   };
@@ -87,9 +87,8 @@ const AddLCL = () => {
         const res = await clientLCL.post("/create", { ...lclInfo });
         if (res.data.success) {
           Alert.alert("Thêm Thành Công");
+          navigation.goBack();
         }
-        console.log("running");
-        console.log(res.data);
       } catch (error) {
         console.log(error.message);
       }

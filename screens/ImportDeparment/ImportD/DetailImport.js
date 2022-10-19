@@ -86,7 +86,7 @@ const DetailImport = ({ route, navigation }) => {
           <TouchableOpacity
             style={[styles.buttonUpdate]}
             onPress={() => {
-              navigation.navigate("UpdateImport", {
+              navigation.replace("UpdateImport", {
                 data: data,
               });
             }}

@@ -1,14 +1,15 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Icon from "react-native-vector-icons/FontAwesome";
-import HomeImport from './HomeImport';
+import HomeImport from "./HomeImport";
 import CheckPriceImport from "./CheckPriceImport";
 const Tab = createBottomTabNavigator();
 
 const HomeTabImport = () => {
   return (
     <Tab.Navigator
-      tabBarOptions={{ labelStyle: { fontSize: 16, marginBottom: 5 } }}
+    // tabBarOptions={{ labelStyle: { fontSize: 16, marginBottom: 5 } }}
+    // screenOptions={{ headerStyle: { backgroundColor: "papayawhip" } }}
     >
       <Tab.Screen
         name="HomeImport"
@@ -27,7 +28,7 @@ const HomeTabImport = () => {
         }}
       />
     </Tab.Navigator>
-  )
-}
+  );
+};
 
-export default HomeTabImport
+export default HomeTabImport;

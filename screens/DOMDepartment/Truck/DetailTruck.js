@@ -70,7 +70,7 @@ const DetailTruck = ({ navigation, route }) => {
             <TouchableOpacity
               style={[styles.buttonUpdate]}
               onPress={() => {
-                navigation.navigate("UpdateTruck", {
+                navigation.replace("UpdateTruck", {
                   data: data,
                 });
               }}

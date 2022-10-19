@@ -98,9 +98,8 @@ const Add = ({ navigation, route }) => {
       const res = await client.post("/create", { ...fclInfo });
       if (res.data.success) {
         Alert.alert("Thêm Thành Công");
+        navigation.goBack();
       }
-      console.log("running");
-      console.log(res.data);
     } catch (error) {
       console.log(error.message);
     }

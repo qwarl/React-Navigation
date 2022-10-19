@@ -9,6 +9,7 @@ import {
   Alert,
   Image,
   Button,
+  TextInput,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -20,7 +21,7 @@ import clientImportLCL from "../../../../api/clientImportLCL";
 import clientCheckPriceImportLCL from "../../../../api/clientCheckPriceImportLCL";
 import Icon from "react-native-vector-icons/FontAwesome";
 
-const AddRequiteSale = ({ route }) => {
+const AddRequiteSale = ({ route, navigation }) => {
   const [importLCLInfo, setImportLCLInfo] = useState(route.params.item);
 
   const handleOnChangeText = (fieldName, ...values) => {
@@ -78,6 +79,7 @@ const AddRequiteSale = ({ route }) => {
       const res = await clientImportLCL.post("/create", { ...importLCLInfo });
       if (res.data.success) {
         Alert.alert("Thêm Thành Công");
+        navigation.goBack();
       }
       console.log(res.data);
     } catch (error) {

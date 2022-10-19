@@ -66,7 +66,7 @@ const DetailDoor = ({ navigation, route }) => {
           <TouchableOpacity
             style={[styles.buttonUpdate]}
             onPress={() => {
-              navigation.navigate("UpdateDoor", {
+              navigation.replace("UpdateDoor", {
                 data: data,
               });
             }}

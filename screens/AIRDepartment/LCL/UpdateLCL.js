@@ -20,7 +20,7 @@ import { Dropdown } from "react-native-element-dropdown";
 import { Continent, Month1 } from "../../../contains/constant";
 import Icon from "react-native-vector-icons/FontAwesome";
 
-const UpdateLCL = ({ route }) => {
+const UpdateLCL = ({ route, navigation }) => {
   const [lclInfo, setLCLInfo] = useState(route.params.data);
   const handleOnChangeText = (value, fieldName) => {
     setLCLInfo({ ...lclInfo, [fieldName]: value });
@@ -62,9 +62,8 @@ const UpdateLCL = ({ route }) => {
       const res = await clientLCL.post(url + id, { ...lclInfo });
       if (res.data.success) {
         Alert.alert("Cập Nhật Thành Công");
+        navigation.goBack();
       }
-      console.log("running");
-      console.log(res.data);
     } catch (error) {
       console.log(error.message);
     }
@@ -77,9 +76,8 @@ const UpdateLCL = ({ route }) => {
       const res = await clientLCL.post("/create", { ...lclInfo });
       if (res.data.success) {
         Alert.alert("Thêm Thành Công");
+        navigation.goBack();
       }
-      console.log("running");
-      console.log(res.data);
     } catch (error) {
       console.log(error.message);
     }

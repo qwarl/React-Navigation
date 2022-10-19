@@ -20,7 +20,7 @@ import FormInput from "../../../components/FormInput";
 import clientImportLCL from "../../../api/clientImportLCL";
 import Icon from "react-native-vector-icons/FontAwesome";
 
-const AddImportLCL = () => {
+const AddImportLCL = ({ navigation }) => {
   const handleOnChangeText = (fieldName, ...values) => {
     values.length === 1
       ? setImportLCLInfo({ ...importLCLInfo, [fieldName]: values[0] })
@@ -96,9 +96,8 @@ const AddImportLCL = () => {
       const res = await clientImportLCL.post("/create", { ...importLCLInfo });
       if (res.data.success) {
         Alert.alert("Thêm Thành Công");
+        navigation.goBack();
       }
-      console.log("running");
-      console.log(res.data);
     } catch (error) {
       console.log(error.message);
     }

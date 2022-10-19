@@ -21,7 +21,7 @@ import clientAir from "../../api/clientAir";
 import color from "../../contains/color";
 import Icon from "react-native-vector-icons/FontAwesome";
 
-const AddAir = () => {
+const AddAir = ({ navigation }) => {
   const handleOnChangeText = (value, fieldName) => {
     setAirInfo({ ...airInfo, [fieldName]: value });
   };
@@ -86,9 +86,8 @@ const AddAir = () => {
       const res = await clientAir.post("/create", { ...airInfo });
       if (res.data.success) {
         Alert.alert("Thêm Thành Công");
+        navigation.goBack();
       }
-      console.log("running");
-      console.log(res.data);
     } catch (error) {
       console.log(error.message);
     }

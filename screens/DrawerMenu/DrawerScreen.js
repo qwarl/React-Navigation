@@ -41,7 +41,7 @@ const DrawerScreen = () => {
       openAir: false,
       openHome: false,
     });
-    console.log(open);
+    // console.log(open);
     // console.timeEnd('doSomething')
     return (
       <DrawerContentScrollView {...rest}>

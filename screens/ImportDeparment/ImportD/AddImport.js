@@ -21,7 +21,7 @@ import { isValidObjectField, updateError } from "../../../utils/method";
 import clientImport from "../../../api/clientImport";
 import Icon from "react-native-vector-icons/FontAwesome";
 
-const AddImport = () => {
+const AddImport = ({ navigation }) => {
   const handleOnChangeText = (fieldName, ...values) => {
     values.length === 1
       ? setImportInfo({ ...importInfo, [fieldName]: values[0] })
@@ -100,9 +100,8 @@ const AddImport = () => {
       const res = await clientImport.post("/create", { ...importInfo });
       if (res.data.success) {
         Alert.alert("Thêm Thành Công");
+        navigation.goBack();
       }
-      console.log("running");
-      console.log(res.data);
     } catch (error) {
       console.log(error.message);
     }

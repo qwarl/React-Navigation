@@ -29,7 +29,7 @@ import axios from "axios";
 import { Dropdown } from "react-native-element-dropdown";
 import Icon from "react-native-vector-icons/FontAwesome";
 
-const UpdateFCL = ({ route }) => {
+const UpdateFCL = ({ route, navigation }) => {
   const [updateData, setUpdateData] = useState(route.params.data);
   const [open, setOpen] = useState(false);
 
@@ -87,6 +87,7 @@ const UpdateFCL = ({ route }) => {
       const res = await client.post(url + id, { ...updateData });
       if (res.data.success) {
         Alert.alert("Cập Nhật Thành Công");
+        navigation.goBack();
       }
       console.log("running");
       console.log(res.data);
@@ -103,9 +104,8 @@ const UpdateFCL = ({ route }) => {
       const res = await client.post("/create", updateData);
       if (res.data.success) {
         Alert.alert("Thêm Thành Công");
+        navigation.goBack();
       }
-      console.log("running");
-      console.log(res.data);
     } catch (error) {
       console.log(error.message);
     }

@@ -22,7 +22,7 @@ import {
 import clientSeaDoor from "../../../../api/clientSeaDoor";
 import FormInput from "../../../../components/FormInput";
 
-const UpdateDoor = ({ route }) => {
+const UpdateDoor = ({ route, navigation }) => {
   const [seaDoorInfo, setSeaDoorInfo] = useState(route.params.data);
   const handleOnChangeText = (value, fieldName) => {
     setSeaDoorInfo({ ...seaDoorInfo, [fieldName]: value });
@@ -37,9 +37,8 @@ const UpdateDoor = ({ route }) => {
       const res = await clientSeaDoor.post(url + id, { ...seaDoorInfo });
       if (res.data.success) {
         Alert.alert("Cập Nhật Thành Công");
+        navigation.goBack();
       }
-      console.log("running");
-      console.log(res.data);
     } catch (error) {
       console.log(error.message);
     }
@@ -52,9 +51,8 @@ const UpdateDoor = ({ route }) => {
       const res = await clientSeaDoor.post("/create", { ...seaDoorInfo });
       if (res.data.success) {
         Alert.alert("Thêm Thành Công");
+        navigation.goBack();
       }
-      console.log("running");
-      console.log(res.data);
     } catch (error) {
       console.log(error.message);
     }

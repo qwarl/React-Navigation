@@ -74,7 +74,7 @@ const DetailAir = ({ navigation, route }) => {
           <TouchableOpacity
             style={[styles.buttonUpdate]}
             onPress={() => {
-              navigation.navigate("UpdateAir", {
+              navigation.replace("UpdateAir", {
                 data: data,
               });
             }}

@@ -20,7 +20,7 @@ import FormInput from "../../../../components/FormInput";
 import { Cargo, Continent, Month1 } from "../../../../contains/constant";
 import clientCheckPriceImportLCL from "../../../../api/clientCheckPriceImportLCL";
 
-const AddCheckPriceImportLCL = () => {
+const AddCheckPriceImportLCL = ({ navigation }) => {
   const handleOnChangeText = (fieldName, ...values) => {
     values.length === 1
       ? setImportLCLInfo({ ...importLCLInfo, [fieldName]: values[0] })
@@ -98,9 +98,8 @@ const AddCheckPriceImportLCL = () => {
       });
       if (res.data.success) {
         Alert.alert("Thêm Thành Công");
+        navigation.goBack();
       }
-      console.log("running");
-      console.log(res.data);
     } catch (error) {
       console.log(error.message);
     }

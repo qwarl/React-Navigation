@@ -26,7 +26,7 @@ import FormInput from "../../components/FormInput";
 import color from "../../contains/color";
 import Icon from "react-native-vector-icons/FontAwesome";
 
-const UpdateAir = ({ route }) => {
+const UpdateAir = ({ route, navigation }) => {
   const [airInfo, setAirInfo] = useState(route.params.data);
   const handleOnChangeText = (value, fieldName) => {
     setAirInfo({ ...airInfo, [fieldName]: value });
@@ -70,9 +70,8 @@ const UpdateAir = ({ route }) => {
       const res = await clientAir.post(url + id, { ...airInfo });
       if (res.data.success) {
         Alert.alert("Cập Nhật Thành Công");
+        navigation.goBack();
       }
-      console.log("running");
-      console.log(res.data);
     } catch (error) {
       console.log(error.message);
     }
@@ -85,9 +84,8 @@ const UpdateAir = ({ route }) => {
       const res = await clientAir.post("/create", { ...airInfo });
       if (res.data.success) {
         Alert.alert("Thêm Thành Công");
+        navigation.goBack();
       }
-      console.log("running");
-      console.log(res.data);
     } catch (error) {
       console.log(error.message);
     }

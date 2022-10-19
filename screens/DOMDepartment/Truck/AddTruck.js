@@ -23,7 +23,7 @@ import FormInput from "../../../components/FormInput";
 import clientTruck from "../../../api/clientTruck";
 import { isValidObjectField, updateError } from "../../../utils/method";
 
-const AddTruck = () => {
+const AddTruck = ({ navigation }) => {
   const handleOnChangeText = (value, fieldName) => {
     setTruckInfo({ ...truckInfo, [fieldName]: value });
   };
@@ -86,9 +86,8 @@ const AddTruck = () => {
         const res = await clientTruck.post("/create", { ...truckInfo });
         if (res.data.success) {
           Alert.alert("Thêm Thành Công");
+          navigation.goBack();
         }
-        console.log("running");
-        console.log(res.data);
       } catch (error) {
         console.log(error.message);
       }

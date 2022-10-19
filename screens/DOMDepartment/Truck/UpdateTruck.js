@@ -21,7 +21,7 @@ import {
   TypeContainerTruck,
   TypeTruck,
 } from "../../../contains/constant";
-const UpdateTruck = ({ route }) => {
+const UpdateTruck = ({ route, navigation }) => {
   const [truckInfo, setTruckInfo] = useState(route.params.data);
   const handleOnChangeText = (value, fieldName) => {
     setTruckInfo({ ...truckInfo, [fieldName]: value });
@@ -35,9 +35,8 @@ const UpdateTruck = ({ route }) => {
       const res = await clientTruck.post(url + id, { ...truckInfo });
       if (res.data.success) {
         Alert.alert("Cập Nhật Thành Công");
+        navigation.goBack();
       }
-      console.log("running");
-      console.log(res.data);
     } catch (error) {
       console.log(error.message);
     }
@@ -50,9 +49,8 @@ const UpdateTruck = ({ route }) => {
       const res = await clientTruck.post("/create", { ...truckInfo });
       if (res.data.success) {
         Alert.alert("Thêm Thành Công");
+        navigation.goBack();
       }
-      console.log("running");
-      console.log(res.data);
     } catch (error) {
       console.log(error.message);
     }

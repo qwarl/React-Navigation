@@ -23,7 +23,7 @@ import {
 import clientSeaDoor from "../../../../api/clientSeaDoor";
 import { isValidObjectField, updateError } from "../../../../utils/method";
 
-const AddDoor = () => {
+const AddDoor = ({ navigation }) => {
   const [error, setError] = useState("");
   const [seaDoorInfo, setSeaDoorInfo] = useState({
     month: "",
@@ -83,9 +83,8 @@ const AddDoor = () => {
         const res = await clientSeaDoor.post("/create", { ...seaDoorInfo });
         if (res.data.success) {
           Alert.alert("Thêm Thành Công");
+          navigation.goBack();
         }
-        console.log("running");
-        console.log(res.data);
       } catch (error) {
         console.log(error.message);
       }

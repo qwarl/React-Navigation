@@ -20,7 +20,7 @@ import FormInput from "../../../components/FormInput";
 import clientImportLCL from "../../../api/clientImportLCL";
 import Icon from "react-native-vector-icons/FontAwesome";
 
-const UpdateImportLCL = ({ route }) => {
+const UpdateImportLCL = ({ route, navigation }) => {
   const [importLCLInfo, setImportLCLInfo] = useState(route.params.data);
 
   const handleOnChangeText = (fieldName, ...values) => {
@@ -77,9 +77,8 @@ const UpdateImportLCL = ({ route }) => {
       const res = await clientImportLCL.post(url + id, { ...importLCLInfo });
       if (res.data.success) {
         Alert.alert("Cập Nhật Thành Công");
+        navigation.goBack();
       }
-      console.log("running");
-      console.log(res.data);
     } catch (error) {
       console.log(error.message);
     }
@@ -92,9 +91,8 @@ const UpdateImportLCL = ({ route }) => {
       const res = await clientImportLCL.post("/create", { ...importLCLInfo });
       if (res.data.success) {
         Alert.alert("Thêm Thành Công");
+        navigation.goBack();
       }
-      console.log("running");
-      console.log(res.data);
     } catch (error) {
       console.log(error.message);
     }

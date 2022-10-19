@@ -20,7 +20,7 @@ import FormInput from "../../../components/FormInput";
 import clientImport from "../../../api/clientImport";
 import Icon from "react-native-vector-icons/FontAwesome";
 
-const UpdateImport = ({ route }) => {
+const UpdateImport = ({ route, navigation }) => {
   const [importInfo, setImportInfo] = useState(route.params.data);
 
   const handleOnChangeText = (fieldName, ...values) => {
@@ -77,9 +77,8 @@ const UpdateImport = ({ route }) => {
       const res = await clientImport.post(url + id, { ...importInfo });
       if (res.data.success) {
         Alert.alert("Cập Nhật Thành Công");
+        navigation.goBack();
       }
-      console.log("running");
-      console.log(res.data);
     } catch (error) {
       console.log(error.message);
     }
@@ -92,9 +91,8 @@ const UpdateImport = ({ route }) => {
       const res = await clientImport.post("/create", { ...importInfo });
       if (res.data.success) {
         Alert.alert("Thêm Thành Công");
+        navigation.goBack();
       }
-      console.log("running");
-      console.log(res.data);
     } catch (error) {
       console.log(error.message);
     }

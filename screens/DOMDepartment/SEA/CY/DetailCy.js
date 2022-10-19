@@ -58,7 +58,7 @@ const DetailCy = ({ navigation, route }) => {
           <TouchableOpacity
             style={[styles.buttonUpdate]}
             onPress={() => {
-              navigation.navigate("UpdateCy", {
+              navigation.replace("UpdateCy", {
                 data: data,
               });
             }}
