@@ -12,7 +12,7 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import FormInput from "../../../../components/FormInput";
-import SelectList from "react-native-dropdown-select-list";
+import { Dropdown } from "react-native-element-dropdown";
 import color from "../../../../contains/color";
 import {
   Continent,
@@ -100,38 +100,82 @@ const AddDoor = ({ navigation }) => {
       <ScrollView>
         <View style={styles.dropMenu}>
           <Text style={styles.label}>Chọn Tháng</Text>
-          <SelectList
-            setSelected={(value) =>
-              setSeaDoorInfo({ ...seaDoorInfo, month: value })
-            }
+          <Dropdown
+            style={[styles.dropdown]}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
             data={Month1}
+            search={true}
+            maxHeight={300}
+            labelField="label"
+            valueField="value"
+            searchPlaceholder="Search..."
+            value={seaDoorInfo.month}
+            onChange={(value) => {
+              setSeaDoorInfo({ ...seaDoorInfo, month: value.value });
+            }}
           />
         </View>
         <View style={styles.dropMenu}>
           <Text style={styles.label}>Chọn Châu</Text>
-          <SelectList
-            setSelected={(value) =>
-              setSeaDoorInfo({ ...seaDoorInfo, continent: value })
-            }
+          <Dropdown
+            style={[styles.dropdown]}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
             data={Continent}
+            search={true}
+            maxHeight={300}
+            labelField="label"
+            valueField="value"
+            searchPlaceholder="Search..."
+            value={seaDoorInfo.continent}
+            onChange={(value) => {
+              setSeaDoorInfo({ ...seaDoorInfo, continent: value.value });
+            }}
           />
         </View>
         <View style={styles.dropMenu}>
           <Text style={styles.label}>Chọn Container</Text>
-          <SelectList
-            setSelected={(value) =>
-              setSeaDoorInfo({ ...seaDoorInfo, container: value })
-            }
+          <Dropdown
+            style={[styles.dropdown]}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
             data={TypeSeaCY}
+            search={true}
+            maxHeight={300}
+            labelField="label"
+            valueField="value"
+            searchPlaceholder="Search..."
+            value={seaDoorInfo.container}
+            onChange={(value) => {
+              setSeaDoorInfo({ ...seaDoorInfo, container: value.value });
+            }}
           />
         </View>
         <View style={styles.dropMenu}>
           <Text style={styles.label}>Chọn Loại Vận Chuyển</Text>
-          <SelectList
-            setSelected={(value) =>
-              setSeaDoorInfo({ ...seaDoorInfo, doortype: value })
-            }
+          <Dropdown
+            style={[styles.dropdown]}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
             data={DomType}
+            search={true}
+            maxHeight={300}
+            labelField="label"
+            valueField="value"
+            searchPlaceholder="Search..."
+            value={seaDoorInfo.doortype}
+            onChange={(value) => {
+              setSeaDoorInfo({ ...seaDoorInfo, doortype: value.value });
+            }}
           />
         </View>
         <FormInput
@@ -205,6 +249,9 @@ const AddDoor = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   iconWrapper: {
     width: 44,
     height: 44,
@@ -236,7 +283,7 @@ const styles = StyleSheet.create({
     height: 50,
     width: 150,
     borderColor: color.borderColor,
-    borderWidth: 3,
+    borderWidth: 1.5,
     borderRadius: 8,
     justifyContent: "center",
     alignItems: "center",
@@ -271,6 +318,42 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginLeft: 20,
+  },
+  dropdown: {
+    height: 50,
+    borderColor: "gray",
+    borderWidth: 0.5,
+    borderRadius: 8,
+    paddingHorizontal: 8,
+  },
+  placeholderStyle: {
+    fontSize: 16,
+  },
+  selectedTextStyle: {
+    fontSize: 16,
+  },
+  iconStyle: {
+    width: 20,
+    height: 20,
+  },
+  inputSearchStyle: {
+    height: 40,
+    fontSize: 16,
+  },
+  validStyle: {
+    height: 35,
+    width: "90%",
+    fontSize: 14,
+    padding: 5,
+    marginBottom: 10,
+    height: 50,
+    marginLeft: 17,
+    marginRight: 17,
+    borderBottomWidth: 1,
+  },
+  textValid: {
+    fontWeight: "bold",
+    marginLeft: 17,
   },
 });
 export default AddDoor;

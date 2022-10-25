@@ -2,7 +2,7 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Icon from "react-native-vector-icons/FontAwesome";
 import HomeImport from "./HomeImport";
-import CheckPriceImport from "./CheckPriceImport";
+import CheckPriceImport from "./../ImportD/checkprice/CheckPriceImport";
 const Tab = createBottomTabNavigator();
 
 const HomeTabImport = () => {

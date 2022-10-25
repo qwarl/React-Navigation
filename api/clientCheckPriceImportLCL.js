@@ -1,5 +1,6 @@
 import axios from "axios";
-
+import { ipAddress } from "../contains/constant";
+const url = "/api/import-lcl-check";
 export default axios.create({
-  baseURL: "http://192.168.1.77:3001/api/import-lcl-check",
+  baseURL: ipAddress + url,
 });

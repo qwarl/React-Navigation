@@ -8,7 +8,6 @@ import {
   TextInput,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import SelectList from "react-native-dropdown-select-list";
 import Icon from "react-native-vector-icons/FontAwesome";
 import color from "../../../contains/color";
 import clientLCL from "../../../api/clientLCL";

@@ -14,7 +14,7 @@ import {
 import React, { useEffect, useState } from "react";
 import clientLCL from "../../../api/clientLCL";
 import color from "../../../contains/color";
-import SelectList from "react-native-dropdown-select-list";
+import { Dropdown } from "react-native-element-dropdown";
 import { Continent, Month } from "../../../contains/constant";
 import FormInput from "../../../components/FormInput";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -105,18 +105,42 @@ const AddLCL = ({ navigation }) => {
       <ScrollView>
         <View style={styles.dropMenu}>
           <Text style={styles.label}>Chọn Tháng</Text>
-          <SelectList
-            setSelected={(value) => setLCLInfo({ ...lclInfo, month: value })}
-            data={Month}
+          <Dropdown
+            style={[styles.dropdown]}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
+            data={Month1}
+            search={true}
+            maxHeight={300}
+            labelField="label"
+            valueField="value"
+            searchPlaceholder="Search..."
+            value={lclInfo.month}
+            onChange={(value) => {
+              setLCLInfo({ ...lclInfo, month: value.value });
+            }}
           />
         </View>
         <View style={styles.dropMenu}>
           <Text style={styles.label}>Chọn Châu</Text>
-          <SelectList
-            setSelected={(value) =>
-              setLCLInfo({ ...lclInfo, continent: value })
-            }
+          <Dropdown
+            style={[styles.dropdown]}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
             data={Continent}
+            search={true}
+            maxHeight={300}
+            labelField="label"
+            valueField="value"
+            searchPlaceholder="Search..."
+            value={lclInfo.continent}
+            onChange={(value) => {
+              setLCLInfo({ ...lclInfo, continent: value.value });
+            }}
           />
         </View>
         <FormInput

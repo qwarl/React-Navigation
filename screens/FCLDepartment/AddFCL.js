@@ -17,7 +17,12 @@ import SelectList from "react-native-dropdown-select-list";
 import DateTimePicker from "@react-native-community/datetimepicker";
 const { width, height } = Dimensions.get("window");
 import { isValidObjectField, updateError } from "../../utils/method.js";
-import { Container, Continent, Month } from "../../contains/constant";
+import {
+  Container,
+  Continent,
+  ipAddress,
+  Month,
+} from "../../contains/constant";
 import axios from "axios";
 import client from "../../api/client";
 import Icon from "react-native-vector-icons/FontAwesome";
@@ -108,7 +113,7 @@ const Add = ({ navigation, route }) => {
   const submitUpdateForm = async () => {
     // if (isValidForm()) {
 
-    const url = `http://192.168.1.77:3001/api/quotations/update/${route.params._id}`;
+    const url = `http://'${ipAddress}'/api/quotations/update/${route.params._id}`;
 
     try {
       const res = await axios.post(url, { ...fclInfo });

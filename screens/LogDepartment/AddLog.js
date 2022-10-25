@@ -12,13 +12,13 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import color from "../../contains/color";
-import SelectList from "react-native-dropdown-select-list";
 import FormInput from "../../components/FormInput";
 import clientLog from "../../api/clientLog";
 import { isValidObjectField, updateError } from "../../utils/method";
-import { Month, ShippingType, Type } from "../../contains/constant";
+import { Month1, ShippingType, Type } from "../../contains/constant";
 import * as ImagePicker from "expo-image-picker";
 import Icon from "react-native-vector-icons/FontAwesome";
+import { Dropdown } from "react-native-element-dropdown";
 
 const { width, height } = Dimensions.get("window");
 
@@ -130,24 +130,62 @@ const AddLog = ({ route }) => {
       <ScrollView>
         <View style={styles.dropMenu}>
           <Text style={styles.label}>Chọn Tháng</Text>
-          <SelectList
-            setSelected={(value) => setLogInfo({ ...logInfo, month: value })}
-            data={Month}
-            // defaultOption={{key:logInfo.month, value:logInfo.month}}
+          <Dropdown
+            style={[styles.dropdown]}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
+            data={Month1}
+            search={true}
+            maxHeight={300}
+            labelField="label"
+            valueField="value"
+            searchPlaceholder="Search..."
+            value={logInfo.month}
+            onChange={(value) => {
+              setLogInfo({ ...logInfo, month: value.value });
+            }}
           />
         </View>
         <View style={styles.dropMenu}>
           <Text style={styles.label}>Chọn Loại Vận Chuyển</Text>
-          <SelectList
-            setSelected={(value) => setLogInfo({ ...logInfo, freight: value })}
+          <Dropdown
+            style={[styles.dropdown]}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
             data={ShippingType}
+            search={true}
+            maxHeight={300}
+            labelField="label"
+            valueField="value"
+            searchPlaceholder="Search..."
+            value={logInfo.freight}
+            onChange={(value) => {
+              setLogInfo({ ...logInfo, freight: value.value });
+            }}
           />
         </View>
         <View style={styles.dropMenu}>
           <Text style={styles.label}>Chọn Loại Hình</Text>
-          <SelectList
-            setSelected={(value) => setLogInfo({ ...logInfo, type: value })}
+          <Dropdown
+            style={[styles.dropdown]}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
             data={Type}
+            search={true}
+            maxHeight={300}
+            labelField="label"
+            valueField="value"
+            searchPlaceholder="Search..."
+            value={logInfo.type}
+            onChange={(value) => {
+              setLogInfo({ ...logInfo, type: value.value });
+            }}
           />
         </View>
         <FormInput
@@ -264,7 +302,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     borderWidth: 2,
     borderColor: color.background,
-    marginLeft: height * 0.445,
   },
   icon: {
     fontSize: 24,
@@ -287,12 +324,22 @@ const styles = StyleSheet.create({
     height: 50,
     width: 150,
     borderColor: color.borderColor,
-    borderWidth: 3,
+    borderWidth: 1.5,
     borderRadius: 8,
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 30,
     marginLeft: 10,
+  },
+  buttonTime: {
+    height: 40,
+    borderColor: color.colorbutton,
+    borderWidth: 2,
+    borderRadius: 8,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 30,
+    marginHorizontal: 80,
   },
   buttonImage: {
     height: 50,
@@ -313,6 +360,41 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginLeft: 20,
   },
+  dropdown: {
+    height: 50,
+    borderColor: "gray",
+    borderWidth: 0.5,
+    borderRadius: 8,
+    paddingHorizontal: 8,
+  },
+  placeholderStyle: {
+    fontSize: 16,
+  },
+  selectedTextStyle: {
+    fontSize: 16,
+  },
+  iconStyle: {
+    width: 20,
+    height: 20,
+  },
+  inputSearchStyle: {
+    height: 40,
+    fontSize: 16,
+  },
+  validStyle: {
+    height: 35,
+    width: "90%",
+    fontSize: 14,
+    padding: 5,
+    marginBottom: 10,
+    height: 50,
+    marginLeft: 17,
+    marginRight: 17,
+    borderBottomWidth: 1,
+  },
+  textValid: {
+    fontWeight: "bold",
+    marginLeft: 17,
+  },
 });
-
 export default AddLog;

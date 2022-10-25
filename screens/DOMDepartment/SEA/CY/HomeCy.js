@@ -47,20 +47,6 @@ const HomeCy = ({ navigation }) => {
       });
   }, [data]);
 
-  // const checkPriceSearch = (eachAir) => {
-  //   let result = false;
-  //   const end = seaCyInfo.beweenprice.indexOf("đến");
-  //   const value1 = seaCyInfo.beweenprice.substring(3, end - 1);
-  //   const value2 = seaCyInfo.beweenprice.substring(end + 4);
-  //   if (eachAir.price > value1 && eachAir.price < value2) {
-  //     result = true;
-  //   } else if (seaCyInfo.beweenprice == "") {
-  //     result = true;
-  //   }
-
-  //   return result;
-  // };
-
   const checkTypeSearch = (searchText, eachSeaCy) => {
     let result = false;
     if (

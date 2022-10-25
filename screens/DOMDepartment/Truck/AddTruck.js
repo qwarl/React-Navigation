@@ -11,11 +11,13 @@ import {
   Button,
 } from "react-native";
 import React, { useEffect, useState } from "react";
+import { Dropdown } from "react-native-element-dropdown";
 import color from "../../../contains/color";
 import SelectList from "react-native-dropdown-select-list";
 import {
   Continent,
   Month,
+  Month1,
   TypeContainerTruck,
   TypeTruck,
 } from "../../../contains/constant";
@@ -103,38 +105,82 @@ const AddTruck = ({ navigation }) => {
       <ScrollView>
         <View style={styles.dropMenu}>
           <Text style={styles.label}>Chọn Tháng</Text>
-          <SelectList
-            setSelected={(value) =>
-              setTruckInfo({ ...truckInfo, month: value })
-            }
-            data={Month}
+          <Dropdown
+            style={[styles.dropdown]}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
+            data={Month1}
+            search={true}
+            maxHeight={300}
+            labelField="label"
+            valueField="value"
+            searchPlaceholder="Search..."
+            value={truckInfo.month}
+            onChange={(value) => {
+              setTruckInfo({ ...truckInfo, month: value.value });
+            }}
           />
         </View>
         <View style={styles.dropMenu}>
           <Text style={styles.label}>Chọn Châu</Text>
-          <SelectList
-            setSelected={(value) =>
-              setTruckInfo({ ...truckInfo, continent: value })
-            }
+          <Dropdown
+            style={[styles.dropdown]}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
             data={Continent}
+            search={true}
+            maxHeight={300}
+            labelField="label"
+            valueField="value"
+            searchPlaceholder="Search..."
+            value={truckInfo.continent}
+            onChange={(value) => {
+              setTruckInfo({ ...truckInfo, continent: value.value });
+            }}
           />
         </View>
         <View style={styles.dropMenu}>
           <Text style={styles.label}>Chọn Loại Xe Vận Chuyển</Text>
-          <SelectList
-            setSelected={(value) =>
-              setTruckInfo({ ...truckInfo, typetruck: value })
-            }
+          <Dropdown
+            style={[styles.dropdown]}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
             data={TypeTruck}
+            search={true}
+            maxHeight={300}
+            labelField="label"
+            valueField="value"
+            searchPlaceholder="Search..."
+            value={truckInfo.typetruck}
+            onChange={(value) => {
+              setTruckInfo({ ...truckInfo, typetruck: value.value });
+            }}
           />
         </View>
         <View style={styles.dropMenu}>
           <Text style={styles.label}>Chọn Loại Container</Text>
-          <SelectList
-            setSelected={(value) =>
-              setTruckInfo({ ...truckInfo, container: value })
-            }
+          <Dropdown
+            style={[styles.dropdown]}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
             data={TypeContainerTruck}
+            search={true}
+            maxHeight={300}
+            labelField="label"
+            valueField="value"
+            searchPlaceholder="Search..."
+            value={truckInfo.container}
+            onChange={(value) => {
+              setTruckInfo({ ...truckInfo, container: value.value });
+            }}
           />
         </View>
         <FormInput
@@ -238,7 +284,6 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
     flex: 1,
     minWidth: 180,
-    marginBottom: 10,
   },
   label: {
     fontSize: 18,
@@ -249,11 +294,12 @@ const styles = StyleSheet.create({
     height: 50,
     width: 150,
     borderColor: color.borderColor,
-    borderWidth: 2,
+    borderWidth: 1.5,
     borderRadius: 8,
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 30,
+    marginLeft: 10,
   },
   buttonTime: {
     height: 40,
@@ -283,6 +329,42 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginLeft: 20,
+  },
+  dropdown: {
+    height: 50,
+    borderColor: "gray",
+    borderWidth: 0.5,
+    borderRadius: 8,
+    paddingHorizontal: 8,
+  },
+  placeholderStyle: {
+    fontSize: 16,
+  },
+  selectedTextStyle: {
+    fontSize: 16,
+  },
+  iconStyle: {
+    width: 20,
+    height: 20,
+  },
+  inputSearchStyle: {
+    height: 40,
+    fontSize: 16,
+  },
+  validStyle: {
+    height: 35,
+    width: "90%",
+    fontSize: 14,
+    padding: 5,
+    marginBottom: 10,
+    height: 50,
+    marginLeft: 17,
+    marginRight: 17,
+    borderBottomWidth: 1,
+  },
+  textValid: {
+    fontWeight: "bold",
+    marginLeft: 17,
   },
 });
 

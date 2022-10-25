@@ -1,3 +1,5 @@
 import axios from "axios";
+import { ipAddress } from "../contains/constant";
 
-export default axios.create({baseURL: 'http://192.168.1.77:3001/api/truck'})
+const url = "/api/truck";
+export default axios.create({ baseURL: ipAddress + url });

@@ -13,9 +13,9 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import SelectList from "react-native-dropdown-select-list";
+import { Dropdown } from "react-native-element-dropdown";
 import FormInput from "../../components/FormInput";
-import { Continent, Month, ShippingType } from "../../contains/constant";
+import { Continent, Month1, ShippingType } from "../../contains/constant";
 import { isValidObjectField, updateError } from "../../utils/method";
 import clientAir from "../../api/clientAir";
 import color from "../../contains/color";
@@ -103,27 +103,62 @@ const AddAir = ({ navigation }) => {
       <ScrollView>
         <View style={styles.dropMenu}>
           <Text style={styles.label}>Chọn Tháng</Text>
-          <SelectList
-            setSelected={(value) => setAirInfo({ ...airInfo, month: value })}
-            data={Month}
+          <Dropdown
+            style={[styles.dropdown]}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
+            data={Month1}
+            search={true}
+            maxHeight={300}
+            labelField="label"
+            valueField="value"
+            searchPlaceholder="Search..."
+            value={airInfo.month}
+            onChange={(value) => {
+              setAirInfo({ ...airInfo, month: value.value });
+            }}
           />
         </View>
         <View style={styles.dropMenu}>
           <Text style={styles.label}>Chọn Châu</Text>
-          <SelectList
-            setSelected={(value) =>
-              setAirInfo({ ...airInfo, continent: value })
-            }
+          <Dropdown
+            style={[styles.dropdown]}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
             data={Continent}
+            search={true}
+            maxHeight={300}
+            labelField="label"
+            valueField="value"
+            searchPlaceholder="Search..."
+            value={airInfo.continent}
+            onChange={(value) => {
+              setAirInfo({ ...airInfo, continent: value.value });
+            }}
           />
         </View>
         <View style={styles.dropMenu}>
           <Text style={styles.label}>Chọn Loại Vận Chuyển</Text>
-          <SelectList
-            setSelected={(value) =>
-              setAirInfo({ ...airInfo, shippingtype: value })
-            }
+          <Dropdown
+            style={[styles.dropdown]}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
             data={ShippingType}
+            search={true}
+            maxHeight={300}
+            labelField="label"
+            valueField="value"
+            searchPlaceholder="Search..."
+            value={airInfo.shippingtype}
+            onChange={(value) => {
+              setAirInfo({ ...airInfo, shippingtype: value.value });
+            }}
           />
         </View>
         <FormInput

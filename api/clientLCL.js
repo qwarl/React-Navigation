@@ -1,3 +1,4 @@
 import axios from "axios";
-
-export default axios.create({baseURL: 'http://192.168.1.77:3001/api/lcl'})
+import { ipAddress } from "../contains/constant";
+const url = "/api/lcl";
+export default axios.create({ baseURL: ipAddress + url });

@@ -7,16 +7,28 @@ import DetailLog from "./DetailLog";
 import AddLog from "./AddLog";
 import UpdateLog from "./UpdateLog";
 import PolicyDetail from "./PolicyDetail";
+import AddCheckPriceLog from "./checkprice/AddCheckPriceLog";
+import AddLogRequiteSale from "./checkprice/AddLogRequiteSale";
+import HomeTabLog from "./checkprice/HomeTabLog";
 
 const Stack = createStackNavigator();
 
 const ScreenLog = () => {
   return (
-    //    <NavigationContainer>
     <Stack.Navigator>
       <Stack.Screen
-        name="HomeLog"
-        component={HomeLog}
+        name="HomeTabLog"
+        component={HomeTabLog}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="AddCheckPriceLog"
+        component={AddCheckPriceLog}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="AddLogRequiteSale"
+        component={AddLogRequiteSale}
         options={{ headerShown: false }}
       />
       <Stack.Screen
@@ -40,7 +52,6 @@ const ScreenLog = () => {
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
-    // </NavigationContainer>
   );
 };
 

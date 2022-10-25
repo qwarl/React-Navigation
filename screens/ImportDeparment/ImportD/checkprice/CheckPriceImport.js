@@ -6,12 +6,14 @@ import {
   Dimensions,
   FlatList,
   TextInput,
+  Alert,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import color from "../../../contains/color";
-import clientImport from "../../../api/clientImport";
+import clientImport from "../../../../api/clientImport";
+import color from "../../../../contains/color";
+import clientCheckPriceImport from "../../../../api/clientCheckPriceImport";
 
-const CheckPriceImport = () => {
+const CheckPriceImport = ({ navigation }) => {
   const [importInfo, setImportInfo] = useState({
     month: "",
     continent: "",
@@ -28,10 +30,10 @@ const CheckPriceImport = () => {
   // }, []);
   // call api get Log
   useEffect(() => {
-    clientImport
+    clientCheckPriceImport
       .get("/getAll")
       .then((res) => {
-        setData(res.data.dataImport);
+        setData(res.data.dataImportCheckPrice);
       })
       .catch((err) => {
         console.log(err);
@@ -82,15 +84,28 @@ const CheckPriceImport = () => {
   const renderItem = ({ item }) => (
     <TouchableOpacity
       onPress={() => {
-        navigation.navigate("DetailImport", {
-          item: item,
-        });
+        Alert.alert(
+          "Thông Báo",
+          "Bạn có muốn tạo một báo giá mới theo yêu cầu sale không?",
+          [
+            {
+              text: "Hủy",
+              onPress: () => console.log("Cancel required"),
+              style: "cancel",
+            },
+            {
+              text: "Phản hồi",
+              onPress: () => {
+                navigation.navigate("AddRequiteSale", {
+                  item: item,
+                });
+              },
+            },
+          ]
+        );
       }}
     >
       <View style={styles.detail}>
-        <View>
-          <Text style={styles.textDisplayCode}>{item.code}</Text>
-        </View>
         <View style={{ flexDirection: "row" }}>
           <Text style={styles.textLable}>Pol: </Text>
           <Text style={styles.textDisplay}>{item.pol}</Text>
@@ -150,7 +165,7 @@ const CheckPriceImport = () => {
       >
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate("AddImport");
+            navigation.navigate("AddCheckPriceImport");
           }}
         >
           <View style={styles.iconWrapper}>

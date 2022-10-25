@@ -8,7 +8,7 @@ import {
   TextInput,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import SelectList from "react-native-dropdown-select-list";
+import { Dropdown } from "react-native-element-dropdown";
 import color from "../../contains/color";
 import clientLog from "../../api/clientLog";
 import Icon from "react-native-vector-icons/FontAwesome";
@@ -18,7 +18,6 @@ import {
   ShippingType,
   Year1,
 } from "../../contains/constant";
-import { Dropdown } from "react-native-element-dropdown";
 
 const HomeLog = ({ navigation }) => {
   const [logInfo, setLogInfo] = useState({

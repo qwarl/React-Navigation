@@ -19,6 +19,7 @@ import {
   Year1,
   BetweenPrice1,
   ContainerHome,
+  ipAddress,
 } from "../../contains/constant";
 import Icon from "react-native-vector-icons/FontAwesome";
 import RadioForm, {
@@ -50,8 +51,8 @@ const Home = ({ navigation }) => {
   });
 
   function getData() {
-    const url = `http://192.168.1.77:3001/api/quotations/getAll`;
-    axios.get(url).then((res) => {
+    const url = `/api/quotations/getAll`;
+    axios.get(ipAddress + url).then((res) => {
       setData1(res["data"].quotations);
     });
   }

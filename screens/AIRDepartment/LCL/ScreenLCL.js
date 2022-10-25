@@ -7,6 +7,9 @@ import HomeLCL from "./HomeLCL";
 import DetailLCL from "./DetailLCL";
 import AddLCL from "./AddLCL";
 import UpdateLCL from "./UpdateLCL";
+import HomeTabLCL from "./checkprice/HomeTabLCL";
+import AddLCLRequiteSale from "./checkprice/AddLCLRequiteSale";
+import AddCheckPriceLCL from "./checkprice/AddCheckPriceLCL";
 
 const Stack = createStackNavigator();
 
@@ -15,8 +18,18 @@ const ScreenLCL = () => {
     // <NavigationContainer>
     <Stack.Navigator>
       <Stack.Screen
-        name="HomeLCL"
-        component={HomeLCL}
+        name="HomeTabLCL"
+        component={HomeTabLCL}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="AddLCLRequiteSale"
+        component={AddLCLRequiteSale}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="AddCheckPriceLCL"
+        component={AddCheckPriceLCL}
         options={{ headerShown: false }}
       />
       <Stack.Screen
