@@ -23,11 +23,12 @@ import color from "../../contains/color";
 import Icon from "react-native-vector-icons/AntDesign";
 import Icon1 from "react-native-vector-icons/Feather";
 import BusinessMainScreen from "./BusinessMainScreen";
+import * as Updates from "expo-updates"
 
 const Drawer = createDrawerNavigator();
 
 const DrawerScreen = () => {
-  function CustomDrawerContent({ navigation, progress, ...rest }) {
+  function CustomDrawerContent({ navigation, progress, route, ...rest }) {
     // const translateX = Animated.interpolateNode(progress, {
     //     inputRange: [0, 1],
     //     outputRange: [30, 0],
@@ -51,7 +52,7 @@ const DrawerScreen = () => {
         <View style={styles.mainMenu}>
           <TouchableOpacity
             onPress={() => navigation.navigate("Nghiệp Vụ")}
-            // style={{ backgroundColor: "rgb(172, 231, 250)" }}
+          // style={{ backgroundColor: "rgb(172, 231, 250)" }}
           >
             <Icon
               name="home"
@@ -69,7 +70,7 @@ const DrawerScreen = () => {
             onPress={() =>
               setOpen({ ...open, openQuotation: !open.openQuotation })
             }
-            // style={{ backgroundColor: "rgb(172, 231, 250)" }}
+          // style={{ backgroundColor: "rgb(172, 231, 250)" }}
           >
             <Icon1
               name="clipboard"
@@ -98,7 +99,8 @@ const DrawerScreen = () => {
               <View>
                 <TouchableOpacity
                   onPress={() => {
-                    navigation.navigate("ScreenFCL");
+                    // navigation.navigate('ScreenFCL',{f5:Math.random()})
+                    navigation.reset({ index: 0, routes: [{ name: 'ScreenFCL' }] })
                     setOpen(!open.openQuotation);
                   }}
                 >
@@ -128,7 +130,8 @@ const DrawerScreen = () => {
                     >
                       <TouchableOpacity
                         onPress={() => {
-                          navigation.navigate("ScreenImport");
+                          // navigation.navigate("ScreenImport");
+                          navigation.reset({ index: 0, routes: [{ name: 'ScreenImport' }] })
                           setOpen(!open.openImport);
                         }}
                       >
@@ -143,7 +146,8 @@ const DrawerScreen = () => {
                       </TouchableOpacity>
                       <TouchableOpacity
                         onPress={() => {
-                          navigation.navigate("ScreenImportLCL");
+                          // navigation.navigate("ScreenImportLCL");
+                          navigation.reset({ index: 0, routes: [{ name: 'ScreenImportLCL' }] })
                           setOpen(!open.openImport);
                         }}
                       >
@@ -162,7 +166,8 @@ const DrawerScreen = () => {
                 </View>
                 <TouchableOpacity
                   onPress={() => {
-                    navigation.navigate("ScreenLog");
+                    // navigation.navigate("ScreenLog");
+                    navigation.reset({ index: 0, routes: [{ name: 'ScreenLog' }] })
                   }}
                 >
                   <Text style={{ fontSize: 20, marginTop: 16 }}>
@@ -189,7 +194,8 @@ const DrawerScreen = () => {
                     >
                       <TouchableOpacity
                         onPress={() => {
-                          navigation.navigate("ScreenLCL");
+                          // navigation.navigate("ScreenLCL");
+                          navigation.reset({ index: 0, routes: [{ name: 'ScreenLCL' }] })
                           setOpen({ ...open, openAir: !open.openAir });
                         }}
                       >
@@ -199,7 +205,8 @@ const DrawerScreen = () => {
                       </TouchableOpacity>
                       <TouchableOpacity
                         onPress={() => {
-                          navigation.navigate("ScreenAIR");
+                          // navigation.navigate("ScreenAIR");
+                          navigation.reset({ index: 0, routes: [{ name: 'ScreenAIR' }] })
                           setOpen({ ...open, openAir: !open.openAir });
                         }}
                       >
@@ -235,7 +242,8 @@ const DrawerScreen = () => {
                     >
                       <TouchableOpacity
                         onPress={() => {
-                          navigation.navigate("ScreenCy");
+                          // navigation.navigate("ScreenCy");
+                          navigation.reset({ index: 0, routes: [{ name: 'ScreenCy' }] })
                           setOpen({ ...open, openDOM: !open.openDOM });
                         }}
                       >
@@ -250,7 +258,8 @@ const DrawerScreen = () => {
                       </TouchableOpacity>
                       <TouchableOpacity
                         onPress={() => {
-                          navigation.navigate("ScreenDoor");
+                          // navigation.navigate("ScreenDoor");
+                          navigation.reset({ index: 0, routes: [{ name: 'ScreenDoor' }] })
                           setOpen({ ...open, openDOM: !open.openDOM });
                         }}
                       >
@@ -267,7 +276,8 @@ const DrawerScreen = () => {
 
                       <TouchableOpacity
                         onPress={() => {
-                          navigation.navigate("ScreenTruck");
+                          // navigation.navigate("ScreenTruck")
+                          navigation.reset({ index: 0, routes: [{ name: 'ScreenTruck' }] })
                           setOpen({ ...open, openDOM: !open.openDOM });
                         }}
                       >
@@ -319,7 +329,8 @@ const DrawerScreen = () => {
               <View>
                 <TouchableOpacity
                   onPress={() => {
-                    navigation.navigate("Add");
+                    // navigation.navigate("Add");
+                    navigation.reset({ index: 0, routes: [{ name: 'Add' }] })
                     setOpen({ ...open, openInfo: !open.openInfo });
                   }}
                 >
@@ -327,7 +338,8 @@ const DrawerScreen = () => {
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => {
-                    navigation.navigate("ScreenFCL");
+                    // navigation.navigate("ScreenFCL");
+                    navigation.reset({ index: 0, routes: [{ name: 'ScreenFCL' }] })
                     setOpen({ ...open, openInfo: !open.openInfo });
                   }}
                 >
@@ -338,7 +350,7 @@ const DrawerScreen = () => {
           </View>
         </View>
         {/* </Animated.View> */}
-      </DrawerContentScrollView>
+      </DrawerContentScrollView >
     );
   }
 
@@ -347,8 +359,8 @@ const DrawerScreen = () => {
       <Drawer.Navigator
         drawerContent={(props) => <CustomDrawerContent {...props} />}
       >
-        <Drawer.Screen name="Nghiệp Vụ" component={BusinessMainScreen} />
         <Drawer.Screen name="ScreenFCL" component={ScreenFCL} />
+        <Drawer.Screen name="Nghiệp Vụ" component={BusinessMainScreen} />
         <Drawer.Screen name="Add" component={Add} />
         <Drawer.Screen name="ScreenLog" component={ScreenLog} />
         <Drawer.Screen name="ScreenAIR" component={ScreenAIR} />

@@ -8,7 +8,7 @@ const Tab = createBottomTabNavigator();
 const HomeTabImport = () => {
   return (
     <Tab.Navigator
-    // tabBarOptions={{ labelStyle: { fontSize: 16, marginBottom: 5 } }}
+    // screenOptions={{ labelStyle: { fontSize: 16, marginBottom: 5 } }}
     // screenOptions={{ headerStyle: { backgroundColor: "papayawhip" } }}
     >
       <Tab.Screen

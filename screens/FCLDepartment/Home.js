@@ -6,9 +6,10 @@ import {
   Dimensions,
   FlatList,
   TextInput,
+  Button,
+  RefreshControl
 } from "react-native";
-import React, { useEffect, useState } from "react";
-// import { RadioButton } from "react-native-paper";
+import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import color from "../../contains/color";
 import {
@@ -28,10 +29,12 @@ import RadioForm, {
   RadioButtonLabel,
 } from "react-native-simple-radio-button";
 import { Dropdown } from "react-native-element-dropdown";
+import { useIsFocused } from '@react-navigation/native'
+import * as Updates from "expo-updates"
 
 const { width, height } = Dimensions.get("window");
 
-const Home = ({ navigation }) => {
+const Home = ({ navigation, route }) => {
   const [data1, setData1] = useState([]);
 
   // console.log('data1', data1[0].valid);
@@ -56,10 +59,11 @@ const Home = ({ navigation }) => {
       setData1(res["data"].quotations);
     });
   }
+  const isFocused = useIsFocused()
 
   useEffect(() => {
-    getData();
-  }, []);
+    isFocused && getData();
+  }, [isFocused]);
 
   const [searchText, setSearchText] = useState("");
   // console.log(data1.container);
@@ -135,8 +139,9 @@ const Home = ({ navigation }) => {
     if (
       eachFcl.pol.toLowerCase().includes(searchText.toLowerCase()) ||
       eachFcl.pod.toLowerCase().includes(searchText.toLowerCase()) ||
-      eachFcl.code.toLowerCase().includes(searchText.toLowerCase()) ||
-      eachFcl.carrier.toLowerCase().includes(searchText.toLowerCase())
+      eachFcl.code.toLowerCase().includes(searchText.toLowerCase())
+      // ||
+      // eachFcl.carrier.toLowerCase().includes(searchText.toLowerCase())
       // || eachFcl.valid.toLowerCase().includes(searchText.toLowerCase())
     ) {
       result = true;
@@ -156,6 +161,17 @@ const Home = ({ navigation }) => {
         eachFcl.type.toLowerCase().includes(fclInfo.type.toLowerCase()) &&
         eachFcl.valid.slice(eachFcl.valid.length - 4).includes(fclInfo.year)
     );
+
+  async function clearFilter() {
+    // setFCLInfo({ ...fclInfo, month: '', continent: '', type: '' })
+    // setSearchText('')
+    // RNRestart.Restart()
+    // DevSettings.reload()
+    // await Updates.reloadAsync()
+    // Updates.reloadAsync()
+    navigation.reset({ index: 0, routes: [{ name: 'ScreenFCL' }] })
+    // setTimeout(Updates.reloadAsync, 1000)
+  }
 
   return (
     <View style={{ flex: 1, backgroundColor: "white" }}>
@@ -237,6 +253,8 @@ const Home = ({ navigation }) => {
             setFCLInfo({ ...fclInfo, type: ContainerHome[val].label })
           }
         />
+        <Button title='Clear' onPress={clearFilter} />
+        {/* <Button title='Clear' onPress={navigation.reset('Home')} /> */}
       </View>
 
       <View style={{ flex: 7 }}>

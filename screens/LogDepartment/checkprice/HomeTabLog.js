@@ -8,7 +8,7 @@ import CheckPriceLog from "./CheckPriceLog";
 const HomeTabLog = () => {
   return (
     <Tab.Navigator
-      tabBarOptions={{ labelStyle: { fontSize: 16, marginBottom: 5 } }}
+      screenOptions={{ labelStyle: { fontSize: 16, marginBottom: 5 } }}
     >
       <Tab.Screen
         name="HomeLog"
