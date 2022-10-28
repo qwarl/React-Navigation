@@ -196,6 +196,9 @@ const HomeLog = ({ navigation }) => {
           </View>
         </View>
       </View>
+      <View>
+        <Button title="Clear" onPress={clearFilter} />
+      </View>
       {/* <View style={{ flexDirection: "row", minHeight: 100 }}>
         <View style={styles.dropMenu}>
           <Text style={styles.label}>Chọn Năm</Text>

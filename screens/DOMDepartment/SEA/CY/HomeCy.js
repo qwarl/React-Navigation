@@ -6,6 +6,7 @@ import {
   FlatList,
   ScrollView,
   TextInput,
+  Button,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Dropdown } from "react-native-element-dropdown";
@@ -76,16 +77,16 @@ const HomeCy = ({ navigation }) => {
       // && checkPriceSearch(eachLog)
     );
 
-    function clearFilter() {
-      // setFCLInfo({ ...fclInfo, month: '', continent: '', type: '' })
-      // setSearchText('')
-      // RNRestart.Restart()
-      // DevSettings.reload()
-      // await Updates.reloadAsync()
-      // Updates.reloadAsync()
-      navigation.reset({ index: 0, routes: [{ name: 'ScreenCy' }] })
-      // setTimeout(Updates.reloadAsync, 1000)
-    }
+  function clearFilter() {
+    // setFCLInfo({ ...fclInfo, month: '', continent: '', type: '' })
+    // setSearchText('')
+    // RNRestart.Restart()
+    // DevSettings.reload()
+    // await Updates.reloadAsync()
+    // Updates.reloadAsync()
+    navigation.reset({ index: 0, routes: [{ name: "ScreenCy" }] });
+    // setTimeout(Updates.reloadAsync, 1000)
+  }
 
   const renderItem = ({ item }) => (
     <TouchableOpacity
@@ -232,7 +233,7 @@ const HomeCy = ({ navigation }) => {
         </View>
       </View>
       <View>
-      <Button title='Clear' onPress={clearFilter} />
+        <Button title="Clear" onPress={clearFilter} />
       </View>
       <View style={{ flex: 5 }}>
         <View style={styles.displayData}>
