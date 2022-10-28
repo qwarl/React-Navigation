@@ -29,6 +29,7 @@ import RadioForm, {
   RadioButtonLabel,
 } from "react-native-simple-radio-button";
 import { Dropdown } from "react-native-element-dropdown";
+import client from "../../api/client";
 import { useIsFocused } from '@react-navigation/native'
 import * as Updates from "expo-updates"
 
@@ -53,17 +54,27 @@ const Home = ({ navigation, route }) => {
     type: "",
   });
 
-  function getData() {
-    const url = `/api/quotations/getAll`;
-    axios.get(ipAddress + url).then((res) => {
-      setData1(res["data"].quotations);
-    });
-  }
-  const isFocused = useIsFocused()
+  // function getData() {
+  //   const url = `/api/quotations/getAll`;
+  //   axios.get(ipAddress + url).then((res) => {
+  //     setData1(res["data"].quotations);
+  //   });
+  // }
+
+  // useEffect(() => {
+  //   getData();
+  // }, []);
 
   useEffect(() => {
-    isFocused && getData();
-  }, [isFocused]);
+    client
+      .get("/getAll")
+      .then((res) => {
+        setData1(res.data.quotations);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [data1]);
 
   const [searchText, setSearchText] = useState("");
   // console.log(data1.container);

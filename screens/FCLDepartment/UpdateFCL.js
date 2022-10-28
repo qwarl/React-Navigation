@@ -35,7 +35,7 @@ const UpdateFCL = ({ route, navigation }) => {
 
   // const [value, setValue] = useState(null);
 
-  console.log("123", updateData);
+  // console.log("123", updateData);
 
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState("date");
@@ -89,8 +89,8 @@ const UpdateFCL = ({ route, navigation }) => {
         Alert.alert("Cập Nhật Thành Công");
         navigation.goBack();
       }
-      console.log("running");
-      console.log(res.data);
+      // console.log("running");
+      // console.log(res.data);
     } catch (error) {
       console.log(error.message);
     }
@@ -264,7 +264,7 @@ const UpdateFCL = ({ route, navigation }) => {
           value={updateData.freeTime}
         />
         <View style={{ flexDirection: "row" }}>
-          <View style={{ width: "100%", marginRight: 20 }}>
+          <View style={{ width: "100%" }}>
             <Text style={styles.textValid}>Valid</Text>
             <TextInput
               style={styles.validStyle}
@@ -274,31 +274,31 @@ const UpdateFCL = ({ route, navigation }) => {
               onChangeText={(value) => handleOnChangeText(value, "valid")}
             />
           </View>
-          <TouchableOpacity onPress={() => showMode("date")}>
-            <Icon
-              name="calendar"
-              size={35}
-              color="#7F7F7F"
-              style={{
-                top: 30,
-                position: "absolute",
-                right: 40,
-                marginBottom: 0,
-                zIndex: 1000,
-              }}
-            />
-          </TouchableOpacity>
-          {show && (
-            <DateTimePicker
-              testID="dateTimePicker"
-              value={date}
-              mode={mode}
-              is24Hour={true}
-              desplay="default"
-              onChange={onChange}
-            />
-          )}
+          <Icon
+            onPress={() => setShow(!show)}
+            name="calendar"
+            size={35}
+            color="#7F7F7F"
+            style={{
+              top: 30,
+              position: "absolute",
+              right: 20,
+              marginBottom: 0,
+              zIndex: 1000,
+            }}
+          />
         </View>
+        {show && (
+          <DateTimePicker
+            testID="dateTimePicker"
+            value={date}
+            mode={mode}
+            is24Hour={true}
+            desplay="default"
+            onChange={onChange}
+            style={{ width: 400 }}
+          />
+        )}
         <FormInput
           placeholder="NOTES"
           label="NOTES"

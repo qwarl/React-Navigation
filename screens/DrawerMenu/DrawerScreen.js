@@ -190,6 +190,7 @@ const DrawerScreen = () => {
                         borderColor: "black",
                         borderStyle: "solid",
                         marginRight: 5,
+                        marginTop: 10,
                       }}
                     >
                       <TouchableOpacity
@@ -211,7 +212,11 @@ const DrawerScreen = () => {
                         }}
                       >
                         <Text
-                          style={{ fontSize: 20, marginLeft: 10, marginTop: 5 }}
+                          style={{
+                            fontSize: 20,
+                            marginLeft: 10,
+                            marginTop: 15,
+                          }}
                         >
                           AIR
                         </Text>
@@ -321,7 +326,7 @@ const DrawerScreen = () => {
                 marginTop: 16,
               }}
             >
-              TẠO TIN
+              TẠO THÔNG TIN
             </Text>
           </TouchableOpacity>
           <View style={{ marginLeft: 20 }}>

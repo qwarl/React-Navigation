@@ -28,7 +28,7 @@ const UpdateDoor = ({ route, navigation }) => {
     setSeaDoorInfo({ ...seaDoorInfo, [fieldName]: value });
   };
 
-  console.log(seaDoorInfo.month);
+  // console.log(seaDoorInfo.month);
   const submitForm = async () => {
     // if (isValidForm()) {
     try {

@@ -1,81 +1,61 @@
 import {
   View,
   Text,
-  StyleSheet,
   TouchableOpacity,
+  StyleSheet,
+  Dimensions,
   FlatList,
-  ScrollView,
   TextInput,
   Alert,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import color from "../../../../contains/color";
-import clientLCL from "../../../../api/clientLCL";
-import clientCheckPriceAirLCL from "../../../../api/clientCheckPriceAirLCL";
+import { Dropdown } from "react-native-element-dropdown";
+import clientCheckPriceFCL from "../../../api/clientCheckPriceFCL";
+import color from "../../../contains/color";
 
-const CheckPriceLCL = ({ navigation }) => {
-  const [lclInfo, setLCLInfo] = useState({
+const CheckPriceFCL = ({ navigation }) => {
+  const [data1, setData1] = useState([]);
+
+  // console.log('data1', data1[0].valid);
+  // console.log('data2', data1[0].valid.toString().length);
+  // console.log('data1', data1[0].valid.slice(data1[0].valid.toString().length - 4)==fclInfo.valid);
+
+  const [value, setValue] = useState(null);
+
+  const [type, setType] = useState("");
+
+  const [fclInfo, setFCLInfo] = useState({
     month: "",
     continent: "",
     year: "",
-    beweenprice: "",
+    betweenprice: "",
+    type: "",
   });
 
-  const [value, setValue] = useState(null);
-  const [data, setData] = useState([]);
-  const [searchText, setSearchText] = useState("");
+  // function getData() {
+  //   const url = `/api/fcl-check/getAll`;
+  //   axios.get(ipAddress + url).then((res) => {
+  //     setData1(res["data"].quotations);
+  //   });
+  // }
 
   // useEffect(() => {
-  //   data.map((item) => console.log(item.shippingtype));
+  //   getData();
   // }, []);
-  // call api get Log
+
   useEffect(() => {
-    clientCheckPriceAirLCL
+    clientCheckPriceFCL
       .get("/getAll")
       .then((res) => {
-        setData(res.data.checkPriceAirLCL);
+        setData1(res.data.checkPriceFCL);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, [data]);
+  }, [data1]);
 
-  const checkDropdownValue = (eachAir) => {
-    let result = false;
-    if (
-      eachAir.shippingtype
-        .toLowerCase()
-        .includes(airInfo.shippingtype.toLowerCase())
-    ) {
-      result = true;
-    }
-    return result;
-  };
-
-  const checkTypeSearch = (searchText, eachLCL) => {
-    let result = false;
-    if (
-      eachLCL.pol.toLowerCase().includes(searchText.toLowerCase()) ||
-      eachLCL.pod.toLowerCase().includes(searchText.toLowerCase()) ||
-      eachLCL.code.toLowerCase().includes(searchText.toLowerCase())
-      // || eachAir.hsCode.toLowerCase().includes(searchText.toLowerCase()) ||
-      // eachAir.name.toLowerCase().includes(searchText.toLowerCase())
-    ) {
-      result = true;
-    }
-    return result;
-  };
-
-  const filteredLCL = () =>
-    data.filter(
-      (eachLCL) =>
-        eachLCL.month.toLowerCase().includes(lclInfo.month.toLowerCase()) &&
-        eachLCL.continent
-          .toLowerCase()
-          .includes(lclInfo.continent.toLowerCase()) &&
-        checkTypeSearch(searchText, eachLCL)
-      // && checkPriceSearch(eachLog)
-    );
+  const [searchText, setSearchText] = useState("");
+  // console.log(data1.container);
   const renderItem = ({ item }) => (
     <TouchableOpacity
       onPress={() => {
@@ -91,7 +71,7 @@ const CheckPriceLCL = ({ navigation }) => {
             {
               text: "Phản hồi",
               onPress: () => {
-                navigation.navigate("AddLCLRequiteSale", {
+                navigation.navigate("AddFCLRequiteSale", {
                   item: item,
                 });
               },
@@ -102,36 +82,82 @@ const CheckPriceLCL = ({ navigation }) => {
     >
       <View style={styles.detail}>
         <View style={{ flexDirection: "row" }}>
-          <Text style={styles.textLable}>Pol: </Text>
+          <Text style={styles.textLable}>Loại Container: </Text>
+          <Text style={styles.textDisplay}>{item.type}</Text>
+        </View>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.textLable}>Cảng Đi: </Text>
           <Text style={styles.textDisplay}>{item.pol}</Text>
         </View>
         <View style={{ flexDirection: "row" }}>
-          <Text style={styles.textLable}>Pod: </Text>
+          <Text style={styles.textLable}>Cảng Đến: </Text>
           <Text style={styles.textDisplay}>{item.pod}</Text>
         </View>
         <View style={{ flexDirection: "row" }}>
-          <Text style={styles.textLable}>Dim: </Text>
-          <Text style={styles.textDisplay}>{item.dim}</Text>
+          <Text style={styles.textLable}>OF 20: </Text>
+          <Text style={styles.textDisplay}>{item.of20}</Text>
         </View>
         <View style={{ flexDirection: "row" }}>
-          <Text style={styles.textLable}>Schedule: </Text>
-          <Text style={styles.textDisplay}>{item.schedule}</Text>
+          <Text style={styles.textLable}>SUR 20: </Text>
+          <Text style={styles.textDisplay}>{item.sur20}</Text>
         </View>
         <View style={{ flexDirection: "row" }}>
-          <Text style={styles.textLable}>Châu: </Text>
-          <Text style={styles.textDisplay}>{item.continent}</Text>
+          <Text style={styles.textLable}>Ngày: </Text>
+          <Text style={styles.textDisplay}>{item.valid}</Text>
         </View>
       </View>
     </TouchableOpacity>
   );
+
+  const checkPriceSearch = (eachFcl) => {
+    let result = false;
+    const end = fclInfo.betweenprice.indexOf("đến");
+    const value1 = fclInfo.betweenprice.substring(3, end - 1);
+    const value2 = fclInfo.betweenprice.substring(end + 4);
+    if (eachFcl.price > value1 && eachFcl.price < value2) {
+      result = true;
+    } else if (fclInfo.betweenprice == "") {
+      result = true;
+    }
+
+    return result;
+  };
+
+  const checkTypeSearch = (searchText, eachFcl) => {
+    let result = false;
+    if (
+      eachFcl.pol.toLowerCase().includes(searchText.toLowerCase()) ||
+      eachFcl.pod.toLowerCase().includes(searchText.toLowerCase()) ||
+      eachFcl.code.toLowerCase().includes(searchText.toLowerCase()) ||
+      eachFcl.carrier.toLowerCase().includes(searchText.toLowerCase())
+      // || eachFcl.valid.toLowerCase().includes(searchText.toLowerCase())
+    ) {
+      result = true;
+    }
+    return result;
+  };
+
+  const filteredFCL = () =>
+    data1.filter(
+      (eachFcl) =>
+        eachFcl.month.toLowerCase().includes(fclInfo.month.toLowerCase()) &&
+        eachFcl.continent
+          .toLowerCase()
+          .includes(fclInfo.continent.toLowerCase()) &&
+        checkTypeSearch(searchText, eachFcl) &&
+        checkPriceSearch(eachFcl) &&
+        eachFcl.type.toLowerCase().includes(fclInfo.type.toLowerCase()) &&
+        eachFcl.valid.slice(eachFcl.valid.length - 4).includes(fclInfo.year)
+    );
+
   return (
     <View style={{ flex: 1, backgroundColor: "white" }}>
-      <View style={{ flex: 9 }}>
+      <View style={{ flex: 7 }}>
         <View style={styles.displayData}>
-          {filteredLCL().length > 0 ? (
+          {filteredFCL().length > 0 ? (
             <FlatList
               style={styles.list}
-              data={filteredLCL()}
+              data={filteredFCL()}
               renderItem={renderItem}
               keyExtractor={(item) => item._id}
             />
@@ -150,10 +176,15 @@ const CheckPriceLCL = ({ navigation }) => {
           )}
         </View>
       </View>
-      <View style={{ flex: 0.5, marginBottom: 20 }}>
+      <View
+        style={{
+          flex: 0.5,
+          marginBottom: 30,
+        }}
+      >
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate("AddCheckPriceLCL");
+            navigation.navigate("AddCheckPriceFCL");
           }}
         >
           <View style={styles.iconWrapper}>
@@ -279,5 +310,4 @@ const styles = StyleSheet.create({
     textDecorationLine: "underline",
   },
 });
-
-export default CheckPriceLCL;
+export default CheckPriceFCL;

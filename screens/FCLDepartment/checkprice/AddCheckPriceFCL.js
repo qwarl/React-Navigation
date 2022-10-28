@@ -7,28 +7,19 @@ import {
   Platform,
   Dimensions,
   Alert,
-  Image,
   Button,
   TextInput,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import DateTimePicker from "@react-native-community/datetimepicker";
+import color from "../../../contains/color";
+import { Container, Continent, Month1 } from "../../../contains/constant";
+import { Dropdown } from "react-native-element-dropdown";
 import FormInput from "../../../components/FormInput";
 import Icon from "react-native-vector-icons/FontAwesome";
-import color from "../../../contains/color";
-import { Continent, Month1, ShippingType } from "../../../contains/constant";
-import { Dropdown } from "react-native-element-dropdown";
-import clientCheckPriceAir from "../../../api/clientCheckPriceAir";
-import clientAir from "../../../api/clientAir";
+import clientCheckPriceFCL from "../../../api/clientCheckPriceFCL";
+import DateTimePicker from "@react-native-community/datetimepicker";
 
-const AddAirRequiteSale = ({ navigation, route }) => {
-  const handleOnChangeText = (value, fieldName) => {
-    setAirInfo({ ...airInfo, [fieldName]: value });
-  };
-
-  const [error, setError] = useState("");
-
-  //handle time picker
+const AddCheckPriceFCL = ({ navigation }) => {
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState("date");
   const [show, setShow] = useState(false);
@@ -56,21 +47,34 @@ const AddAirRequiteSale = ({ navigation, route }) => {
     setMode(currentMode);
   };
 
-  const [airInfo, setAirInfo] = useState(route.params.item);
-
-  const isValidForm = () => {
-    if (!isValidObjectField(airInfo))
-      return updateError("Nhập thiếu trường dữ liệu!", setError);
-    return true;
+  const handleOnChangeText = (value, fieldName) => {
+    setFclInfo({ ...fclInfo, [fieldName]: value });
   };
 
+  const addDate = () => {
+    showMode("date");
+  };
+  const [fclInfo, setFclInfo] = useState({
+    month: "",
+    continent: "",
+    type: "",
+    pol: "",
+    pod: "",
+    carrier: "",
+    of20: "",
+    of40: "",
+    of45: "",
+    sur20: "",
+    sur40: "",
+    valid: "",
+    lines: "",
+    freeTime: "",
+    notes: "",
+  });
+  // console.log("valid", fclInfo.valid);
   const submitForm = async () => {
-    // if (isValidForm()) {
     try {
-      const url = "/delete/";
-      const id = airInfo._id;
-      const res1 = await clientCheckPriceAir.delete(url + id);
-      const res = await clientAir.post("/create", { ...airInfo });
+      const res = await clientCheckPriceFCL.post("/create", { ...fclInfo });
       if (res.data.success) {
         Alert.alert("Thêm Thành Công");
         navigation.goBack();
@@ -78,15 +82,27 @@ const AddAirRequiteSale = ({ navigation, route }) => {
     } catch (error) {
       console.log(error.message);
     }
+  };
+
+  const submitUpdateForm = async () => {
+    // if (isValidForm()) {
+
+    const url = `http://'${ipAddress}'/api/quotations/update/${route.params._id}`;
+
+    try {
+      const res = await axios.post(url, { ...fclInfo });
+      if (res.data.success) {
+        Alert.alert("Cập nhật thành công");
+      }
+      // console.log("running");
+      // console.log(res.data);
+    } catch (error) {
+      console.log(error.message);
+    }
     // }
   };
   return (
     <View style={StyleSheet.container}>
-      {error ? (
-        <Text style={{ color: "red", fontSize: 18, textAlign: "center" }}>
-          {error}
-        </Text>
-      ) : null}
       <ScrollView>
         <View style={styles.dropMenu}>
           <Text style={styles.label}>Chọn Tháng</Text>
@@ -102,9 +118,9 @@ const AddAirRequiteSale = ({ navigation, route }) => {
             labelField="label"
             valueField="value"
             searchPlaceholder="Search..."
-            value={airInfo.month}
+            value={fclInfo.month}
             onChange={(value) => {
-              setAirInfo({ ...airInfo, month: value.value });
+              setFclInfo({ ...fclInfo, month: value.value });
             }}
           />
         </View>
@@ -122,91 +138,92 @@ const AddAirRequiteSale = ({ navigation, route }) => {
             labelField="label"
             valueField="value"
             searchPlaceholder="Search..."
-            value={airInfo.continent}
+            value={fclInfo.continent}
             onChange={(value) => {
-              setAirInfo({ ...airInfo, continent: value.value });
+              setFclInfo({ ...fclInfo, continent: value.value });
             }}
           />
         </View>
         <View style={styles.dropMenu}>
-          <Text style={styles.label}>Chọn Loại Vận Chuyển</Text>
+          <Text style={styles.label}>Chọn Loại Container</Text>
           <Dropdown
             style={[styles.dropdown]}
             placeholderStyle={styles.placeholderStyle}
             selectedTextStyle={styles.selectedTextStyle}
             inputSearchStyle={styles.inputSearchStyle}
             iconStyle={styles.iconStyle}
-            data={ShippingType}
+            data={Container}
             search={true}
             maxHeight={300}
             labelField="label"
             valueField="value"
             searchPlaceholder="Search..."
-            value={airInfo.shippingtype}
+            value={fclInfo.type}
             onChange={(value) => {
-              setAirInfo({ ...airInfo, shippingtype: value.value });
+              setFclInfo({ ...fclInfo, type: value.value });
             }}
           />
         </View>
+
         <FormInput
-          label="Aol"
-          placeholder="Aol"
-          onChangeText={(value) => handleOnChangeText(value, "aol")}
-          value={airInfo.aol}
+          label="HÃNG TÀU"
+          placeholder="HÃNG TÀU"
+          onChangeText={(value) => handleOnChangeText(value, "carrier")}
+          value={fclInfo.carrier}
         />
         <FormInput
-          placeholder="Aod"
-          label="Aod"
-          onChangeText={(value) => handleOnChangeText(value, "aod")}
-          value={airInfo.aod}
+          label="POL"
+          placeholder="pol"
+          onChangeText={(value) => handleOnChangeText(value, "pol")}
+          value={fclInfo.pol}
         />
         <FormInput
-          label="Dim"
-          placeholder="Dim"
-          onChangeText={(value) => handleOnChangeText(value, "dim")}
-          value={airInfo.dim}
+          label="POD"
+          placeholder="pod"
+          onChangeText={(value) => handleOnChangeText(value, "pod")}
+          value={fclInfo.pod}
         />
         <FormInput
-          label="Gross Weight"
-          placeholder="Gross Weight"
-          onChangeText={(value) => handleOnChangeText(value, "grossweight")}
-          value={airInfo.grossweight}
+          label="O/F 20"
+          placeholder="O/F 20"
+          onChangeText={(value) => handleOnChangeText(value, "of20")}
+          value={fclInfo.of20}
         />
         <FormInput
-          placeholder="Type Of Cargo"
-          label="Type Of Cargo"
-          onChangeText={(value) => handleOnChangeText(value, "typeofcargo")}
-          value={airInfo.typeofcargo}
+          placeholder="O/F 40"
+          label="O/F 40"
+          onChangeText={(value) => handleOnChangeText(value, "of40")}
+          value={fclInfo.of40}
         />
         <FormInput
-          placeholder="Air Freight"
-          label="Air Freight"
-          onChangeText={(value) => handleOnChangeText(value, "airfreight")}
-          value={airInfo.airfreight}
+          placeholder="O/F 45"
+          label="O/F 45"
+          onChangeText={(value) => handleOnChangeText(value, "of45")}
+          value={fclInfo.of45}
         />
         <FormInput
-          placeholder="Sur"
-          label="Sur"
-          onChangeText={(value) => handleOnChangeText(value, "sur")}
-          value={airInfo.sur}
+          placeholder="SUR 20"
+          label="SUR 20"
+          onChangeText={(value) => handleOnChangeText(value, "sur20")}
+          value={fclInfo.sur20}
         />
         <FormInput
-          placeholder="Air Lines"
-          label="Air Lines"
-          value={airInfo.airlines}
-          onChangeText={(value) => handleOnChangeText(value, "airlines")}
+          placeholder="SUR 40"
+          label="SUR 40"
+          onChangeText={(value) => handleOnChangeText(value, "sur40")}
+          value={fclInfo.sur40}
         />
         <FormInput
-          placeholder="Schedule"
-          label="Schedule"
-          value={airInfo.schedule}
-          onChangeText={(value) => handleOnChangeText(value, "schedule")}
+          placeholder="LINES"
+          label="LINES"
+          onChangeText={(value) => handleOnChangeText(value, "lines")}
+          value={fclInfo.lines}
         />
         <FormInput
-          placeholder="Transittime"
-          label="Transittime"
-          value={airInfo.transittime}
-          onChangeText={(value) => handleOnChangeText(value, "transittime")}
+          placeholder="FREE TIME"
+          label="FREE TIME"
+          onChangeText={(value) => handleOnChangeText(value, "freeTime")}
+          value={fclInfo.freeTime}
         />
         <View style={{ flexDirection: "row" }}>
           <View style={{ width: "100%" }}>
@@ -215,7 +232,7 @@ const AddAirRequiteSale = ({ navigation, route }) => {
               style={styles.validStyle}
               placeholder="VALID"
               label="VALID"
-              value={airInfo.valid}
+              value={fclInfo.valid}
               onChangeText={(value) => handleOnChangeText(value, "valid")}
             />
           </View>
@@ -245,10 +262,10 @@ const AddAirRequiteSale = ({ navigation, route }) => {
           />
         )}
         <FormInput
-          placeholder="Ghi Chú"
-          label="Ghi Chú"
-          value={airInfo.note}
-          onChangeText={(value) => handleOnChangeText(value, "note")}
+          placeholder="NOTES"
+          label="NOTES"
+          onChangeText={(value) => handleOnChangeText(value, "notes")}
+          value={fclInfo.notes}
         />
         <View
           style={{
@@ -259,7 +276,7 @@ const AddAirRequiteSale = ({ navigation, route }) => {
             alignItems: "center",
           }}
         >
-          <TouchableOpacity style={[styles.buttonInsert]} onPress={submitForm}>
+          <TouchableOpacity style={styles.buttonInsert} onPress={submitForm}>
             <Text
               style={{ fontSize: 18, color: color.primary, fontWeight: "bold" }}
             >
@@ -381,4 +398,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AddAirRequiteSale;
+export default AddCheckPriceFCL;

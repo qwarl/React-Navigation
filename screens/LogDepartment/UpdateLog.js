@@ -18,7 +18,7 @@ import { isValidObjectField, updateError } from "../../utils/method";
 import { Month1, ShippingType, Type } from "../../contains/constant";
 import { Dropdown } from "react-native-element-dropdown";
 
-const UpdateLog = ({ route }) => {
+const UpdateLog = ({ route, navigation }) => {
   const [updateData, setUpdateData] = useState(route.params.data);
   const [open, setOpen] = useState(false);
 
@@ -52,9 +52,8 @@ const UpdateLog = ({ route }) => {
       const res = await clientLog.post(url + id, { ...updateData });
       if (res.data.success) {
         Alert.alert("Cập Nhật Thành Công");
+        navigation.goBack();
       }
-      console.log("running");
-      console.log(res.data);
     } catch (error) {
       console.log(error.message);
     }
@@ -66,9 +65,8 @@ const UpdateLog = ({ route }) => {
       const res = await clientLog.post("/create", { ...updateData });
       if (res.data.success) {
         Alert.alert("Thêm Thành Công");
+        navigation.goBack();
       }
-      console.log("running");
-      console.log(res.data);
     } catch (error) {
       console.log(error.message);
     }
@@ -198,6 +196,24 @@ const UpdateLog = ({ route }) => {
           label="Giá"
           value={updateData.price}
           onChangeText={(value) => handleOnChangeText(value, "price")}
+        />
+        <FormInput
+          placeholder="Chính Sách"
+          label="Chính Sách"
+          value={updateData.policy}
+          onChangeText={(value) => handleOnChangeText(value, "policy")}
+        />
+        <FormInput
+          placeholder="Phí TTHQ Tham Khảo"
+          label="Phí TTHQ Tham Khảo"
+          value={updateData.referencefee}
+          onChangeText={(value) => handleOnChangeText(value, "referencefee")}
+        />
+        <FormInput
+          placeholder="Ghi Chú"
+          label="Ghi Chú"
+          value={updateData.note}
+          onChangeText={(value) => handleOnChangeText(value, "note")}
         />
         <View
           style={{

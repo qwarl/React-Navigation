@@ -28,7 +28,7 @@ const UpdateCy = ({ route, navigation }) => {
     setSeaCyInfo({ ...seaCyInfo, [fieldName]: value });
   };
 
-  console.log(seaCyInfo.month);
+  // console.log(seaCyInfo.month);
   const submitForm = async () => {
     // if (isValidForm()) {
     try {
