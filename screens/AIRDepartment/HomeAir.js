@@ -6,6 +6,7 @@ import {
   FlatList,
   ScrollView,
   TextInput,
+  Button,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import color from "../../contains/color";
@@ -87,6 +88,18 @@ const HomeAir = ({ navigation }) => {
           .includes(airInfo.shippingtype.toLowerCase())
       // && checkPriceSearch(eachLog)
     );
+
+    function clearFilter() {
+      // setFCLInfo({ ...fclInfo, month: '', continent: '', type: '' })
+      // setSearchText('')
+      // RNRestart.Restart()
+      // DevSettings.reload()
+      // await Updates.reloadAsync()
+      // Updates.reloadAsync()
+      navigation.reset({ index: 0, routes: [{ name: 'ScreenAIR' }] })
+      // setTimeout(Updates.reloadAsync, 1000)
+    }
+
   const renderItem = ({ item }) => (
     <TouchableOpacity
       onPress={() => {
@@ -230,6 +243,10 @@ const HomeAir = ({ navigation }) => {
             />
           </View>
         </View>
+      </View>
+      <View>
+      <Button title='Clear' onPress={clearFilter} />
+
       </View>
       <View style={{ flex: 5 }}>
         <View style={styles.displayData}>

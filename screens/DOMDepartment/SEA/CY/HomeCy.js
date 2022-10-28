@@ -75,6 +75,18 @@ const HomeCy = ({ navigation }) => {
         checkTypeSearch(searchText, eachSeaCy)
       // && checkPriceSearch(eachLog)
     );
+
+    function clearFilter() {
+      // setFCLInfo({ ...fclInfo, month: '', continent: '', type: '' })
+      // setSearchText('')
+      // RNRestart.Restart()
+      // DevSettings.reload()
+      // await Updates.reloadAsync()
+      // Updates.reloadAsync()
+      navigation.reset({ index: 0, routes: [{ name: 'ScreenCy' }] })
+      // setTimeout(Updates.reloadAsync, 1000)
+    }
+
   const renderItem = ({ item }) => (
     <TouchableOpacity
       onPress={() => {
@@ -218,6 +230,9 @@ const HomeCy = ({ navigation }) => {
             />
           </View>
         </View>
+      </View>
+      <View>
+      <Button title='Clear' onPress={clearFilter} />
       </View>
       <View style={{ flex: 5 }}>
         <View style={styles.displayData}>

@@ -6,6 +6,7 @@ import {
   FlatList,
   ScrollView,
   TextInput,
+  Button,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import SelectList from "react-native-dropdown-select-list";
@@ -93,6 +94,18 @@ const HomeTruck = ({ navigation }) => {
         checkTypeSearch(searchText, eachTruck)
       // && checkPriceSearch(eachLog)
     );
+
+  function clearFilter() {
+    // setFCLInfo({ ...fclInfo, month: '', continent: '', type: '' })
+    // setSearchText('')
+    // RNRestart.Restart()
+    // DevSettings.reload()
+    // await Updates.reloadAsync()
+    // Updates.reloadAsync()
+    navigation.reset({ index: 0, routes: [{ name: 'ScreenTruck' }] })
+    // setTimeout(Updates.reloadAsync, 1000)
+  }
+
   const renderItem = ({ item }) => (
     <TouchableOpacity
       onPress={() => {
@@ -236,6 +249,10 @@ const HomeTruck = ({ navigation }) => {
             />
           </View>
         </View>
+
+      </View>
+      <View>
+        <Button title='Clear' onPress={clearFilter} />
       </View>
       <View style={{ flex: 6 }}>
         <View style={styles.displayData}>

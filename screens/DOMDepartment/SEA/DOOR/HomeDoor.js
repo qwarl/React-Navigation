@@ -6,6 +6,7 @@ import {
   FlatList,
   ScrollView,
   TextInput,
+  Button,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Dropdown } from "react-native-element-dropdown";
@@ -94,6 +95,18 @@ const HomeDoor = ({ navigation }) => {
         checkTypeSearch(searchText, eachSeaDoor)
       // && checkPriceSearch(eachLog)
     );
+
+    function clearFilter() {
+      // setFCLInfo({ ...fclInfo, month: '', continent: '', type: '' })
+      // setSearchText('')
+      // RNRestart.Restart()
+      // DevSettings.reload()
+      // await Updates.reloadAsync()
+      // Updates.reloadAsync()
+      navigation.reset({ index: 0, routes: [{ name: 'ScreenDoor' }] })
+      // setTimeout(Updates.reloadAsync, 1000)
+    }
+
   const renderItem = ({ item }) => (
     <TouchableOpacity
       onPress={() => {
@@ -237,6 +250,9 @@ const HomeDoor = ({ navigation }) => {
             />
           </View>
         </View>
+      </View>
+      <View>
+      <Button title='Clear' onPress={clearFilter} />
       </View>
       <View style={{ flex: 6 }}>
         <View style={styles.displayData}>

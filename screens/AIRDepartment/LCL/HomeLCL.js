@@ -6,6 +6,7 @@ import {
   FlatList,
   ScrollView,
   TextInput,
+  Button,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import Icon from "react-native-vector-icons/FontAwesome";
@@ -77,6 +78,18 @@ const HomeLCL = ({ navigation }) => {
         checkTypeSearch(searchText, eachLCL)
       // && checkPriceSearch(eachLog)
     );
+
+    function clearFilter() {
+      // setFCLInfo({ ...fclInfo, month: '', continent: '', type: '' })
+      // setSearchText('')
+      // RNRestart.Restart()
+      // DevSettings.reload()
+      // await Updates.reloadAsync()
+      // Updates.reloadAsync()
+      navigation.reset({ index: 0, routes: [{ name: 'ScreenLCL' }] })
+      // setTimeout(Updates.reloadAsync, 1000)
+    }
+
   const renderItem = ({ item }) => (
     <TouchableOpacity
       onPress={() => {
@@ -174,6 +187,9 @@ const HomeLCL = ({ navigation }) => {
             />
           </View>
         </View>
+      </View>
+      <View>
+      <Button title='Clear' onPress={clearFilter} />
       </View>
       <View style={{ flex: 5 }}>
         <View style={styles.displayData}>
