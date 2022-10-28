@@ -214,20 +214,19 @@ const AddLCL = ({ navigation }) => {
               onChangeText={(value) => handleOnChangeText(value, "valid")}
             />
           </View>
-          <TouchableOpacity onPress={() => showMode("date")}>
-            <Icon
-              name="calendar"
-              size={35}
-              color="#7F7F7F"
-              style={{
-                top: 30,
-                position: "absolute",
-                right: 40,
-                marginBottom: 0,
-                zIndex: 1000,
-              }}
-            />
-          </TouchableOpacity>
+          <Icon
+            onPress={() => setShow(!show)}
+            name="calendar"
+            size={35}
+            color="#7F7F7F"
+            style={{
+              top: 30,
+              position: "absolute",
+              right: 20,
+              marginBottom: 0,
+              zIndex: 1000,
+            }}
+          />
           {show && (
             <DateTimePicker
               testID="dateTimePicker"
@@ -236,6 +235,7 @@ const AddLCL = ({ navigation }) => {
               is24Hour={true}
               desplay="default"
               onChange={onChange}
+              style={{ width: 400 }}
             />
           )}
         </View>

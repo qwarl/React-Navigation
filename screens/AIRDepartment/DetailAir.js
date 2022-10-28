@@ -82,7 +82,7 @@ const DetailAir = ({ navigation, route }) => {
             <Text
               style={{ fontSize: 18, color: color.primary, fontWeight: "bold" }}
             >
-              Update
+              Cập nhật
             </Text>
           </TouchableOpacity>
         </View>
@@ -162,7 +162,6 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
     textAlign: "center",
     color: color.primary,
-    fontFamily: "Roboto",
     fontWeight: "bold",
     marginBottom: 16,
     textDecorationLine: "underline",

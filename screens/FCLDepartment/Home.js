@@ -28,6 +28,7 @@ import RadioForm, {
   RadioButtonLabel,
 } from "react-native-simple-radio-button";
 import { Dropdown } from "react-native-element-dropdown";
+import client from "../../api/client";
 
 const { width, height } = Dimensions.get("window");
 
@@ -50,16 +51,27 @@ const Home = ({ navigation }) => {
     type: "",
   });
 
-  function getData() {
-    const url = `/api/quotations/getAll`;
-    axios.get(ipAddress + url).then((res) => {
-      setData1(res["data"].quotations);
-    });
-  }
+  // function getData() {
+  //   const url = `/api/quotations/getAll`;
+  //   axios.get(ipAddress + url).then((res) => {
+  //     setData1(res["data"].quotations);
+  //   });
+  // }
+
+  // useEffect(() => {
+  //   getData();
+  // }, []);
 
   useEffect(() => {
-    getData();
-  }, []);
+    client
+      .get("/getAll")
+      .then((res) => {
+        setData1(res.data.quotations);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [data1]);
 
   const [searchText, setSearchText] = useState("");
   // console.log(data1.container);

@@ -154,7 +154,6 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
     textAlign: "center",
     color: color.primary,
-    fontFamily: "Roboto",
     fontWeight: "bold",
     marginBottom: 16,
     textDecorationLine: "underline",

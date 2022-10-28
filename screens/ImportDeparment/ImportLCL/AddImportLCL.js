@@ -227,7 +227,7 @@ const AddImportLCL = ({ navigation }) => {
           onChangeText={(value) => handleOnChangeText("transittime", value)}
         />
         <View style={{ flexDirection: "row" }}>
-          <View style={{ width: "100%", marginRight: 20 }}>
+          <View style={{ width: "100%" }}>
             <Text style={styles.textValid}>Valid</Text>
             <TextInput
               style={styles.validStyle}
@@ -237,31 +237,31 @@ const AddImportLCL = ({ navigation }) => {
               onChangeText={(value) => handleOnChangeText(value, "valid")}
             />
           </View>
-          <TouchableOpacity onPress={() => showMode("date")}>
-            <Icon
-              name="calendar"
-              size={35}
-              color="#7F7F7F"
-              style={{
-                top: 30,
-                position: "absolute",
-                right: 40,
-                marginBottom: 0,
-                zIndex: 1000,
-              }}
-            />
-          </TouchableOpacity>
-          {show && (
-            <DateTimePicker
-              testID="dateTimePicker"
-              value={date}
-              mode={mode}
-              is24Hour={true}
-              desplay="default"
-              onChange={onChange}
-            />
-          )}
+          <Icon
+            onPress={() => setShow(!show)}
+            name="calendar"
+            size={35}
+            color="#7F7F7F"
+            style={{
+              top: 30,
+              position: "absolute",
+              right: 20,
+              marginBottom: 0,
+              zIndex: 1000,
+            }}
+          />
         </View>
+        {show && (
+          <DateTimePicker
+            testID="dateTimePicker"
+            value={date}
+            mode={mode}
+            is24Hour={true}
+            desplay="default"
+            onChange={onChange}
+            style={{ width: 400 }}
+          />
+        )}
         <FormInput
           placeholder="Ghi Chú"
           label="Ghi Chú"

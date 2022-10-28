@@ -22,7 +22,7 @@ import { Dropdown } from "react-native-element-dropdown";
 
 const { width, height } = Dimensions.get("window");
 
-const AddLog = ({ route }) => {
+const AddLog = ({ route, navigation }) => {
   const handleOnChangeText = (value, fieldName) => {
     setLogInfo({ ...logInfo, [fieldName]: value });
   };
@@ -109,9 +109,8 @@ const AddLog = ({ route }) => {
       const res = await clientLog.post("/create", { ...logInfo });
       if (res.data.success) {
         Alert.alert("Thêm Thành Công");
+        navigation.goBack();
       }
-      console.log("running");
-      console.log(res.data);
     } catch (error) {
       console.log(error.message);
     }

@@ -183,7 +183,7 @@ const HomeLog = ({ navigation }) => {
           </View>
         </View>
       </View>
-      <View style={{ flexDirection: "row", minHeight: 100 }}>
+      {/* <View style={{ flexDirection: "row", minHeight: 100 }}>
         <View style={styles.dropMenu}>
           <Text style={styles.label}>Chọn Năm</Text>
           <View style={styles.containerDropDown}>
@@ -228,7 +228,7 @@ const HomeLog = ({ navigation }) => {
             />
           </View>
         </View>
-      </View>
+      </View> */}
       <View style={{ flex: 5 }}>
         <View style={styles.displayData}>
           {filteredLog().length > 0 ? (

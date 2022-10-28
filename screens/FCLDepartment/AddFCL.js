@@ -13,7 +13,7 @@ import {
 import React, { useEffect, useState } from "react";
 import FormInput from "../../components/FormInput";
 import color from "../../contains/color";
-import SelectList from "react-native-dropdown-select-list";
+import { Dropdown } from "react-native-element-dropdown";
 import DateTimePicker from "@react-native-community/datetimepicker";
 const { width, height } = Dimensions.get("window");
 import { isValidObjectField, updateError } from "../../utils/method.js";
@@ -22,6 +22,7 @@ import {
   Continent,
   ipAddress,
   Month,
+  Month1,
 } from "../../contains/constant";
 import axios from "axios";
 import client from "../../api/client";
@@ -97,7 +98,7 @@ const Add = ({ navigation, route }) => {
     freeTime: freeTime,
     notes: notes,
   });
-  console.log("valid", fclInfo.valid);
+  // console.log("valid", fclInfo.valid);
   const submitForm = async () => {
     try {
       const res = await client.post("/create", { ...fclInfo });
@@ -120,8 +121,8 @@ const Add = ({ navigation, route }) => {
       if (res.data.success) {
         Alert.alert("Cập nhật thành công");
       }
-      console.log("running");
-      console.log(res.data);
+      // console.log("running");
+      // console.log(res.data);
     } catch (error) {
       console.log(error.message);
     }
@@ -131,36 +132,66 @@ const Add = ({ navigation, route }) => {
   return (
     <View style={StyleSheet.container}>
       <ScrollView>
-        <View>
-          <View style={styles.dropMenu}>
-            <Text style={styles.label}>Chọn Tháng</Text>
-            <SelectList
-              setSelected={(value) => setFclInfo({ ...fclInfo, month: value })}
-              data={Month}
-              // defaultOption={{ key: month, value: month }}
-              defaultOption={{ key: month, value: month }}
-            />
-          </View>
-          <View style={styles.dropMenu}>
-            <Text style={styles.label}>Chọn Châu</Text>
-            <SelectList
-              setSelected={(value) =>
-                setFclInfo({ ...fclInfo, continent: value })
-              }
-              data={Continent}
-              defaultOption={{ key: continent, value: continent }}
-            />
-          </View>
-          <View style={styles.dropMenu}>
-            <Text style={styles.label}>Chọn Loại Container</Text>
-            <SelectList
-              setSelected={(value) => setFclInfo({ ...fclInfo, type: value })}
-              data={Container}
-              defaultOption={{ key: type, value: type }}
-            />
-          </View>
+        <View style={styles.dropMenu}>
+          <Text style={styles.label}>Chọn Tháng</Text>
+          <Dropdown
+            style={[styles.dropdown]}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
+            data={Month1}
+            search={true}
+            maxHeight={300}
+            labelField="label"
+            valueField="value"
+            searchPlaceholder="Search..."
+            value={fclInfo.month}
+            onChange={(value) => {
+              setFclInfo({ ...fclInfo, month: value.value });
+            }}
+          />
         </View>
-
+        <View style={styles.dropMenu}>
+          <Text style={styles.label}>Chọn Châu</Text>
+          <Dropdown
+            style={[styles.dropdown]}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
+            data={Continent}
+            search={true}
+            maxHeight={300}
+            labelField="label"
+            valueField="value"
+            searchPlaceholder="Search..."
+            value={fclInfo.continent}
+            onChange={(value) => {
+              setFclInfo({ ...fclInfo, continent: value.value });
+            }}
+          />
+        </View>
+        <View style={styles.dropMenu}>
+          <Text style={styles.label}>Chọn Loại Container</Text>
+          <Dropdown
+            style={[styles.dropdown]}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
+            data={Container}
+            search={true}
+            maxHeight={300}
+            labelField="label"
+            valueField="value"
+            searchPlaceholder="Search..."
+            value={fclInfo.type}
+            onChange={(value) => {
+              setFclInfo({ ...fclInfo, type: value.value });
+            }}
+          />
+        </View>
         <FormInput
           label="HÃNG TÀU"
           placeholder="HÃNG TÀU"
@@ -222,7 +253,7 @@ const Add = ({ navigation, route }) => {
           value={fclInfo.freeTime}
         />
         <View style={{ flexDirection: "row" }}>
-          <View style={{ width: "100%", marginRight: 20 }}>
+          <View style={{ width: "100%" }}>
             <Text style={styles.textValid}>Valid</Text>
             <TextInput
               style={styles.validStyle}
@@ -232,32 +263,31 @@ const Add = ({ navigation, route }) => {
               onChangeText={(value) => handleOnChangeText(value, "valid")}
             />
           </View>
-          <TouchableOpacity onPress={() => showMode("date")}>
-            <Icon
-              name="calendar"
-              size={35}
-              color="#7F7F7F"
-              style={{
-                top: 30,
-                position: "absolute",
-                right: 40,
-                marginBottom: 0,
-                zIndex: 1000,
-              }}
-            />
-          </TouchableOpacity>
-          {show && (
-            <DateTimePicker
-              testID="dateTimePicker"
-              value={date}
-              mode={mode}
-              is24Hour={true}
-              desplay="default"
-              onChange={onChange}
-            />
-          )}
+          <Icon
+            onPress={() => setShow(!show)}
+            name="calendar"
+            size={35}
+            color="#7F7F7F"
+            style={{
+              top: 30,
+              position: "absolute",
+              right: 20,
+              marginBottom: 0,
+              zIndex: 1000,
+            }}
+          />
         </View>
-
+        {show && (
+          <DateTimePicker
+            testID="dateTimePicker"
+            value={date}
+            mode={mode}
+            is24Hour={true}
+            desplay="default"
+            onChange={onChange}
+            style={{ width: 400 }}
+          />
+        )}
         <FormInput
           placeholder="NOTES"
           label="NOTES"
