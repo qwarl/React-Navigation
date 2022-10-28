@@ -173,7 +173,7 @@ const Home = ({ navigation, route }) => {
         eachFcl.valid.slice(eachFcl.valid.length - 4).includes(fclInfo.year)
     );
 
-  async function clearFilter() {
+  function clearFilter() {
     // setFCLInfo({ ...fclInfo, month: '', continent: '', type: '' })
     // setSearchText('')
     // RNRestart.Restart()

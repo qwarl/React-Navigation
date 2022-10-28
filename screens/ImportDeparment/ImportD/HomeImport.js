@@ -6,6 +6,7 @@ import {
   Dimensions,
   FlatList,
   TextInput,
+  Button,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import color from "../../../contains/color";
@@ -94,6 +95,18 @@ const HomeImport = ({ navigation }) => {
         checkTypeSearch(searchText, eachImport)
       // && checkPriceSearch(eachLog)
     );
+
+    function clearFilter() {
+      // setFCLInfo({ ...fclInfo, month: '', continent: '', type: '' })
+      // setSearchText('')
+      // RNRestart.Restart()
+      // DevSettings.reload()
+      // await Updates.reloadAsync()
+      // Updates.reloadAsync()
+      navigation.reset({ index: 0, routes: [{ name: 'ScreenImport' }] })
+      // setTimeout(Updates.reloadAsync, 1000)
+    }
+
   const renderItem = ({ item }) => (
     <TouchableOpacity
       onPress={() => {
@@ -253,6 +266,7 @@ const HomeImport = ({ navigation }) => {
             })
           }
         />
+        <Button title='Clear' onPress={clearFilter} />
       </View>
       <View style={{ flex: 4 }}>
         <View style={styles.displayData}>
