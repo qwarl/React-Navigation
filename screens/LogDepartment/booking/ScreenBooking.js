@@ -8,6 +8,8 @@ import AddBookingLog from "./AddBookingLog";
 import UpdateBooking from "./UpdateBooking";
 import NewAddBooking from "./NewAddBooking";
 import ProfitReport from "./ProfitReport";
+import AddBuyDetail from "./AddBuyDetail";
+import AddSellDetail from "./AddSellDetail";
 const Stack = createStackNavigator();
 
 const ScreenBooking = () => {
@@ -41,6 +43,16 @@ const ScreenBooking = () => {
       <Stack.Screen
         name="ProfitReport"
         component={ProfitReport}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="AddBuyDetail"
+        component={AddBuyDetail}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="AddSellDetail"
+        component={AddSellDetail}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
