@@ -7,14 +7,19 @@ import {
   FlatList,
   TextInput,
   Button,
+  ScrollView,
+  RefreshControl
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { Dropdown } from "react-native-element-dropdown";
 import clientImportLCL from "../../../api/clientImportLCL";
 import { Continent, Month1 } from "../../../contains/constant";
 import color from "../../../contains/color";
 
+const wait = (timeout) => {
+  return new Promise(resolve => setTimeout(resolve, timeout));
+}
 const HomeImportLCL = ({ navigation }) => {
   const [importLCLInfo, setImportLCLInfo] = useState({
     month: "",
@@ -26,7 +31,15 @@ const HomeImportLCL = ({ navigation }) => {
   const [value, setValue] = useState(null);
   const [data, setData] = useState([]);
   const [searchText, setSearchText] = useState("");
+  const [refreshing, setRefreshing] = useState(false)
 
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    navigation.replace('HomeTabImportLCL')
+    // alert('refresh')
+    // console.log('refreshed')
+    wait(500).then(() => setRefreshing(false));
+  }, [])
   // useEffect(() => {
   //   data.map((item) => console.log(item.shippingtype));
   // }, []);
@@ -70,17 +83,6 @@ const HomeImportLCL = ({ navigation }) => {
       // && checkPriceSearch(eachLog)
     );
 
-  function clearFilter() {
-    // setFCLInfo({ ...fclInfo, month: '', continent: '', type: '' })
-    // setSearchText('')
-    // RNRestart.Restart()
-    // DevSettings.reload()
-    // await Updates.reloadAsync()
-    // Updates.reloadAsync()
-    navigation.reset({ index: 0, routes: [{ name: 'ScreenImportLCL' }] })
-    // setTimeout(Updates.reloadAsync, 1000)
-  }
-
   const renderItem = ({ item }) => (
     <TouchableOpacity
       onPress={() => {
@@ -118,37 +120,67 @@ const HomeImportLCL = ({ navigation }) => {
   );
   return (
     <View style={{ flex: 1, backgroundColor: "white" }}>
-      <View style={{ flexDirection: "row", alignItems: "center" }}>
-        <Icon
-          name="search"
-          size={28}
-          color="white"
-          style={{ position: "absolute", top: 20, left: 30, zIndex: 1000 }}
-        />
-        <TextInput
-          style={styles.styleSearch}
-          placeholder="Tìm kiếm"
-          placeholderTextColor={"white"}
-          underlineColorAndroid="transparent"
-          onChangeText={(text) => setSearchText(text)}
-        />
-      </View>
-      <View
-        style={{
-          justifyContent: "space-between",
-          flexDirection: "row",
-        }}
+      <ScrollView
+        // contentContainerStyle={styles.scrollView}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+          />
+        }
       >
-        <View style={styles.dropMenu}>
-          <Text style={styles.label}>Chọn Tháng</Text>
-          <View style={styles.containerDropDown}>
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <Icon
+            name="search"
+            size={28}
+            color="white"
+            style={{ position: "absolute", top: 20, left: 30, zIndex: 1000 }}
+          />
+          <TextInput
+            style={styles.styleSearch}
+            placeholder="Tìm kiếm"
+            placeholderTextColor={"white"}
+            underlineColorAndroid="transparent"
+            onChangeText={(text) => setSearchText(text)}
+          />
+        </View>
+        <View
+          style={{
+            justifyContent: "space-between",
+            flexDirection: "row",
+          }}
+        >
+          <View style={styles.dropMenu}>
+            <Text style={styles.label}>Chọn Tháng</Text>
+            <View style={styles.containerDropDown}>
+              <Dropdown
+                style={[styles.dropdown]}
+                placeholderStyle={styles.placeholderStyle}
+                selectedTextStyle={styles.selectedTextStyle}
+                inputSearchStyle={styles.inputSearchStyle}
+                iconStyle={styles.iconStyle}
+                data={Month1}
+                search
+                maxHeight={300}
+                labelField="label"
+                valueField="value"
+                searchPlaceholder="Search..."
+                value={value}
+                onChange={(value) => {
+                  setImportLCLInfo({ ...importLCLInfo, month: value.value });
+                }}
+              />
+            </View>
+          </View>
+          <View style={styles.dropMenu}>
+            <Text style={styles.label}>Chọn Châu</Text>
             <Dropdown
               style={[styles.dropdown]}
               placeholderStyle={styles.placeholderStyle}
               selectedTextStyle={styles.selectedTextStyle}
               inputSearchStyle={styles.inputSearchStyle}
               iconStyle={styles.iconStyle}
-              data={Month1}
+              data={Continent}
               search
               maxHeight={300}
               labelField="label"
@@ -156,78 +188,57 @@ const HomeImportLCL = ({ navigation }) => {
               searchPlaceholder="Search..."
               value={value}
               onChange={(value) => {
-                setImportLCLInfo({ ...importLCLInfo, month: value.value });
+                setImportLCLInfo({ ...importLCLInfo, continent: value.value });
               }}
             />
           </View>
         </View>
-        <View style={styles.dropMenu}>
-          <Text style={styles.label}>Chọn Châu</Text>
-          <Dropdown
-            style={[styles.dropdown]}
-            placeholderStyle={styles.placeholderStyle}
-            selectedTextStyle={styles.selectedTextStyle}
-            inputSearchStyle={styles.inputSearchStyle}
-            iconStyle={styles.iconStyle}
-            data={Continent}
-            search
-            maxHeight={300}
-            labelField="label"
-            valueField="value"
-            searchPlaceholder="Search..."
-            value={value}
-            onChange={(value) => {
-              setImportLCLInfo({ ...importLCLInfo, continent: value.value });
-            }}
-          />
+        <View>
         </View>
-      </View>
-      <View>
-        <Button title='Clear' onPress={clearFilter} />
-      </View>
 
-      <View style={{ flex: 4 }}>
-        <View style={styles.displayData}>
-          {filteredImport().length > 0 ? (
-            <FlatList
-              style={styles.list}
-              data={filteredImport()}
-              renderItem={renderItem}
-              keyExtractor={(item) => item._id}
-            />
-          ) : (
-            <View
-              style={{
-                flex: 1,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Text style={{ color: "black", fontSize: 20 }}>
-                Không có dữ liệu có tên là: {searchText}
-              </Text>
-            </View>
-          )}
+        <View style={{ flex: 4 }}>
+          <View style={styles.displayData}>
+            {filteredImport().length > 0 ? (
+              <FlatList
+                style={styles.list}
+                data={filteredImport()}
+                renderItem={renderItem}
+                keyExtractor={(item) => item._id}
+              />
+            ) : (
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Text style={{ color: "black", fontSize: 20 }}>
+                  Không có dữ liệu có tên là: {searchText}
+                </Text>
+              </View>
+            )}
+          </View>
         </View>
-      </View>
-      <View
-        style={{
-          flex: 0.5,
-          justifyContent: "center",
-          marginTop: -10,
-          marginBottom: 30,
-        }}
-      >
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate("AddImportLCL");
+        <View
+          style={{
+            flex: 0.5,
+            justifyContent: "center",
+            marginTop: -10,
+            marginBottom: 30,
           }}
         >
-          <View style={styles.iconWrapper}>
-            <Text style={styles.icon}>+</Text>
-          </View>
-        </TouchableOpacity>
-      </View>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("AddImportLCL");
+            }}
+          >
+            <View style={styles.iconWrapper}>
+              <Text style={styles.icon}>+</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
     </View>
   );
 };

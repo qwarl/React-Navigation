@@ -1,6 +1,6 @@
 import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import React from "react";
-import SelectList from "react-native-dropdown-select-list";
+import SelectList from 'react-native-dropdown-select-list'
 
 const FormDropDownMonth = ({ label }) => {
 	const [selected, setSelected] = React.useState("");

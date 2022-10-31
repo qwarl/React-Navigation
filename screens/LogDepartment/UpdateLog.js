@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import color from "../../contains/color";
-import SelectList from "react-native-dropdown-select-list";
+import SelectList from 'react-native-dropdown-select-list'
 import FormInput from "../../components/FormInput";
 import clientLog from "../../api/clientLog";
 

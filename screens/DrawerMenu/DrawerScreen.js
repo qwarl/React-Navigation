@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity, Alert } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, Alert, Button } from "react-native";
 import React, { useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import {
@@ -23,17 +23,18 @@ import color from "../../contains/color";
 import Icon from "react-native-vector-icons/AntDesign";
 import Icon1 from "react-native-vector-icons/Feather";
 import BusinessMainScreen from "./BusinessMainScreen";
-import * as Updates from "expo-updates"
 
 const Drawer = createDrawerNavigator();
 
 const DrawerScreen = () => {
+  
   function CustomDrawerContent({ navigation, progress, route, ...rest }) {
     // const translateX = Animated.interpolateNode(progress, {
     //     inputRange: [0, 1],
     //     outputRange: [30, 0],
     // });
     // console.time('doSomething')
+    
     const [open, setOpen] = useState({
       openQuotation: false,
       openDOM: false,
@@ -353,6 +354,7 @@ const DrawerScreen = () => {
       </DrawerContentScrollView >
     );
   }
+  
 
   return (
     <NavigationContainer>

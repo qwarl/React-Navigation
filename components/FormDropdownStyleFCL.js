@@ -1,6 +1,6 @@
 import { View, Text } from 'react-native'
 import React from 'react';
-import SelectList from "react-native-dropdown-select-list";
+import SelectList from 'react-native-dropdown-select-list'
 
 const FormDropdownStyleFCL = ({ label }) => {
 	const [selected, setSelected] = React.useState('');

@@ -13,7 +13,7 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import SelectList from "react-native-dropdown-select-list";
+import SelectList from 'react-native-dropdown-select-list'
 import { Continent, Month1, TypeImport } from "../../../contains/constant";
 import FormInput from "../../../components/FormInput";
 import color from "../../../contains/color";

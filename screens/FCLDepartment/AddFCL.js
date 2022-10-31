@@ -13,7 +13,7 @@ import {
 import React, { useEffect, useState } from "react";
 import FormInput from "../../components/FormInput";
 import color from "../../contains/color";
-import SelectList from "react-native-dropdown-select-list";
+
 import DateTimePicker from "@react-native-community/datetimepicker";
 const { width, height } = Dimensions.get("window");
 import { isValidObjectField, updateError } from "../../utils/method.js";
@@ -26,7 +26,7 @@ import {
 import axios from "axios";
 import client from "../../api/client";
 import Icon from "react-native-vector-icons/FontAwesome";
-
+import SelectList from 'react-native-dropdown-select-list'
 
 const Add = ({ navigation, route }) => {
 	const [date, setDate] = useState(new Date());
