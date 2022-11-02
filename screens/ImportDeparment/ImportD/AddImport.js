@@ -14,7 +14,12 @@ import {
 import React, { useEffect, useState } from "react";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import SelectList from "react-native-dropdown-select-list";
-import { Continent, Month1, TypeImport } from "../../../contains/constant";
+import {
+  Container,
+  Continent,
+  Month1,
+  TypeImport,
+} from "../../../contains/constant";
 import FormInput from "../../../components/FormInput";
 import color from "../../../contains/color";
 import { isValidObjectField, updateError } from "../../../utils/method";
@@ -118,29 +123,62 @@ const AddImport = ({ navigation }) => {
       <ScrollView>
         <View style={styles.dropMenu}>
           <Text style={styles.label}>Chọn Tháng</Text>
-          <SelectList
-            setSelected={(value) =>
-              setImportInfo({ ...importInfo, month: value })
-            }
+          <Dropdown
+            style={[styles.dropdown]}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
             data={Month1}
+            search={true}
+            maxHeight={300}
+            labelField="label"
+            valueField="value"
+            searchPlaceholder="Search..."
+            value={importInfo.month}
+            onChange={(value) => {
+              setImportInfo({ ...importInfo, month: value.value });
+            }}
           />
         </View>
         <View style={styles.dropMenu}>
           <Text style={styles.label}>Chọn Châu</Text>
-          <SelectList
-            setSelected={(value) =>
-              setImportInfo({ ...importInfo, continent: value })
-            }
+          <Dropdown
+            style={[styles.dropdown]}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
             data={Continent}
+            search={true}
+            maxHeight={300}
+            labelField="label"
+            valueField="value"
+            searchPlaceholder="Search..."
+            value={importInfo.continent}
+            onChange={(value) => {
+              setImportInfo({ ...importInfo, continent: value.value });
+            }}
           />
         </View>
         <View style={styles.dropMenu}>
           <Text style={styles.label}>Loại Container</Text>
-          <SelectList
-            setSelected={(value) =>
-              setImportInfo({ ...importInfo, container: value })
-            }
-            data={TypeImport}
+          <Dropdown
+            style={[styles.dropdown]}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
+            data={Container}
+            search={true}
+            maxHeight={300}
+            labelField="label"
+            valueField="value"
+            searchPlaceholder="Search..."
+            value={importInfo.container}
+            onChange={(value) => {
+              setImportInfo({ ...importInfo, container: value.value });
+            }}
           />
         </View>
         <FormInput

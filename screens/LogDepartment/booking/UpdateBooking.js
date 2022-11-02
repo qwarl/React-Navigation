@@ -20,7 +20,7 @@ import color from "../../../contains/color";
 import FormInput from "../../../components/FormInput";
 import clientBookingLog from "../../../api/clientBookingLog";
 
-const AddBookingLog = ({ navigation, route }) => {
+const UpdateBooking = ({ navigation, route }) => {
   const handleOnChangeText = (fieldName, ...values) => {
     values.length === 1
       ? setBookingInfo({ ...bookingInfo, [fieldName]: values[0] })
@@ -207,45 +207,7 @@ const AddBookingLog = ({ navigation, route }) => {
     return num1 + num2;
   };
 
-  let { type, pol, pod, code, typeProduct, name } = route?.params.data || {};
-
-  const [bookingInfo, setBookingInfo] = useState({
-    code: code,
-    month: "",
-    type: type,
-    customer: "",
-    numberdeclaration: "",
-    daydeclaration: "",
-    stream: "",
-    typeProduct: typeProduct,
-    quantity: "",
-    numberbale: "",
-    baletype: "",
-    weight: "",
-    container: "",
-    numbercotainer: "",
-    name: name,
-    supplier: "",
-    supplier1: "",
-    supplier2: "",
-    pol: pol,
-    daygo: "",
-    pod: pod,
-    dayarrive: "",
-    salescontract: "",
-    daysalescontract: "",
-    invoice: "",
-    dayinvoice: "",
-    packing: "",
-    daypacking: "",
-    billbooking: "",
-    daybillbooking: "",
-    debit: "",
-    sales: "",
-    docs: "",
-    ops: "",
-    note: "",
-  });
+  const [bookingInfo, setBookingInfo] = useState(route.params.data);
 
   // console.log(bookingInfo);
   const isValidForm = () => {
@@ -256,11 +218,13 @@ const AddBookingLog = ({ navigation, route }) => {
   const submitForm = async () => {
     // if (isValidForm()) {
     try {
-      const res = await clientBookingLog.post("/create", {
+      const url = "/update/";
+      const id = bookingInfo._id;
+      const res = await clientBookingLog.post(url + id, {
         ...bookingInfo,
       });
       if (res.data.success) {
-        Alert.alert("Thêm Thành Công");
+        Alert.alert("Cập Nhật Thành Công");
         navigation.goBack();
       }
     } catch (error) {
@@ -765,7 +729,7 @@ const AddBookingLog = ({ navigation, route }) => {
             <Text
               style={{ fontSize: 18, color: color.primary, fontWeight: "bold" }}
             >
-              Thêm
+              Cập nhật
             </Text>
           </TouchableOpacity>
         </View>
@@ -883,4 +847,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AddBookingLog;
+export default UpdateBooking;

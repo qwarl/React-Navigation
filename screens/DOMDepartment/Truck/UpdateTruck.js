@@ -120,7 +120,7 @@ const UpdateTruck = ({ route, navigation }) => {
         />
       </View>
       <View style={styles.dropMenu}>
-        <Text style={styles.label}>Chọn Loại Container</Text>
+        <Text style={styles.label}>Chọn Xe Tải</Text>
         <Dropdown
           style={[styles.dropdown]}
           placeholderStyle={styles.placeholderStyle}

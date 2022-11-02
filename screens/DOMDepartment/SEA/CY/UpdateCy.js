@@ -16,6 +16,7 @@ import clientSeaCy from "../../../../api/clientSeaCy";
 import color from "../../../../contains/color";
 import FormInput from "../../../../components/FormInput";
 import {
+  Container,
   Continent,
   DomType,
   Month1,
@@ -110,7 +111,7 @@ const UpdateCy = ({ route, navigation }) => {
             selectedTextStyle={styles.selectedTextStyle}
             inputSearchStyle={styles.inputSearchStyle}
             iconStyle={styles.iconStyle}
-            data={TypeSeaCY}
+            data={Container}
             search={true}
             maxHeight={300}
             labelField="label"
