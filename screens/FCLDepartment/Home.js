@@ -63,17 +63,15 @@ const Home = ({ navigation, route }) => {
     wait(500).then(() => setRefreshing(false));
   }, [])
 
-  function getData() {
+  // const isFocused = useIsFocused()
+
+  useEffect(() => {
+    // isFocused && 
     const url = `/api/quotations/getAll`;
     axios.get(ipAddress + url).then((res) => {
       setData1(res["data"].quotations);
     });
-  }
-  const isFocused = useIsFocused()
-
-  useEffect(() => {
-    isFocused && getData();
-  }, [isFocused]);
+  }, []);
 
   const [searchText, setSearchText] = useState("");
   // console.log(data1.container);
@@ -262,35 +260,37 @@ const Home = ({ navigation, route }) => {
             }
           />
         </View>
-
-        <View style={{ flex: 7 }}>
-          <View style={styles.displayData}>
-            {filteredFCL().length > 0 ? (
-              <FlatList
-                style={styles.list}
-                data={filteredFCL()}
-                renderItem={renderItem}
-                keyExtractor={(item) => item._id}
-              />
-            ) : (
-              <View
-                style={{
-                  flex: 1,
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <Text style={{ color: "black", fontSize: 20 }}>
-                  Không có dữ liệu có tên là: {searchText}
-                </Text>
-              </View>
-            )}
+        <View>
+          <View style={{ flex: 7 }}>
+            <View style={styles.displayData}>
+              {filteredFCL().length > 0 ? (
+                <FlatList
+                  style={styles.list}
+                  data={filteredFCL()}
+                  renderItem={renderItem}
+                  keyExtractor={(item) => item._id}
+                />
+              ) : (
+                <View
+                  style={{
+                    flex: 1,
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <Text style={{ color: "black", fontSize: 20 }}>
+                    Không có dữ liệu có tên là: {searchText}
+                  </Text>
+                </View>
+              )}
+            </View>
           </View>
         </View>
         <View
           style={{
             flex: 0.5,
-            marginBottom: 30,
+            // marginBottom: 50,
+            marginBottom: 50,
           }}
         >
           <TouchableOpacity
@@ -391,7 +391,7 @@ const styles = StyleSheet.create({
   list: {
     flex: 1,
     padding: 8,
-    height: height * 0.46,
+    height: height * 0.5,
   },
   dropdown: {
     height: 50,

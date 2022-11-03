@@ -15,7 +15,7 @@ import React, { useEffect, useState } from "react";
 import clientLCL from "../../../api/clientLCL";
 import color from "../../../contains/color";
 import { Dropdown } from "react-native-element-dropdown";
-import { Continent, Month } from "../../../contains/constant";
+import { Continent, Month, Month1 } from "../../../contains/constant";
 import FormInput from "../../../components/FormInput";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import { isValidObjectField, updateError } from "../../../utils/method";

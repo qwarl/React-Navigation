@@ -65,6 +65,7 @@ const AddLog = ({ route }) => {
     hsCode: "",
     function: "",
     image: "",
+    // image: null,
     pol: "",
     pod: "",
     typeProduct: "",
@@ -265,7 +266,7 @@ const AddLog = ({ route }) => {
           <Text style={{ fontSize: 20, fontWeight: "600" }}>Chọn hình ảnh</Text>
         </TouchableOpacity>
         {imageGallery && (
-          <Image style={styles.styleImage} source={{ uri: imageGallery }} />
+          <Image style={styles.styleImage} source={{ uri: imageGallery }}/>
         )}
         <View
           style={{

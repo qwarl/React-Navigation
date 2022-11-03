@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   FlatList,
   ScrollView,
+  Dimensions,
   TextInput,
   Button,
   RefreshControl
@@ -287,6 +288,7 @@ const HomeCy = ({ navigation }) => {
     </View>
   );
 };
+const { width, height } = Dimensions.get("window");
 
 const styles = StyleSheet.create({
   iconWrapper: {
@@ -371,6 +373,8 @@ const styles = StyleSheet.create({
   list: {
     flex: 1,
     padding: 8,
+    height: height * 0.46,
+
   },
   dropdown: {
     height: 50,
