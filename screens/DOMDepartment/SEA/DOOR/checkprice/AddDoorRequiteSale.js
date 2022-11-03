@@ -15,6 +15,7 @@ import color from "../../../../../contains/color";
 import FormInput from "../../../../../components/FormInput";
 import { Dropdown } from "react-native-element-dropdown";
 import {
+  Container,
   Continent,
   DomType,
   Month1,
@@ -135,7 +136,7 @@ const AddDoorRequiteSale = ({ navigation, route }) => {
             selectedTextStyle={styles.selectedTextStyle}
             inputSearchStyle={styles.inputSearchStyle}
             iconStyle={styles.iconStyle}
-            data={TypeSeaCY}
+            data={Container}
             search={true}
             maxHeight={300}
             labelField="label"

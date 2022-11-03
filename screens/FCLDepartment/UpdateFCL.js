@@ -117,16 +117,6 @@ const UpdateFCL = ({ route, navigation }) => {
       <ScrollView>
         <View style={styles.dropMenu}>
           <Text style={styles.label}>Chọn Tháng</Text>
-          {/* <SelectList
-                        setSelected={(value) =>
-                            setUpdateData({ ...updateData, month: value })
-                        }
-                        data={Month}
-                        // defaultOption={{ key: updateData.month, value: updateData.month }}
-                        defaultOption={{ key: 'Jan', value: 'January' }}
-
-                    /> */}
-
           <Dropdown
             style={[styles.dropdown]}
             placeholderStyle={styles.placeholderStyle}
@@ -147,16 +137,6 @@ const UpdateFCL = ({ route, navigation }) => {
         </View>
         <View style={styles.dropMenu}>
           <Text style={styles.label}>Chọn Châu</Text>
-          {/* <SelectList
-                        setSelected={(value) =>
-                            setUpdateData({ ...updateData, continent: value })
-                        }
-                        data={Continent}
-                        defaultOption={{
-                            key: updateData.continent, value: updateData.continent,
-                        }}
-                    /> */}
-
           <Dropdown
             style={[styles.dropdown]}
             placeholderStyle={styles.placeholderStyle}
@@ -177,14 +157,6 @@ const UpdateFCL = ({ route, navigation }) => {
         </View>
         <View style={styles.dropMenu}>
           <Text style={styles.label}>Chọn Loại Container</Text>
-          {/* <SelectList
-                        setSelected={(value) =>
-                            setUpdateData({ ...updateData, container: value })
-                        }
-                        data={Type}
-                        defaultOption={{ key: updateData.container, value: updateData.container }}
-                    /> */}
-
           <Dropdown
             style={[styles.dropdown]}
             placeholderStyle={styles.placeholderStyle}

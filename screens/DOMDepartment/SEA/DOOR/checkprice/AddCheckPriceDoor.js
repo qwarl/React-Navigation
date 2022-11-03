@@ -147,7 +147,7 @@ const AddCheckPriceDoor = ({ navigation }) => {
             selectedTextStyle={styles.selectedTextStyle}
             inputSearchStyle={styles.inputSearchStyle}
             iconStyle={styles.iconStyle}
-            data={TypeSeaCY}
+            data={Continent}
             search={true}
             maxHeight={300}
             labelField="label"

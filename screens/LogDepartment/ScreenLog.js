@@ -11,6 +11,7 @@ import AddCheckPriceLog from "./checkprice/AddCheckPriceLog";
 import AddLogRequiteSale from "./checkprice/AddLogRequiteSale";
 import HomeTabLog from "./checkprice/HomeTabLog";
 import AddBookingLog from "./booking/AddBookingLog";
+import DetailBooking from "./booking/DetailBooking";
 
 const Stack = createStackNavigator();
 
@@ -35,6 +36,11 @@ const ScreenLog = () => {
       <Stack.Screen
         name="AddBookingLog"
         component={AddBookingLog}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="DetailBooking"
+        component={DetailBooking}
         options={{ headerShown: false }}
       />
       <Stack.Screen

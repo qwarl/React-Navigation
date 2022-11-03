@@ -23,7 +23,9 @@ import color from "../../contains/color";
 import Icon from "react-native-vector-icons/AntDesign";
 import Icon1 from "react-native-vector-icons/Feather";
 import BusinessMainScreen from "./BusinessMainScreen";
-import * as Updates from "expo-updates"
+import * as Updates from "expo-updates";
+import HomeBookingLog from "../LogDepartment/booking/HomeBookingLog";
+import ScreenBooking from "../LogDepartment/booking/ScreenBooking";
 
 const Drawer = createDrawerNavigator();
 
@@ -52,7 +54,7 @@ const DrawerScreen = () => {
         <View style={styles.mainMenu}>
           <TouchableOpacity
             onPress={() => navigation.navigate("Nghiệp Vụ")}
-          // style={{ backgroundColor: "rgb(172, 231, 250)" }}
+            // style={{ backgroundColor: "rgb(172, 231, 250)" }}
           >
             <Icon
               name="home"
@@ -70,7 +72,7 @@ const DrawerScreen = () => {
             onPress={() =>
               setOpen({ ...open, openQuotation: !open.openQuotation })
             }
-          // style={{ backgroundColor: "rgb(172, 231, 250)" }}
+            // style={{ backgroundColor: "rgb(172, 231, 250)" }}
           >
             <Icon1
               name="clipboard"
@@ -100,12 +102,15 @@ const DrawerScreen = () => {
                 <TouchableOpacity
                   onPress={() => {
                     // navigation.navigate('ScreenFCL',{f5:Math.random()})
-                    navigation.reset({ index: 0, routes: [{ name: 'ScreenFCL' }] })
+                    navigation.reset({
+                      index: 0,
+                      routes: [{ name: "ScreenFCL" }],
+                    });
                     setOpen(!open.openQuotation);
                   }}
                 >
                   <Text style={{ fontSize: 20, opacity: 80, marginTop: 16 }}>
-                    FCL Department
+                    Phòng FCL
                   </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -114,7 +119,7 @@ const DrawerScreen = () => {
                   }}
                 >
                   <Text style={{ fontSize: 20, marginTop: 16 }}>
-                    IMPORT Department
+                    Phòng IMPORT
                   </Text>
                 </TouchableOpacity>
                 <View style={{ marginLeft: 20 }}>
@@ -131,7 +136,10 @@ const DrawerScreen = () => {
                       <TouchableOpacity
                         onPress={() => {
                           // navigation.navigate("ScreenImport");
-                          navigation.reset({ index: 0, routes: [{ name: 'ScreenImport' }] })
+                          navigation.reset({
+                            index: 0,
+                            routes: [{ name: "ScreenImport" }],
+                          });
                           setOpen(!open.openImport);
                         }}
                       >
@@ -147,7 +155,10 @@ const DrawerScreen = () => {
                       <TouchableOpacity
                         onPress={() => {
                           // navigation.navigate("ScreenImportLCL");
-                          navigation.reset({ index: 0, routes: [{ name: 'ScreenImportLCL' }] })
+                          navigation.reset({
+                            index: 0,
+                            routes: [{ name: "ScreenImportLCL" }],
+                          });
                           setOpen(!open.openImport);
                         }}
                       >
@@ -167,19 +178,18 @@ const DrawerScreen = () => {
                 <TouchableOpacity
                   onPress={() => {
                     // navigation.navigate("ScreenLog");
-                    navigation.reset({ index: 0, routes: [{ name: 'ScreenLog' }] })
+                    navigation.reset({
+                      index: 0,
+                      routes: [{ name: "ScreenLog" }],
+                    });
                   }}
                 >
-                  <Text style={{ fontSize: 20, marginTop: 16 }}>
-                    LOG Department
-                  </Text>
+                  <Text style={{ fontSize: 20, marginTop: 16 }}>Phòng LOG</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => setOpen({ ...open, openAir: !open.openAir })}
                 >
-                  <Text style={{ fontSize: 20, marginTop: 16 }}>
-                    AIR Department
-                  </Text>
+                  <Text style={{ fontSize: 20, marginTop: 16 }}>Phòng AIR</Text>
                 </TouchableOpacity>
                 <View>
                   {open.openAir ? (
@@ -196,7 +206,10 @@ const DrawerScreen = () => {
                       <TouchableOpacity
                         onPress={() => {
                           // navigation.navigate("ScreenLCL");
-                          navigation.reset({ index: 0, routes: [{ name: 'ScreenLCL' }] })
+                          navigation.reset({
+                            index: 0,
+                            routes: [{ name: "ScreenLCL" }],
+                          });
                           setOpen({ ...open, openAir: !open.openAir });
                         }}
                       >
@@ -207,7 +220,10 @@ const DrawerScreen = () => {
                       <TouchableOpacity
                         onPress={() => {
                           // navigation.navigate("ScreenAIR");
-                          navigation.reset({ index: 0, routes: [{ name: 'ScreenAIR' }] })
+                          navigation.reset({
+                            index: 0,
+                            routes: [{ name: "ScreenAIR" }],
+                          });
                           setOpen({ ...open, openAir: !open.openAir });
                         }}
                       >
@@ -229,9 +245,7 @@ const DrawerScreen = () => {
                     setOpen({ ...open, openDOM: !open.openDOM });
                   }}
                 >
-                  <Text style={{ fontSize: 20, marginTop: 16 }}>
-                    DOM Department
-                  </Text>
+                  <Text style={{ fontSize: 20, marginTop: 16 }}>Phòng DOM</Text>
                 </TouchableOpacity>
                 <View>
                   {open.openDOM ? (
@@ -248,7 +262,10 @@ const DrawerScreen = () => {
                       <TouchableOpacity
                         onPress={() => {
                           // navigation.navigate("ScreenCy");
-                          navigation.reset({ index: 0, routes: [{ name: 'ScreenCy' }] })
+                          navigation.reset({
+                            index: 0,
+                            routes: [{ name: "ScreenCy" }],
+                          });
                           setOpen({ ...open, openDOM: !open.openDOM });
                         }}
                       >
@@ -264,7 +281,10 @@ const DrawerScreen = () => {
                       <TouchableOpacity
                         onPress={() => {
                           // navigation.navigate("ScreenDoor");
-                          navigation.reset({ index: 0, routes: [{ name: 'ScreenDoor' }] })
+                          navigation.reset({
+                            index: 0,
+                            routes: [{ name: "ScreenDoor" }],
+                          });
                           setOpen({ ...open, openDOM: !open.openDOM });
                         }}
                       >
@@ -282,7 +302,10 @@ const DrawerScreen = () => {
                       <TouchableOpacity
                         onPress={() => {
                           // navigation.navigate("ScreenTruck")
-                          navigation.reset({ index: 0, routes: [{ name: 'ScreenTruck' }] })
+                          navigation.reset({
+                            index: 0,
+                            routes: [{ name: "ScreenTruck" }],
+                          });
                           setOpen({ ...open, openDOM: !open.openDOM });
                         }}
                       >
@@ -329,33 +352,39 @@ const DrawerScreen = () => {
               TẠO THÔNG TIN
             </Text>
           </TouchableOpacity>
-          <View style={{ marginLeft: 20 }}>
+          <View style={{ marginLeft: 20, marginTop: 16 }}>
             {open.openInfo ? (
               <View>
                 <TouchableOpacity
                   onPress={() => {
                     // navigation.navigate("Add");
-                    navigation.reset({ index: 0, routes: [{ name: 'Add' }] })
+                    navigation.reset({
+                      index: 0,
+                      routes: [{ name: "Tạo Thông Tin LOG" }],
+                    });
                     setOpen({ ...open, openInfo: !open.openInfo });
                   }}
                 >
-                  <Text style={{ fontSize: 20 }}>Add</Text>
+                  <Text style={{ fontSize: 20 }}>Phòng LOG</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => {
                     // navigation.navigate("ScreenFCL");
-                    navigation.reset({ index: 0, routes: [{ name: 'ScreenFCL' }] })
+                    navigation.reset({
+                      index: 0,
+                      routes: [{ name: "ScreenFCL" }],
+                    });
                     setOpen({ ...open, openInfo: !open.openInfo });
                   }}
                 >
-                  <Text style={{ fontSize: 20 }}>UpdateFCL</Text>
+                  <Text style={{ fontSize: 20, marginTop: 16 }}>Phòng FCL</Text>
                 </TouchableOpacity>
               </View>
             ) : null}
           </View>
         </View>
         {/* </Animated.View> */}
-      </DrawerContentScrollView >
+      </DrawerContentScrollView>
     );
   }
 
@@ -375,6 +404,7 @@ const DrawerScreen = () => {
         <Drawer.Screen name="ScreenCy" component={ScreenCy} />
         <Drawer.Screen name="ScreenDoor" component={ScreenDoor} />
         <Drawer.Screen name="ScreenTruck" component={ScreenTruck} />
+        <Drawer.Screen name="Tạo Thông Tin LOG" component={ScreenBooking} />
       </Drawer.Navigator>
     </NavigationContainer>
   );
