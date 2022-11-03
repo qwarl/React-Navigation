@@ -13,7 +13,7 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import SelectList from "react-native-dropdown-select-list";
+import { Dropdown } from "react-native-element-dropdown";
 import {
   Container,
   Continent,

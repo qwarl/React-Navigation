@@ -68,10 +68,11 @@ const AddPriceSell = ({ navigation }) => {
   const totalVND = function (a) {
     const num1 = Number(a);
     if (sellInfo.currencyunit === "USD") {
-      return num1;
-    } else {
-      return num1;
+      return num1 * Number(sellInfo.usd);
+    } else if (sellInfo.currencyunit === "EUR") {
+      return num1 * Number(sellInfo.usd);
     }
+    return num1;
   };
 
   const [sellInfo, setSellInfo] = useState({
@@ -232,7 +233,7 @@ const AddPriceSell = ({ navigation }) => {
         <FormInput
           placeholder="Total (VND)"
           label="Total (VND)"
-          value={`${Number(sellInfo.sur20) + Number(sellInfo.of20)}`}
+          value={totalVND(sellInfo.)}
         />
         <FormInput
           placeholder="Số Hóa Đơn"
