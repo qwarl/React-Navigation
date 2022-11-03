@@ -71,7 +71,7 @@ const Home = ({ navigation, route }) => {
       .then((res) => {
         setData1(res.data.quotations);
       })
-      .catch((err) => {
+      .catch((err) =>  {
         console.log(err);
       });
   }, [data1]);
