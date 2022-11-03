@@ -31,6 +31,7 @@ import RadioForm, {
   RadioButtonLabel,
 } from "react-native-simple-radio-button";
 import { Dropdown } from "react-native-element-dropdown";
+import client from "../../api/client";
 import { useIsFocused } from '@react-navigation/native'
 
 const { width, height } = Dimensions.get("window");
@@ -52,27 +53,29 @@ const Home = ({ navigation, route }) => {
     betweenprice: "",
     type: "",
   });
-
   const [refreshing, setRefreshing] = useState(false)
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
-    navigation.replace('Home')
-    // alert('refresh')
-    // console.log('refreshed')
+    navigation.replace('HomeTabFCL')
     wait(500).then(() => setRefreshing(false));
   }, [])
 
-  // const isFocused = useIsFocused()
-
   useEffect(() => {
-    // isFocused && 
-    const url = `/api/quotations/getAll`;
-    axios.get(ipAddress + url).then((res) => {
-      setData1(res["data"].quotations);
-    });
-  }, []);
+    client
+      .get("/getAll")
+      .then((res) => {
+        setData1(res.data.quotations);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [isFocused]);
 
+  const isFocused = useIsFocused()
+  useEffect(() => {
+    isFocused
+  }, [isFocused])
   const [searchText, setSearchText] = useState("");
   // console.log(data1.container);
   const ListItem = ({ item }) => {
@@ -173,7 +176,7 @@ const Home = ({ navigation, route }) => {
   return (
     <View style={{ flex: 1, backgroundColor: "white" }}>
       <ScrollView
-        // contentContainerStyle={styles.scrollView}
+        contentContainerStyle={styles.scrollView}
         refreshControl={
           <RefreshControl
             refreshing={refreshing}
@@ -260,48 +263,61 @@ const Home = ({ navigation, route }) => {
             }
           />
         </View>
-        <View>
-          <View style={{ flex: 7 }}>
-            <View style={styles.displayData}>
-              {filteredFCL().length > 0 ? (
-                <FlatList
-                  style={styles.list}
-                  data={filteredFCL()}
-                  renderItem={renderItem}
-                  keyExtractor={(item) => item._id}
-                />
-              ) : (
-                <View
-                  style={{
-                    flex: 1,
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <Text style={{ color: "black", fontSize: 20 }}>
-                    Không có dữ liệu có tên là: {searchText}
-                  </Text>
-                </View>
-              )}
+        <View >
+
+          <View
+          // style={{ alignSelf: 'center' }}
+          >
+            <View style={{
+              flex: 7, zIndex: 1, position: "relative"
+            }}>
+              <View style={styles.displayData}>
+                {filteredFCL().length > 0 ? (
+                  <FlatList
+                    style={styles.list}
+                    data={filteredFCL()}
+                    renderItem={renderItem}
+                    keyExtractor={(item) => item._id}
+                  // nestedScrollEnabled={true}
+                  />
+                ) : (
+                  <View
+                    style={{
+                      flex: 1,
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <Text style={{ color: "black", fontSize: 20 }}>
+                      Không có dữ liệu có tên là: {searchText}
+                    </Text>
+                  </View>
+                )}
+              </View>
             </View>
           </View>
-        </View>
-        <View
-          style={{
-            flex: 0.5,
-            // marginBottom: 50,
-            marginBottom: 50,
-          }}
-        >
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate("Add");
+          <View
+            style={{
+              flex: 0.5,
+              // marginBottom: 50,
+              // marginTop: 250,
+              // minHeight:100
+              // minHeight:height*0.11,
+              maxHeight: height * 0.11,
+              zIndex: 2,
+              position: "relative"
             }}
           >
-            <View style={styles.iconWrapper}>
-              <Text style={styles.icon}>+</Text>
-            </View>
-          </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate("Add");
+              }}
+            >
+              <View style={styles.iconWrapper}>
+                <Text style={styles.icon}>+</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
         </View>
       </ScrollView>
     </View>
@@ -391,7 +407,7 @@ const styles = StyleSheet.create({
   list: {
     flex: 1,
     padding: 8,
-    height: height * 0.5,
+    // minHeight: height * 0.5,
   },
   dropdown: {
     height: 50,
@@ -423,6 +439,11 @@ const styles = StyleSheet.create({
     textDecorationLine: "underline",
     // overflow:'scroll'
   },
+  scrollView:{
+    // flex:1,
+    // height:height,
+    minHeight:height*0.5
+  }
 });
 
 export default Home;

@@ -119,6 +119,20 @@ const DetailLog = ({ navigation, route }) => {
               Cập nhật
             </Text>
           </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.buttonBooking]}
+            onPress={() => {
+              navigation.replace("AddBookingLog", {
+                data: data,
+              });
+            }}
+          >
+            <Text
+              style={{ fontSize: 18, color: color.primary, fontWeight: "bold" }}
+            >
+              Tạo Thông Tin
+            </Text>
+          </TouchableOpacity>
         </View>
       </View>
     </ScrollView>
@@ -179,13 +193,28 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     justifyContent: "center",
     alignItems: "center",
-    width: 170,
+    width: 160,
     marginBottom: 30,
     color: color.primary,
+    marginRight: 10,
+  },
+  buttonBooking: {
+    marginTop: 20,
+    height: 45,
+    borderColor: color.borderColor,
+    borderWidth: 2,
+    borderRadius: 20,
+    justifyContent: "center",
+    alignItems: "center",
+    width: 160,
+    marginBottom: 30,
+    color: color.primary,
+    marginLeft: 5,
   },
   styleButton: {
     alignItems: "center",
     justifyContent: "center",
+    flexDirection: "row",
   },
   textDisplayCode: {
     fontSize: 22,
@@ -196,7 +225,6 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
     textAlign: "center",
     color: color.primary,
-    fontFamily: "Roboto",
     fontWeight: "bold",
     marginBottom: 16,
     textDecorationLine: "underline",
