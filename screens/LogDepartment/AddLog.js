@@ -92,11 +92,12 @@ const AddLog = ({ route, navigation }) => {
     // console.log(result);
 
     if (!result.cancelled) {
-      setImageGallery(result.uri);
+      // setImageGallery(result.uri);
+      setLogInfo({ ...logInfo, image: result.uri });
     }
   };
 
-  // console.log(image);
+  // console.log(logInfo.image);
 
   const isValidForm = () => {
     if (!isValidObjectField(logInfo))

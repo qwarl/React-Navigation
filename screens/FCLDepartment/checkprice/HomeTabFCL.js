@@ -8,7 +8,7 @@ const Tab = createBottomTabNavigator();
 const HomeTabFCL = () => {
   return (
     <Tab.Navigator
-      tabBarOptions={{ labelStyle: { fontSize: 16, marginBottom: 5 } }}
+      options={{ labelStyle: { fontSize: 16, marginBottom: 5 } }}
     >
       <Tab.Screen
         name="Home"
