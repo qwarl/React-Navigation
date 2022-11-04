@@ -73,9 +73,10 @@ const Home = ({ navigation, route }) => {
   }, [isFocused]);
 
   const isFocused = useIsFocused()
-  useEffect(() => {
-    isFocused
-  }, [isFocused])
+  // useEffect(() => {
+  //   isFocused
+  // }, [isFocused])
+
   const [searchText, setSearchText] = useState("");
   // console.log(data1.container);
   const ListItem = ({ item }) => {
@@ -263,13 +264,14 @@ const Home = ({ navigation, route }) => {
             }
           />
         </View>
-        <View >
+        <View>
 
           <View
           // style={{ alignSelf: 'center' }}
           >
             <View style={{
-              flex: 7, zIndex: 1, position: "relative"
+              flex: 7, zIndex: 1, position: "relative",
+              // height:height*0.4
             }}>
               <View style={styles.displayData}>
                 {filteredFCL().length > 0 ? (
@@ -278,7 +280,6 @@ const Home = ({ navigation, route }) => {
                     data={filteredFCL()}
                     renderItem={renderItem}
                     keyExtractor={(item) => item._id}
-                  // nestedScrollEnabled={true}
                   />
                 ) : (
                   <View
@@ -303,9 +304,9 @@ const Home = ({ navigation, route }) => {
               // marginTop: 250,
               // minHeight:100
               // minHeight:height*0.11,
-              maxHeight: height * 0.11,
-              zIndex: 2,
-              position: "relative"
+              // maxHeight: height * 0.11,
+              // zIndex: 2,
+              // position: "relative"
             }}
           >
             <TouchableOpacity
@@ -403,11 +404,13 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     padding: 10,
+    height:height*0.47
   },
   list: {
     flex: 1,
     padding: 8,
-    // minHeight: height * 0.5,
+    // height: height * 0.43,
+    // maxHeight: height * 0.43,
   },
   dropdown: {
     height: 50,
@@ -439,11 +442,6 @@ const styles = StyleSheet.create({
     textDecorationLine: "underline",
     // overflow:'scroll'
   },
-  scrollView:{
-    // flex:1,
-    // height:height,
-    minHeight:height*0.5
-  }
 });
 
 export default Home;
