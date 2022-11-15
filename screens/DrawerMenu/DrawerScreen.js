@@ -23,18 +23,20 @@ import color from "../../contains/color";
 import Icon from "react-native-vector-icons/AntDesign";
 import Icon1 from "react-native-vector-icons/Feather";
 import BusinessMainScreen from "./BusinessMainScreen";
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
+const queryClient = new QueryClient()
 const Drawer = createDrawerNavigator();
 
 const DrawerScreen = () => {
-  
+
   function CustomDrawerContent({ navigation, progress, route, ...rest }) {
     // const translateX = Animated.interpolateNode(progress, {
     //     inputRange: [0, 1],
     //     outputRange: [30, 0],
     // });
     // console.time('doSomething')
-    
+
     const [open, setOpen] = useState({
       openQuotation: false,
       openDOM: false,
@@ -359,25 +361,27 @@ const DrawerScreen = () => {
       </DrawerContentScrollView >
     );
   }
-  
+
 
   return (
     <NavigationContainer>
-      <Drawer.Navigator
-        drawerContent={(props) => <CustomDrawerContent {...props} />}
-      >
-        <Drawer.Screen name="ScreenFCL" component={ScreenFCL} />
-        <Drawer.Screen name="Nghiệp Vụ" component={BusinessMainScreen} />
-        <Drawer.Screen name="Add" component={Add} />
-        <Drawer.Screen name="ScreenLog" component={ScreenLog} />
-        <Drawer.Screen name="ScreenAIR" component={ScreenAIR} />
-        <Drawer.Screen name="ScreenLCL" component={ScreenLCL} />
-        <Drawer.Screen name="ScreenImport" component={ScreenImport} />
-        <Drawer.Screen name="ScreenImportLCL" component={ScreenImportLCL} />
-        <Drawer.Screen name="ScreenCy" component={ScreenCy} />
-        <Drawer.Screen name="ScreenDoor" component={ScreenDoor} />
-        <Drawer.Screen name="ScreenTruck" component={ScreenTruck} />
-      </Drawer.Navigator>
+      <QueryClientProvider client={queryClient}>
+        <Drawer.Navigator
+          drawerContent={(props) => <CustomDrawerContent {...props} />}
+        >
+          <Drawer.Screen name="ScreenFCL" component={ScreenFCL} />
+          <Drawer.Screen name="Nghiệp Vụ" component={BusinessMainScreen} />
+          <Drawer.Screen name="Add" component={Add} />
+          <Drawer.Screen name="ScreenLog" component={ScreenLog} />
+          <Drawer.Screen name="ScreenAIR" component={ScreenAIR} />
+          <Drawer.Screen name="ScreenLCL" component={ScreenLCL} />
+          <Drawer.Screen name="ScreenImport" component={ScreenImport} />
+          <Drawer.Screen name="ScreenImportLCL" component={ScreenImportLCL} />
+          <Drawer.Screen name="ScreenCy" component={ScreenCy} />
+          <Drawer.Screen name="ScreenDoor" component={ScreenDoor} />
+          <Drawer.Screen name="ScreenTruck" component={ScreenTruck} />
+        </Drawer.Navigator>
+      </QueryClientProvider>
     </NavigationContainer>
   );
 };

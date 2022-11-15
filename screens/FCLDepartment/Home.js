@@ -33,12 +33,18 @@ import RadioForm, {
 import { Dropdown } from "react-native-element-dropdown";
 import client from "../../api/client";
 import { useIsFocused } from '@react-navigation/native'
+import { useQuery } from '@tanstack/react-query'
+import { useFocusEffect } from '@react-navigation/native'
 
 const { width, height } = Dimensions.get("window");
 
 const wait = (timeout) => {
   return new Promise(resolve => setTimeout(resolve, timeout));
 }
+// dem 5s
+var count = () => { setInterval(() => { console.log("count") }, 5000) }
+// console.log("count1",count())
+
 const Home = ({ navigation, route }) => {
   const [data1, setData1] = useState([]);
 
@@ -54,6 +60,17 @@ const Home = ({ navigation, route }) => {
     type: "",
   });
   const [refreshing, setRefreshing] = useState(false)
+  const [searchText, setSearchText] = useState("");
+
+  useEffect(() => {
+    // const dem = setInterval(() => {
+    //   var dem1 = 0
+    //   console.log(`dem`, dem1);
+      // dem1++
+      getData()
+    // }, 7000)
+    // return () => clearInterval(dem)
+  }, []);
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
@@ -61,36 +78,29 @@ const Home = ({ navigation, route }) => {
     wait(500).then(() => setRefreshing(false));
   }, [])
 
-  useEffect(() => {
-    client
+  const getData = async () => {
+    const { data } = await client
       .get("/getAll")
       .then((res) => {
-        setData1(res.data.quotations);
+        setData1(res.data);
+        return res;
       })
       .catch((err) => {
         console.log(err);
       });
-  }, [isFocused]);
+    return data
+  }
 
-  const isFocused = useIsFocused()
-  // useEffect(() => {
-  //   isFocused
-  // }, [isFocused])
 
-  const [searchText, setSearchText] = useState("");
+
+  const { isLoading, error, data } = useQuery({ queryKey: ['getFCL'], queryFn: getData })
+  if (isLoading) return console.log('Loading...')
+
+  if (error) return console.log('An error has occurred: ' + error.message)
+  console.log('matday', data);
+  // const isFocused = useIsFocused()
+
   // console.log(data1.container);
-  const ListItem = ({ item }) => {
-    // console.log('month', item.month);
-    return (
-      <TouchableOpacity onPress={() => navigation.navigate("Add", item)}>
-        <Text style={{ marginLeft: 10, fontSize: 20 }}>
-          Tháng: {item.month}
-        </Text>
-        <Text style={styles.item}>Cảng đi: {item.pol}</Text>
-        <Text style={styles.item}>Cảng đến: {item.pod}</Text>
-      </TouchableOpacity>
-    );
-  };
 
   const renderItem = ({ item }) => (
     <TouchableOpacity
@@ -161,8 +171,9 @@ const Home = ({ navigation, route }) => {
     return result;
   };
 
+  // tam thoi cmt
   const filteredFCL = () =>
-    data1.filter(
+    data.filter(
       (eachFcl) =>
         eachFcl.month.toLowerCase().includes(fclInfo.month.toLowerCase()) &&
         eachFcl.continent
@@ -404,7 +415,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     padding: 10,
-    height:height*0.47
+    height: height * 0.47
   },
   list: {
     flex: 1,

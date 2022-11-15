@@ -9,7 +9,7 @@ import {
   TextInput,
   Button,
   RefreshControl
-  } from "react-native";
+} from "react-native";
 import React, { useEffect, useState, useCallback } from "react";
 import { Dropdown } from "react-native-element-dropdown";
 import color from "../../contains/color";
@@ -21,6 +21,7 @@ import {
   ShippingType,
   Year1,
 } from "../../contains/constant";
+// import { useQuery } from '@tanstack/react-query'
 
 const wait = (timeout) => {
   return new Promise(resolve => setTimeout(resolve, timeout));
@@ -48,8 +49,8 @@ const HomeLog = ({ navigation }) => {
     wait(500).then(() => setRefreshing(false));
   }, [])
 
-  useEffect(() => {
-    clientLog
+  const getData = async () => {
+    await clientLog
       .get("/getAll")
       .then((res) => {
         setData(res.data.phongLogs);
@@ -57,7 +58,17 @@ const HomeLog = ({ navigation }) => {
       .catch((err) => {
         console.log(err);
       });
+  }
+  useEffect(() => {
+    getData()
   }, []);
+
+  // const getLogQuery = useQuery(['getLogQuery'], getData, {
+  //   refetchOnWindowFocus: false,
+  //   cacheTime: 0,
+  // })
+  // const { dataaaa } = getLogQuery
+  // console.log('logData', dataaaa);
 
   const checkPriceSearch = (eachLog) => {
     let result = false;
@@ -147,68 +158,68 @@ const HomeLog = ({ navigation }) => {
           />
         }
       >
-      <View style={{ flexDirection: "row", alignItems: "center" }}>
-        <Icon
-          name="search"
-          size={28}
-          color="white"
-          style={{ position: "absolute", top: 20, left: 30, zIndex: 1000 }}
-        />
-        <TextInput
-          style={styles.styleSearch}
-          placeholder="Tìm kiếm"
-          placeholderTextColor={"white"}
-          underlineColorAndroid="transparent"
-          onChangeText={(text) => setSearchText(text)}
-        />
-      </View>
-      <View style={{ flexDirection: "row", minHeight: 100 }}>
-        <View style={styles.dropMenu}>
-          <Text style={styles.label}>Chọn Tháng</Text>
-          <View style={styles.containerDropDown}>
-            <Dropdown
-              style={[styles.dropdown]}
-              placeholderStyle={styles.placeholderStyle}
-              selectedTextStyle={styles.selectedTextStyle}
-              inputSearchStyle={styles.inputSearchStyle}
-              iconStyle={styles.iconStyle}
-              data={Month1}
-              search
-              maxHeight={300}
-              labelField="label"
-              valueField="value"
-              searchPlaceholder="Search..."
-              value={value}
-              onChange={(value) => {
-                setLogInfo({ ...logInfo, month: value.value });
-              }}
-            />
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <Icon
+            name="search"
+            size={28}
+            color="white"
+            style={{ position: "absolute", top: 20, left: 30, zIndex: 1000 }}
+          />
+          <TextInput
+            style={styles.styleSearch}
+            placeholder="Tìm kiếm"
+            placeholderTextColor={"white"}
+            underlineColorAndroid="transparent"
+            onChangeText={(text) => setSearchText(text)}
+          />
+        </View>
+        <View style={{ flexDirection: "row", minHeight: 100 }}>
+          <View style={styles.dropMenu}>
+            <Text style={styles.label}>Chọn Tháng</Text>
+            <View style={styles.containerDropDown}>
+              <Dropdown
+                style={[styles.dropdown]}
+                placeholderStyle={styles.placeholderStyle}
+                selectedTextStyle={styles.selectedTextStyle}
+                inputSearchStyle={styles.inputSearchStyle}
+                iconStyle={styles.iconStyle}
+                data={Month1}
+                search
+                maxHeight={300}
+                labelField="label"
+                valueField="value"
+                searchPlaceholder="Search..."
+                value={value}
+                onChange={(value) => {
+                  setLogInfo({ ...logInfo, month: value.value });
+                }}
+              />
+            </View>
+          </View>
+          <View style={styles.dropMenu}>
+            <Text style={styles.label}>Loại Vận Chuyển</Text>
+            <View style={styles.containerDropDown}>
+              <Dropdown
+                style={[styles.dropdown]}
+                placeholderStyle={styles.placeholderStyle}
+                selectedTextStyle={styles.selectedTextStyle}
+                inputSearchStyle={styles.inputSearchStyle}
+                iconStyle={styles.iconStyle}
+                data={ShippingType}
+                search
+                maxHeight={300}
+                labelField="label"
+                valueField="value"
+                searchPlaceholder="Search..."
+                value={value}
+                onChange={(value) => {
+                  setLogInfo({ ...logInfo, freight: value.value });
+                }}
+              />
+            </View>
           </View>
         </View>
-        <View style={styles.dropMenu}>
-          <Text style={styles.label}>Loại Vận Chuyển</Text>
-          <View style={styles.containerDropDown}>
-            <Dropdown
-              style={[styles.dropdown]}
-              placeholderStyle={styles.placeholderStyle}
-              selectedTextStyle={styles.selectedTextStyle}
-              inputSearchStyle={styles.inputSearchStyle}
-              iconStyle={styles.iconStyle}
-              data={ShippingType}
-              search
-              maxHeight={300}
-              labelField="label"
-              valueField="value"
-              searchPlaceholder="Search..."
-              value={value}
-              onChange={(value) => {
-                setLogInfo({ ...logInfo, freight: value.value });
-              }}
-            />
-          </View>
-        </View>
-      </View>
-      {/* <View style={{ flexDirection: "row", minHeight: 100 }}>
+        {/* <View style={{ flexDirection: "row", minHeight: 100 }}>
         <View style={styles.dropMenu}>
           <Text style={styles.label}>Chọn Năm</Text>
           <View style={styles.containerDropDown}>
@@ -254,43 +265,43 @@ const HomeLog = ({ navigation }) => {
           </View>
         </View>
       </View> */}
-      <View style={{ flex: 5 }}>
-        <View style={styles.displayData}>
-          {filteredLog().length > 0 ? (
-            <FlatList
-              style={styles.list}
-              data={filteredLog()}
-              renderItem={renderItem}
-              keyExtractor={(item) => item._id}
-            />
-          ) : (
-            <View
-              style={{
-                flex: 1,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Text style={{ color: "black", fontSize: 20 }}>
-                Không có dữ liệu có tên là: {searchText}
-              </Text>
-            </View>
-          )}
-        </View>
-      </View>
-      <View style={{ flex: 0.5, marginTop: -10, marginBottom: 20 }}>
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate("AddLog", {
-              logInfo: logInfo,
-            });
-          }}
-        >
-          <View style={styles.iconWrapper}>
-            <Text style={styles.icon}>+</Text>
+        <View style={{ flex: 5 }}>
+          <View style={styles.displayData}>
+            {filteredLog().length > 0 ? (
+              <FlatList
+                style={styles.list}
+                data={filteredLog()}
+                renderItem={renderItem}
+                keyExtractor={(item) => item._id}
+              />
+            ) : (
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Text style={{ color: "black", fontSize: 20 }}>
+                  Không có dữ liệu có tên là: {searchText}
+                </Text>
+              </View>
+            )}
           </View>
-        </TouchableOpacity>
-      </View>
+        </View>
+        <View style={{ flex: 0.5, marginTop: -10, marginBottom: 20 }}>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("AddLog", {
+                logInfo: logInfo,
+              });
+            }}
+          >
+            <View style={styles.iconWrapper}>
+              <Text style={styles.icon}>+</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
       </ScrollView>
     </View>
   );

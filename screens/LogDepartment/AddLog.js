@@ -85,7 +85,7 @@ const AddLog = ({ route, navigation }) => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
-      aspect: [4, 3],
+      // aspect: [4, 3],
       quality: 1,
     });
 
@@ -97,7 +97,7 @@ const AddLog = ({ route, navigation }) => {
     }
   };
 
-  // console.log(logInfo.image);
+  console.log(logInfo.image);
 
   const isValidForm = () => {
     if (!isValidObjectField(logInfo))
@@ -108,10 +108,10 @@ const AddLog = ({ route, navigation }) => {
   const submitForm = async () => {
     // if (isValidForm()) {
     try {
-      const res = await clientLog.post("/create", { ...logInfo });
+      const res = await clientLog.post("/create", { ...logInfo })
       if (res.data.success) {
         Alert.alert("Thêm Thành Công");
-        navigation.goBack();
+        // navigation.goBack();
       }
     } catch (error) {
       console.log(error.message);
@@ -265,8 +265,8 @@ const AddLog = ({ route, navigation }) => {
           />
           <Text style={{ fontSize: 20, fontWeight: "600" }}>Chọn hình ảnh</Text>
         </TouchableOpacity>
-        {imageGallery && (
-          <Image style={styles.styleImage} source={{ uri: imageGallery }}/>
+        {logInfo.image && (
+          <Image style={styles.styleImage} source={{ uri: logInfo.image }} />
         )}
         <View
           style={{
