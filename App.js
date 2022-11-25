@@ -16,6 +16,8 @@ import ScreenImportLCL from "./screens/ImportDeparment/ImportLCL/ScreenImportLCL
 import BusinessMainScreen from "./screens/DrawerMenu/BusinessMainScreen";
 import TestPicker from "./screens/LogDepartment/booking/TestPicker";
 import AddPriceSell from "./screens/LogDepartment/profitreport/AddPriceSell";
+import ScreenAdvance from "./screens/LogDepartment/advance/ScreenAdvance";
+import ScreenBooking from "./screens/LogDepartment/booking/ScreenBooking";
 // import ScreenAIR from "./screens/AIRDepartment/ScreenAIR";
 
 const Stack = createStackNavigator();
@@ -32,7 +34,9 @@ export default function App() {
       {/* <ScreenDoor/> */}
       {/* <ScreenAIR/> */}
       {/* <DrawerScreen /> */}
-      <AddPriceSell />
+      <ScreenAdvance />
+      {/* <ScreenBooking /> */}
+      {/* <AddPriceSell /> */}
       {/* <ScreenImport /> */}
       {/* <ScreenImportLCL/> */}
       {/* <BusinessMainScreen /> */}

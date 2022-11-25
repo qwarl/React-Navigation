@@ -230,11 +230,7 @@ const AddPriceSell = ({ navigation }) => {
             Number(sellInfo.unitprice) * (sellInfo.vat / 100)
           }`}
         />
-        <FormInput
-          placeholder="Total (VND)"
-          label="Total (VND)"
-          value={totalVND(sellInfo.)}
-        />
+        <FormInput placeholder="Total (VND)" label="Total (VND)" value={""} />
         <FormInput
           placeholder="Số Hóa Đơn"
           label="Số Hóa Đơn"
