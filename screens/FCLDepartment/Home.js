@@ -7,7 +7,9 @@ import {
   FlatList,
   TextInput,
   Button,
-  RefreshControl
+  RefreshControl,
+  ScrollView,
+  Alert
 } from "react-native";
 import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
@@ -31,16 +33,14 @@ import RadioForm, {
 import { Dropdown } from "react-native-element-dropdown";
 import client from "../../api/client";
 import { useIsFocused } from '@react-navigation/native'
-import * as Updates from "expo-updates"
 
 const { width, height } = Dimensions.get("window");
 
+const wait = (timeout) => {
+  return new Promise(resolve => setTimeout(resolve, timeout));
+}
 const Home = ({ navigation, route }) => {
   const [data1, setData1] = useState([]);
-
-  // console.log('data1', data1[0].valid);
-  // console.log('data2', data1[0].valid.toString().length);
-  // console.log('data1', data1[0].valid.slice(data1[0].valid.toString().length - 4)==fclInfo.valid);
 
   const [value, setValue] = useState(null);
 
@@ -54,16 +54,23 @@ const Home = ({ navigation, route }) => {
     type: "",
   });
 
-  // function getData() {
-  //   const url = `/api/quotations/getAll`;
-  //   axios.get(ipAddress + url).then((res) => {
-  //     setData1(res["data"].quotations);
-  //   });
-  // }
+  const [refreshing, setRefreshing] = useState(false)
 
-  // useEffect(() => {
-  //   getData();
-  // }, []);
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    navigation.replace('Home')
+    // alert('refresh')
+    // console.log('refreshed')
+    wait(500).then(() => setRefreshing(false));
+  }, [])
+
+  function getData() {
+    const url = `/api/quotations/getAll`;
+    axios.get(ipAddress + url).then((res) => {
+      setData1(res["data"].quotations);
+    });
+  }
+  const isFocused = useIsFocused()
 
   useEffect(() => {
     client
@@ -173,51 +180,70 @@ const Home = ({ navigation, route }) => {
         eachFcl.valid.slice(eachFcl.valid.length - 4).includes(fclInfo.year)
     );
 
-  function clearFilter() {
-    // setFCLInfo({ ...fclInfo, month: '', continent: '', type: '' })
-    // setSearchText('')
-    // RNRestart.Restart()
-    // DevSettings.reload()
-    // await Updates.reloadAsync()
-    // Updates.reloadAsync()
-    navigation.reset({ index: 0, routes: [{ name: 'ScreenFCL' }] })
-    // setTimeout(Updates.reloadAsync, 1000)
-  }
-
   return (
     <View style={{ flex: 1, backgroundColor: "white" }}>
-      <View style={{ flexDirection: "row", alignItems: "center" }}>
-        <Icon
-          name="search"
-          size={28}
-          color="white"
-          style={{ position: "absolute", top: 20, left: 30, zIndex: 1000 }}
-        />
-        <TextInput
-          style={styles.styleSearch}
-          placeholder="Tìm kiếm"
-          placeholderTextColor={"white"}
-          underlineColorAndroid="transparent"
-          onChangeText={(text) => setSearchText(text)}
-        />
-      </View>
-      <View
-        style={{
-          justifyContent: "space-between",
-          flexDirection: "row",
-          marginVertical: 10,
-        }}
+      <ScrollView
+        // contentContainerStyle={styles.scrollView}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+          />
+        }
       >
-        <View style={styles.dropMenu}>
-          <Text style={styles.label}>Chọn Tháng</Text>
-          <View style={styles.containerDropDown}>
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <Icon
+            name="search"
+            size={28}
+            color="white"
+            style={{ position: "absolute", top: 20, left: 30, zIndex: 1000 }}
+          />
+          <TextInput
+            style={styles.styleSearch}
+            placeholder="Tìm kiếm"
+            placeholderTextColor={"white"}
+            underlineColorAndroid="transparent"
+            onChangeText={(text) => setSearchText(text)}
+          />
+        </View>
+        <View
+          style={{
+            justifyContent: "space-between",
+            flexDirection: "row",
+            marginVertical: 10,
+          }}
+        >
+          <View style={styles.dropMenu}>
+            <Text style={styles.label}>Chọn Tháng</Text>
+            <View style={styles.containerDropDown}>
+              <Dropdown
+                style={[styles.dropdown]}
+                placeholderStyle={styles.placeholderStyle}
+                selectedTextStyle={styles.selectedTextStyle}
+                inputSearchStyle={styles.inputSearchStyle}
+                iconStyle={styles.iconStyle}
+                data={Month1}
+                search
+                maxHeight={300}
+                labelField="label"
+                valueField="value"
+                searchPlaceholder="Search..."
+                value={value}
+                onChange={(value) => {
+                  setFCLInfo({ ...fclInfo, month: value.value });
+                }}
+              />
+            </View>
+          </View>
+          <View style={styles.dropMenu}>
+            <Text style={styles.label}>Chọn Châu</Text>
             <Dropdown
               style={[styles.dropdown]}
               placeholderStyle={styles.placeholderStyle}
               selectedTextStyle={styles.selectedTextStyle}
               inputSearchStyle={styles.inputSearchStyle}
               iconStyle={styles.iconStyle}
-              data={Month1}
+              data={Continent}
               search
               maxHeight={300}
               labelField="label"
@@ -225,89 +251,67 @@ const Home = ({ navigation, route }) => {
               searchPlaceholder="Search..."
               value={value}
               onChange={(value) => {
-                setFCLInfo({ ...fclInfo, month: value.value });
+                setFCLInfo({ ...fclInfo, continent: value.value });
               }}
             />
           </View>
         </View>
-        <View style={styles.dropMenu}>
-          <Text style={styles.label}>Chọn Châu</Text>
-          <Dropdown
-            style={[styles.dropdown]}
-            placeholderStyle={styles.placeholderStyle}
-            selectedTextStyle={styles.selectedTextStyle}
-            inputSearchStyle={styles.inputSearchStyle}
-            iconStyle={styles.iconStyle}
-            data={Continent}
-            search
-            maxHeight={300}
-            labelField="label"
-            valueField="value"
-            searchPlaceholder="Search..."
-            value={value}
-            onChange={(value) => {
-              setFCLInfo({ ...fclInfo, continent: value.value });
-            }}
+        <View>
+          <RadioForm
+            formHorizontal={true}
+            style={{ marginLeft: 20, marginVertical: 10 }}
+            labelStyle={{ fontSize: 20, marginRight: 15 }}
+            buttonSize={11}
+            buttonColor={"black"}
+            radio_props={ContainerHome}
+            initial={-1}
+            onPress={(val) =>
+              setFCLInfo({ ...fclInfo, type: ContainerHome[val].label })
+            }
           />
         </View>
-      </View>
-      <View>
-        <RadioForm
-          formHorizontal={true}
-          style={{ marginLeft: 20, marginVertical: 10 }}
-          labelStyle={{ fontSize: 20, marginRight: 15 }}
-          buttonSize={11}
-          buttonColor={"black"}
-          radio_props={ContainerHome}
-          initial={-1}
-          onPress={(val) =>
-            setFCLInfo({ ...fclInfo, type: ContainerHome[val].label })
-          }
-        />
-        <Button title='Clear' onPress={clearFilter} />
-        {/* <Button title='Clear' onPress={navigation.reset('Home')} /> */}
-      </View>
 
-      <View style={{ flex: 7 }}>
-        <View style={styles.displayData}>
-          {filteredFCL().length > 0 ? (
-            <FlatList
-              style={styles.list}
-              data={filteredFCL()}
-              renderItem={renderItem}
-              keyExtractor={(item) => item._id}
-            />
-          ) : (
-            <View
-              style={{
-                flex: 1,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Text style={{ color: "black", fontSize: 20 }}>
-                Không có dữ liệu có tên là: {searchText}
-              </Text>
-            </View>
-          )}
+        <View style={{ flex: 7 }}>
+          <View style={styles.displayData}>
+            {filteredFCL().length > 0 ? (
+              <FlatList
+                style={styles.list}
+                data={filteredFCL()}
+                renderItem={renderItem}
+                keyExtractor={(item) => item._id}
+              />
+            ) : (
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Text style={{ color: "black", fontSize: 20 }}>
+                  Không có dữ liệu có tên là: {searchText}
+                </Text>
+              </View>
+            )}
+          </View>
         </View>
-      </View>
-      <View
-        style={{
-          flex: 0.5,
-          marginBottom: 30,
-        }}
-      >
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate("Add");
+        <View
+          style={{
+            flex: 0.5,
+            marginBottom: 30,
           }}
         >
-          <View style={styles.iconWrapper}>
-            <Text style={styles.icon}>+</Text>
-          </View>
-        </TouchableOpacity>
-      </View>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("Add");
+            }}
+          >
+            <View style={styles.iconWrapper}>
+              <Text style={styles.icon}>+</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
     </View>
   );
 };
@@ -395,6 +399,7 @@ const styles = StyleSheet.create({
   list: {
     flex: 1,
     padding: 8,
+    height: height * 0.46,
   },
   dropdown: {
     height: 50,
@@ -424,6 +429,7 @@ const styles = StyleSheet.create({
     fontWeight: "500",
     color: "#0176E4",
     textDecorationLine: "underline",
+    // overflow:'scroll'
   },
 });
 

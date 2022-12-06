@@ -7,6 +7,7 @@ import DetailBooking from "./DetailBooking";
 import AddBookingLog from "./AddBookingLog";
 import UpdateBooking from "./UpdateBooking";
 import NewAddBooking from "./NewAddBooking";
+import ProfitReport from "./ProfitReport";
 const Stack = createStackNavigator();
 
 const ScreenBooking = () => {
@@ -35,6 +36,11 @@ const ScreenBooking = () => {
       <Stack.Screen
         name="NewAddBooking"
         component={NewAddBooking}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="ProfitReport"
+        component={ProfitReport}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

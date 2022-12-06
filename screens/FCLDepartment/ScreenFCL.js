@@ -1,4 +1,5 @@
 import React from "react";
+import { Button, TouchableOpacity } from "react-native";
 import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -12,7 +13,20 @@ import AddFCLRequiteSale from "./checkprice/AddFCLRequiteSale";
 
 const Stack = createStackNavigator();
 
-export default function Fcl() {
+export default function Fcl({ navigation }) {
+  // reload the page when the user click on the icon
+  function clearFilter() {
+    navigation.reset({ index: 0, routes: [{ name: 'Home' }] })
+  }
+  //add icon
+  function LogoTitle() {
+    return (
+      <TouchableOpacity onPress={clearFilter}>
+        <FontAwesome5 icon="far fa-redo" />
+      </TouchableOpacity>
+    );
+  }
+
   return (
     // <NavigationContainer>
     <Stack.Navigator>

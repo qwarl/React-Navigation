@@ -13,7 +13,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { Dropdown } from "react-native-element-dropdown";
 import color from "../../../contains/color";
-import SelectList from "react-native-dropdown-select-list";
+
 import {
   Continent,
   Month,

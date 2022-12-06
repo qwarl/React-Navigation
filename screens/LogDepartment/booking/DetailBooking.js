@@ -168,7 +168,7 @@ const DetailBooking = ({ navigation, route }) => {
           <TouchableOpacity
             style={[styles.buttonUpdate]}
             onPress={() => {
-              navigation.replace("UpdateBooking", {
+              navigation.replace("ProfitReport", {
                 data: data,
               });
             }}

@@ -27,7 +27,7 @@ import {
 import axios from "axios";
 import client from "../../api/client";
 import Icon from "react-native-vector-icons/FontAwesome";
-
+import SelectList from 'react-native-dropdown-select-list'
 
 const Add = ({ navigation, route }) => {
 	const [date, setDate] = useState(new Date());

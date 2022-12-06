@@ -233,7 +233,7 @@ const AddPriceSell = ({ navigation }) => {
         <FormInput
           placeholder="Total (VND)"
           label="Total (VND)"
-          value={totalVND(sellInfo.)}
+          value={totalVND(sellInfo.totalvnd)}
         />
         <FormInput
           placeholder="Số Hóa Đơn"

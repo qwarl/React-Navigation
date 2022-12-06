@@ -7,8 +7,10 @@ import {
   FlatList,
   TextInput,
   Button,
+  ScrollView,
+  RefreshControl
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import color from "../../../contains/color";
 import Icon from "react-native-vector-icons/FontAwesome";
 import RadioForm, {
@@ -27,6 +29,9 @@ import {
 } from "../../../contains/constant";
 import clientImport from "../../../api/clientImport";
 
+const wait = (timeout) => {
+  return new Promise(resolve => setTimeout(resolve, timeout));
+}
 const HomeImport = ({ navigation }) => {
   const [importInfo, setImportInfo] = useState({
     month: "",
@@ -38,6 +43,15 @@ const HomeImport = ({ navigation }) => {
   const [value, setValue] = useState(null);
   const [data, setData] = useState([]);
   const [searchText, setSearchText] = useState("");
+  const [refreshing, setRefreshing] = useState(false)
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    navigation.replace('HomeTabImport')
+    // alert('refresh')
+    // console.log('refreshed')
+    wait(500).then(() => setRefreshing(false));
+  }, [])
 
   // useEffect(() => {
   //   data.map((item) => console.log(item.shippingtype));
@@ -96,17 +110,6 @@ const HomeImport = ({ navigation }) => {
       // && checkPriceSearch(eachLog)
     );
 
-    function clearFilter() {
-      // setFCLInfo({ ...fclInfo, month: '', continent: '', type: '' })
-      // setSearchText('')
-      // RNRestart.Restart()
-      // DevSettings.reload()
-      // await Updates.reloadAsync()
-      // Updates.reloadAsync()
-      navigation.reset({ index: 0, routes: [{ name: 'ScreenImport' }] })
-      // setTimeout(Updates.reloadAsync, 1000)
-    }
-
   const renderItem = ({ item }) => (
     <TouchableOpacity
       onPress={() => {
@@ -144,37 +147,67 @@ const HomeImport = ({ navigation }) => {
   );
   return (
     <View style={{ flex: 1, backgroundColor: "white" }}>
-      <View style={{ flexDirection: "row", alignItems: "center" }}>
-        <Icon
-          name="search"
-          size={28}
-          color="white"
-          style={{ position: "absolute", top: 20, left: 30, zIndex: 1000 }}
-        />
-        <TextInput
-          style={styles.styleSearch}
-          placeholder="Tìm kiếm"
-          placeholderTextColor={"white"}
-          underlineColorAndroid="transparent"
-          onChangeText={(text) => setSearchText(text)}
-        />
-      </View>
-      <View
-        style={{
-          justifyContent: "space-between",
-          flexDirection: "row",
-        }}
+      <ScrollView
+        // contentContainerStyle={styles.scrollView}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+          />
+        }
       >
-        <View style={styles.dropMenu}>
-          <Text style={styles.label}>Chọn Tháng</Text>
-          <View style={styles.containerDropDown}>
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <Icon
+            name="search"
+            size={28}
+            color="white"
+            style={{ position: "absolute", top: 20, left: 30, zIndex: 1000 }}
+          />
+          <TextInput
+            style={styles.styleSearch}
+            placeholder="Tìm kiếm"
+            placeholderTextColor={"white"}
+            underlineColorAndroid="transparent"
+            onChangeText={(text) => setSearchText(text)}
+          />
+        </View>
+        <View
+          style={{
+            justifyContent: "space-between",
+            flexDirection: "row",
+          }}
+        >
+          <View style={styles.dropMenu}>
+            <Text style={styles.label}>Chọn Tháng</Text>
+            <View style={styles.containerDropDown}>
+              <Dropdown
+                style={[styles.dropdown]}
+                placeholderStyle={styles.placeholderStyle}
+                selectedTextStyle={styles.selectedTextStyle}
+                inputSearchStyle={styles.inputSearchStyle}
+                iconStyle={styles.iconStyle}
+                data={Month1}
+                search
+                maxHeight={300}
+                labelField="label"
+                valueField="value"
+                searchPlaceholder="Search..."
+                value={value}
+                onChange={(value) => {
+                  setImportInfo({ ...importInfo, month: value.value });
+                }}
+              />
+            </View>
+          </View>
+          <View style={styles.dropMenu}>
+            <Text style={styles.label}>Chọn Châu</Text>
             <Dropdown
               style={[styles.dropdown]}
               placeholderStyle={styles.placeholderStyle}
               selectedTextStyle={styles.selectedTextStyle}
               inputSearchStyle={styles.inputSearchStyle}
               iconStyle={styles.iconStyle}
-              data={Month1}
+              data={Continent}
               search
               maxHeight={300}
               labelField="label"
@@ -182,134 +215,113 @@ const HomeImport = ({ navigation }) => {
               searchPlaceholder="Search..."
               value={value}
               onChange={(value) => {
-                setImportInfo({ ...importInfo, month: value.value });
+                setImportInfo({ ...importInfo, continent: value.value });
               }}
             />
           </View>
         </View>
-        <View style={styles.dropMenu}>
-          <Text style={styles.label}>Chọn Châu</Text>
-          <Dropdown
-            style={[styles.dropdown]}
-            placeholderStyle={styles.placeholderStyle}
-            selectedTextStyle={styles.selectedTextStyle}
-            inputSearchStyle={styles.inputSearchStyle}
-            iconStyle={styles.iconStyle}
-            data={Continent}
-            search
-            maxHeight={300}
-            labelField="label"
-            valueField="value"
-            searchPlaceholder="Search..."
-            value={value}
-            onChange={(value) => {
-              setImportInfo({ ...importInfo, continent: value.value });
-            }}
-          />
-        </View>
-      </View>
-      <View style={{ flexDirection: "row", minHeight: 100 }}>
-        <View style={styles.dropMenu}>
-          <Text style={styles.label}>Chọn Năm</Text>
-          <Dropdown
-            style={[styles.dropdown]}
-            placeholderStyle={styles.placeholderStyle}
-            selectedTextStyle={styles.selectedTextStyle}
-            inputSearchStyle={styles.inputSearchStyle}
-            iconStyle={styles.iconStyle}
-            data={Year1}
-            search
-            maxHeight={300}
-            labelField="label"
-            valueField="value"
-            searchPlaceholder="Search..."
-            value={value}
-            onChange={(value) => {
-              setImportInfo({ ...importInfo, year: value.value });
-            }}
-          />
-        </View>
-        <View style={styles.dropMenu}>
-          <Text style={styles.label}>Khoảng Giá</Text>
-          <Dropdown
-            style={[styles.dropdown]}
-            placeholderStyle={styles.placeholderStyle}
-            selectedTextStyle={styles.selectedTextStyle}
-            inputSearchStyle={styles.inputSearchStyle}
-            iconStyle={styles.iconStyle}
-            data={BetweenPrice1}
-            search
-            maxHeight={300}
-            labelField="label"
-            valueField="value"
-            searchPlaceholder="Search..."
-            value={value}
-            onChange={(value) => {
-              setImportInfo({ ...importInfo, betweenprice: value.value });
-            }}
-          />
-        </View>
-      </View>
-      <View>
-        <RadioForm
-          formHorizontal={true}
-          style={{ marginLeft: 10 }}
-          labelStyle={{ fontSize: 20, marginRight: 8 }}
-          buttonSize={8}
-          buttonColor={"black"}
-          radio_props={ContainerImport}
-          initial={-1}
-          onPress={(val) =>
-            setImportInfo({
-              ...importInfo,
-              container: ContainerImport[val].label,
-            })
-          }
-        />
-        <Button title='Clear' onPress={clearFilter} />
-      </View>
-      <View style={{ flex: 4 }}>
-        <View style={styles.displayData}>
-          {filteredImport().length > 0 ? (
-            <FlatList
-              style={styles.list}
-              data={filteredImport()}
-              renderItem={renderItem}
-              keyExtractor={(item) => item._id}
-            />
-          ) : (
-            <View
-              style={{
-                flex: 1,
-                justifyContent: "center",
-                alignItems: "center",
+        <View style={{ flexDirection: "row", minHeight: 100 }}>
+          <View style={styles.dropMenu}>
+            <Text style={styles.label}>Chọn Năm</Text>
+            <Dropdown
+              style={[styles.dropdown]}
+              placeholderStyle={styles.placeholderStyle}
+              selectedTextStyle={styles.selectedTextStyle}
+              inputSearchStyle={styles.inputSearchStyle}
+              iconStyle={styles.iconStyle}
+              data={Year1}
+              search
+              maxHeight={300}
+              labelField="label"
+              valueField="value"
+              searchPlaceholder="Search..."
+              value={value}
+              onChange={(value) => {
+                setImportInfo({ ...importInfo, year: value.value });
               }}
-            >
-              <Text style={{ color: "black", fontSize: 20 }}>
-                Không có dữ liệu có tên là: {searchText}
-              </Text>
-            </View>
-          )}
+            />
+          </View>
+          <View style={styles.dropMenu}>
+            <Text style={styles.label}>Khoảng Giá</Text>
+            <Dropdown
+              style={[styles.dropdown]}
+              placeholderStyle={styles.placeholderStyle}
+              selectedTextStyle={styles.selectedTextStyle}
+              inputSearchStyle={styles.inputSearchStyle}
+              iconStyle={styles.iconStyle}
+              data={BetweenPrice1}
+              search
+              maxHeight={300}
+              labelField="label"
+              valueField="value"
+              searchPlaceholder="Search..."
+              value={value}
+              onChange={(value) => {
+                setImportInfo({ ...importInfo, betweenprice: value.value });
+              }}
+            />
+          </View>
         </View>
-      </View>
-      <View
-        style={{
-          flex: 0.5,
-          justifyContent: "center",
-          marginTop: -10,
-          marginBottom: 30,
-        }}
-      >
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate("AddImport");
+        <View>
+          <RadioForm
+            formHorizontal={true}
+            style={{ marginLeft: 10 }}
+            labelStyle={{ fontSize: 20, marginRight: 8 }}
+            buttonSize={8}
+            buttonColor={"black"}
+            radio_props={ContainerImport}
+            initial={-1}
+            onPress={(val) =>
+              setImportInfo({
+                ...importInfo,
+                container: ContainerImport[val].label,
+              })
+            }
+          />
+        </View>
+        <View style={{ flex: 4 }}>
+          <View style={styles.displayData}>
+            {filteredImport().length > 0 ? (
+              <FlatList
+                style={styles.list}
+                data={filteredImport()}
+                renderItem={renderItem}
+                keyExtractor={(item) => item._id}
+              />
+            ) : (
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Text style={{ color: "black", fontSize: 20 }}>
+                  Không có dữ liệu có tên là: {searchText}
+                </Text>
+              </View>
+            )}
+          </View>
+        </View>
+        <View
+          style={{
+            flex: 0.5,
+            justifyContent: "center",
+            marginTop: -10,
+            marginBottom: 30,
           }}
         >
-          <View style={styles.iconWrapper}>
-            <Text style={styles.icon}>+</Text>
-          </View>
-        </TouchableOpacity>
-      </View>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("AddImport");
+            }}
+          >
+            <View style={styles.iconWrapper}>
+              <Text style={styles.icon}>+</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
     </View>
   );
 };

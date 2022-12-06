@@ -35,7 +35,8 @@ const HomeBookingLog = ({ navigation }) => {
       .catch((err) => {
         console.log(err);
       });
-  }, [data]);
+  // }, [data]);
+  }, []);
 
   // const checkPriceSearch = (eachLog) => {
   //   let result = false;

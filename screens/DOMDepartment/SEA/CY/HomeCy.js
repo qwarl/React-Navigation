@@ -7,8 +7,9 @@ import {
   ScrollView,
   TextInput,
   Button,
+  RefreshControl
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { Dropdown } from "react-native-element-dropdown";
 import Icon from "react-native-vector-icons/FontAwesome";
 import color from "../../../../contains/color";
@@ -33,6 +34,18 @@ const HomeCy = ({ navigation }) => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchText, setSearchText] = useState("");
+  const [refreshing, setRefreshing] = useState(false)
+
+  const wait = (timeout) => {
+    return new Promise(resolve => setTimeout(resolve, timeout));
+  }
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    navigation.replace('HomeTabCy')
+    // alert('refresh')
+    // console.log('refreshed')
+    wait(500).then(() => setRefreshing(false));
+  }, [])
   //   useEffect(() => {
   //     data.map((item) => console.log(item.shippingtype));
   //   }, []);
@@ -125,153 +138,162 @@ const HomeCy = ({ navigation }) => {
   );
   return (
     <View style={{ flex: 1, backgroundColor: "white" }}>
-      <View style={{ flexDirection: "row", alignItems: "center" }}>
-        <Icon
-          name="search"
-          size={28}
-          color="white"
-          style={{ position: "absolute", top: 20, left: 30, zIndex: 1000 }}
-        />
-        <TextInput
-          style={styles.styleSearch}
-          placeholder="Tìm kiếm"
-          placeholderTextColor={"white"}
-          underlineColorAndroid="transparent"
-          onChangeText={(text) => setSearchText(text)}
-        />
-      </View>
-      <View style={{ flexDirection: "row", minHeight: 100 }}>
-        <View style={styles.dropMenu}>
-          <Text style={styles.label}>Chọn Tháng</Text>
-          <View style={styles.containerDropDown}>
-            <Dropdown
-              style={[styles.dropdown]}
-              placeholderStyle={styles.placeholderStyle}
-              selectedTextStyle={styles.selectedTextStyle}
-              inputSearchStyle={styles.inputSearchStyle}
-              iconStyle={styles.iconStyle}
-              data={Month1}
-              search
-              maxHeight={300}
-              labelField="label"
-              valueField="value"
-              searchPlaceholder="Search..."
-              value={value}
-              onChange={(value) => {
-                setSeaCyInfo({ ...seaCyInfo, month: value.value });
-              }}
-            />
-          </View>
+      <ScrollView
+        // contentContainerStyle={styles.scrollView}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+          />
+        }
+      >
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <Icon
+            name="search"
+            size={28}
+            color="white"
+            style={{ position: "absolute", top: 20, left: 30, zIndex: 1000 }}
+          />
+          <TextInput
+            style={styles.styleSearch}
+            placeholder="Tìm kiếm"
+            placeholderTextColor={"white"}
+            underlineColorAndroid="transparent"
+            onChangeText={(text) => setSearchText(text)}
+          />
         </View>
-        <View style={styles.dropMenu}>
-          <Text style={styles.label}>Chọn Châu</Text>
-          <View style={styles.containerDropDown}>
-            <Dropdown
-              style={[styles.dropdown]}
-              placeholderStyle={styles.placeholderStyle}
-              selectedTextStyle={styles.selectedTextStyle}
-              inputSearchStyle={styles.inputSearchStyle}
-              iconStyle={styles.iconStyle}
-              data={Continent}
-              search
-              maxHeight={300}
-              labelField="label"
-              valueField="value"
-              searchPlaceholder="Search..."
-              value={value}
-              onChange={(value) => {
-                setSeaCyInfo({ ...seaCyInfo, continent: value.value });
-              }}
-            />
-          </View>
-        </View>
-      </View>
-      <View style={{ flexDirection: "row", minHeight: 100 }}>
-        <View style={styles.dropMenu}>
-          <Text style={styles.label}>Chọn Năm</Text>
-          <View style={styles.containerDropDown}>
-            <Dropdown
-              style={[styles.dropdown]}
-              placeholderStyle={styles.placeholderStyle}
-              selectedTextStyle={styles.selectedTextStyle}
-              inputSearchStyle={styles.inputSearchStyle}
-              iconStyle={styles.iconStyle}
-              data={Year1}
-              search
-              maxHeight={300}
-              labelField="label"
-              valueField="value"
-              searchPlaceholder="Search..."
-              value={value}
-              onChange={(value) => {
-                setSeaCyInfo({ ...seaCyInfo, year: value.value });
-              }}
-            />
-          </View>
-        </View>
-        <View style={styles.dropMenu}>
-          <Text style={styles.label}>Loại Vận Chuyển</Text>
-          <View style={styles.containerDropDown}>
-            <Dropdown
-              style={[styles.dropdown]}
-              placeholderStyle={styles.placeholderStyle}
-              selectedTextStyle={styles.selectedTextStyle}
-              inputSearchStyle={styles.inputSearchStyle}
-              iconStyle={styles.iconStyle}
-              data={DomType}
-              search
-              maxHeight={300}
-              labelField="label"
-              valueField="value"
-              searchPlaceholder="Search..."
-              value={value}
-              onChange={(value) => {
-                setSeaCyInfo({ ...seaCyInfo, cytype: value.value });
-              }}
-            />
-          </View>
-        </View>
-      </View>
-      <View>
-        <Button title="Clear" onPress={clearFilter} />
-      </View>
-      <View style={{ flex: 5 }}>
-        <View style={styles.displayData}>
-          {filteredSeaCy().length > 0 ? (
-            <FlatList
-              style={styles.list}
-              data={filteredSeaCy()}
-              renderItem={renderItem}
-              keyExtractor={(item) => item._id}
-            />
-          ) : (
-            <View
-              style={{
-                flex: 1,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Text style={{ color: "black", fontSize: 20 }}>
-                Không có dữ liệu có tên là: {searchText}
-              </Text>
+        <View style={{ flexDirection: "row", minHeight: 100 }}>
+          <View style={styles.dropMenu}>
+            <Text style={styles.label}>Chọn Tháng</Text>
+            <View style={styles.containerDropDown}>
+              <Dropdown
+                style={[styles.dropdown]}
+                placeholderStyle={styles.placeholderStyle}
+                selectedTextStyle={styles.selectedTextStyle}
+                inputSearchStyle={styles.inputSearchStyle}
+                iconStyle={styles.iconStyle}
+                data={Month1}
+                search
+                maxHeight={300}
+                labelField="label"
+                valueField="value"
+                searchPlaceholder="Search..."
+                value={value}
+                onChange={(value) => {
+                  setSeaCyInfo({ ...seaCyInfo, month: value.value });
+                }}
+              />
             </View>
-          )}
-        </View>
-      </View>
-      <View style={{ flex: 0.5, marginBottom: 20 }}>
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate("AddCy", {
-              seaCyInfo: seaCyInfo,
-            });
-          }}
-        >
-          <View style={styles.iconWrapper}>
-            <Text style={styles.icon}>+</Text>
           </View>
-        </TouchableOpacity>
-      </View>
+          <View style={styles.dropMenu}>
+            <Text style={styles.label}>Chọn Châu</Text>
+            <View style={styles.containerDropDown}>
+              <Dropdown
+                style={[styles.dropdown]}
+                placeholderStyle={styles.placeholderStyle}
+                selectedTextStyle={styles.selectedTextStyle}
+                inputSearchStyle={styles.inputSearchStyle}
+                iconStyle={styles.iconStyle}
+                data={Continent}
+                search
+                maxHeight={300}
+                labelField="label"
+                valueField="value"
+                searchPlaceholder="Search..."
+                value={value}
+                onChange={(value) => {
+                  setSeaCyInfo({ ...seaCyInfo, continent: value.value });
+                }}
+              />
+            </View>
+          </View>
+        </View>
+        <View style={{ flexDirection: "row", minHeight: 100 }}>
+          <View style={styles.dropMenu}>
+            <Text style={styles.label}>Chọn Năm</Text>
+            <View style={styles.containerDropDown}>
+              <Dropdown
+                style={[styles.dropdown]}
+                placeholderStyle={styles.placeholderStyle}
+                selectedTextStyle={styles.selectedTextStyle}
+                inputSearchStyle={styles.inputSearchStyle}
+                iconStyle={styles.iconStyle}
+                data={Year1}
+                search
+                maxHeight={300}
+                labelField="label"
+                valueField="value"
+                searchPlaceholder="Search..."
+                value={value}
+                onChange={(value) => {
+                  setSeaCyInfo({ ...seaCyInfo, year: value.value });
+                }}
+              />
+            </View>
+          </View>
+          <View style={styles.dropMenu}>
+            <Text style={styles.label}>Loại Vận Chuyển</Text>
+            <View style={styles.containerDropDown}>
+              <Dropdown
+                style={[styles.dropdown]}
+                placeholderStyle={styles.placeholderStyle}
+                selectedTextStyle={styles.selectedTextStyle}
+                inputSearchStyle={styles.inputSearchStyle}
+                iconStyle={styles.iconStyle}
+                data={DomType}
+                search
+                maxHeight={300}
+                labelField="label"
+                valueField="value"
+                searchPlaceholder="Search..."
+                value={value}
+                onChange={(value) => {
+                  setSeaCyInfo({ ...seaCyInfo, cytype: value.value });
+                }}
+              />
+            </View>
+          </View>
+        </View>
+        <View>
+        </View>
+        <View style={{ flex: 5 }}>
+          <View style={styles.displayData}>
+            {filteredSeaCy().length > 0 ? (
+              <FlatList
+                style={styles.list}
+                data={filteredSeaCy()}
+                renderItem={renderItem}
+                keyExtractor={(item) => item._id}
+              />
+            ) : (
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Text style={{ color: "black", fontSize: 20 }}>
+                  Không có dữ liệu có tên là: {searchText}
+                </Text>
+              </View>
+            )}
+          </View>
+        </View>
+        <View style={{ flex: 0.5, marginBottom: 20 }}>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("AddCy", {
+                seaCyInfo: seaCyInfo,
+              });
+            }}
+          >
+            <View style={styles.iconWrapper}>
+              <Text style={styles.icon}>+</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
     </View>
   );
 };

@@ -7,8 +7,9 @@ import {
   ScrollView,
   TextInput,
   Button,
-} from "react-native";
-import React, { useEffect, useState } from "react";
+  RefreshControl
+  } from "react-native";
+import React, { useEffect, useState, useCallback } from "react";
 import { Dropdown } from "react-native-element-dropdown";
 import color from "../../contains/color";
 import clientLog from "../../api/clientLog";
@@ -20,6 +21,9 @@ import {
   Year1,
 } from "../../contains/constant";
 
+const wait = (timeout) => {
+  return new Promise(resolve => setTimeout(resolve, timeout));
+}
 const HomeLog = ({ navigation }) => {
   const [logInfo, setLogInfo] = useState({
     month: "",
@@ -33,6 +37,15 @@ const HomeLog = ({ navigation }) => {
   // const [search, setSearch] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [searchText, setSearchText] = useState("");
+  const [refreshing, setRefreshing] = useState(false)
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    navigation.replace('HomeTabLog')
+    // alert('refresh')
+    // console.log('refreshed')
+    wait(500).then(() => setRefreshing(false));
+  }, [])
 
   useEffect(() => {
     clientLog
@@ -82,17 +95,6 @@ const HomeLog = ({ navigation }) => {
         checkPriceSearch(eachLog)
     );
 
-  function clearFilter() {
-    // setFCLInfo({ ...fclInfo, month: '', continent: '', type: '' })
-    // setSearchText('')
-    // RNRestart.Restart()
-    // DevSettings.reload()
-    // await Updates.reloadAsync()
-    // Updates.reloadAsync()
-    navigation.reset({ index: 0, routes: [{ name: "ScreenLog" }] });
-    // setTimeout(Updates.reloadAsync, 1000)
-  }
-
   const renderItem = ({ item }) => (
     <TouchableOpacity
       onPress={() => {
@@ -135,6 +137,7 @@ const HomeLog = ({ navigation }) => {
 
   return (
     <View style={{ flex: 1, backgroundColor: "white" }}>
+     
       <View style={{ flexDirection: "row", alignItems: "center" }}>
         <Icon
           name="search"
@@ -197,9 +200,9 @@ const HomeLog = ({ navigation }) => {
         </View>
       </View>
       <View>
-        <Button title="Clear" onPress={clearFilter} />
+        {/* <Button title="Clear" onPress={clearFilter} /> */}
       </View>
-      {/* <View style={{ flexDirection: "row", minHeight: 100 }}>
+      <View style={{ flexDirection: "row", minHeight: 100 }}>
         <View style={styles.dropMenu}>
           <Text style={styles.label}>Chọn Năm</Text>
           <View style={styles.containerDropDown}>
@@ -244,7 +247,16 @@ const HomeLog = ({ navigation }) => {
             />
           </View>
         </View>
-      </View> */}
+      </View>
+      <ScrollView
+        // contentContainerStyle={styles.scrollView}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+          />
+        }
+      >
       <View style={{ flex: 5 }}>
         <View style={styles.displayData}>
           {filteredLog().length > 0 ? (
@@ -282,6 +294,7 @@ const HomeLog = ({ navigation }) => {
           </View>
         </TouchableOpacity>
       </View>
+      </ScrollView>
     </View>
   );
 };

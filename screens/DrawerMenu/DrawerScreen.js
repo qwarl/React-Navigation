@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity, Alert } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, Alert, Button } from "react-native";
 import React, { useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import {
@@ -30,12 +30,14 @@ import ScreenBooking from "../LogDepartment/booking/ScreenBooking";
 const Drawer = createDrawerNavigator();
 
 const DrawerScreen = () => {
+  
   function CustomDrawerContent({ navigation, progress, route, ...rest }) {
     // const translateX = Animated.interpolateNode(progress, {
     //     inputRange: [0, 1],
     //     outputRange: [30, 0],
     // });
     // console.time('doSomething')
+    
     const [open, setOpen] = useState({
       openQuotation: false,
       openDOM: false,
@@ -387,12 +389,14 @@ const DrawerScreen = () => {
       </DrawerContentScrollView>
     );
   }
+  
 
   return (
     <NavigationContainer>
       <Drawer.Navigator
         drawerContent={(props) => <CustomDrawerContent {...props} />}
       >
+        <Drawer.Screen name="Tạo Thông Tin LOG" component={ScreenBooking} />
         <Drawer.Screen name="ScreenFCL" component={ScreenFCL} />
         <Drawer.Screen name="Nghiệp Vụ" component={BusinessMainScreen} />
         <Drawer.Screen name="Add" component={Add} />
@@ -404,7 +408,6 @@ const DrawerScreen = () => {
         <Drawer.Screen name="ScreenCy" component={ScreenCy} />
         <Drawer.Screen name="ScreenDoor" component={ScreenDoor} />
         <Drawer.Screen name="ScreenTruck" component={ScreenTruck} />
-        <Drawer.Screen name="Tạo Thông Tin LOG" component={ScreenBooking} />
       </Drawer.Navigator>
     </NavigationContainer>
   );
