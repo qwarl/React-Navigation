@@ -37,6 +37,7 @@ const AddAdvance = ({ navigation }) => {
     setDate(currentDate);
 
     let tempDate = new Date(currentDate);
+    let hour = tempDate.getHours();
     let fDate =
       tempDate.getDate() +
       "/" +
