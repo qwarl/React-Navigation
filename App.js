@@ -18,6 +18,7 @@ import TestPicker from "./screens/LogDepartment/booking/TestPicker";
 import AddPriceSell from "./screens/LogDepartment/profitreport/AddPriceSell";
 import ScreenAdvance from "./screens/LogDepartment/advance/ScreenAdvance";
 import ScreenBooking from "./screens/LogDepartment/booking/ScreenBooking";
+import DetailAdvance from "./screens/LogDepartment/advance/DetailAdvance";
 // import ScreenAIR from "./screens/AIRDepartment/ScreenAIR";
 
 const Stack = createStackNavigator();
@@ -35,6 +36,7 @@ export default function App() {
       {/* <ScreenAIR/> */}
       {/* <DrawerScreen /> */}
       <ScreenAdvance />
+      {/* <DetailAdvance /> */}
       {/* <ScreenBooking /> */}
       {/* <AddPriceSell /> */}
       {/* <ScreenImport /> */}

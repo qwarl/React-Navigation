@@ -16,6 +16,7 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import FormInput from "../../../components/FormInput";
 import color from "../../../contains/color";
 import Icon from "react-native-vector-icons/FontAwesome";
+import clientAddItemAdvance from "../../../api/clientAddItemAdvance";
 
 const AddAdvance = ({ navigation }) => {
   const handleOnChangeText = (value, fieldName) => {
@@ -58,8 +59,10 @@ const AddAdvance = ({ navigation }) => {
     reason: "",
     status: "",
     date: "",
+    userCreate: "Mr Thắng",
   });
 
+  // console.log(advanceInfo);
   const isValidForm = () => {
     if (!isValidObjectField(advanceInfo))
       return updateError("Nhập thiếu trường dữ liệu!", setError);
@@ -67,11 +70,17 @@ const AddAdvance = ({ navigation }) => {
   };
 
   const submitForm = async () => {
-    // if (isValidForm()) {
-    navigation.navigate("DetailLog", {
-      advanceInfo: advanceInfo,
-    });
-    // }
+    try {
+      const res = await clientAddItemAdvance.post("/create", {
+        ...advanceInfo,
+      });
+      if (res.data.success) {
+        Alert.alert("Thêm Thành Công");
+        navigation.goBack();
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
   };
   return (
     <View style={StyleSheet.container}>
@@ -155,14 +164,7 @@ const AddAdvance = ({ navigation }) => {
             alignItems: "center",
           }}
         >
-          <TouchableOpacity
-            style={[styles.buttonInsert]}
-            onPress={() => {
-              navigation.navigate("AdvanceLog", {
-                item: advanceInfo,
-              });
-            }}
-          >
+          <TouchableOpacity style={[styles.buttonInsert]} onPress={submitForm}>
             <Text
               style={{
                 fontSize: 18,
