@@ -23,7 +23,7 @@ import color from "../../contains/color";
 import Icon from "react-native-vector-icons/AntDesign";
 import Icon1 from "react-native-vector-icons/Feather";
 import BusinessMainScreen from "./BusinessMainScreen";
-import * as Updates from "expo-updates";
+// import * as Updates from "expo-updates";
 import HomeBookingLog from "../LogDepartment/booking/HomeBookingLog";
 import ScreenBooking from "../LogDepartment/booking/ScreenBooking";
 

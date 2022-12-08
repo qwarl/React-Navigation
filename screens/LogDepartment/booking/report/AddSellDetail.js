@@ -1,7 +1,7 @@
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import React, { useState } from "react";
-import color from "../../../contains/color";
-
+import color from "../../../../contains/color";
+import FormInput from "../../../../components/FormInput";
 const AddSellDetail = () => {
   const [sellDetail, setSellDetail] = useState({
     code: code,

@@ -1,11 +1,22 @@
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React, { useState } from "react";
-import color from "../../../contains/color";
+import color from "../../../../contains/color";
+import clientReport from "../../../../api/clientReport";
 const ProfitReport = ({ route, navigation }) => {
   const [data, setData] = useState(route.params.data);
+  const [dataGetById, setDataGetById] = useState();
+console.log('data',data._id);
 
+const getDataById = async () => {
+    try {
+      const response = await clientReport.get("/getById/" + data._id);
+      setDataGetById(response.data);
+      console.log("data1", dataGetById);
+    } catch (error) {
+      console.log(error);
+    }
+  };
   // const []=data
-  console.log("data", data.idfile);
   return (
     <ScrollView>
       <View style={styles.detail}>
@@ -70,7 +81,7 @@ const ProfitReport = ({ route, navigation }) => {
           <TouchableOpacity
             style={[styles.buttonUpdate]}
             onPress={() => {
-              navigation.replace("AddSellDetail", {
+              navigation.navigate("AddSellDetail", {
                 data: data,
               });
             }}

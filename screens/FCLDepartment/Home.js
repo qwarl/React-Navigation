@@ -70,7 +70,7 @@ const Home = ({ navigation, route }) => {
       setData1(res["data"].quotations);
     });
   }
-  const isFocused = useIsFocused()
+  // const isFocused = useIsFocused()
 
   useEffect(() => {
     client
@@ -82,6 +82,11 @@ const Home = ({ navigation, route }) => {
         console.log(err);
       });
   }, [data1]);
+
+  const isFocused = useIsFocused()
+  // useEffect(() => {
+  //   isFocused
+  // }, [isFocused])
 
   const [searchText, setSearchText] = useState("");
   // console.log(data1.container);
@@ -395,11 +400,13 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     padding: 10,
+    height:height*0.47
   },
   list: {
     flex: 1,
     padding: 8,
-    height: height * 0.46,
+    // height: height * 0.43,
+    // maxHeight: height * 0.43,
   },
   dropdown: {
     height: 50,
