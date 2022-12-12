@@ -11,6 +11,11 @@ import ProfitReport from "./report/ProfitReport";
 import AddBuyDetail from "./report/AddBuyDetail";
 import AddSellDetail from "./report/AddSellDetail";
 import TabHomeAndReportLog from './report/tab.home.and.report.log'
+import ProfitReportScreen from "./report/ProfitReportScreen";
+import AddExchangeRate from "./report/change.to.sub.screen/AddExchangeRate";
+import ItemSellDetails from "./report/change.to.sub.screen/Item.Sell.Details";
+import ItemBuyDetails from "./report/change.to.sub.screen/Item.Buy.Details";
+import PaidOn from "./report/change.to.sub.screen/PaidOn";
 const Stack = createStackNavigator();
 
 const ScreenBooking = () => {
@@ -60,6 +65,26 @@ const ScreenBooking = () => {
         name="AddSellDetail"
         component={AddSellDetail}
         // options={{ headerShown: false }}
+      />
+      <Stack.Screen
+      name='ProfitReportScreen'
+      component={ProfitReportScreen}
+      />
+      <Stack.Screen
+      name='AddExchangeRate'
+      component={AddExchangeRate}
+      />
+      <Stack.Screen
+      name='ItemSellDetails'
+      component={ItemSellDetails}
+      />
+      <Stack.Screen
+      name='ItemBuyDetails'
+      component={ItemBuyDetails}
+      />
+      <Stack.Screen
+      name='PaidOn'
+      component={PaidOn}
       />
     </Stack.Navigator>
   );
