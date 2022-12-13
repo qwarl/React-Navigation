@@ -24,7 +24,7 @@ const ProfitReportScreen = ({ navigation }) => {
   useEffect(() => {
     getAllReport();
   }, []);
-  // console.log(report);
+  console.log('hihihi',report);
 
   // show item in flat list
   const renderItem = ({ item }) => {
@@ -62,6 +62,10 @@ const ProfitReportScreen = ({ navigation }) => {
           <View style={{ flexDirection: "row" }}>
             <Text style={styles.textLable}>Profit:</Text>
             <Text style={styles.textDisplay}>{item.profitVND}</Text>
+          </View>
+          <View style={{ flexDirection: "row" }}>
+            <Text style={styles.textLable}>Profit VAT:</Text>
+            <Text style={styles.textDisplay}>{item.profitVAT}</Text>
           </View>
         </View>
       </TouchableOpacity>

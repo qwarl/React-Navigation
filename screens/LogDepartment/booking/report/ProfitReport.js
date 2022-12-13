@@ -128,6 +128,10 @@ const ProfitReport = ({ route, navigation }) => {
               <Text style={styles.textDisplay}>Tên hàng:</Text>
               <Text style={styles.textContent}>{dataGetById.info.name}</Text>
             </View>
+            <View style={{ flexDirection: "row" }}>
+              <Text style={styles.textDisplay}>Lợi nhuận VAT: </Text>
+              <Text style={styles.textContent}>{dataGetById.profitVAT}</Text>
+            </View>
 
             <View style={{ flexDirection: "row" }}>
               <TouchableOpacity onPress={changeToSellDetailsScreen}>
