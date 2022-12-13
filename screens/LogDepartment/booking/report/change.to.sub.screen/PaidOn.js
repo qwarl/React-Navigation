@@ -35,7 +35,7 @@ const PaidOn = ({ route, navigation }) => {
           </View>
           <View style={{ flexDirection: "row" }}>
             <Text style={styles.textLable}>Số tiền: </Text>
-            <Text style={styles.textDisplay}>{item.total}</Text>
+            <Text style={styles.textDisplay}>{item.price}</Text>
           </View>
           <View style={{ flexDirection: "row" }}>
             <Text style={styles.textLable}>Số hóa đơn: </Text>

@@ -45,6 +45,14 @@ const ItemBuyDetails = ({route,navigation}) => {
             <Text style={styles.textLable}>Total: </Text>
             <Text style={styles.textDisplay}>{item.total}</Text>
           </View>
+          <View style={{ flexDirection: "row" }}>
+            <Text style={styles.textLable}>VAT: </Text>
+            <Text style={styles.textDisplay}>{item.VAT}</Text>
+          </View>
+          <View style={{ flexDirection: "row" }}>
+            <Text style={styles.textLable}>Total (VAT): </Text>
+            <Text style={styles.textDisplay}>{item.actualPayment}</Text>
+          </View>
         </View>
       </TouchableOpacity>
     );
