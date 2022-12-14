@@ -9,138 +9,173 @@ import {
   Alert,
   Image,
   Button,
+  TextInput,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import FormInput from "../../../../components/FormInput";
+import DateTimePicker from "@react-native-community/datetimepicker";
 import { Dropdown } from "react-native-element-dropdown";
-import color from "../../../../contains/color";
-import {
-  Container,
-  Continent,
-  DomType,
-  Month1,
-  TypeSeaCY,
-} from "../../../../contains/constant";
-import clientSeaDoor from "../../../../api/clientSeaDoor";
-import { isValidObjectField, updateError } from "../../../../utils/method";
+import Icon from "react-native-vector-icons/FontAwesome";
+import color from "../../../contains/color";
 
-const AddDoor = ({ navigation }) => {
-  const [error, setError] = useState("");
-  const [seaDoorInfo, setSeaDoorInfo] = useState({
-    month: "",
-    continent: "",
-    container: "",
-    productname: "",
-    weight: "",
-    quantitycont: "",
-    etd: "",
-    pol: "",
-    pod: "",
-    addresspacking: "",
-    addressdelivery: "",
-    doortype: "",
-  });
-
-  const handleOnChangeText = (value, fieldName) => {
-    setSeaDoorInfo({ ...seaDoorInfo, [fieldName]: value });
-  };
-  //handle time picker
-  const [date, setDate] = useState(new Date());
-  const [mode, setMode] = useState("date");
-  const [show, setShow] = useState(false);
-
-  //handle time picker
-  const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate || date;
-    setShow(Platform.OS === "ios");
-    setDate(currentDate);
-
-    let tempDate = new Date(currentDate);
-    let fDate =
-      tempDate.getDate() +
-      "/" +
-      (tempDate.getMonth() + 1) +
-      "/" +
-      tempDate.getFullYear();
-
-    handleOnChangeText(fDate, "valid");
-  };
-
-  //handle time picker
-  const showMode = (currentMode) => {
-    setShow(true);
-    setMode(currentMode);
-  };
-
-  const isValidForm = () => {
-    if (!isValidObjectField(seaDoorInfo))
-      return updateError("Nhập thiếu trường dữ liệu!", setError);
-    return true;
-  };
-
-  const submitForm = async () => {
-    if (isValidForm()) {
-      try {
-        const res = await clientSeaDoor.post("/create", { ...seaDoorInfo });
-        if (res.data.success) {
-          Alert.alert("Thêm Thành Công");
-          navigation.goBack();
-        }
-      } catch (error) {
-        console.log(error.message);
-      }
-    }
-  };
+const AddProfitReport = () => {
   return (
-    <View style={{ flex: 1, backgroundColor: "white" }}>
+    <View style={StyleSheet.container}>
       {error ? (
         <Text style={{ color: "red", fontSize: 18, textAlign: "center" }}>
           {error}
         </Text>
       ) : null}
       <ScrollView>
+        <FormInput
+          label="Số Báo Giá"
+          placeholder="Số Báo Giá"
+          onChangeText={(value) => handleOnChangeText("code", value)}
+          value={bookingInfo.code}
+        />
+        <FormInput
+          label="Số File"
+          placeholder="Số File"
+          onChangeText={(value) => handleOnChangeText("idfile", value)}
+          value={bookingInfo.idfile}
+        />
         <View style={styles.dropMenu}>
-          <Text style={styles.label}>Chọn Tháng</Text>
+          <Text style={styles.label}>Sales</Text>
           <Dropdown
             style={[styles.dropdown]}
             placeholderStyle={styles.placeholderStyle}
             selectedTextStyle={styles.selectedTextStyle}
             inputSearchStyle={styles.inputSearchStyle}
             iconStyle={styles.iconStyle}
-            data={Month1}
+            data={NameSales}
             search={true}
             maxHeight={300}
             labelField="label"
             valueField="value"
             searchPlaceholder="Search..."
-            value={seaDoorInfo.month}
+            value={bookingInfo.sales}
             onChange={(value) => {
-              setSeaDoorInfo({ ...seaDoorInfo, month: value.value });
+              setBookingInfo({ ...bookingInfo, sales: value.value });
             }}
           />
         </View>
+        <FormInput
+          placeholder="Docs"
+          label="Docs"
+          value={bookingInfo.docs}
+          onChangeText={(value) => handleOnChangeText("docs", value)}
+        />
+        <FormInput
+          placeholder="OPS"
+          label="OPS"
+          value={bookingInfo.ops}
+          onChangeText={(value) => handleOnChangeText("ops", value)}
+        />
+        <FormInput
+          placeholder="Khách Hàng"
+          label="Khách Hàng"
+          onChangeText={(value) => handleOnChangeText("customer", value)}
+          value={bookingInfo.customer}
+        />
         <View style={styles.dropMenu}>
-          <Text style={styles.label}>Chọn Châu</Text>
+          <Text style={styles.label}>Loại Hình</Text>
           <Dropdown
             style={[styles.dropdown]}
             placeholderStyle={styles.placeholderStyle}
             selectedTextStyle={styles.selectedTextStyle}
             inputSearchStyle={styles.inputSearchStyle}
             iconStyle={styles.iconStyle}
-            data={Continent}
+            data={Type}
             search={true}
             maxHeight={300}
             labelField="label"
             valueField="value"
             searchPlaceholder="Search..."
-            value={seaDoorInfo.continent}
+            value={bookingInfo.type}
             onChange={(value) => {
-              setSeaDoorInfo({ ...seaDoorInfo, continent: value.value });
+              setBookingInfo({ ...bookingInfo, type: value.value });
             }}
           />
         </View>
+        <FormInput
+          label="Số Tờ Khai"
+          placeholder="Số Tờ Khai"
+          onChangeText={(value) =>
+            handleOnChangeText("numberdeclaration", value)
+          }
+          value={bookingInfo.numberdeclaration}
+        />
+        <View style={{ flexDirection: "row" }}>
+          <View style={{ width: "100%" }}>
+            <Text style={styles.textValid}>Ngày Tờ Khai</Text>
+            <TextInput
+              style={styles.validStyle}
+              placeholder="Chọn Ngày"
+              label="Chọn Ngày"
+              value={bookingInfo.daydeclaration}
+              onChangeText={(value) =>
+                handleOnChangeText("daydeclaration", value)
+              }
+            />
+          </View>
+          <Icon
+            onPress={() => setShow(!show)}
+            name="calendar"
+            size={35}
+            color="#7F7F7F"
+            style={{
+              top: 30,
+              position: "absolute",
+              right: 20,
+              marginBottom: 0,
+              zIndex: 1000,
+            }}
+          />
+        </View>
+        {show && (
+          <DateTimePicker
+            testID="dateTimePicker"
+            value={date}
+            mode={mode}
+            is24Hour={true}
+            desplay="default"
+            onChange={onChangeDeclaration}
+            style={{ width: 400 }}
+          />
+        )}
         <View style={styles.dropMenu}>
-          <Text style={styles.label}>Chọn Container</Text>
+          <Text style={styles.label}>Phân Luồng</Text>
+          <Dropdown
+            style={[styles.dropdown]}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            inputSearchStyle={styles.inputSearchStyle}
+            iconStyle={styles.iconStyle}
+            data={Stream}
+            search={true}
+            maxHeight={300}
+            labelField="label"
+            valueField="value"
+            searchPlaceholder="Search..."
+            value={bookingInfo.stream}
+            onChange={(value) => {
+              setBookingInfo({ ...bookingInfo, stream: value.value });
+            }}
+          />
+        </View>
+        <FormInput
+          placeholder="Loại Hàng"
+          label="Loại Hàng"
+          onChangeText={(value) => handleOnChangeText("typeProduct", value)}
+          value={bookingInfo.typeProduct}
+        />
+        <FormInput
+          placeholder="Số Lượng"
+          label="Số Lượng"
+          onChangeText={(value) => handleOnChangeText("quantity", value)}
+          value={bookingInfo.quantity}
+        />
+        <View style={styles.dropMenu}>
+          <Text style={styles.label}>Loại Container</Text>
           <Dropdown
             style={[styles.dropdown]}
             placeholderStyle={styles.placeholderStyle}
@@ -153,79 +188,47 @@ const AddDoor = ({ navigation }) => {
             labelField="label"
             valueField="value"
             searchPlaceholder="Search..."
-            value={seaDoorInfo.container}
+            value={bookingInfo.container}
             onChange={(value) => {
-              setSeaDoorInfo({ ...seaDoorInfo, container: value.value });
-            }}
-          />
-        </View>
-        <View style={styles.dropMenu}>
-          <Text style={styles.label}>Chọn Loại Vận Chuyển</Text>
-          <Dropdown
-            style={[styles.dropdown]}
-            placeholderStyle={styles.placeholderStyle}
-            selectedTextStyle={styles.selectedTextStyle}
-            inputSearchStyle={styles.inputSearchStyle}
-            iconStyle={styles.iconStyle}
-            data={DomType}
-            search={true}
-            maxHeight={300}
-            labelField="label"
-            valueField="value"
-            searchPlaceholder="Search..."
-            value={seaDoorInfo.doortype}
-            onChange={(value) => {
-              setSeaDoorInfo({ ...seaDoorInfo, doortype: value.value });
+              setBookingInfo({ ...bookingInfo, container: value.value });
             }}
           />
         </View>
         <FormInput
-          label="Điểm Đi"
-          placeholder="Điểm Đi"
-          onChangeText={(value) => handleOnChangeText(value, "pol")}
-          value={seaDoorInfo.pol}
+          placeholder="Số Kiện"
+          label="Số Kiện"
+          value={bookingInfo.numberbale}
+          onChangeText={(value) => handleOnChangeText("numberbale", value)}
         />
         <FormInput
-          placeholder="Điểm Đến"
-          label="Điểm Đến"
-          onChangeText={(value) => handleOnChangeText(value, "pod")}
-          value={seaDoorInfo.pod}
+          placeholder="Loại Kiện"
+          label="Loại Kiện"
+          value={bookingInfo.baletype}
+          onChangeText={(value) => handleOnChangeText("baletype", value)}
         />
         <FormInput
-          label="Tên Hàng"
-          placeholder="Tên Hàng"
-          onChangeText={(value) => handleOnChangeText(value, "productname")}
-          value={seaDoorInfo.productname}
-        />
-        <FormInput
-          label="Trọng Lượng"
           placeholder="Trọng Lượng"
-          onChangeText={(value) => handleOnChangeText(value, "weight")}
-          value={seaDoorInfo.weight}
+          label="Trọng Lượng"
+          value={bookingInfo.weight}
+          onChangeText={(value) => handleOnChangeText("weight", value)}
         />
         <FormInput
-          placeholder="SL Cont"
-          label="SL Cont"
-          onChangeText={(value) => handleOnChangeText(value, "quantitycont")}
-          value={seaDoorInfo.quantitycont}
+          placeholder="Số Container"
+          label="Số Container"
+          value={bookingInfo.numbercotainer}
+          onChangeText={(value) => handleOnChangeText("numbercotainer", value)}
         />
         <FormInput
-          placeholder="ETD"
-          label="ETD"
-          onChangeText={(value) => handleOnChangeText(value, "etd")}
-          value={seaDoorInfo.etd}
+          placeholder="Tên Hàng"
+          label="Tên Hàng"
+          value={bookingInfo.name}
+          onChangeText={(value) => handleOnChangeText("name", value)}
         />
         <FormInput
-          placeholder="ĐC Đóng Hàng"
-          label="ĐC Đóng Hàng"
-          onChangeText={(value) => handleOnChangeText(value, "addresspacking")}
-          value={seaDoorInfo.addresspacking}
-        />
-        <FormInput
-          placeholder="ĐC Giao Hàng"
-          label="ĐC Giao Hàng"
-          onChangeText={(value) => handleOnChangeText(value, "addressdelivery")}
-          value={seaDoorInfo.addressdelivery}
+          placeholder="Ghi Chú"
+          label="Ghi Chú"
+          value={bookingInfo.note}
+          onChangeText={(value) => handleOnChangeText("note", value)}
         />
         <View
           style={{
@@ -357,4 +360,5 @@ const styles = StyleSheet.create({
     marginLeft: 17,
   },
 });
-export default AddDoor;
+
+export default AddProfitReport;

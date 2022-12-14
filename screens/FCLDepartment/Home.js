@@ -10,6 +10,9 @@ import {
   RefreshControl,
   ScrollView,
   Alert
+  RefreshControl,
+  ScrollView,
+  Alert
 } from "react-native";
 import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
@@ -31,6 +34,7 @@ import RadioForm, {
   RadioButtonLabel,
 } from "react-native-simple-radio-button";
 import { Dropdown } from "react-native-element-dropdown";
+import client from "../../api/client";
 import client from "../../api/client";
 import { useIsFocused } from '@react-navigation/native'
 import { useQuery } from '@tanstack/react-query'
@@ -249,6 +253,7 @@ const Home = ({ navigation, route }) => {
               inputSearchStyle={styles.inputSearchStyle}
               iconStyle={styles.iconStyle}
               data={Continent}
+              data={Continent}
               search
               maxHeight={300}
               labelField="label"
@@ -256,6 +261,7 @@ const Home = ({ navigation, route }) => {
               searchPlaceholder="Search..."
               value={value}
               onChange={(value) => {
+                setFCLInfo({ ...fclInfo, continent: value.value });
                 setFCLInfo({ ...fclInfo, continent: value.value });
               }}
             />
@@ -422,6 +428,8 @@ const styles = StyleSheet.create({
     padding: 8,
     // height: height * 0.43,
     // maxHeight: height * 0.43,
+    // height: height * 0.43,
+    // maxHeight: height * 0.43,
   },
   dropdown: {
     height: 50,
@@ -451,6 +459,7 @@ const styles = StyleSheet.create({
     fontWeight: "500",
     color: "#0176E4",
     textDecorationLine: "underline",
+    // overflow:'scroll'
     // overflow:'scroll'
   },
 });

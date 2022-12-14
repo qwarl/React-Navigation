@@ -1,5 +1,6 @@
 import React from "react";
 import { Button, TouchableOpacity } from "react-native";
+import { Button, TouchableOpacity } from "react-native";
 import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -14,7 +15,6 @@ import AddFCLRequiteSale from "./checkprice/AddFCLRequiteSale";
 const Stack = createStackNavigator();
 
 export default function Fcl({ navigation }) {
-
   return (
     // <NavigationContainer>
     <Stack.Navigator>

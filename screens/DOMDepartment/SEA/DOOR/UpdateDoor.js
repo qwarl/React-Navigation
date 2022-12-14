@@ -14,6 +14,7 @@ import React, { useEffect, useState } from "react";
 import { Dropdown } from "react-native-element-dropdown";
 import color from "../../../../contains/color";
 import {
+  Container,
   Continent,
   DomType,
   Month1,
@@ -109,7 +110,7 @@ const UpdateDoor = ({ route, navigation }) => {
             selectedTextStyle={styles.selectedTextStyle}
             inputSearchStyle={styles.inputSearchStyle}
             iconStyle={styles.iconStyle}
-            data={TypeSeaCY}
+            data={Container}
             search={true}
             maxHeight={300}
             labelField="label"

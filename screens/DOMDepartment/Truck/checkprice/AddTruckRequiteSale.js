@@ -151,7 +151,7 @@ const AddTruckRequiteSale = ({ navigation, route }) => {
           />
         </View>
         <View style={styles.dropMenu}>
-          <Text style={styles.label}>Chọn Loại Container</Text>
+          <Text style={styles.label}>Loại Xe Tải</Text>
           <Dropdown
             style={[styles.dropdown]}
             placeholderStyle={styles.placeholderStyle}

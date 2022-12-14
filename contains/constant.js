@@ -46,15 +46,45 @@ export const Cargo = [
 ];
 
 export const ipAddress = "http://192.168.1.83:3000";
+export const ipAddress = "http://192.168.1.12:3000";
 
 export const Container = [
-  { label: "GP", value: "GP" },
-  { label: "RF", value: "RF" },
-  { label: "FR", value: "FR" },
-  { label: "OT", value: "OT" },
-  { label: "HC", value: "HC" },
+  { label: "20GP", value: "20GP" },
+  { label: "40GP", value: "40GP" },
+  { label: "40HQ", value: "40HQ" },
+  { label: "20HQ", value: "20HQ" },
+  { label: "20RF", value: "20RF" },
+  { label: "40RF", value: "40RF" },
+  { label: "20FR", value: "20FR" },
+  { label: "40FR", value: "40FR" },
+  { label: "20OT", value: "20OT" },
+  { label: "40OT", value: "40OT" },
+  { label: "20TK", value: "20TK" },
+  { label: "40TK", value: "40TK" },
+  { label: "20HC", value: "20HC" },
+  { label: "40HC", value: "40HC" },
+  { label: "20TK", value: "20TK" },
+  { label: "40TK", value: "40TK" },
+  { label: "20FT", value: "20FT" },
+  { label: "40FT", value: "40FT" },
 ];
 
+export const TypeSeaCY = [
+  { label: "FT", value: "FT" },
+  { label: "RF", value: "RF" },
+];
+
+export const CurrencyUnit = [
+  { label: "VND", value: "VND" },
+  { label: "USD", value: "USD" },
+  { label: "EUR", value: "EUR" },
+];
+
+export const Stream = [
+  { label: "Xanh", value: "Xanh" },
+  { label: "Vàng", value: "Vàng" },
+  { label: "Đỏ", value: "Đỏ" },
+];
 // use this export in Home screen
 export const ContainerHome = [
   { label: "GP", value: "0" },
@@ -80,6 +110,34 @@ export const TypeImport = [
   { label: "OT", value: "OT" },
   { label: "HQ", value: "HQ" },
   { label: "TK", value: "TK" },
+];
+
+export const NameSales = [
+  { label: "Trần Thái Hòa", value: "Trần Thái Hòa" },
+  { label: "Nguyễn Thị Như Lan", value: "Nguyễn Thị Như Lan" },
+  { label: "Nguyễn Thúy Hiền", value: "Nguyễn Thúy Hiền" },
+  { label: "Dương Thị Chuyền", value: "Dương Thị Chuyền" },
+  { label: "Cao Thụy Quỳnh Như", value: "Cao Thụy Quỳnh Như" },
+  { label: "Nguyễn Thị Tiết", value: "Nguyễn Thị Tiết" },
+  { label: "Đào Thị Bảo Trâm", value: "Đào Thị Bảo Trâm" },
+  { label: "Nguyễn Thị Hồng My", value: "Nguyễn Thị Hồng My" },
+  { label: "Trương Thị Cẩm Tú", value: "Trương Thị Cẩm Tú" },
+  { label: "Trần Thị Nga", value: "Trần Thị Nga" },
+  { label: "Nguyễn Nhật Đình Trường", value: "Nguyễn Nhật Đình Trường" },
+  { label: "Đoàn Ngọc Anh Thư", value: "Đoàn Ngọc Anh Thư" },
+  { label: "Lê Thị Thanh Hậu", value: "Lê Thị Thanh Hậu" },
+  { label: "Nguyễn Nguyên Diệu My", value: "Nguyễn Nguyên Diệu My" },
+  { label: "Đào Thị Hồng Lộc", value: "Đào Thị Hồng Lộc" },
+  { label: "Trà Thị Mỹ Linh", value: "Trà Thị Mỹ Linh" },
+  { label: "Bùi Thúy Kiều", value: "Bùi Thúy Kiều" },
+  { label: "Đinh Đức Thọ", value: "Đinh Đức Thọ" },
+  { label: "Hồ Tấn Phát", value: "Hồ Tấn Phát" },
+  { label: "Lưu Thị Thu Hà", value: "Lưu Thị Thu Hà" },
+  { label: "Nguyễn Thị Thắm", value: "Nguyễn Thị Thắm" },
+  { label: "Phan Thị Phúc Chung", value: "Phan Thị Phúc Chung" },
+  { label: "Nguyễn Hoàng Ngọc Duy", value: "Nguyễn Hoàng Ngọc Duy" },
+  { label: "Nguyễn Quang Huy", value: "Nguyễn Quang Huy" },
+  { label: "Nguyễn Thị Thảo Trinh", value: "Nguyễn Thị Thảo Trinh" },
 ];
 
 export const Year = [
@@ -161,19 +219,18 @@ export const TypeTruck = [
   { label: "Xe Tải Lạnh", value: "Xe Tải Lạnh" },
 ];
 
-export const TypeSeaCY = [
-  { label: "FT", value: "FT" },
-  { label: "RF", value: "RF" },
-];
-
 export const TypeContainerTruck = [
-  { label: "500 KGS", value: "500 KGS" },
   { label: "1 Tấn", value: "1 Tấn" },
+  { label: "1.25 Tấn", value: "1.25 Tấn" },
+  { label: "1.5 Tấn", value: "1.5 Tấn" },
   { label: "2 Tấn", value: "2 Tấn" },
+  { label: "2.5 Tấn", value: "2.5 Tấn" },
   { label: "3 Tấn", value: "3 Tấn" },
+  { label: "3.5 Tấn", value: "3.5 Tấn" },
   { label: "5 Tấn", value: "5 Tấn" },
   { label: "8 Tấn", value: "8 Tấn" },
   { label: "10 Tấn", value: "10 Tấn" },
-  { label: "13 Tấn", value: "13 Tấn" },
   { label: "15 Tấn", value: "15 Tấn" },
+  { label: "20 Tấn", value: "20 Tấn" },
+  { label: "25 Tấn", value: "25 Tấn" },
 ];

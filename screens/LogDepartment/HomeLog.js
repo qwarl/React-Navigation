@@ -264,44 +264,53 @@ const HomeLog = ({ navigation }) => {
             />
           </View>
         </View>
-      </View> */}
-        <View style={{ flex: 5 }}>
-          <View style={styles.displayData}>
-            {filteredLog().length > 0 ? (
-              <FlatList
-                style={styles.list}
-                data={filteredLog()}
-                renderItem={renderItem}
-                keyExtractor={(item) => item._id}
-              />
-            ) : (
-              <View
-                style={{
-                  flex: 1,
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <Text style={{ color: "black", fontSize: 20 }}>
-                  Không có dữ liệu có tên là: {searchText}
-                </Text>
-              </View>
-            )}
-          </View>
-        </View>
-        <View style={{ flex: 0.5, marginTop: -10, marginBottom: 20 }}>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate("AddLog", {
-                logInfo: logInfo,
-              });
-            }}
-          >
-            <View style={styles.iconWrapper}>
-              <Text style={styles.icon}>+</Text>
+      </View>
+      <ScrollView
+        // contentContainerStyle={styles.scrollView}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+          />
+        }
+      >
+      <View style={{ flex: 5 }}>
+        <View style={styles.displayData}>
+          {filteredLog().length > 0 ? (
+            <FlatList
+              style={styles.list}
+              data={filteredLog()}
+              renderItem={renderItem}
+              keyExtractor={(item) => item._id}
+            />
+          ) : (
+            <View
+              style={{
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Text style={{ color: "black", fontSize: 20 }}>
+                Không có dữ liệu có tên là: {searchText}
+              </Text>
             </View>
-          </TouchableOpacity>
+          )}
         </View>
+      </View>
+      <View style={{ flex: 0.5, marginTop: -10, marginBottom: 20 }}>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate("AddLog", {
+              logInfo: logInfo,
+            });
+          }}
+        >
+          <View style={styles.iconWrapper}>
+            <Text style={styles.icon}>+</Text>
+          </View>
+        </TouchableOpacity>
+      </View>
       </ScrollView>
     </View>
   );

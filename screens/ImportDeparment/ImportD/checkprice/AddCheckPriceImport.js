@@ -16,7 +16,12 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import { Dropdown } from "react-native-element-dropdown";
 import Icon from "react-native-vector-icons/FontAwesome";
 import color from "../../../../contains/color";
-import { Continent, Month1, TypeImport } from "../../../../contains/constant";
+import {
+  Container,
+  Continent,
+  Month1,
+  TypeImport,
+} from "../../../../contains/constant";
 import FormInput from "../../../../components/FormInput";
 import clientCheckPriceImport from "../../../../api/clientCheckPriceImport";
 
@@ -164,7 +169,7 @@ const AddCheckPriceImport = () => {
             selectedTextStyle={styles.selectedTextStyle}
             inputSearchStyle={styles.inputSearchStyle}
             iconStyle={styles.iconStyle}
-            data={TypeImport}
+            data={Container}
             search={true}
             maxHeight={300}
             labelField="label"

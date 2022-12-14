@@ -20,7 +20,7 @@ import color from "../../../contains/color";
 import FormInput from "../../../components/FormInput";
 import clientBookingLog from "../../../api/clientBookingLog";
 
-const AddBookingLog = ({ navigation, route }) => {
+const NewAddBooking = ({ navigation }) => {
   const handleOnChangeText = (fieldName, ...values) => {
     values.length === 1
       ? setBookingInfo({ ...bookingInfo, [fieldName]: values[0] })
@@ -207,30 +207,28 @@ const AddBookingLog = ({ navigation, route }) => {
     return num1 + num2;
   };
 
-  let { type, pol, pod, code, typeProduct, name } = route?.params.data || {};
-
   const [bookingInfo, setBookingInfo] = useState({
-    code: code,
+    code: "",
     month: "",
-    type: type,
+    type: "",
     customer: "",
     numberdeclaration: "",
     daydeclaration: "",
     stream: "",
-    typeProduct: typeProduct,
+    typeProduct: "",
     quantity: "",
     numberbale: "",
     baletype: "",
     weight: "",
     container: "",
     numbercotainer: "",
-    name: name,
+    name: "",
     supplier: "",
     supplier1: "",
     supplier2: "",
-    pol: pol,
+    pol: "",
     daygo: "",
-    pod: pod,
+    pod: "",
     dayarrive: "",
     salescontract: "",
     daysalescontract: "",
@@ -256,7 +254,8 @@ const AddBookingLog = ({ navigation, route }) => {
   const submitForm = async () => {
     // if (isValidForm()) {
     try {
-      const res = await clientBookingLog.post("/create", {
+      const url = "/create";
+      const res = await clientBookingLog.post(url, {
         ...bookingInfo,
       });
       if (res.data.success) {
@@ -883,4 +882,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AddBookingLog;
+export default NewAddBooking;
