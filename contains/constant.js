@@ -45,7 +45,7 @@ export const Cargo = [
   { label: "NON-DG", value: "NON-DG" },
 ];
 
-export const ipAddress = "http://192.168.1.106:3001";
+export const ipAddress = "http://192.168.1.91:3001";
 
 export const Container = [
   { label: "20GP", value: "20GP" },

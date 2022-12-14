@@ -12,65 +12,123 @@ import {
 import React, { useEffect, useState } from "react";
 import color from "../../../contains/color";
 import Icon from "react-native-vector-icons/Entypo";
-import clientAddItemAdvance from "../../../api/clientAddItemAdvance";
 import clientAdvanceOPS from "../../../api/clientAdvanceOPS";
-const AdvanceLog = ({ navigation }) => {
+
+// expo add expo-file-system expo-sharing xlsx
+import * as XLSX from "xlsx";
+import * as FileSystem from "expo-file-system";
+import * as Sharing from "expo-sharing";
+const DetailAdvance = () => {
   const [data, setData] = useState([]);
   const [ops, setOps] = useState({ ops: "", userCreate: "Mr Thắng" });
-  const url = "/get-all-by-id/";
+  const url = "/getAll";
   const id = "Mr Thắng";
 
   useEffect(() => {
-    clientAddItemAdvance
-      .get(url + id)
+    clientAdvanceOPS
+      .get(url)
       .then((res) => {
-        setData(res.data.itemAdvance);
+        setData(res.data.advanceOPS);
+        // console.log(data[0].ops);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, [data]);
+  }, []);
 
-  // useEffect(() => {
-  //   clientAddItemAdvance
-  //     .get(url + id)
-  //     .then((res) => {
-  //       setData(res.data.itemAdvance);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }, []);
+  const totalOps = data
+    .map((item) => Number(item.money))
+    .reduce((prev, curr) => prev + curr, 0);
 
-  useEffect(() => {
-    setOps({ ops: data });
-  }, [data]);
+  console.log(totalOps);
+  const newArray = () => {
+    var numbers = [];
+    for (var i = 0; i < data.length; i++) {
+      var money = data[i].money;
+      var username = data[i].username;
+      var reason = data[i].reason;
+      var status = data[i].status;
+      var date = data[i].date;
+      numbers.push([money, username, reason, status, date]);
+    }
+    // for (var i = 0; i < numbers.length; i++) {
+    //   let row = numbers[i];
+    //   let row1 = [];
+    //   row1.push(row);
+    //   const [childRow] = row1;
+    //   // console.log(row1);
+    //   return childRow;
+    // }
+    return numbers;
+  };
+
+  const generateExcel = () => {
+    let row4 = newArray(); // [[1,2,3], [4,5]]
+
+    let wb = XLSX.utils.book_new();
+    let ws = XLSX.utils.aoa_to_sheet([
+      ["Số Tiền", "Người Ứng", "Lí Do Ứng", "Tình Trạng", "Ngày Ứng"],
+      ...row4,
+    ]);
+
+    XLSX.utils.book_append_sheet(wb, ws, "Sheet1", true);
+    const base64 = XLSX.write(wb, { type: "base64" });
+    var date = new Date();
+    const filename =
+      FileSystem.documentDirectory +
+      date.getFullYear() +
+      (date.getMonth() + 1) +
+      date.getDate() +
+      date.getHours() +
+      date.getMinutes() +
+      "OPS.xlsx";
+    FileSystem.writeAsStringAsync(filename, base64, {
+      encoding: FileSystem.EncodingType.Base64,
+    }).then(() => {
+      Sharing.shareAsync(filename);
+    });
+  };
+  // let obj = JSON.parse(data);
+
+  // console.log(obj);
 
   const submitForm = async () => {
     // if (isValidForm()) {
     try {
-      const url = "/delete/";
-      const res = await clientAdvanceOPS.post("/create", { ...ops });
-      if (res.data.success) {
-        for (let i = 0; i < data.length; i++) {
-          const id = data[i]._id;
-          // console.log(id);
-          const res1 = await clientAddItemAdvance.delete(url + id);
-        }
-        Alert.alert("Thêm Thành Công");
-        navigation.replace("DetailAdvance");
+      // const url = "/delete/";
+      // const res = await clientAdvanceOPS.post("/create", { ...ops });
+      // if (res.data.success) {
+      var numbers = [];
+      for (var i = 0; i < data.length; i++) {
+        var money = data[i].money;
+        var username = data[i].username;
+        var reason = data[i].reason;
+        var status = data[i].status;
+        var date = data[i].date;
+        numbers.push([money, username, reason, status, date]);
+        // console.log(numbers);
       }
+      for (var i = 0; i <= numbers.length; i++) {
+        let row = numbers[i];
+        let row1 = [];
+        row1.push(row);
+        const [childRow] = row1;
+        console.log(childRow);
+      }
+      Alert.alert("Thêm Thành Công");
+      // navigation.replace("DrawerScreen");
+      // }
     } catch (error) {
       console.log(error.message);
     }
   };
   const renderItem = ({ item }) => (
     <TouchableOpacity
-      onPress={() => {
-        navigation.navigate("AdvanceLog", {
-          item: item,
-        });
-      }}
+    // onPress={() => {
+    //   navigation.navigate("AdvanceLog", {
+    //     item: item,
+    //   });
+    // }}
     >
       <View style={{ marginTop: 10 }}>
         <View
@@ -92,7 +150,7 @@ const AdvanceLog = ({ navigation }) => {
             justifyContent: "space-between",
           }}
         >
-          <Text style={styles.textLable}>Lí do ứng: </Text>
+          <Text style={styles.textLable}>Lý do ứng: </Text>
           <Text style={styles.textDisplay}>{item.reason}</Text>
         </View>
         <View
@@ -146,6 +204,7 @@ const AdvanceLog = ({ navigation }) => {
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: color.white,
+        marginTop: 40,
       }}
     >
       <View style={{ marginTop: 10, flexDirection: "row" }}>
@@ -160,7 +219,7 @@ const AdvanceLog = ({ navigation }) => {
         >
           Tạm Ứng OPS
         </Text>
-        <Icon
+        {/* <Icon
           onPress={() => navigation.navigate("AddAdvance")}
           name="add-to-list"
           size={35}
@@ -172,7 +231,7 @@ const AdvanceLog = ({ navigation }) => {
             marginBottom: 0,
             zIndex: 1000,
           }}
-        />
+        /> */}
       </View>
       <View style={styles.displayData}>
         <FlatList
@@ -192,7 +251,7 @@ const AdvanceLog = ({ navigation }) => {
           marginTop: 2,
         }}
       >
-        <TouchableOpacity style={[styles.buttonInsert]} onPress={submitForm}>
+        <TouchableOpacity style={[styles.buttonInsert]} onPress={generateExcel}>
           <Text
             style={{
               fontSize: 18,
@@ -200,13 +259,15 @@ const AdvanceLog = ({ navigation }) => {
               fontWeight: "bold",
             }}
           >
-            Thêm
+            Xuất File Excel
           </Text>
         </TouchableOpacity>
       </View>
     </View>
   );
 };
+
+export default DetailAdvance;
 
 const styles = StyleSheet.create({
   iconWrapper: {
@@ -334,5 +395,3 @@ const styles = StyleSheet.create({
     textDecorationLine: "underline",
   },
 });
-
-export default AdvanceLog;

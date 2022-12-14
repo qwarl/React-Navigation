@@ -18,6 +18,10 @@ import TestPicker from "./screens/LogDepartment/booking/TestPicker";
 import AddPriceSell from "./screens/LogDepartment/profitreport/AddPriceSell";
 import ScreenAdvance from "./screens/LogDepartment/advance/ScreenAdvance";
 import ScreenBooking from "./screens/LogDepartment/booking/ScreenBooking";
+import DetailAdvance from "./screens/LogDepartment/advance/DetailAdvance";
+import PaymentLog from "./screens/LogDepartment/formLog/PaymentLog";
+import ReceiptLog from "./screens/LogDepartment/formLog/ReceiptLog";
+import AddReceiptLog from "./screens/LogDepartment/formLog/AddReceiptLog";
 // import ScreenAIR from "./screens/AIRDepartment/ScreenAIR";
 
 const Stack = createStackNavigator();
@@ -34,7 +38,11 @@ export default function App() {
       {/* <ScreenDoor/> */}
       {/* <ScreenAIR/> */}
       {/* <DrawerScreen /> */}
-      <ScreenAdvance />
+      {/* <ScreenAdvance /> */}
+      {/* <ReceiptLog /> */}
+      {/* <AddReceiptLog /> */}
+      <PaymentLog />
+      {/* <DetailAdvance /> */}
       {/* <ScreenBooking /> */}
       {/* <AddPriceSell /> */}
       {/* <ScreenImport /> */}
