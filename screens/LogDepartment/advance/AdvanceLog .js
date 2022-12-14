@@ -54,7 +54,7 @@ const AdvanceLog = ({ navigation }) => {
       if (res.data.success) {
         for (let i = 0; i < data.length; i++) {
           const id = data[i]._id;
-          console.log(id);
+          // console.log(id);
           const res1 = await clientAddItemAdvance.delete(url + id);
         }
         Alert.alert("Thêm Thành Công");

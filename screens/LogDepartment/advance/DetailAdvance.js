@@ -35,44 +35,32 @@ const DetailAdvance = () => {
         console.log(err);
       });
   }, []);
-  // console.log(data);
-  // const map2 = data.map((x) => x.ops);
 
-  // console.log(typeof map2);
+  // const totalOps = data
+  //   .map((item) => Number(item.money))
+  //   .reduce((prev, curr) => prev + curr, 0);
 
-  // console.log(data[0].ops);
-
-  // useEffect(() => {
-  //   clientAddItemAdvance
-  //     .get(url + id)
-  //     .then((res) => {
-  //       setData(res.data.itemAdvance);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }, []);
-
-  const newArray = () => {
-    var numbers = [];
-    for (var i = 0; i < data.length; i++) {
-      var money = data[i].money;
-      var username = data[i].username;
-      var reason = data[i].reason;
-      var status = data[i].status;
-      var date = data[i].date;
-      numbers.push([money, username, reason, status, date]);
-    }
-    // for (var i = 0; i < numbers.length; i++) {
-    //   let row = numbers[i];
-    //   let row1 = [];
-    //   row1.push(row);
-    //   const [childRow] = row1;
-    //   // console.log(row1);
-    //   return childRow;
-    // }
-    return numbers;
-  };
+  // console.log(totalOps);
+  // const newArray = () => {
+  //   var numbers = [];
+  //   for (var i = 0; i < data.length; i++) {
+  //     var money = data[i].money;
+  //     var username = data[i].username;
+  //     var reason = data[i].reason;
+  //     var status = data[i].status;
+  //     var date = data[i].date;
+  //     numbers.push([money, username, reason, status, date]);
+  //   }
+  // for (var i = 0; i < numbers.length; i++) {
+  //   let row = numbers[i];
+  //   let row1 = [];
+  //   row1.push(row);
+  //   const [childRow] = row1;
+  //   // console.log(row1);
+  //   return childRow;
+  // }
+  //   return numbers;
+  // };
 
   const generateExcel = () => {
     let row4 = newArray(); // [[1,2,3], [4,5]]
@@ -162,7 +150,7 @@ const DetailAdvance = () => {
             justifyContent: "space-between",
           }}
         >
-          <Text style={styles.textLable}>Lí do ứng: </Text>
+          <Text style={styles.textLable}>Lý do ứng: </Text>
           <Text style={styles.textDisplay}>{item.reason}</Text>
         </View>
         <View

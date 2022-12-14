@@ -110,7 +110,7 @@ const AddAdvance = ({ navigation }) => {
           value={advanceInfo.username}
         />
         <FormInput
-          label="Lí Do Ứng"
+          label="Lý Do Ứng"
           placeholder="Lí Do Ứng"
           onChangeText={(value) => handleOnChangeText(value, "reason")}
           value={advanceInfo.reason}

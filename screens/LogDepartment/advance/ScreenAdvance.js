@@ -12,6 +12,7 @@ const ScreenAdvance = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+        <Stack.Screen name="DetailAdvance" component={DetailAdvance} />
         <Stack.Screen name="AdvanceLog" component={AdvanceLog} />
         <Stack.Screen name="AddAdvance" component={AddAdvance} />
         <Stack.Screen name="DetailAdvance" component={DetailAdvance} />
