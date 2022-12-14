@@ -35,12 +35,24 @@ const DetailAdvance = () => {
         console.log(err);
       });
   }, []);
+  // console.log(data);
+  // const map2 = data.map((x) => x.ops);
 
-  const totalOps = data
-    .map((item) => Number(item.money))
-    .reduce((prev, curr) => prev + curr, 0);
+  // console.log(typeof map2);
 
-  console.log(totalOps);
+  // console.log(data[0].ops);
+
+  // useEffect(() => {
+  //   clientAddItemAdvance
+  //     .get(url + id)
+  //     .then((res) => {
+  //       setData(res.data.itemAdvance);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, []);
+
   const newArray = () => {
     var numbers = [];
     for (var i = 0; i < data.length; i++) {
@@ -150,7 +162,7 @@ const DetailAdvance = () => {
             justifyContent: "space-between",
           }}
         >
-          <Text style={styles.textLable}>Lý do ứng: </Text>
+          <Text style={styles.textLable}>Lí do ứng: </Text>
           <Text style={styles.textDisplay}>{item.reason}</Text>
         </View>
         <View
