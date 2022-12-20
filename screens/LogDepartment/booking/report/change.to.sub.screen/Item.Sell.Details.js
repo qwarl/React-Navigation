@@ -11,13 +11,13 @@ import { ipAddress } from "../../../../../contains/constant";
 
 const ItemSellDetails = ({ route, navigation }) => {
   const [data, setData] = useState(route.params.id);
+  // const id=route.params.id
   const [sellItem, setSellItem] = useState();
-  //   console.log("dataGetIdBy", data);
-  //   const idReport = route.params.id;
   // get sell item details from report
   const getAllSellItemDetails = async () => {
     const url = `api/report-log/getById/`;
     clientReport
+      // .get(`${ipAddress}/${url}` + data)
       .get(`${ipAddress}/${url}` + data)
       //   .then((res) => setSellItem(res.data.report.sellReport))
       .then((res) => setSellItem(res.data.report))
@@ -27,13 +27,15 @@ const ItemSellDetails = ({ route, navigation }) => {
     getAllSellItemDetails();
   }, []);
 
-  console.log("sellItem", sellItem);
+  // console.log("sellItem", sellItem);
 
   // show in flat list
   const renderItem = ({ item }) => {
     console.log("item123", item);
     return (
-      <TouchableOpacity>
+      <TouchableOpacity
+        onPress={()=>navigation.navigate("ItemSellDetailsInfo", { data:item })}
+      >
         <View style={styles.item}>
           <View style={{ flexDirection: "row" }}>
             <Text style={styles.textLable}>Loại phí: </Text>

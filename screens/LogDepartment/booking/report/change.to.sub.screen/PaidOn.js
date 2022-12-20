@@ -25,9 +25,9 @@ const PaidOn = ({ route, navigation }) => {
   }, []);
 
   const renderItem = ({ item }) => {
-    console.log("item1234", item.paymentFor);
+    console.log("item1234", item);
     return (
-      <TouchableOpacity>
+      <TouchableOpacity onPress={()=>navigation.navigate('ItemPaidOnDetailsInfo',{data:item._id})}>
         <View style={styles.item}>
           <View style={{ flexDirection: "row" }}>
             <Text style={styles.textLable}>Loại phí: </Text>

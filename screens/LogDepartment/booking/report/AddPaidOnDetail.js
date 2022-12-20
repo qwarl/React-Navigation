@@ -13,42 +13,46 @@ import clientReport from "../../../../api/clientReport";
 import { Dropdown } from "react-native-element-dropdown";
 import { CurrencyUnit, VAT, TypeOfFee } from "../../../../contains/constant";
 
-const AddBuyDetail = ({ route, navigation }) => {
+const AddPaidOnDetail = ({ route, navigation }) => {
   const idReportLog = route.params.data;
-  console.log("idReport", idReportLog);
 
-  const [buyItemDetails, setBuyItemDetails] = useState({
+  const [paidOnItemDetails, setPaidOnItemDetails] = useState({
     // idReportLog: route.params.data,
     typeOfFee: "",
-    quantity: "",
-    unitPrice: "",
-    currency: "VND",
-    // total: 0, // price of item = unitPrice * quantity
-    totalVND: 0, // price of item = unitPrice * quantity
-    totalUSD: 0, // price of item = unitPrice * quantity
-    totalEUR: 0, // price of item = unitPrice * quantity
-    changeToVND: 0, //total(USD/EUR) * exchangeRate. not inclueded VAT
-    changeToVNDVAT: 0, // actualPayment(USD/EUR) * exchangeRate. included VAT
-    VAT: 0,
-    exchangeRate: 0,
-    actualPaymentVND: 0, // total after VAT = total * ( 1 + VAT )
-    actualPaymentUSD: 0, // total after VAT
-    actualPaymentEUR: 0, // total after VAT
-    // approximatelyToVnd: 0, // if currency !== VND, show 0. else appreoximatelyToVnd == actualPaymentVND
-    note: "",
+    price: 0,
     invoiceNumber: "",
+    payer: "",
+    paymentFor: "",
+    paidBy: "",
   });
-  console.log(buyItemDetails);
+  console.log(paidOnItemDetails);
 
   const handleOnChangeText = (fieldName, value) => {
-    setBuyItemDetails({ ...buyItemDetails, [fieldName]: value });
+    setPaidOnItemDetails({ ...paidOnItemDetails, [fieldName]: value });
+  };
+
+  // add chi hộ
+  const createNewPaidOnItem = async () => {
+    console.log("create new paid on item");
+
+    try {
+      const res = await clientReport.post("/add-paid-on-behalf-of-item-details", {
+        paidOnItemDetails: paidOnItemDetails,
+        idReportLog: idReportLog,
+      });
+      if (res.data.success) {
+        Alert.alert("Thêm Thành Công");
+        // navigation.goBack();
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
   return (
     <>
       <ScrollView>
         <Text style={styles.input}>Loại phí</Text>
-
         <View style={styles.containerDropDown}>
           <Dropdown
             style={[styles.dropdown]}
@@ -62,69 +66,71 @@ const AddBuyDetail = ({ route, navigation }) => {
             labelField="label"
             valueField="value"
             searchPlaceholder="Search..."
-            value={buyItemDetails.typeOfFee}
+            value={paidOnItemDetails.typeOfFee}
             onChange={(value) => {
-              setBuyItemDetails({
-                ...buyItemDetails,
+              setPaidOnItemDetails({
+                ...paidOnItemDetails,
                 typeOfFee: value.value,
               });
             }}
           />
-        </View>
-
-
-        <FormInput
-          label="Số lượng"
-          placeholder="Số lượng"
-          onChangeText={(value) => handleOnChangeText("quantity", value)}
-          value={buyItemDetails.quantity}
-        />
-        <FormInput
-          label="Đơn giá"
-          placeholder="Đơn giá"
-          onChangeText={(value) => handleOnChangeText("unitPrice", value)}
-          value={buyItemDetails.unitPrice}
-        />
-        {/* dropdown pick currency */}
-        <Text style={styles.input}>Đồng tiền</Text>
-        <View style={styles.containerDropDown}>
-          <Dropdown
-            style={[styles.dropdown]}
-            placeholderStyle={styles.placeholderStyle}
-            selectedTextStyle={styles.selectedTextStyle}
-            inputSearchStyle={styles.inputSearchStyle}
-            iconStyle={styles.iconStyle}
-            data={CurrencyUnit}
-            search
-            maxHeight={300}
-            labelField="label"
-            valueField="value"
-            searchPlaceholder="Search..."
-            value={buyItemDetails.currency}
-            onChange={(value) => {
-              setBuyItemDetails({ ...buyItemDetails, currency: value.value });
-            }}
+          <FormInput
+            label="Số tiền"
+            placeholder="Số tiền"
+            onChangeText={(value) => handleOnChangeText("price", value)}
+            value={paidOnItemDetails.price}
+          />
+          <FormInput
+            label="Số hóa đơn"
+            placeholder="Số hóa đơn"
+            onChangeText={(value) => handleOnChangeText("invoiceNumber", value)}
+            value={paidOnItemDetails.invoiceNumber}
+          />
+          <FormInput
+            label="Thu"
+            placeholder="Thu"
+            onChangeText={(value) => handleOnChangeText("payer", value)}
+            value={paidOnItemDetails.payer}
+          />
+          <FormInput
+            label="T/T cho"
+            placeholder="T/T cho"
+            onChangeText={(value) => handleOnChangeText("paymentFor", value)}
+            value={paidOnItemDetails.paymentFor}
+          />
+          <FormInput
+            label="Tên người chi"
+            placeholder="Tên người chi"
+            onChangeText={(value) => handleOnChangeText("paidBy", value)}
+            value={paidOnItemDetails.paidBy}
           />
         </View>
-
-        {/* <FormInput
-          label="Đồng tiền"
-          placeholder="Đồng tiền"
-          onChangeText={(value) => handleOnChangeText("currency", value)}
-          value={buyItemDetails.currency}
-        /> */}
-        <FormInput
-          label="Tỉ giá"
-          placeholder="Tỉ giá"
-          onChangeText={(value) => handleOnChangeText("exchangeRate", value)}
-          value={buyItemDetails.exchangeRate}
-        />
       </ScrollView>
+      <View
+        style={{
+          flex: 1,
+          marginVertical: 30,
+          marginHorizontal: 80,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <TouchableOpacity
+          style={[styles.buttonInsert]}
+          onPress={() => createNewPaidOnItem()}
+        >
+          <Text
+            style={{ fontSize: 18, color: color.primary, fontWeight: "bold" }}
+          >
+            Thêm
+          </Text>
+        </TouchableOpacity>
+      </View>
     </>
   );
 };
 
-export default AddBuyDetail;
+export default AddPaidOnDetail;
 
 const styles = StyleSheet.create({
   container: {

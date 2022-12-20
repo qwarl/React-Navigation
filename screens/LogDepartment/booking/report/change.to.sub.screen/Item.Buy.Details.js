@@ -1,9 +1,15 @@
-import { StyleSheet, Text, View,FlatList,TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  TouchableOpacity,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import clientReport from "../../../../../api/clientReport";
 import { ipAddress } from "../../../../../contains/constant";
 
-const ItemBuyDetails = ({route,navigation}) => {
+const ItemBuyDetails = ({ route, navigation }) => {
   const [data, setData] = useState(route.params.id);
   const [buyItem, setBuyItem] = useState();
 
@@ -23,7 +29,11 @@ const ItemBuyDetails = ({route,navigation}) => {
   const renderItem = ({ item }) => {
     console.log("item123", item);
     return (
-      <TouchableOpacity>
+      <TouchableOpacity
+        onPress={() =>
+          navigation.navigate("ItemBuyDetailsInfo", { data: item._id })
+        }
+      >
         <View style={styles.item}>
           <View style={{ flexDirection: "row" }}>
             <Text style={styles.textLable}>Loại phí: </Text>
@@ -81,31 +91,31 @@ const ItemBuyDetails = ({route,navigation}) => {
 export default ItemBuyDetails;
 
 const styles = StyleSheet.create({
-    list: {
-        flex: 1,
-        padding: 8,
-      },
-      displayData: {
-        flex: 1,
-        width: "100%",
-      },
-      textDisplay: {
-        fontSize: 19,
-        lineHeight: 25,
-        alignItems: "center",
-      },
-      textLable: {
-        fontSize: 18,
-        fontWeight: "bold",
-        lineHeight: 25,
-      },
-      item: {
-        marginLeft: 10,
-        marginBottom: 10,
-        padding: 5,
-        borderRadius: 10,
-        borderStyle: "solid",
-        borderColor: "#0176E4",
-        borderWidth: 1,
-      },
+  list: {
+    flex: 1,
+    padding: 8,
+  },
+  displayData: {
+    flex: 1,
+    width: "100%",
+  },
+  textDisplay: {
+    fontSize: 19,
+    lineHeight: 25,
+    alignItems: "center",
+  },
+  textLable: {
+    fontSize: 18,
+    fontWeight: "bold",
+    lineHeight: 25,
+  },
+  item: {
+    marginLeft: 10,
+    marginBottom: 10,
+    padding: 5,
+    borderRadius: 10,
+    borderStyle: "solid",
+    borderColor: "#0176E4",
+    borderWidth: 1,
+  },
 });

@@ -32,23 +32,23 @@ const ProfitReport = ({ route, navigation }) => {
         .get(`${ipAddress}/${url}` + data)
         .then((data) => setDataGetById(data.data.report));
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
-  console.log("dataGetById", data)
+  };
+  console.log("dataGetById", data);
   const changeToExchangeRateScreen = () => {
-    navigation.navigate("AddExchangeRate")
-    console.log('changeToExchangeRateScreen');
-  }
-  const changeToSellDetailsScreen=()=>{
-    navigation.navigate('ItemSellDetails',{id:data})
-  }
-  const changeToBuyDetailsScreen=()=>{
-    navigation.navigate('ItemBuyDetails',{id:data})
-  }
-  const changeToPaidOnDetailsScreen=()=>{
-    navigation.navigate('PaidOn',{id:data})
-  }
+    navigation.navigate("AddExchangeRate", { id: data });
+    console.log("changeToExchangeRateScreen");
+  };
+  const changeToSellDetailsScreen = () => {
+    navigation.navigate("ItemSellDetails", { id: data });
+  };
+  const changeToBuyDetailsScreen = () => {
+    navigation.navigate("ItemBuyDetails", { id: data });
+  };
+  const changeToPaidOnDetailsScreen = () => {
+    navigation.navigate("PaidOn", { id: data });
+  };
 
   return (
     <>
@@ -128,10 +128,6 @@ const ProfitReport = ({ route, navigation }) => {
               <Text style={styles.textDisplay}>Tên hàng:</Text>
               <Text style={styles.textContent}>{dataGetById.info.name}</Text>
             </View>
-            <View style={{ flexDirection: "row" }}>
-              <Text style={styles.textDisplay}>Lợi nhuận VAT: </Text>
-              <Text style={styles.textContent}>{dataGetById.profitVAT}</Text>
-            </View>
 
             <View style={{ flexDirection: "row" }}>
               <TouchableOpacity onPress={changeToSellDetailsScreen}>
@@ -159,10 +155,28 @@ const ProfitReport = ({ route, navigation }) => {
                 <Text style={styles.textContent}>{dataGetById.profitVND}</Text>
               </TouchableOpacity>
             </View>
+            {/* <View style={{ flexDirection: "row" }}>
+              <Text style={styles.textDisplay}>Lợi nhuận: </Text>
+              <Text style={styles.textContent}>{dataGetById.totalBuyVAT}</Text>
+            </View> */}
+            <View style={{ flexDirection: "row" }}>
+              <Text style={styles.textDisplay}>Total Buy VAT: </Text>
+              <Text style={styles.textContent}>{dataGetById.totalBuyVAT}</Text>
+            </View>
+            <View style={{ flexDirection: "row" }}>
+              <Text style={styles.textDisplay}>Total Sell VAT: </Text>
+              <Text style={styles.textContent}>{dataGetById.totalSellVAT}</Text>
+            </View>
+            <View style={{ flexDirection: "row" }}>
+              <Text style={styles.textDisplay}>Lợi nhuận VAT: </Text>
+              <Text style={styles.textContent}>{dataGetById.profitVAT}</Text>
+            </View>
             <View style={{ flexDirection: "row" }}>
               <TouchableOpacity onPress={changeToExchangeRateScreen}>
                 <Text style={styles.textDisplay}>Tỉ giá:</Text>
-                <Text style={styles.textContent}>{dataGetById.exchangeRate}</Text>
+                <Text style={styles.textContent}>
+                  {dataGetById.exchangeRate}
+                </Text>
                 {/* (
                 {dataGetById.exchangeRate}==0||{dataGetById.exchangeRate}==null
                 )
@@ -198,7 +212,7 @@ const ProfitReport = ({ route, navigation }) => {
               <TouchableOpacity
                 style={[styles.buttonUpdate]}
                 onPress={() => {
-                  navigation.replace("AddBuyDetail", {
+                  navigation.navigate("AddBuyDetail", {
                     data: data,
                   });
                 }}
@@ -213,6 +227,46 @@ const ProfitReport = ({ route, navigation }) => {
                   Nhập giá mua
                 </Text>
               </TouchableOpacity>
+              
+            </View>
+            <View style={styles.styleButton}>
+              <TouchableOpacity
+                style={[styles.buttonUpdate]}
+                onPress={() => {
+                  navigation.navigate("AddPaidOnDetail", {
+                    data: data,
+                  });
+                }}
+              >
+                <Text
+                  style={{
+                    fontSize: 18,
+                    color: color.primary,
+                    fontWeight: "bold",
+                  }}
+                >
+                  Nhập chi hộ
+                </Text>
+              </TouchableOpacity>
+              {/* <TouchableOpacity
+                style={[styles.buttonUpdate]}
+                onPress={() => {
+                  navigation.navigate("AddBuyDetail", {
+                    data: data,
+                  });
+                }}
+              >
+                <Text
+                  style={{
+                    fontSize: 18,
+                    color: color.primary,
+                    fontWeight: "bold",
+                  }}
+                >
+                  Nhập giá mua
+                </Text>
+              </TouchableOpacity> */}
+              
             </View>
 
             {/* <View style={styles.styleButton}>
