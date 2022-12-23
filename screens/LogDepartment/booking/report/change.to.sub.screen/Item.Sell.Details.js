@@ -26,7 +26,7 @@ const ItemSellDetails = ({ route, navigation }) => {
     getAllSellItemDetails();
   }, []);
 
-  console.log("add them", sellItem);
+  console.log("add them",route.params);
 
   // show in flat list
   const renderItem = ({ item }) => {
@@ -34,7 +34,7 @@ const ItemSellDetails = ({ route, navigation }) => {
     return (
       <TouchableOpacity
         onPress={() =>
-          navigation.navigate("ItemSellDetailsInfo", { data: item })
+          navigation.navigate("ItemSellDetailsInfo", { data: item,code:route.params.code })
         }
       >
         <View style={styles.item}>

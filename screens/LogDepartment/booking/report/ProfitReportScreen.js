@@ -24,18 +24,17 @@ const ProfitReportScreen = ({ navigation }) => {
   useEffect(() => {
     getAllReport();
   }, []);
-  console.log('hihihi',report);
-
+  // console.log("hihihi", report);
   // show item in flat list
   const renderItem = ({ item }) => {
     console.log("itemmmmmmmmmmmmmmmmm", item);
     return (
       <TouchableOpacity
         onPress={() =>
-          navigation.navigate(
-            "ProfitReport",
-             { data1: item._id }
-          )
+          navigation.navigate("ProfitReport", {
+            data1: item._id,
+            code: 'PROFIT_REPORT',
+          })
         }
       >
         <View style={styles.item}>
@@ -44,28 +43,30 @@ const ProfitReportScreen = ({ navigation }) => {
             <Text style={styles.textDisplayCode}>{item.info.idfile}</Text>
           </View>
           <View style={{ flexDirection: "row" }}>
-            <Text style={styles.textLable}>Mã Báo Giá:</Text>
+            <Text style={styles.textLable}>Mã Báo Giá: </Text>
             <Text style={styles.textDisplay}>{item.info.code}</Text>
           </View>
           <View style={{ flexDirection: "row" }}>
-            <Text style={styles.textLable}>Total Sell: </Text>
-            <Text style={styles.textDisplay}>{item.totalSellVND}</Text>
+            <Text style={styles.textLable}>Khách hàng: </Text>
+            <Text style={styles.textDisplay}>{item.info.customer}</Text>
           </View>
           <View style={{ flexDirection: "row" }}>
-            <Text style={styles.textLable}>Total Buy:</Text>
-            <Text style={styles.textDisplay}>{item.totalBuy}</Text>
+            <Text style={styles.textLable}>Docs: </Text>
+            <Text style={styles.textDisplay}>{item.info.docs}</Text>
           </View>
           <View style={{ flexDirection: "row" }}>
-            <Text style={styles.textLable}>Chi hộ:</Text>
-            <Text style={styles.textDisplay}>{item.totalPaidOnBehalfOf}</Text>
+            <Text style={styles.textLable}>Sales: </Text>
+            <Text style={styles.textDisplay}>{item.info.sales}</Text>
           </View>
           <View style={{ flexDirection: "row" }}>
-            <Text style={styles.textLable}>Profit:</Text>
-            <Text style={styles.textDisplay}>{item.profitVND}</Text>
+            <Text style={styles.textLable}>Số tờ khai: </Text>
+            <Text style={styles.textDisplay}>
+              {item.info.numberdeclaration}
+            </Text>
           </View>
           <View style={{ flexDirection: "row" }}>
-            <Text style={styles.textLable}>Profit VAT:</Text>
-            <Text style={styles.textDisplay}>{item.profitVAT}</Text>
+            <Text style={styles.textLable}>Ngày tờ khai: </Text>
+            <Text style={styles.textDisplay}>{item.info.daydeclaration}</Text>
           </View>
         </View>
       </TouchableOpacity>

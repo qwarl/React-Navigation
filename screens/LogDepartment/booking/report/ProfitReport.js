@@ -13,8 +13,11 @@ import { useIsFocused } from "@react-navigation/native";
 
 const ProfitReport = ({ route, navigation }) => {
   const [data, setData] = useState(route.params.data1);
+  const code = route.params.code;
+  console.log("code", code);
+  // console.log('code',route.params);
   const [dataGetById, setDataGetById] = useState();
-  console.log("data hahaha", data);
+  // console.log("data hahaha", data);
 
   const isFocused = useIsFocused();
 
@@ -38,20 +41,35 @@ const ProfitReport = ({ route, navigation }) => {
       console.log(error);
     }
   };
-  console.log("dataGetById", data);
-  const changeToExchangeRateScreen = () => {
-    navigation.navigate("AddExchangeRate", { id: data });
-    console.log("changeToExchangeRateScreen");
-  };
-  const changeToSellDetailsScreen = () => {
-    navigation.navigate("ItemSellDetails", { id: data });
-  };
-  const changeToBuyDetailsScreen = () => {
-    navigation.navigate("ItemBuyDetails", { id: data });
-  };
-  const changeToPaidOnDetailsScreen = () => {
-    navigation.navigate("PaidOn", { id: data });
-  };
+  // if (code === "PROFIT_REPORT") {
+    const changeToExchangeRateScreen = () => {
+      navigation.navigate("AddExchangeRate", { id: data });
+      console.log("changeToExchangeRateScreen");
+    };
+    const changeToSellDetailsScreen = () => {
+      navigation.navigate("ItemSellDetails", { id: data,code:code });
+    };
+    const changeToBuyDetailsScreen = () => {
+      navigation.navigate("ItemBuyDetails", { id: data,code:code });
+    };
+    const changeToPaidOnDetailsScreen = () => {
+      navigation.navigate("PaidOn", { id: data,code:code });
+    };
+  // }else if(code === "WATCH_AND_UPDATE"){
+  //   const changeToExchangeRateScreen = () => {
+  //     navigation.navigate("AddExchangeRate", { id: data });
+  //     console.log("changeToExchangeRateScreen");
+  //   };
+  //   const changeToSellDetailsScreen = () => {
+  //     navigation.navigate("ItemSellDetails", { id: data,code:code });
+  //   };
+  //   const changeToBuyDetailsScreen = () => {
+  //     navigation.navigate("ItemBuyDetails", { id: data,code:code });
+  //   };
+  //   const changeToPaidOnDetailsScreen = () => {
+  //     navigation.navigate("PaidOn", { id: data,code:code });
+  //   };
+  // }
 
   return (
     <>
@@ -149,15 +167,13 @@ const ProfitReport = ({ route, navigation }) => {
             <View style={{ flexDirection: "row" }}>
               <TouchableOpacity onPress={changeToSellDetailsScreen}>
                 <Text style={styles.textDisplay}>Total Sell:</Text>
-              <Text style={styles.textContent}>{dataGetById.totalSell}</Text>
+                <Text style={styles.textContent}>{dataGetById.totalSell}</Text>
               </TouchableOpacity>
             </View>
             <View style={{ flexDirection: "row" }}>
               <TouchableOpacity onPress={changeToBuyDetailsScreen}>
                 <Text style={styles.textDisplay}>Total Buy:</Text>
-                <Text style={styles.textContent}>
-                  {dataGetById.totalBuy}
-                </Text>
+                <Text style={styles.textContent}>{dataGetById.totalBuy}</Text>
               </TouchableOpacity>
             </View>
             <View style={{ flexDirection: "row" }}>
@@ -169,12 +185,10 @@ const ProfitReport = ({ route, navigation }) => {
               </TouchableOpacity>
             </View>
             <View style={{ flexDirection: "row" }}>
-              <TouchableOpacity onPress={console.log("z")}>
-                <Text style={styles.textDisplay}>Lợi nhuận:</Text>
-                <Text style={styles.textContent}>
-                  {dataGetById.profit}
-                </Text>
-              </TouchableOpacity>
+              {/* <TouchableOpacity onPress={console.log("z")}> */}
+              <Text style={styles.textDisplay}>Lợi nhuận:</Text>
+              <Text style={styles.textContent}>{dataGetById.profit}</Text>
+              {/* </TouchableOpacity> */}
             </View>
             {/* <View style={{ flexDirection: "row" }}>
               <Text style={styles.textDisplay}>Lợi nhuận: </Text>
@@ -188,15 +202,11 @@ const ProfitReport = ({ route, navigation }) => {
             </View>
             <View style={{ flexDirection: "row" }}>
               <Text style={styles.textDisplay}>Total Buy VAT: </Text>
-              <Text style={styles.textContent}>
-                {dataGetById.totalBuyVAT}
-              </Text>
+              <Text style={styles.textContent}>{dataGetById.totalBuyVAT}</Text>
             </View>
             <View style={{ flexDirection: "row" }}>
               <Text style={styles.textDisplay}>Lợi nhuận VAT: </Text>
-              <Text style={styles.textContent}>
-                {dataGetById.profitVAT}
-              </Text>
+              <Text style={styles.textContent}>{dataGetById.profitVAT}</Text>
             </View>
             <View style={{ flexDirection: "row" }}>
               <TouchableOpacity onPress={changeToExchangeRateScreen}>
@@ -217,64 +227,66 @@ const ProfitReport = ({ route, navigation }) => {
                 ) */}
               </TouchableOpacity>
             </View>
-            <View style={styles.styleButton}>
-              <TouchableOpacity
-                style={[styles.buttonUpdate]}
-                onPress={() => {
-                  navigation.navigate("AddSellDetail", {
-                    data: data,
-                  });
-                }}
-              >
-                <Text
-                  style={{
-                    fontSize: 18,
-                    color: color.primary,
-                    fontWeight: "bold",
-                  }}
-                >
-                  Nhập giá bán
-                </Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={[styles.buttonUpdate]}
-                onPress={() => {
-                  navigation.navigate("AddBuyDetail", {
-                    data: data,
-                  });
-                }}
-              >
-                <Text
-                  style={{
-                    fontSize: 18,
-                    color: color.primary,
-                    fontWeight: "bold",
-                  }}
-                >
-                  Nhập giá mua
-                </Text>
-              </TouchableOpacity>
-            </View>
-            <View style={styles.styleButton}>
-              <TouchableOpacity
-                style={[styles.buttonUpdate]}
-                onPress={() => {
-                  navigation.navigate("AddPaidOnDetail", {
-                    data: data,
-                  });
-                }}
-              >
-                <Text
-                  style={{
-                    fontSize: 18,
-                    color: color.primary,
-                    fontWeight: "bold",
-                  }}
-                >
-                  Nhập chi hộ
-                </Text>
-              </TouchableOpacity>
-              {/* <TouchableOpacity
+            {code === "PROFIT_REPORT" ? (
+              <>
+                <View style={styles.styleButton}>
+                  <TouchableOpacity
+                    style={[styles.buttonUpdate]}
+                    onPress={() => {
+                      navigation.navigate("AddSellDetail", {
+                        data: data,
+                      });
+                    }}
+                  >
+                    <Text
+                      style={{
+                        fontSize: 18,
+                        color: color.primary,
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Nhập giá bán
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={[styles.buttonUpdate]}
+                    onPress={() => {
+                      navigation.navigate("AddBuyDetail", {
+                        data: data,
+                      });
+                    }}
+                  >
+                    <Text
+                      style={{
+                        fontSize: 18,
+                        color: color.primary,
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Nhập giá mua
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.styleButton}>
+                  <TouchableOpacity
+                    style={[styles.buttonUpdate]}
+                    onPress={() => {
+                      navigation.navigate("AddPaidOnDetail", {
+                        data: data,
+                      });
+                    }}
+                  >
+                    <Text
+                      style={{
+                        fontSize: 18,
+                        color: color.primary,
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Nhập chi hộ
+                    </Text>
+                  </TouchableOpacity>
+                  {/* <TouchableOpacity
                 style={[styles.buttonUpdate]}
                 onPress={() => {
                   navigation.navigate("AddBuyDetail", {
@@ -292,38 +304,9 @@ const ProfitReport = ({ route, navigation }) => {
                   Nhập giá mua
                 </Text>
               </TouchableOpacity> */}
-            </View>
-
-            {/* <View style={styles.styleButton}>
-          <TouchableOpacity
-            style={[styles.buttonUpdate]}
-            onPress={() => {
-              navigation.replace("UpdateBooking", {
-                data: data,
-              });
-            }}
-          >
-            <Text
-              style={{ fontSize: 18, color: color.primary, fontWeight: "bold" }}
-            >
-              Cập nhật
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={[styles.buttonUpdate]}
-            onPress={() => {
-              navigation.replace("ProfitReport", {
-                data: data,
-              });
-            }}
-          >
-            <Text
-              style={{ fontSize: 18, color: color.primary, fontWeight: "bold" }}
-            >
-              Báo cáo lợi nhuận
-            </Text>
-          </TouchableOpacity>
-        </View> */}
+                </View>
+              </>
+            ) : null}
           </View>
         </ScrollView>
       )}

@@ -17,7 +17,8 @@ const ItemPaidOnDetailsInfo = ({ route, navigation }) => {
   // const id = route.params.data;
 
   const [paidOnItemDetails, setPaidOnItemDetails] = useState(route.params.data);
-
+  const id = route.params.data._id;
+  console.log("id", id);
   const handleOnChangeText = (fieldName, value) => {
     setPaidOnItemDetails({ ...paidOnItemDetails, [fieldName]: value });
   };
@@ -27,12 +28,9 @@ const ItemPaidOnDetailsInfo = ({ route, navigation }) => {
     console.log("update paid on item");
 
     try {
-      const res = await clientReport.put(
-        `update-paid-on-item-details/${paidOnItemDetails._id}`,
-        {
-          ...paidOnItemDetails,
-        }
-      );
+      const res = await clientReport.put(`update-paid-on-item-details/`+id, {
+        ...paidOnItemDetails,
+      });
       if (res.data.success) {
         Alert.alert("Cập nhật Thành Công");
         // navigation.goBack();
@@ -112,7 +110,7 @@ const ItemPaidOnDetailsInfo = ({ route, navigation }) => {
       >
         <TouchableOpacity
           style={[styles.buttonInsert]}
-          onPress={() => updatePaidOnItem()}
+          onPress={() => {updatePaidOnItem()}}
         >
           <Text
             style={{ fontSize: 18, color: color.primary, fontWeight: "bold" }}
