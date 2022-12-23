@@ -18,16 +18,17 @@ const ItemBuyDetails = ({ route, navigation }) => {
     clientReport
       .get(`${ipAddress}/${url}` + data)
       //   .then((res) => setBuyItem(res.data.report.buyReport))
-      .then((res) => setBuyItem(res.data.report))
+      .then((res) => setBuyItem(res.data))
       .catch((err) => console.log(err));
   };
   useEffect(() => {
     getAllBuyItemDetails();
   }, []);
 
+  console.log("buy", buyItem);
   // show in flat list
   const renderItem = ({ item }) => {
-    console.log("item123", item);
+    console.log("123item", item);
     return (
       <TouchableOpacity
         onPress={() =>
@@ -53,7 +54,17 @@ const ItemBuyDetails = ({ route, navigation }) => {
           </View>
           <View style={{ flexDirection: "row" }}>
             <Text style={styles.textLable}>Total: </Text>
-            <Text style={styles.textDisplay}>{item.total}</Text>
+            {/* <Text style={styles.textDisplay}>{item.total}</Text> */}
+            <Text style={styles.textDisplay}>
+              {/* {item.total} */}
+              {item.totalUSD !== 0
+                ? `${item.totalUSD} USD ~ ${item.changeToVND} VND`
+                : null}
+              {item.totalEUR !== 0
+                ? `${item.totalEUR} EUR ~ ${item.changeToVND} VND`
+                : null}
+              {item.totalVND !== 0 ? `${item.totalVND} VND` : null}
+            </Text>
           </View>
           <View style={{ flexDirection: "row" }}>
             <Text style={styles.textLable}>VAT: </Text>
@@ -61,7 +72,16 @@ const ItemBuyDetails = ({ route, navigation }) => {
           </View>
           <View style={{ flexDirection: "row" }}>
             <Text style={styles.textLable}>Total (VAT): </Text>
-            <Text style={styles.textDisplay}>{item.actualPayment}</Text>
+            <Text style={styles.textDisplay}>
+              {/* {item.actualPayment} */}
+              {item.actualPaymentUSD !== 0
+                ? `${item.actualPaymentUSD} USD ~ ${item.changeToVNDVAT} VND`
+                : null}
+              {item.actualPaymentEUR !== 0
+                ? `${item.actualPaymentEUR} EUR ~ ${item.changeToVNDVAT} VND`
+                : null}
+              {item.totalVND !== 0 ? `${item.totalVND} VND` : null}
+            </Text>
           </View>
         </View>
       </TouchableOpacity>
@@ -70,20 +90,28 @@ const ItemBuyDetails = ({ route, navigation }) => {
 
   return (
     <>
-      {buyItem?.buyReport && (
+      {buyItem?.report && (
         <View style={{ flex: 5 }}>
           <View style={styles.displayData}>
             <FlatList
               keyExtractor={(item) => item._id}
               style={styles.list}
-              data={buyItem.buyReport}
+              data={buyItem.report.buyReport}
               renderItem={renderItem}
             />
           </View>
         </View>
       )}
-      <Text>Total Sell: </Text>
-      {buyItem?.buyReport && <Text>{buyItem.totalBuy}</Text>}
+      <View style={{flexDirection:'row',justifyContent:"space-between"}}>
+        <View>
+          <Text>Total Buy: </Text>
+          {buyItem?.report && <Text>{buyItem.totalBuy}</Text>}
+        </View>
+        <View>
+          <Text>Total Buy (VAT): </Text>
+          {buyItem?.report && <Text>{buyItem.totalBuyVAT}</Text>}
+        </View>
+      </View>
     </>
   );
 };

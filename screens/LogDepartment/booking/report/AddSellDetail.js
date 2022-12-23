@@ -21,7 +21,7 @@ const AddSellDetail = ({ route, navigation }) => {
   const [sellItemDetails, setSellItemDetails] = useState({
     // idReportLog: route.params.data,
     typeOfFee: "",
-    quantity: "",
+    quantity: 1,
     unitPrice: "",
     currency: "VND",
     // total: 0, // price of item = unitPrice * quantity
@@ -47,13 +47,18 @@ const AddSellDetail = ({ route, navigation }) => {
         ...prevState,
         approximatelyToVnd: sellItemDetails.actualPaymentVND,
       }));
-    } else {
+    } else if (sellItemDetails.currency==='USD'){
       setSellItemDetails((prevState) => ({
         ...prevState,
-        approximatelyToVnd: 0,
+        approximatelyToVnd: sellItemDetails.changeToVNDVAT,
       }));
+    }else{
+      setSellItemDetails((prevState)=>({
+        ...prevState,
+        approximatelyToVnd:0
+      }))
     }
-  }, [sellItemDetails.actualPaymentVND, sellItemDetails.currency]);
+  }, [sellItemDetails.actualPaymentVND, sellItemDetails.currency,sellItemDetails.changeToVNDVAT]);
 
   // quy doi ra tien viet tong tien truoc thue
   useEffect(() => {
@@ -250,7 +255,7 @@ const AddSellDetail = ({ route, navigation }) => {
           label="Số lượng"
           placeholder="Số lượng"
           onChangeText={(value) => handleOnChangeText("quantity", value)}
-          value={sellItemDetails.quantity}
+          value={`${sellItemDetails.quantity}`}
         />
         <FormInput
           label="Đơn giá"
@@ -289,6 +294,7 @@ const AddSellDetail = ({ route, navigation }) => {
         <FormInput
           label="Tỉ giá"
           placeholder="Tỉ giá"
+          inputType='number-pad'
           onChangeText={(value) => handleOnChangeText("exchangeRate", value)}
           value={sellItemDetails.exchangeRate}
         />
@@ -385,14 +391,6 @@ const AddSellDetail = ({ route, navigation }) => {
             : 0} */}
           {sellItemDetails.approximatelyToVnd} VND
         </Text>
-        {/* <FormInput
-          label="Total (VND)"
-          placeholder="Total (VND)"
-          onChangeText={(value) =>
-            handleOnChangeText("approximatelyToVnd", value)
-          }
-          value={sellItemDetails.approximatelyToVnd}
-        /> */}
         <FormInput
           label="Số hóa đơn"
           placeholder="Số hóa đơn"

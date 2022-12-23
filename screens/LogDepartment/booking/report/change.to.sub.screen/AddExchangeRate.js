@@ -37,27 +37,24 @@ const AddExchangeRate = ({ route, navigation }) => {
   return (
     <>
       <FormInput
-        label="Loại phí"
-        placeholder="Loại phí"
+        label="Tỉ giá"
+        placeholder="Tỉ giá"
         onChangeText={(value) => handleOnChangeText("exchangeRate", value)}
         value={exchangeRate.exchangeRate}
       />
       <TouchableOpacity
         style={[styles.buttonUpdate]}
-        onPress={() => {
-          navigation.replace("AddBuyDetail", {
-            data: data,
-          });
-        }}
+        onPress={() => updateExchangeRate()}
       >
         <Text
           style={{
             fontSize: 18,
             color: color.primary,
             fontWeight: "bold",
+            // alignSelf:'center'
           }}
         >
-          Nhập giá mua
+          Thêm
         </Text>
       </TouchableOpacity>
     </>

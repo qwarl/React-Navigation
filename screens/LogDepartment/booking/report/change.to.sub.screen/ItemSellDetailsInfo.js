@@ -29,7 +29,7 @@ const ItemSellDetailsInfo = ({ route, navigation }) => {
           </View>
           <View style={{ flexDirection: "row" }}>
             <Text style={styles.textLable}>Đồng tiền: </Text>
-            <Text style={styles.textDisplay}>{data.curency}</Text>
+            <Text style={styles.textDisplay}>{data.currency}</Text>
           </View>
           <View style={{ flexDirection: "row" }}>
             <Text style={styles.textLable}>Tỉ giá: </Text>
@@ -37,19 +37,31 @@ const ItemSellDetailsInfo = ({ route, navigation }) => {
           </View>
           <View style={{ flexDirection: "row" }}>
             <Text style={styles.textLable}>Total: </Text>
-            <Text style={styles.textDisplay}>{data.total}</Text>
+            <Text style={styles.textDisplay}>
+              {data.total}
+              {data.totalUSD !== 0 ? `${data.totalUSD} USD` : null}
+              {data.totalEUR !== 0 ? `${data.totalEUR} EUR` : null}
+              {data.totalVND !== 0 ? `${data.totalVND} VND` : null}
+            </Text>
           </View>
           <View style={{ flexDirection: "row" }}>
             <Text style={styles.textLable}>VAT: </Text>
             <Text style={styles.textDisplay}>{data.VAT}</Text>
           </View>
           <View style={{ flexDirection: "row" }}>
-            <Text style={styles.textLable}>Total: </Text>
-            <Text style={styles.textDisplay}>{data.total}</Text>
-          </View>
-          <View style={{ flexDirection: "row" }}>
             <Text style={styles.textLable}>Thành tiền: </Text>
-            <Text style={styles.textDisplay}>{data.actualPayment}</Text>
+            <Text style={styles.textDisplay}>
+              {/* {data.actualPayment} */}
+              {data.actualPaymentVND !== 0
+                ? `${data.actualPaymentVND} VND`
+                : ""}
+              {data.actualPaymentEUR !== 0
+                ? `${data.actualPaymentEUR} EUR`
+                : ""}
+              {data.actualPaymentUSD !== 0
+                ? `${data.actualPaymentUSD} USD`
+                : ""}
+            </Text>
           </View>
           <View style={{ flexDirection: "row" }}>
             <Text style={styles.textLable}>Total (VND): </Text>
@@ -57,7 +69,7 @@ const ItemSellDetailsInfo = ({ route, navigation }) => {
           </View>
           <View style={{ flexDirection: "row" }}>
             <Text style={styles.textLable}>Số hóa đơn: </Text>
-            <Text style={styles.invoiceNumber}>{data.approximatelyToVnd}</Text>
+            <Text style={styles.invoiceNumber}>{data.invoiceNumber}</Text>
           </View>
           <View style={{ flexDirection: "row" }}>
             <Text style={styles.textLable}>Ghi chú: </Text>
@@ -65,7 +77,6 @@ const ItemSellDetailsInfo = ({ route, navigation }) => {
           </View>
         </View>
       </ScrollView>
-      
     </>
   );
 };

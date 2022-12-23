@@ -17,17 +17,17 @@ const PaidOn = ({ route, navigation }) => {
     clientReport
       .get(`${ipAddress}/${url}` + data)
       //   .then((res) => setPaidOn(res.data.report.sellReport))
-      .then((res) => setPaidOn(res.data.report))
+      .then((res) => setPaidOn(res.data))
       .catch((err) => console.log(err));
   };
   useEffect(() => {
     getAllPaidOnItemDetails();
   }, []);
-
+console.log('paidOn',paidOn);
   const renderItem = ({ item }) => {
-    console.log("item1234", item);
+    // console.log("item1234", item);
     return (
-      <TouchableOpacity onPress={()=>navigation.navigate('ItemPaidOnDetailsInfo',{data:item._id})}>
+      // <TouchableOpacity onPress={()=>navigation.navigate('ItemPaidOnDetailsInfo',{data:item})}>
         <View style={styles.item}>
           <View style={{ flexDirection: "row" }}>
             <Text style={styles.textLable}>Loại phí: </Text>
@@ -54,26 +54,26 @@ const PaidOn = ({ route, navigation }) => {
             <Text style={styles.textDisplay}>{item.paidBy}</Text>
           </View>
         </View>
-      </TouchableOpacity>
+      // </TouchableOpacity>
     );
   };
 
   return (
     <>
-      {paidOn?.paidOnBehalfOfReport && (
+      {paidOn?.report && (
         <View style={{ flex: 5 }}>
           <View style={styles.displayData}>
             <FlatList
               keyExtractor={(item) => item._id}
               style={styles.list}
-              data={paidOn.paidOnBehalfOfReport}
+              data={paidOn.report.paidOnBehalfOfReport}
               renderItem={renderItem}
             />
           </View>
         </View>
       )}
       <Text>Total Sell: </Text>
-      {paidOn?.paidOnBehalfOfReport && <Text>{paidOn.totalPaidOnBehalfOf}</Text>}
+      {paidOn?.report && <Text>{paidOn.totalPaidOn}</Text>}
     </>
   );
 };

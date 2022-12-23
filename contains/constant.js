@@ -45,7 +45,7 @@ export const Cargo = [
   { label: "NON-DG", value: "NON-DG" },
 ];
 
-export const ipAddress = "http://192.168.1.12:3000";
+export const ipAddress = "http://192.168.1.13:3000";
 
 export const Container = [
   { label: "20GP", value: "20GP" },
@@ -73,8 +73,14 @@ export const TypeSeaCY = [
   { label: "RF", value: "RF" },
 ];
 export const VAT = [
+  { label: "0", value: "0" },
   { label: "8%", value: "0.08" },
   { label: "10%", value: "0.1" },
+];
+
+export const COM_KH = [
+  { label: "CHUẨN", value: "CHUẨN" },// xu ly o fe
+  { label: "KHÁC", value: "KHÁC" },
 ];
 
 export const CurrencyUnit = [

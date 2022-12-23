@@ -28,7 +28,7 @@ const ProfitReportScreen = ({ navigation }) => {
 
   // show item in flat list
   const renderItem = ({ item }) => {
-    console.log("item", item);
+    console.log("itemmmmmmmmmmmmmmmmm", item);
     return (
       <TouchableOpacity
         onPress={() =>
@@ -48,8 +48,8 @@ const ProfitReportScreen = ({ navigation }) => {
             <Text style={styles.textDisplay}>{item.info.code}</Text>
           </View>
           <View style={{ flexDirection: "row" }}>
-            <Text style={styles.textLable}>Total Sell:</Text>
-            <Text style={styles.textDisplay}>{item.totalSell}</Text>
+            <Text style={styles.textLable}>Total Sell: </Text>
+            <Text style={styles.textDisplay}>{item.totalSellVND}</Text>
           </View>
           <View style={{ flexDirection: "row" }}>
             <Text style={styles.textLable}>Total Buy:</Text>
