@@ -4,12 +4,48 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  Alert,
 } from "react-native";
 import React, { useState } from "react";
 import color from "../../../contains/color";
+import clientReport from "../../../api/clientReport";
 
 const DetailBooking = ({ navigation, route }) => {
   const [data, setData] = useState(route.params.item);
+  const navigateScreen = () => {
+    return Alert.alert("Báo cáo", "Tạo báo cáo?", [
+      {
+        text: "Cancel",
+        onPress: () => console.log("Cancel Pressed"),
+        style: "cancel",
+      },
+      {
+        text: "OK",
+        // onPress: () => {
+        //   navigation.navigate("ProfitReport", {
+        //     data: data,
+        //   }),
+        //     createReport();
+        // },
+        onPress: () => {
+          
+            createReport();
+        },
+      },
+    ]);
+  };
+  const createReport = async () => {
+    const res = await clientReport.post("create", {
+      idInfo: data._id,
+    })
+    console.log("res", res.data);
+    // if (res.data.status === "success") {
+      navigation.navigate("ProfitReport", {
+        data1: res.data.id,
+      })
+    // }
+  };
+
   return (
     <ScrollView>
       <View style={styles.detail}>
@@ -167,11 +203,7 @@ const DetailBooking = ({ navigation, route }) => {
           </TouchableOpacity>
           <TouchableOpacity
             style={[styles.buttonUpdate]}
-            onPress={() => {
-              navigation.replace("UpdateBooking", {
-                data: data,
-              });
-            }}
+            onPress={() => navigateScreen()}
           >
             <Text
               style={{ fontSize: 18, color: color.primary, fontWeight: "bold" }}

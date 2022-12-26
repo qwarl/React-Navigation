@@ -37,9 +37,9 @@ export default function App() {
       {/* <ScreenCy/> */}
       {/* <ScreenDoor/> */}
       {/* <ScreenAIR/> */}
-      {/* <DrawerScreen /> */}
+      <DrawerScreen />
       {/* <ScreenAdvance /> */}
-      <ReceiptLog />
+      {/* <ReceiptLog /> */}
       {/* <AddReceiptLog /> */}
       {/* <PaymentLog /> */}
       {/* <DetailAdvance /> */}
