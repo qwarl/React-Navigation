@@ -39,9 +39,9 @@ export default function App() {
       {/* <ScreenAIR/> */}
       {/* <DrawerScreen /> */}
       {/* <ScreenAdvance /> */}
-      {/* <ReceiptLog /> */}
+      <ReceiptLog />
       {/* <AddReceiptLog /> */}
-      <PaymentLog />
+      {/* <PaymentLog /> */}
       {/* <DetailAdvance /> */}
       {/* <ScreenBooking /> */}
       {/* <AddPriceSell /> */}

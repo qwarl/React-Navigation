@@ -4728,6 +4728,11 @@ expo-modules-core@0.11.4:
     compare-versions "^3.4.0"
     invariant "^2.2.4"
 
+expo-print@^12.0.0:
+  version "12.0.0"
+  resolved "https://registry.yarnpkg.com/expo-print/-/expo-print-12.0.0.tgz#e20922d19a6eaf0bdaf81989a3108d4fcb44e1b6"
+  integrity sha512-S9MD1iL3xicFuNwNEpfcIt0B4Afs9L+H2qLBDNGksv1b7gRCIf0NUSuDexVHkKkmWxhu0Rg7ClChtNpaB2AoOQ==
+
 expo-pwa@0.0.122:
   version "0.0.122"
   resolved "https://registry.npmjs.org/expo-pwa/-/expo-pwa-0.0.122.tgz"

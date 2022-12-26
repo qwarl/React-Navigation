@@ -29,7 +29,7 @@ const AddPaymentLog = () => {
           fontWeight: "bold",
         }}
       >
-        PHIẾU CHI
+        THÊM PHIẾU CHI
       </Text>
       <FormInput
         label="Số"
