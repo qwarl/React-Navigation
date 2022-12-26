@@ -42,6 +42,8 @@ const DetailBooking = ({ navigation, route }) => {
     // if (res.data.status === "success") {
       navigation.navigate("ProfitReport", {
         data1: res.data.id,
+      code:'PROFIT_REPORT'
+
       })
     // }
   };
