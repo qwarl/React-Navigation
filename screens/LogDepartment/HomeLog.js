@@ -8,7 +8,7 @@ import {
   Dimensions,
   TextInput,
   Button,
-  RefreshControl
+  RefreshControl,
 } from "react-native";
 import React, { useEffect, useState, useCallback } from "react";
 import { Dropdown } from "react-native-element-dropdown";
@@ -24,8 +24,8 @@ import {
 // import { useQuery } from '@tanstack/react-query'
 
 const wait = (timeout) => {
-  return new Promise(resolve => setTimeout(resolve, timeout));
-}
+  return new Promise((resolve) => setTimeout(resolve, timeout));
+};
 const HomeLog = ({ navigation }) => {
   const [logInfo, setLogInfo] = useState({
     month: "",
@@ -39,15 +39,15 @@ const HomeLog = ({ navigation }) => {
   // const [search, setSearch] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [searchText, setSearchText] = useState("");
-  const [refreshing, setRefreshing] = useState(false)
+  const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
-    navigation.replace('HomeTabLog')
+    navigation.replace("HomeTabLog");
     // alert('refresh')
     // console.log('refreshed')
     wait(500).then(() => setRefreshing(false));
-  }, [])
+  }, []);
 
   const getData = async () => {
     await clientLog
@@ -58,9 +58,9 @@ const HomeLog = ({ navigation }) => {
       .catch((err) => {
         console.log(err);
       });
-  }
+  };
   useEffect(() => {
-    getData()
+    getData();
   }, []);
 
   // const getLogQuery = useQuery(['getLogQuery'], getData, {
@@ -149,78 +149,69 @@ const HomeLog = ({ navigation }) => {
 
   return (
     <View style={{ flex: 1, backgroundColor: "white" }}>
-      <ScrollView
-        // contentContainerStyle={styles.scrollView}
-        refreshControl={
-          <RefreshControl
-            refreshing={refreshing}
-            onRefresh={onRefresh}
-          />
-        }
-      >
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <Icon
-            name="search"
-            size={28}
-            color="white"
-            style={{ position: "absolute", top: 20, left: 30, zIndex: 1000 }}
-          />
-          <TextInput
-            style={styles.styleSearch}
-            placeholder="Tìm kiếm"
-            placeholderTextColor={"white"}
-            underlineColorAndroid="transparent"
-            onChangeText={(text) => setSearchText(text)}
-          />
-        </View>
-        <View style={{ flexDirection: "row", minHeight: 100 }}>
-          <View style={styles.dropMenu}>
-            <Text style={styles.label}>Chọn Tháng</Text>
-            <View style={styles.containerDropDown}>
-              <Dropdown
-                style={[styles.dropdown]}
-                placeholderStyle={styles.placeholderStyle}
-                selectedTextStyle={styles.selectedTextStyle}
-                inputSearchStyle={styles.inputSearchStyle}
-                iconStyle={styles.iconStyle}
-                data={Month1}
-                search
-                maxHeight={300}
-                labelField="label"
-                valueField="value"
-                searchPlaceholder="Search..."
-                value={value}
-                onChange={(value) => {
-                  setLogInfo({ ...logInfo, month: value.value });
-                }}
-              />
-            </View>
-          </View>
-          <View style={styles.dropMenu}>
-            <Text style={styles.label}>Loại Vận Chuyển</Text>
-            <View style={styles.containerDropDown}>
-              <Dropdown
-                style={[styles.dropdown]}
-                placeholderStyle={styles.placeholderStyle}
-                selectedTextStyle={styles.selectedTextStyle}
-                inputSearchStyle={styles.inputSearchStyle}
-                iconStyle={styles.iconStyle}
-                data={ShippingType}
-                search
-                maxHeight={300}
-                labelField="label"
-                valueField="value"
-                searchPlaceholder="Search..."
-                value={value}
-                onChange={(value) => {
-                  setLogInfo({ ...logInfo, freight: value.value });
-                }}
-              />
-            </View>
-          </View>
-        </View>
-        {/* <View style={{ flexDirection: "row", minHeight: 100 }}>
+      <View style={{ flexDirection: "row", alignItems: "center" }}>
+        <Icon
+          name="search"
+          size={28}
+          color="white"
+          style={{ position: "absolute", top: 20, left: 30, zIndex: 1000 }}
+        />
+        <TextInput
+          style={styles.styleSearch}
+          placeholder="Tìm kiếm"
+          placeholderTextColor={"white"}
+          underlineColorAndroid="transparent"
+          onChangeText={(text) => setSearchText(text)}
+        />
+      </View>
+      <View style={{ flexDirection: "row", minHeight: 100 }}>
         <View style={styles.dropMenu}>
+          <Text style={styles.label}>Chọn Tháng</Text>
+          <View style={styles.containerDropDown}>
+            <Dropdown
+              style={[styles.dropdown]}
+              placeholderStyle={styles.placeholderStyle}
+              selectedTextStyle={styles.selectedTextStyle}
+              inputSearchStyle={styles.inputSearchStyle}
+              iconStyle={styles.iconStyle}
+              data={Month1}
+              search
+              maxHeight={300}
+              labelField="label"
+              valueField="value"
+              searchPlaceholder="Search..."
+              value={value}
+              onChange={(value) => {
+                setLogInfo({ ...logInfo, month: value.value });
+              }}
+            />
+          </View>
+        </View>
+        <View style={styles.dropMenu}>
+          <Text style={styles.label}>Loại Vận Chuyển</Text>
+          <View style={styles.containerDropDown}>
+            <Dropdown
+              style={[styles.dropdown]}
+              placeholderStyle={styles.placeholderStyle}
+              selectedTextStyle={styles.selectedTextStyle}
+              inputSearchStyle={styles.inputSearchStyle}
+              iconStyle={styles.iconStyle}
+              data={ShippingType}
+              search
+              maxHeight={300}
+              labelField="label"
+              valueField="value"
+              searchPlaceholder="Search..."
+              value={value}
+              onChange={(value) => {
+                setLogInfo({ ...logInfo, freight: value.value });
+              }}
+            />
+          </View>
+        </View>
+      </View>
+      <View style={{ flexDirection: "row", minHeight: 100 }}>
+        {/* <View style={styles.dropMenu}>
           <Text style={styles.label}>Chọn Năm</Text>
           <View style={styles.containerDropDown}>
             <Dropdown
@@ -263,54 +254,51 @@ const HomeLog = ({ navigation }) => {
               }}
             />
           </View>
-        </View>
+        </View> */}
       </View>
       <ScrollView
         // contentContainerStyle={styles.scrollView}
         refreshControl={
-          <RefreshControl
-            refreshing={refreshing}
-            onRefresh={onRefresh}
-          />
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       >
-      <View style={{ flex: 5 }}>
-        <View style={styles.displayData}>
-          {filteredLog().length > 0 ? (
-            <FlatList
-              style={styles.list}
-              data={filteredLog()}
-              renderItem={renderItem}
-              keyExtractor={(item) => item._id}
-            />
-          ) : (
-            <View
-              style={{
-                flex: 1,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Text style={{ color: "black", fontSize: 20 }}>
-                Không có dữ liệu có tên là: {searchText}
-              </Text>
-            </View>
-          )}
-        </View>
-      </View>
-      <View style={{ flex: 0.5, marginTop: -10, marginBottom: 20 }}>
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate("AddLog", {
-              logInfo: logInfo,
-            });
-          }}
-        >
-          <View style={styles.iconWrapper}>
-            <Text style={styles.icon}>+</Text>
+        <View style={{ flex: 5 }}>
+          <View style={styles.displayData}>
+            {filteredLog().length > 0 ? (
+              <FlatList
+                style={styles.list}
+                data={filteredLog()}
+                renderItem={renderItem}
+                keyExtractor={(item) => item._id}
+              />
+            ) : (
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <Text style={{ color: "black", fontSize: 20 }}>
+                  Không có dữ liệu có tên là: {searchText}
+                </Text>
+              </View>
+            )}
           </View>
-        </TouchableOpacity>
-      </View>
+        </View>
+        <View style={{ flex: 0.5, marginTop: -10, marginBottom: 20 }}>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("AddLog", {
+                logInfo: logInfo,
+              });
+            }}
+          >
+            <View style={styles.iconWrapper}>
+              <Text style={styles.icon}>+</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
       </ScrollView>
     </View>
   );
@@ -401,7 +389,6 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 8,
     height: height * 0.46,
-
   },
   dropdown: {
     height: 50,

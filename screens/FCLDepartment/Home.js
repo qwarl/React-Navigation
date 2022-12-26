@@ -9,10 +9,7 @@ import {
   Button,
   RefreshControl,
   ScrollView,
-  Alert
-  RefreshControl,
-  ScrollView,
-  Alert
+  Alert,
 } from "react-native";
 import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
@@ -35,18 +32,21 @@ import RadioForm, {
 } from "react-native-simple-radio-button";
 import { Dropdown } from "react-native-element-dropdown";
 import client from "../../api/client";
-import client from "../../api/client";
-import { useIsFocused } from '@react-navigation/native'
-import { useQuery } from '@tanstack/react-query'
-import { useFocusEffect } from '@react-navigation/native'
+import { useIsFocused } from "@react-navigation/native";
+import { useQuery } from "@tanstack/react-query";
+import { useFocusEffect } from "@react-navigation/native";
 
 const { width, height } = Dimensions.get("window");
 
 const wait = (timeout) => {
-  return new Promise(resolve => setTimeout(resolve, timeout));
-}
+  return new Promise((resolve) => setTimeout(resolve, timeout));
+};
 // dem 5s
-var count = () => { setInterval(() => { console.log("count") }, 5000) }
+var count = () => {
+  setInterval(() => {
+    console.log("count");
+  }, 5000);
+};
 // console.log("count1",count())
 
 const Home = ({ navigation, route }) => {
@@ -63,24 +63,24 @@ const Home = ({ navigation, route }) => {
     betweenprice: "",
     type: "",
   });
-  const [refreshing, setRefreshing] = useState(false)
+  const [refreshing, setRefreshing] = useState(false);
   const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
     // const dem = setInterval(() => {
     //   var dem1 = 0
     //   console.log(`dem`, dem1);
-      // dem1++
-      getData()
+    // dem1++
+    getData();
     // }, 7000)
     // return () => clearInterval(dem)
   }, []);
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
-    navigation.replace('HomeTabFCL')
+    navigation.replace("HomeTabFCL");
     wait(500).then(() => setRefreshing(false));
-  }, [])
+  }, []);
 
   const getData = async () => {
     const { data } = await client
@@ -92,16 +92,17 @@ const Home = ({ navigation, route }) => {
       .catch((err) => {
         console.log(err);
       });
-    return data
-  }
+    return data;
+  };
 
+  const { isLoading, error, data } = useQuery({
+    queryKey: ["getFCL"],
+    queryFn: getData,
+  });
+  if (isLoading) return console.log("Loading...");
 
-
-  const { isLoading, error, data } = useQuery({ queryKey: ['getFCL'], queryFn: getData })
-  if (isLoading) return console.log('Loading...')
-
-  if (error) return console.log('An error has occurred: ' + error.message)
-  console.log('matday', data);
+  if (error) return console.log("An error has occurred: " + error.message);
+  console.log("matday", data);
   // const isFocused = useIsFocused()
 
   // console.log(data1.container);
@@ -194,10 +195,7 @@ const Home = ({ navigation, route }) => {
       <ScrollView
         contentContainerStyle={styles.scrollView}
         refreshControl={
-          <RefreshControl
-            refreshing={refreshing}
-            onRefresh={onRefresh}
-          />
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       >
         <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -253,7 +251,6 @@ const Home = ({ navigation, route }) => {
               inputSearchStyle={styles.inputSearchStyle}
               iconStyle={styles.iconStyle}
               data={Continent}
-              data={Continent}
               search
               maxHeight={300}
               labelField="label"
@@ -282,14 +279,17 @@ const Home = ({ navigation, route }) => {
           />
         </View>
         <View>
-
           <View
           // style={{ alignSelf: 'center' }}
           >
-            <View style={{
-              flex: 7, zIndex: 1, position: "relative",
-              // height:height*0.4
-            }}>
+            <View
+              style={{
+                flex: 7,
+                zIndex: 1,
+                position: "relative",
+                // height:height*0.4
+              }}
+            >
               <View style={styles.displayData}>
                 {filteredFCL().length > 0 ? (
                   <FlatList
@@ -421,7 +421,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     padding: 10,
-    height: height * 0.47
+    height: height * 0.47,
   },
   list: {
     flex: 1,

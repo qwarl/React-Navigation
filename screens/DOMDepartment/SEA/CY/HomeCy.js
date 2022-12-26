@@ -8,9 +8,7 @@ import {
   Dimensions,
   TextInput,
   Button,
-  RefreshControl
-  Button,
-  RefreshControl
+  RefreshControl,
 } from "react-native";
 import React, { useEffect, useState, useCallback } from "react";
 import { Dropdown } from "react-native-element-dropdown";
@@ -37,18 +35,18 @@ const HomeCy = ({ navigation }) => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchText, setSearchText] = useState("");
-  const [refreshing, setRefreshing] = useState(false)
+  const [refreshing, setRefreshing] = useState(false);
 
   const wait = (timeout) => {
-    return new Promise(resolve => setTimeout(resolve, timeout));
-  }
+    return new Promise((resolve) => setTimeout(resolve, timeout));
+  };
   const onRefresh = useCallback(() => {
     setRefreshing(true);
-    navigation.replace('HomeTabCy')
+    navigation.replace("HomeTabCy");
     // alert('refresh')
     // console.log('refreshed')
     wait(500).then(() => setRefreshing(false));
-  }, [])
+  }, []);
   //   useEffect(() => {
   //     data.map((item) => console.log(item.shippingtype));
   //   }, []);
@@ -93,7 +91,6 @@ const HomeCy = ({ navigation }) => {
       // && checkPriceSearch(eachLog)
     );
 
-
   const renderItem = ({ item }) => (
     <TouchableOpacity
       onPress={() => {
@@ -134,10 +131,7 @@ const HomeCy = ({ navigation }) => {
       <ScrollView
         // contentContainerStyle={styles.scrollView}
         refreshControl={
-          <RefreshControl
-            refreshing={refreshing}
-            onRefresh={onRefresh}
-          />
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       >
         <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -247,8 +241,7 @@ const HomeCy = ({ navigation }) => {
             </View>
           </View>
         </View>
-        <View>
-        </View>
+        <View></View>
         <View style={{ flex: 5 }}>
           <View style={styles.displayData}>
             {filteredSeaCy().length > 0 ? (
@@ -376,7 +369,6 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 8,
     height: height * 0.46,
-
   },
   dropdown: {
     height: 50,

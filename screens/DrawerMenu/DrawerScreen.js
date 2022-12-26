@@ -34,7 +34,7 @@ import BusinessMainScreen from "./BusinessMainScreen";
 import HomeBookingLog from "../LogDepartment/booking/HomeBookingLog";
 import ScreenBooking from "../LogDepartment/booking/ScreenBooking";
 
-const queryClient = new QueryClient();
+// const queryClient = new QueryClient();
 const Drawer = createDrawerNavigator();
 
 const DrawerScreen = () => {
@@ -399,23 +399,23 @@ const DrawerScreen = () => {
 
   return (
     <NavigationContainer>
-      <QueryClientProvider client={queryClient}>
-        <Drawer.Navigator
-          drawerContent={(props) => <CustomDrawerContent {...props} />}
-        >
-          <Drawer.Screen name="ScreenFCL" component={ScreenFCL} />
-          <Drawer.Screen name="Nghiệp Vụ" component={BusinessMainScreen} />
-          <Drawer.Screen name="Add" component={Add} />
-          <Drawer.Screen name="ScreenLog" component={ScreenLog} />
-          <Drawer.Screen name="ScreenAIR" component={ScreenAIR} />
-          <Drawer.Screen name="ScreenLCL" component={ScreenLCL} />
-          <Drawer.Screen name="ScreenImport" component={ScreenImport} />
-          <Drawer.Screen name="ScreenImportLCL" component={ScreenImportLCL} />
-          <Drawer.Screen name="ScreenCy" component={ScreenCy} />
-          <Drawer.Screen name="ScreenDoor" component={ScreenDoor} />
-          <Drawer.Screen name="ScreenTruck" component={ScreenTruck} />
-        </Drawer.Navigator>
-      </QueryClientProvider>
+      {/* <QueryClientProvider client={queryClient}> */}
+      <Drawer.Navigator
+        drawerContent={(props) => <CustomDrawerContent {...props} />}
+      >
+        <Drawer.Screen name="ScreenFCL" component={ScreenFCL} />
+        <Drawer.Screen name="Nghiệp Vụ" component={BusinessMainScreen} />
+        <Drawer.Screen name="Add" component={Add} />
+        <Drawer.Screen name="ScreenLog" component={ScreenLog} />
+        <Drawer.Screen name="ScreenAIR" component={ScreenAIR} />
+        <Drawer.Screen name="ScreenLCL" component={ScreenLCL} />
+        <Drawer.Screen name="ScreenImport" component={ScreenImport} />
+        <Drawer.Screen name="ScreenImportLCL" component={ScreenImportLCL} />
+        <Drawer.Screen name="ScreenCy" component={ScreenCy} />
+        <Drawer.Screen name="ScreenDoor" component={ScreenDoor} />
+        <Drawer.Screen name="ScreenTruck" component={ScreenTruck} />
+      </Drawer.Navigator>
+      {/* </QueryClientProvider> */}
     </NavigationContainer>
   );
 };
