@@ -33,7 +33,7 @@ import RadioForm, {
 import { Dropdown } from "react-native-element-dropdown";
 import client from "../../api/client";
 import { useIsFocused } from "@react-navigation/native";
-import { useQuery } from "@tanstack/react-query";
+// import { useQuery } from "@tanstack/react-query";
 import { useFocusEffect } from "@react-navigation/native";
 
 const { width, height } = Dimensions.get("window");
@@ -82,8 +82,8 @@ const Home = ({ navigation, route }) => {
     wait(500).then(() => setRefreshing(false));
   }, []);
 
-  const getData = async () => {
-    const { data } = await client
+  const getData = () => {
+    client
       .get("/getAll")
       .then((res) => {
         setData1(res.data);
@@ -91,18 +91,17 @@ const Home = ({ navigation, route }) => {
       })
       .catch((err) => {
         console.log(err);
-      });
-    return data;
+      })
   };
 
-  const { isLoading, error, data } = useQuery({
-    queryKey: ["getFCL"],
-    queryFn: getData,
-  });
-  if (isLoading) return console.log("Loading...");
+  // const { isLoading, error, data } = useQuery({
+  //   queryKey: ["getFCL"],
+  //   queryFn: getData,
+  // });
+  // if (isLoading) return console.log("Loading...");
 
-  if (error) return console.log("An error has occurred: " + error.message);
-  console.log("matday", data);
+  // if (error) return console.log("An error has occurred: " + error.message);
+  // console.log("matday", data);
   // const isFocused = useIsFocused()
 
   // console.log(data1.container);
@@ -178,7 +177,7 @@ const Home = ({ navigation, route }) => {
 
   // tam thoi cmt
   const filteredFCL = () =>
-    data.filter(
+    data1.filter(
       (eachFcl) =>
         eachFcl.month.toLowerCase().includes(fclInfo.month.toLowerCase()) &&
         eachFcl.continent
