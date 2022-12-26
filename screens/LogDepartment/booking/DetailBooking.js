@@ -28,8 +28,7 @@ const DetailBooking = ({ navigation, route }) => {
         //     createReport();
         // },
         onPress: () => {
-          
-            createReport();
+          createReport();
         },
       },
     ]);
@@ -37,12 +36,13 @@ const DetailBooking = ({ navigation, route }) => {
   const createReport = async () => {
     const res = await clientReport.post("create", {
       idInfo: data._id,
-    })
+    });
     console.log("res", res.data);
     // if (res.data.status === "success") {
-      navigation.navigate("ProfitReport", {
-        data1: res.data.id,
-      })
+    navigation.navigate("ProfitReport", {
+      data1: res.data.id,
+      code: "PROFIT_REPORT",
+    });
     // }
   };
 
