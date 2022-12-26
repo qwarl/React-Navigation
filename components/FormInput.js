@@ -3,7 +3,7 @@ import React from "react";
 import color from "../contains/color";
 
 const FormInput = (props) => {
-  const { placeholder, label, error } = props;
+  const { inputType, placeholder, label, error } = props;
   return (
     <>
       <View
@@ -20,6 +20,7 @@ const FormInput = (props) => {
       </View>
       <TextInput
         {...props}
+        keyboardType={inputType}
         placeholder={placeholder}
         style={styles.input}
         placeholderTextColor={"black"}

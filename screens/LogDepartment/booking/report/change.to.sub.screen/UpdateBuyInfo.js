@@ -7,50 +7,14 @@ import {
   View,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import color from "../../../../contains/color";
-import FormInput from "../../../../components/FormInput";
-import clientReport from "../../../../api/clientReport";
+import color from "../../../../../contains/color";
+import FormInput from "../../../../../components/FormInput";
+import clientReport from "../../../../../api/clientReport";
 import { Dropdown } from "react-native-element-dropdown";
-import {
-  CurrencyUnit,
-  VAT,
-  TypeOfFee,
-  COM_KH,
-  ipAddress,
-} from "../../../../contains/constant";
+import { CurrencyUnit, VAT, TypeOfFee } from "../../../../../contains/constant";
 
-const AddBuyDetail = ({ route, navigation }) => {
-  const idReportLog = route.params.data;
-  console.log("idReport", idReportLog);
-
-  const [buyItemDetails, setBuyItemDetails] = useState({
-    // idReportLog: route.params.data,
-    typeOfFee: "",
-    quantity: 1,
-    unitPrice: "",
-    currency: "VND",
-    COM_KH: "",
-    price_COM_KH: 0,
-    // total: 0, // price of item = unitPrice * quantity
-    totalVND: 0, // price of item = unitPrice * quantity
-    totalUSD: 0, // price of item = unitPrice * quantity
-    totalEUR: 0, // price of item = unitPrice * quantity
-    changeToVND: 0, //total(USD/EUR) * exchangeRate. not inclueded VAT
-    changeToVNDVAT: 0, // actualPayment(USD/EUR) * exchangeRate. included VAT
-    VAT: 0,
-    exchangeRate: 0,
-    actualPaymentVND: 0, // total after VAT = total * ( 1 + VAT )
-    actualPaymentUSD: 0, // total after VAT
-    actualPaymentEUR: 0, // total after VAT
-    // approximatelyToVnd: 0, // if currency !== VND, show 0. else appreoximatelyToVnd == actualPaymentVND
-    note: "",
-    invoiceNumber: "",
-    paymentFor: "",
-    paidBy: "",
-  });
-  console.log(buyItemDetails);
-
-  // quy doi ra tien viet tong tien truoc thue
+const UpdateBuyInfo = ({route,navigation}) => {
+  const [buyItemDetails, setBuyItemDetails] = useState(route.params)
   useEffect(() => {
     // change total of item from usd to vnd do not inclueded VAT
     if (buyItemDetails.currency !== "VND" && buyItemDetails.totalUSD !== 0) {
@@ -193,13 +157,12 @@ const AddBuyDetail = ({ route, navigation }) => {
   };
 
   // add buy item
-  const createNewBuyItem = async () => {
-    console.log("create new buy item");
+  const updateBuyItem = async () => {
+    console.log("update buy item");
 
     try {
-      const res = await clientReport.post("add-buy-item-details", {
-        buyItemDetails: buyItemDetails,
-        idReportLog: idReportLog,
+      const res = await clientReport.put(`update-sell-item-details/${buyItemDetails._id}`, {
+        ...buyItemDetails
       });
       if (res.data.success) {
         Alert.alert("Thêm Thành Công");
@@ -209,7 +172,7 @@ const AddBuyDetail = ({ route, navigation }) => {
       console.log(error.message);
     }
   };
-
+console.log('data',buyItemDetails._id);
   // cal COM KH
   useEffect(()=>{
     if (buyItemDetails.currency === "VND" && buyItemDetails.COM_KH === "CHUẨN") {
@@ -240,7 +203,7 @@ const AddBuyDetail = ({ route, navigation }) => {
       }))
     }
   },[buyItemDetails.actualPaymentVND,buyItemDetails.COM_KH,buyItemDetails.currency])
-
+  
   return (
     <>
       <ScrollView>
@@ -348,7 +311,7 @@ const AddBuyDetail = ({ route, navigation }) => {
             labelField="label"
             valueField="value"
             searchPlaceholder="Search..."
-            value={buyItemDetails.currency}
+            value={`${buyItemDetails.VAT}`}
             onChange={(value) => {
               setBuyItemDetails({ ...buyItemDetails, VAT: value.value });
             }}
@@ -446,12 +409,12 @@ const AddBuyDetail = ({ route, navigation }) => {
       >
         <TouchableOpacity
           style={[styles.buttonInsert]}
-          onPress={() => createNewBuyItem()}
+          onPress={() => updateBuyItem()}
         >
           <Text
             style={{ fontSize: 18, color: color.primary, fontWeight: "bold" }}
           >
-            Thêm
+            Cập nhật
           </Text>
         </TouchableOpacity>
       </View>
@@ -459,7 +422,7 @@ const AddBuyDetail = ({ route, navigation }) => {
   );
 };
 
-export default AddBuyDetail;
+export default UpdateBuyInfo;
 
 const styles = StyleSheet.create({
   container: {

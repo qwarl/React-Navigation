@@ -17,63 +17,104 @@ const PaidOn = ({ route, navigation }) => {
     clientReport
       .get(`${ipAddress}/${url}` + data)
       //   .then((res) => setPaidOn(res.data.report.sellReport))
-      .then((res) => setPaidOn(res.data.report))
+      .then((res) => setPaidOn(res.data))
       .catch((err) => console.log(err));
   };
   useEffect(() => {
     getAllPaidOnItemDetails();
   }, []);
-
+  console.log("paidOn", route.params.code);
   const renderItem = ({ item }) => {
-    console.log("item1234", item.paymentFor);
+    // console.log("item1234", item);
     return (
-      <TouchableOpacity>
-        <View style={styles.item}>
-          <View style={{ flexDirection: "row" }}>
-            <Text style={styles.textLable}>Loại phí: </Text>
-            <Text style={styles.textDisplay}>{item.typeOfFee}</Text>
+      <>
+        {route.params.code === "PROFIT_REPORT" ? (
+          //   <TouchableOpacity
+          //   onPress={() =>
+          //     navigation.navigate("ItemPaidOnDetailsInfo", { data: item })
+          //   }
+          // >
+          <View style={styles.item}>
+            <View style={{ flexDirection: "row" }}>
+              <Text style={styles.textLable}>Loại phí: </Text>
+              <Text style={styles.textDisplay}>{item.typeOfFee}</Text>
+            </View>
+            <View style={{ flexDirection: "row" }}>
+              <Text style={styles.textLable}>Số tiền: </Text>
+              <Text style={styles.textDisplay}>{item.price}</Text>
+            </View>
+            <View style={{ flexDirection: "row" }}>
+              <Text style={styles.textLable}>Số hóa đơn: </Text>
+              <Text style={styles.textDisplay}>{item.invoiceNumber}</Text>
+            </View>
+            <View style={{ flexDirection: "row" }}>
+              <Text style={styles.textLable}>Thu: </Text>
+              <Text style={styles.textDisplay}>{item.payer}</Text>
+            </View>
+            <View style={{ flexDirection: "row" }}>
+              <Text style={styles.textLable}>T/T cho: </Text>
+              <Text style={styles.textDisplay}>{item.paymentFor}</Text>
+            </View>
+            <View style={{ flexDirection: "row" }}>
+              <Text style={styles.textLable}>Tên người chi: </Text>
+              <Text style={styles.textDisplay}>{item.paidBy}</Text>
+            </View>
           </View>
-          <View style={{ flexDirection: "row" }}>
-            <Text style={styles.textLable}>Số tiền: </Text>
-            <Text style={styles.textDisplay}>{item.price}</Text>
-          </View>
-          <View style={{ flexDirection: "row" }}>
-            <Text style={styles.textLable}>Số hóa đơn: </Text>
-            <Text style={styles.textDisplay}>{item.invoiceNumber}</Text>
-          </View>
-          <View style={{ flexDirection: "row" }}>
-            <Text style={styles.textLable}>Thu: </Text>
-            <Text style={styles.textDisplay}>{item.payer}</Text>
-          </View>
-          <View style={{ flexDirection: "row" }}>
-            <Text style={styles.textLable}>T/T cho: </Text>
-            <Text style={styles.textDisplay}>{item.paymentFor}</Text>
-          </View>
-          <View style={{ flexDirection: "row" }}>
-            <Text style={styles.textLable}>Tên người chi: </Text>
-            <Text style={styles.textDisplay}>{item.paidBy}</Text>
-          </View>
-        </View>
-      </TouchableOpacity>
+        ) : (
+          // </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate("ItemPaidOnDetailsInfo", { data: item })
+            }
+          >
+            <View style={styles.item}>
+              <View style={{ flexDirection: "row" }}>
+                <Text style={styles.textLable}>Loại phí: </Text>
+                <Text style={styles.textDisplay}>{item.typeOfFee}</Text>
+              </View>
+              <View style={{ flexDirection: "row" }}>
+                <Text style={styles.textLable}>Số tiền: </Text>
+                <Text style={styles.textDisplay}>{item.price}</Text>
+              </View>
+              <View style={{ flexDirection: "row" }}>
+                <Text style={styles.textLable}>Số hóa đơn: </Text>
+                <Text style={styles.textDisplay}>{item.invoiceNumber}</Text>
+              </View>
+              <View style={{ flexDirection: "row" }}>
+                <Text style={styles.textLable}>Thu: </Text>
+                <Text style={styles.textDisplay}>{item.payer}</Text>
+              </View>
+              <View style={{ flexDirection: "row" }}>
+                <Text style={styles.textLable}>T/T cho: </Text>
+                <Text style={styles.textDisplay}>{item.paymentFor}</Text>
+              </View>
+              <View style={{ flexDirection: "row" }}>
+                <Text style={styles.textLable}>Tên người chi: </Text>
+                <Text style={styles.textDisplay}>{item.paidBy}</Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+        )}
+      </>
     );
   };
 
   return (
     <>
-      {paidOn?.paidOnBehalfOfReport && (
+      {paidOn?.report && (
         <View style={{ flex: 5 }}>
           <View style={styles.displayData}>
             <FlatList
               keyExtractor={(item) => item._id}
               style={styles.list}
-              data={paidOn.paidOnBehalfOfReport}
+              data={paidOn.report.paidOnBehalfOfReport}
               renderItem={renderItem}
             />
           </View>
         </View>
       )}
-      <Text>Total Sell: </Text>
-      {paidOn?.paidOnBehalfOfReport && <Text>{paidOn.totalPaidOnBehalfOf}</Text>}
+      <Text>Chi hộ: </Text>
+      {paidOn?.report && <Text>{paidOn.totalPaidOn}</Text>}
     </>
   );
 };

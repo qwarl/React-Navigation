@@ -11,29 +11,32 @@ import { ipAddress } from "../../../../../contains/constant";
 
 const ItemSellDetails = ({ route, navigation }) => {
   const [data, setData] = useState(route.params.id);
+  // const id=route.params.id
   const [sellItem, setSellItem] = useState();
-  //   console.log("dataGetIdBy", data);
-  //   const idReport = route.params.id;
   // get sell item details from report
   const getAllSellItemDetails = async () => {
     const url = `api/report-log/getById/`;
     clientReport
       .get(`${ipAddress}/${url}` + data)
       //   .then((res) => setSellItem(res.data.report.sellReport))
-      .then((res) => setSellItem(res.data.report))
+      .then((res) => setSellItem(res.data))
       .catch((err) => console.log(err));
   };
   useEffect(() => {
     getAllSellItemDetails();
   }, []);
 
-  console.log("sellItem", sellItem);
+  console.log("add them",route.params);
 
   // show in flat list
   const renderItem = ({ item }) => {
-    console.log("item123", item);
+    // console.log("item123", item);
     return (
-      <TouchableOpacity>
+      <TouchableOpacity
+        onPress={() =>
+          navigation.navigate("ItemSellDetailsInfo", { data: item,code:route.params.code })
+        }
+      >
         <View style={styles.item}>
           <View style={{ flexDirection: "row" }}>
             <Text style={styles.textLable}>Loại phí: </Text>
@@ -49,11 +52,16 @@ const ItemSellDetails = ({ route, navigation }) => {
           </View>
           <View style={{ flexDirection: "row" }}>
             <Text style={styles.textLable}>Đồng tiền: </Text>
-            <Text style={styles.textDisplay}>{item.curency}</Text>
+            <Text style={styles.textDisplay}>{item.currency}</Text>
           </View>
           <View style={{ flexDirection: "row" }}>
             <Text style={styles.textLable}>Total: </Text>
-            <Text style={styles.textDisplay}>{item.total}</Text>
+            <Text style={styles.textDisplay}>
+              {/* {item.total} */}
+              {item.totalUSD !== 0 ? `${item.totalUSD} USD` : null}
+              {item.totalEUR !== 0 ? `${item.totalEUR} EUR` : null}
+              {item.totalVND !== 0 ? `${item.totalVND} VND` : null}
+            </Text>
           </View>
         </View>
       </TouchableOpacity>
@@ -62,20 +70,46 @@ const ItemSellDetails = ({ route, navigation }) => {
 
   return (
     <>
-      {sellItem?.sellReport && (
+      {sellItem?.report && (
         <View style={{ flex: 5 }}>
           <View style={styles.displayData}>
             <FlatList
               keyExtractor={(item) => item._id}
               style={styles.list}
-              data={sellItem.sellReport}
+              data={sellItem.report.sellReport}
               renderItem={renderItem}
             />
           </View>
         </View>
       )}
-      <Text>Total Sell: </Text>
-      {sellItem?.sellReport && <Text>{sellItem.totalSell}</Text>}
+      <View style={{ flexDirection: "row",justifyContent:"space-between" }}>
+        <View style={{ borderRight: 5 }}>
+          <Text>Total USD: </Text>
+          {sellItem?.report && (
+            <Text>
+              {sellItem.totalSellUSD} ~ {sellItem.changeSellToVND}
+            </Text>
+          )}
+          <Text>Total VND: </Text>
+          {sellItem?.report && <Text>{sellItem.totalSellVND}</Text>}
+          <Text>Total Sell: </Text>
+          {sellItem?.report && <Text>{sellItem.totalSell}</Text>}
+        </View>
+        <View>
+          <Text>Thành tiền USD (VAT): </Text>
+          {sellItem?.report && (
+            <Text>
+              {sellItem.actualPaymentSellUSD} ~ {sellItem.changeSellVATToVND}
+            </Text>
+          )}
+          <Text>Thành tiền VND (VAT): </Text>
+          {sellItem?.report && <Text>{sellItem.actualPaymentSellVND}</Text>}
+        </View>
+        <View>
+          <Text>Total (VAT): </Text>
+          {sellItem?.report && <Text>{sellItem.approximatelySellToVnd}</Text>}
+        </View>
+      </View>
     </>
   );
 };

@@ -16,6 +16,12 @@ import AddExchangeRate from "./report/change.to.sub.screen/AddExchangeRate";
 import ItemSellDetails from "./report/change.to.sub.screen/Item.Sell.Details";
 import ItemBuyDetails from "./report/change.to.sub.screen/Item.Buy.Details";
 import PaidOn from "./report/change.to.sub.screen/PaidOn";
+import ItemBuyDetailsInfo from "./report/change.to.sub.screen/ItemBuyDetailsInfo";
+import ItemSellDetailsInfo from "./report/change.to.sub.screen/ItemSellDetailsInfo";
+import ItemPaidOnDetailsInfo from "./report/change.to.sub.screen/ItemPaidOnDetailsInfo";
+import AddPaidOnDetail from "./report/AddPaidOnDetail";
+import UpdateSellInfo from "./report/change.to.sub.screen/UpdateSellInfo";
+import UpdateBuyInfo from "./report/change.to.sub.screen/UpdateBuyInfo";
 const Stack = createStackNavigator();
 
 const ScreenBooking = () => {
@@ -62,6 +68,11 @@ const ScreenBooking = () => {
         // options={{ headerShown: false }}
       />
       <Stack.Screen
+        name="AddPaidOnDetail"
+        component={AddPaidOnDetail}
+        // options={{ headerShown: false }}
+      />
+      <Stack.Screen
         name="AddSellDetail"
         component={AddSellDetail}
         // options={{ headerShown: false }}
@@ -85,6 +96,26 @@ const ScreenBooking = () => {
       <Stack.Screen
       name='PaidOn'
       component={PaidOn}
+      />
+      <Stack.Screen
+      name='ItemBuyDetailsInfo'
+      component={ItemBuyDetailsInfo}
+      />
+      <Stack.Screen
+      name='ItemSellDetailsInfo'
+      component={ItemSellDetailsInfo}
+      />
+      <Stack.Screen
+      name='ItemPaidOnDetailsInfo'
+      component={ItemPaidOnDetailsInfo}
+      />
+      <Stack.Screen
+      name='UpdateSellInfo'
+      component={UpdateSellInfo}
+      />
+      <Stack.Screen
+      name='UpdateBuyInfo'
+      component={UpdateBuyInfo}
       />
     </Stack.Navigator>
   );

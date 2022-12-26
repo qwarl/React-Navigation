@@ -10,8 +10,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { ipAddress } from "../../../../contains/constant";
 import color from "../../../../contains/color";
-const ProfitReportScreen = ({ navigation }) => {
-  // get all report created
+
+const WatchAndUpdateReport = ({ navigation }) => {
   const [report, setReport] = useState();
 
   const getAllReport = async () => {
@@ -24,7 +24,8 @@ const ProfitReportScreen = ({ navigation }) => {
   useEffect(() => {
     getAllReport();
   }, []);
-  // console.log("hihihi", report);
+  console.log("hihihi", report);
+
   // show item in flat list
   const renderItem = ({ item }) => {
     console.log("itemmmmmmmmmmmmmmmmm", item);
@@ -33,7 +34,7 @@ const ProfitReportScreen = ({ navigation }) => {
         onPress={() =>
           navigation.navigate("ProfitReport", {
             data1: item._id,
-            code: 'PROFIT_REPORT',
+            code: 'WATCH_AND_UPDATE',
           })
         }
       >
@@ -72,7 +73,6 @@ const ProfitReportScreen = ({ navigation }) => {
       </TouchableOpacity>
     );
   };
-
   return (
     <>
       <View style={{ flex: 5 }}>
@@ -89,7 +89,7 @@ const ProfitReportScreen = ({ navigation }) => {
   );
 };
 
-export default ProfitReportScreen;
+export default WatchAndUpdateReport;
 
 const styles = StyleSheet.create({
   item: {

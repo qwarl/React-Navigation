@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 const Tab = createBottomTabNavigator();
 import HomeBookingLog from '../HomeBookingLog'
 import ProfitReportScreen from './ProfitReportScreen'
+import WatchAndUpdateReport from "./WatchAndUpdateReport";
 const TabHomeAndReportLog = () => {
   return (
     <Tab.Navigator
@@ -20,6 +21,14 @@ const TabHomeAndReportLog = () => {
       <Tab.Screen
         name="ProfitReportScreen"
         component={ProfitReportScreen}
+        options={{
+          headerShown: false,
+        //   tabBarIcon: () => <Icon name="check" size={20} color="black" />,
+        }}
+      />
+      <Tab.Screen
+        name="WatchAndUpdateReport"
+        component={WatchAndUpdateReport}
         options={{
           headerShown: false,
         //   tabBarIcon: () => <Icon name="check" size={20} color="black" />,
