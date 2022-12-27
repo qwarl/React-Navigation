@@ -42,19 +42,19 @@ const ProfitReport = ({ route, navigation }) => {
     }
   };
   // if (code === "PROFIT_REPORT") {
-    const changeToExchangeRateScreen = () => {
-      navigation.navigate("AddExchangeRate", { id: data });
-      console.log("changeToExchangeRateScreen");
-    };
-    const changeToSellDetailsScreen = () => {
-      navigation.navigate("ItemSellDetails", { id: data,code:code });
-    };
-    const changeToBuyDetailsScreen = () => {
-      navigation.navigate("ItemBuyDetails", { id: data,code:code });
-    };
-    const changeToPaidOnDetailsScreen = () => {
-      navigation.navigate("PaidOn", { id: data,code:code });
-    };
+  const changeToExchangeRateScreen = () => {
+    navigation.navigate("AddExchangeRate", { id: data });
+    console.log("changeToExchangeRateScreen");
+  };
+  const changeToSellDetailsScreen = () => {
+    navigation.navigate("ItemSellDetails", { id: data, code: code });
+  };
+  const changeToBuyDetailsScreen = () => {
+    navigation.navigate("ItemBuyDetails", { id: data, code: code });
+  };
+  const changeToPaidOnDetailsScreen = () => {
+    navigation.navigate("PaidOn", { id: data, code: code });
+  };
   // }else if(code === "WATCH_AND_UPDATE"){
   //   const changeToExchangeRateScreen = () => {
   //     navigation.navigate("AddExchangeRate", { id: data });
@@ -70,6 +70,12 @@ const ProfitReport = ({ route, navigation }) => {
   //     navigation.navigate("PaidOn", { id: data,code:code });
   //   };
   // }
+
+  // const profitUSD = dataGetById.profit / dataGetById.report.exchangeRate;
+
+  // const usd = profitUSD.toFixed();
+
+  // console.log(dataGetById.profit);
 
   return (
     <>
@@ -164,25 +170,26 @@ const ProfitReport = ({ route, navigation }) => {
               </Text>
             </View>
 
-            <View style={{ flexDirection: "row" }}>
-              <TouchableOpacity onPress={changeToSellDetailsScreen}>
-                <Text style={styles.textDisplay}>Total Sell:</Text>
-                <Text style={styles.textContent}>{dataGetById.totalSell}</Text>
-              </TouchableOpacity>
-            </View>
-            <View style={{ flexDirection: "row" }}>
-              <TouchableOpacity onPress={changeToBuyDetailsScreen}>
-                <Text style={styles.textDisplay}>Total Buy:</Text>
-                <Text style={styles.textContent}>{dataGetById.totalBuy}</Text>
-              </TouchableOpacity>
-            </View>
-            <View style={{ flexDirection: "row" }}>
-              <TouchableOpacity onPress={changeToPaidOnDetailsScreen}>
-                <Text style={styles.textDisplay}>Chi hộ:</Text>
-                <Text style={styles.textContent}>
-                  {dataGetById.totalPaidOn}
-                </Text>
-              </TouchableOpacity>
+            <TouchableOpacity
+              style={{ flexDirection: "row" }}
+              onPress={changeToSellDetailsScreen}
+            >
+              <Text style={styles.textDisplay}>Total Sell:</Text>
+              <Text style={styles.textContent}>{dataGetById.totalSell}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{ flexDirection: "row" }}
+              onPress={changeToBuyDetailsScreen}
+            >
+              <Text style={styles.textDisplay}>Total Buy:</Text>
+              <Text style={styles.textContent}>{dataGetById.totalBuy}</Text>
+            </TouchableOpacity>
+            <View
+              style={{ flexDirection: "row" }}
+              onPress={changeToPaidOnDetailsScreen}
+            >
+              <Text style={styles.textDisplay}>Chi hộ:</Text>
+              <Text style={styles.textContent}>{dataGetById.totalPaidOn}</Text>
             </View>
             <View style={{ flexDirection: "row" }}>
               {/* <TouchableOpacity onPress={console.log("z")}> */}
@@ -208,13 +215,15 @@ const ProfitReport = ({ route, navigation }) => {
               <Text style={styles.textDisplay}>Lợi nhuận VAT: </Text>
               <Text style={styles.textContent}>{dataGetById.profitVAT}</Text>
             </View>
-            <View style={{ flexDirection: "row" }}>
-              <TouchableOpacity onPress={changeToExchangeRateScreen}>
-                <Text style={styles.textDisplay}>Tỉ giá:</Text>
-                <Text style={styles.textContent}>
-                  {dataGetById.report.exchangeRate}
-                </Text>
-                {/* (
+            <TouchableOpacity
+              style={{ flexDirection: "row" }}
+              onPress={changeToExchangeRateScreen}
+            >
+              <Text style={styles.textDisplay}>Tỉ giá:</Text>
+              <Text style={styles.textContent}>
+                {dataGetById.report.exchangeRate}
+              </Text>
+              {/* (
                 {dataGetById.report.exchangeRate}==0||{dataGetById.report.exchangeRate}==null
                 )
                 ?
@@ -225,7 +234,15 @@ const ProfitReport = ({ route, navigation }) => {
                   {dataGetById.report.exchangeRate}
                 </Text>
                 ) */}
-              </TouchableOpacity>
+            </TouchableOpacity>
+            <View style={{ flexDirection: "row" }}>
+              <Text style={styles.textDisplay}>Lợi nhuận tính usd: </Text>
+              <Text style={styles.textContent}>
+                {(
+                  dataGetById.profit / dataGetById.report.exchangeRate
+                ).toFixed()}
+                USD
+              </Text>
             </View>
             {code === "PROFIT_REPORT" ? (
               <>
