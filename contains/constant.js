@@ -235,12 +235,18 @@ export const TypeContainerTruck = [
 ];
 
 export const VAT = [
-  { label: "10%", value: "0.1" },
+  { label: "0", value: "0" },
   { label: "8%", value: "0.08" },
-  { label: "20%", value: "0.2" },
-  { label: "7%", value: "0.07" },
+  { label: "10%", value: "0.1" },
+  { label: "15%", value: "0.15" },
   { label: "5%", value: "0.05" },
+  { label: "20%", value: "0.2" },
   { label: "14%", value: "0.14" },
+];
+
+export const COM_KH = [
+  { label: "CHUẨN", value: "CHUẨN" }, // xu ly o fe
+  { label: "KHÁC", value: "KHÁC" },
 ];
 
 export const TypeOfFee = [
