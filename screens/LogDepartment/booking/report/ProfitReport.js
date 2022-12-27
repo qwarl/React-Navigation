@@ -41,6 +41,7 @@ const ProfitReport = ({ route, navigation }) => {
       console.log(error);
     }
   };
+  console.log("111111111111111111111", dataGetById?.report);
   // if (code === "PROFIT_REPORT") {
   const changeToExchangeRateScreen = () => {
     navigation.navigate("AddExchangeRate", { id: data });
@@ -215,26 +216,26 @@ const ProfitReport = ({ route, navigation }) => {
               <Text style={styles.textDisplay}>Lợi nhuận VAT: </Text>
               <Text style={styles.textContent}>{dataGetById.profitVAT}</Text>
             </View>
-            <TouchableOpacity
-              style={{ flexDirection: "row" }}
-              onPress={changeToExchangeRateScreen}
-            >
-              <Text style={styles.textDisplay}>Tỉ giá:</Text>
-              <Text style={styles.textContent}>
-                {dataGetById.report.exchangeRate}
-              </Text>
-              {/* (
-                {dataGetById.report.exchangeRate}==0||{dataGetById.report.exchangeRate}==null
-                )
-                ?
-                (<Text style={styles.textContent}>Thêm tỉ giá</Text>)
-                :
-                (
+
+            {dataGetById.report.exchangeRate !==0 ? (
+              <View>
+                <Text style={styles.textDisplay}>Tỉ giá:</Text>
                 <Text style={styles.textContent}>
                   {dataGetById.report.exchangeRate}
                 </Text>
-                ) */}
-            </TouchableOpacity>
+              </View>
+            ) : (
+              <TouchableOpacity
+                style={{ flexDirection: "row" }}
+                onPress={changeToExchangeRateScreen}
+              >
+                <Text style={styles.textDisplay}>Tỉ giá:</Text>
+                <Text style={styles.textContent}>
+                  {dataGetById.report.exchangeRate}
+                </Text>
+              </TouchableOpacity>
+            )}
+
             <View style={{ flexDirection: "row" }}>
               <Text style={styles.textDisplay}>Lợi nhuận tính usd: </Text>
               <Text style={styles.textContent}>
