@@ -26,6 +26,8 @@ import AddAdvance from "../advance/AddAdvance ";
 import DetailAdvance from "../advance/DetailAdvance";
 import AddFinalSettlement from "../finalSettlement/AddFinalSettlement";
 import DetailFinalSettlement from "../finalSettlement/DetailFinalSettlement";
+import PaymentLog from "../formLog/PaymentLog";
+import ReceiptLog from "../formLog/ReceiptLog";
 const Stack = createStackNavigator();
 
 const ScreenBooking = () => {
@@ -91,6 +93,8 @@ const ScreenBooking = () => {
         name="DetailFinalSettlement"
         component={DetailFinalSettlement}
       />
+      <Stack.Screen name="PaymentLog" component={PaymentLog} />
+      <Stack.Screen name="ReceiptLog" component={ReceiptLog} />
       <Stack.Screen name="DetailAdvance" component={DetailAdvance} />
       <Stack.Screen name="PaidOn" component={PaidOn} />
       <Stack.Screen name="ItemBuyDetailsInfo" component={ItemBuyDetailsInfo} />

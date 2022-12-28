@@ -19,26 +19,25 @@ const AddFinalSettlement = ({ route }) => {
   const [finalSettlement, setFinalSettlement] = useState({
     totalOPS: 0,
     totalPaid: 0,
-    settlement: 0,
-    actions: "",
-    status: "",
+    totalSettlement: 0,
+    actionsSettlement: "",
+    statusSettlement: "",
   });
 
   useEffect(() => {
     setFinalSettlement({
       totalOPS: totalOps,
       totalPaid: totalFinalPaid,
-      settlement: totalFinalSettlement,
+      totalSettlement: totalFinalSettlement,
     });
   }, []);
-
-  console.log(finalSettlement);
 
   const handleOnChangeText = (fieldName, value) => {
     setFinalSettlement({ ...finalSettlement, [fieldName]: value });
   };
 
   const submitForm = async () => {
+    console.log(finalSettlement);
     try {
       const res = await clientReport.post("add-final-settlement-item-details", {
         finalSettlementItemDetail: finalSettlement,
@@ -71,18 +70,22 @@ const AddFinalSettlement = ({ route }) => {
           onChangeText={(value) => handleOnChangeText(value, "reason")}
           value={`${totalFinalSettlement}`}
         />
-        <FormInput
+        {/* <FormInput
           label="Hành Động"
           placeholder="Hành Động"
-          onChangeText={(value) => handleOnChangeText(value, "actions")}
-          value={finalSettlement.actions}
+          onChangeText={(value) =>
+            handleOnChangeText(value, "actionsSettlement")
+          }
+          value={finalSettlement.actionsSettlement}
         />
         <FormInput
           label="Tình Trạng"
           placeholder="Tình Trạng"
-          onChangeText={(value) => handleOnChangeText(value, "status")}
-          value={finalSettlement.status}
-        />
+          onChangeText={(value) =>
+            handleOnChangeText(value, "statusSettlement")
+          }
+          value={finalSettlement.statusSettlement}
+        /> */}
         {/* <View style={{ flexDirection: "row" }}>
           <View style={{ width: "100%" }}>
             <Text style={styles.textValid}>Ngày Ứng</Text>

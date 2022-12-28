@@ -190,13 +190,13 @@ const ProfitReport = ({ route, navigation }) => {
               <Text style={styles.textDisplay}>Total Buy:</Text>
               <Text style={styles.textContent}>{dataGetById.totalBuy}</Text>
             </TouchableOpacity>
-            <View
+            <TouchableOpacity
               style={{ flexDirection: "row" }}
               onPress={changeToPaidOnDetailsScreen}
             >
               <Text style={styles.textDisplay}>Chi hộ:</Text>
               <Text style={styles.textContent}>{dataGetById.totalPaidOn}</Text>
-            </View>
+            </TouchableOpacity>
             <TouchableOpacity
               style={{ flexDirection: "row" }}
               onPress={changeToAdvanceOnDetailsScreen}

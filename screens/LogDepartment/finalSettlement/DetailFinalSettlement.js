@@ -1,5 +1,6 @@
 import {
   FlatList,
+  Pressable,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -10,7 +11,7 @@ import clientReport from "../../../api/clientReport";
 import color from "../../../contains/color";
 import { ipAddress } from "../../../contains/constant";
 
-const DetailFinalSettlement = ({ route }) => {
+const DetailFinalSettlement = ({ route, navigation }) => {
   const [data, setData] = useState(route.params.id);
   const [dataFinalSettlement, setDataFinalSettlement] = useState();
 
@@ -25,7 +26,6 @@ const DetailFinalSettlement = ({ route }) => {
   useEffect(() => {
     getAllOPSItemDetails();
   }, []);
-
   const renderItem = ({ item }) => (
     <TouchableOpacity
     // onPress={() => {
@@ -66,9 +66,60 @@ const DetailFinalSettlement = ({ route }) => {
           }}
         >
           <Text style={styles.textLable}>Quyết Toán: </Text>
-          <Text style={styles.textDisplay}>{item.finalSettlement}</Text>
+          <Text style={styles.textDisplay}>{item.totalSettlement}</Text>
         </View>
-        <View
+        {item.totalSettlement < 0 ? (
+          <Pressable
+            onPress={() => {
+              navigation.navigate("ReceiptLog", {
+                data: data,
+              });
+            }}
+            style={{
+              backgroundColor: color.primary,
+              alignItems: "center",
+              width: 150,
+              justifyContent: "center",
+              alignContent: "center",
+              marginLeft: "auto",
+              marginRight: "auto",
+              marginTop: 30,
+              marginBottom: 10,
+              padding: 15,
+              borderRadius: 8,
+            }}
+          >
+            <Text style={{ textAlign: "center", fontSize: 17, color: "white" }}>
+              Xuất Phiếu Thu
+            </Text>
+          </Pressable>
+        ) : (
+          <Pressable
+            onPress={() => {
+              navigation.navigate("PaymentLog", {
+                data: data,
+              });
+            }}
+            style={{
+              backgroundColor: color.primary,
+              alignItems: "center",
+              width: 150,
+              justifyContent: "center",
+              alignContent: "center",
+              marginLeft: "auto",
+              marginRight: "auto",
+              marginTop: 30,
+              marginBottom: 10,
+              padding: 15,
+              borderRadius: 8,
+            }}
+          >
+            <Text style={{ textAlign: "center", fontSize: 17, color: "white" }}>
+              Xuất Phiếu Chi
+            </Text>
+          </Pressable>
+        )}
+        {/* <View
           style={{
             marginTop: 10,
             flexDirection: "row",
@@ -89,7 +140,7 @@ const DetailFinalSettlement = ({ route }) => {
         >
           <Text style={styles.textLable}>Tình trạng: </Text>
           <Text style={styles.textDisplay}>{item.status}</Text>
-        </View>
+        </View> */}
       </View>
       <Text
         style={{

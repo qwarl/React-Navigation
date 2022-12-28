@@ -53,7 +53,7 @@ const ReceiptLog = () => {
   };
   return (
     <View>
-      <View style={{ marginTop: 10 }}>
+      <View>
         <Pressable style={{ backgroundColor: "#fd5c63" }} onPress={generatePdf}>
           <Text
             style={{
@@ -88,18 +88,20 @@ const ReceiptLog = () => {
           </Text>
         </View>
         <View style={{ position: "absolute", right: 10, top: 70 }}>
-          <Text>Số:</Text>
-          <Text>Nợ:</Text>
-          <Text>Có:</Text>
+          <Text>Số: {number}</Text>
+          <Text>Nợ: {indebt}</Text>
+          <Text>Có: {has}</Text>
         </View>
         <View style={{ marginTop: 90, marginLeft: 20 }}>
-          <Text style={styles.textContent}>Họ tên người nộp tiền:</Text>
-          <Text style={styles.textContent}>Địa Chỉ:</Text>
-          <Text style={styles.textContent}>Lý do nộp:</Text>
-          <Text style={styles.textContent}>Số tiền:</Text>
-          <Text style={styles.textContent}>Viết bằng chữ:</Text>
+          <Text style={styles.textContent}>Họ tên người nộp tiền: {name}</Text>
+          <Text style={styles.textContent}>Địa Chỉ: {address}</Text>
+          <Text style={styles.textContent}>Lý do nộp: {reason}</Text>
+          <Text style={styles.textContent}>Số tiền: {money}</Text>
           <Text style={styles.textContent}>
-            Kèm theo:............... chứng từ gốc
+            Viết bằng chữ: {writteninletters}
+          </Text>
+          <Text style={styles.textContent}>
+            Kèm theo: {attach} chứng từ gốc
           </Text>
         </View>
         <View style={{ position: "absolute", right: 10, top: 380 }}>

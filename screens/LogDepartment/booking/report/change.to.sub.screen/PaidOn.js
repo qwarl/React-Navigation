@@ -8,6 +8,7 @@ import {
 import React, { useEffect, useState } from "react";
 import clientReport from "../../../../../api/clientReport";
 import { ipAddress } from "../../../../../contains/constant";
+import color from "../../../../../contains/color";
 const PaidOn = ({ route, navigation }) => {
   const [data, setData] = useState(route.params.id);
   const [paidOn, setPaidOn] = useState();
@@ -113,8 +114,27 @@ const PaidOn = ({ route, navigation }) => {
           </View>
         </View>
       )}
-      <Text>Chi hộ: </Text>
-      {paidOn?.report && <Text>{paidOn.totalPaidOn}</Text>}
+      <View
+        style={{
+          flexDirection: "row",
+          backgroundColor: color.primary,
+          padding: 10,
+          marginLeft: 20,
+          marginRight: 20,
+          marginBottom: 5,
+          borderRadius: 8,
+          justifyContent: "space-around",
+        }}
+      >
+        <Text style={{ fontSize: 17, color: "white", fontWeight: "bold" }}>
+          Chi hộ:{" "}
+        </Text>
+        {paidOn?.report && (
+          <Text style={{ fontSize: 17, color: "white" }}>
+            {paidOn.totalPaidOn} VND
+          </Text>
+        )}
+      </View>
     </>
   );
 };

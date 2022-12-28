@@ -50,7 +50,7 @@ const PaymentLog = () => {
 
   return (
     <View>
-      <View style={{ marginTop: 10 }}>
+      <View>
         <Pressable style={{ backgroundColor: "#fd5c63" }} onPress={generatePdf}>
           <Text
             style={{
