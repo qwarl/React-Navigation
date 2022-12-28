@@ -10,7 +10,7 @@ import NewAddBooking from "./NewAddBooking";
 import ProfitReport from "./report/ProfitReport";
 import AddBuyDetail from "./report/AddBuyDetail";
 import AddSellDetail from "./report/AddSellDetail";
-import TabHomeAndReportLog from './report/tab.home.and.report.log'
+import TabHomeAndReportLog from "./report/tab.home.and.report.log";
 import ProfitReportScreen from "./report/ProfitReportScreen";
 import AddExchangeRate from "./report/change.to.sub.screen/AddExchangeRate";
 import ItemSellDetails from "./report/change.to.sub.screen/Item.Sell.Details";
@@ -22,6 +22,10 @@ import ItemPaidOnDetailsInfo from "./report/change.to.sub.screen/ItemPaidOnDetai
 import AddPaidOnDetail from "./report/AddPaidOnDetail";
 import UpdateSellInfo from "./report/change.to.sub.screen/UpdateSellInfo";
 import UpdateBuyInfo from "./report/change.to.sub.screen/UpdateBuyInfo";
+import AddAdvance from "../advance/AddAdvance ";
+import DetailAdvance from "../advance/DetailAdvance";
+import AddFinalSettlement from "../finalSettlement/AddFinalSettlement";
+import DetailFinalSettlement from "../finalSettlement/DetailFinalSettlement";
 const Stack = createStackNavigator();
 
 const ScreenBooking = () => {
@@ -77,46 +81,29 @@ const ScreenBooking = () => {
         component={AddSellDetail}
         // options={{ headerShown: false }}
       />
+      <Stack.Screen name="ProfitReportScreen" component={ProfitReportScreen} />
+      <Stack.Screen name="AddExchangeRate" component={AddExchangeRate} />
+      <Stack.Screen name="AddAdvance" component={AddAdvance} />
+      <Stack.Screen name="AddFinalSettlement" component={AddFinalSettlement} />
+      <Stack.Screen name="ItemSellDetails" component={ItemSellDetails} />
+      <Stack.Screen name="ItemBuyDetails" component={ItemBuyDetails} />
       <Stack.Screen
-      name='ProfitReportScreen'
-      component={ProfitReportScreen}
+        name="DetailFinalSettlement"
+        component={DetailFinalSettlement}
+      />
+      <Stack.Screen name="DetailAdvance" component={DetailAdvance} />
+      <Stack.Screen name="PaidOn" component={PaidOn} />
+      <Stack.Screen name="ItemBuyDetailsInfo" component={ItemBuyDetailsInfo} />
+      <Stack.Screen
+        name="ItemSellDetailsInfo"
+        component={ItemSellDetailsInfo}
       />
       <Stack.Screen
-      name='AddExchangeRate'
-      component={AddExchangeRate}
+        name="ItemPaidOnDetailsInfo"
+        component={ItemPaidOnDetailsInfo}
       />
-      <Stack.Screen
-      name='ItemSellDetails'
-      component={ItemSellDetails}
-      />
-      <Stack.Screen
-      name='ItemBuyDetails'
-      component={ItemBuyDetails}
-      />
-      <Stack.Screen
-      name='PaidOn'
-      component={PaidOn}
-      />
-      <Stack.Screen
-      name='ItemBuyDetailsInfo'
-      component={ItemBuyDetailsInfo}
-      />
-      <Stack.Screen
-      name='ItemSellDetailsInfo'
-      component={ItemSellDetailsInfo}
-      />
-      <Stack.Screen
-      name='ItemPaidOnDetailsInfo'
-      component={ItemPaidOnDetailsInfo}
-      />
-      <Stack.Screen
-      name='UpdateSellInfo'
-      component={UpdateSellInfo}
-      />
-      <Stack.Screen
-      name='UpdateBuyInfo'
-      component={UpdateBuyInfo}
-      />
+      <Stack.Screen name="UpdateSellInfo" component={UpdateSellInfo} />
+      <Stack.Screen name="UpdateBuyInfo" component={UpdateBuyInfo} />
     </Stack.Navigator>
   );
 };

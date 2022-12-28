@@ -17,8 +17,10 @@ import FormInput from "../../../components/FormInput";
 import color from "../../../contains/color";
 import Icon from "react-native-vector-icons/FontAwesome";
 import clientAddItemAdvance from "../../../api/clientAddItemAdvance";
+import clientReport from "../../../api/clientReport";
 
-const AddAdvance = ({ navigation }) => {
+const AddAdvance = ({ navigation, route }) => {
+  const idReportLog = route.params.data;
   const handleOnChangeText = (value, fieldName) => {
     setAdvanceInfo({ ...advanceInfo, [fieldName]: value });
   };
@@ -55,7 +57,7 @@ const AddAdvance = ({ navigation }) => {
   };
 
   const [advanceInfo, setAdvanceInfo] = useState({
-    money: "",
+    money: 0,
     username: "",
     reason: "",
     status: "",
@@ -63,6 +65,7 @@ const AddAdvance = ({ navigation }) => {
     userCreate: "Mr Thắng",
   });
 
+  console.log(advanceInfo);
   // console.log(advanceInfo);
   const isValidForm = () => {
     if (!isValidObjectField(advanceInfo))
@@ -72,12 +75,13 @@ const AddAdvance = ({ navigation }) => {
 
   const submitForm = async () => {
     try {
-      const res = await clientAddItemAdvance.post("/create", {
-        ...advanceInfo,
+      const res = await clientReport.post("add-advance-item-details", {
+        advanceOPSItemDetail: advanceInfo,
+        idReportLog: idReportLog,
       });
       if (res.data.success) {
         Alert.alert("Thêm Thành Công");
-        navigation.goBack();
+        // navigation.goBack();
       }
     } catch (error) {
       console.log(error.message);

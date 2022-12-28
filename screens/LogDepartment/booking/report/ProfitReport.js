@@ -55,6 +55,12 @@ const ProfitReport = ({ route, navigation }) => {
   const changeToPaidOnDetailsScreen = () => {
     navigation.navigate("PaidOn", { id: data, code: code });
   };
+  const changeToAdvanceOnDetailsScreen = () => {
+    navigation.navigate("DetailAdvance", { id: data, code: code });
+  };
+  const changeToFinalSettlementOnDetailsScreen = () => {
+    navigation.navigate("DetailFinalSettlement", { id: data, code: code });
+  };
   // }else if(code === "WATCH_AND_UPDATE"){
   //   const changeToExchangeRateScreen = () => {
   //     navigation.navigate("AddExchangeRate", { id: data });
@@ -191,6 +197,22 @@ const ProfitReport = ({ route, navigation }) => {
               <Text style={styles.textDisplay}>Chi hộ:</Text>
               <Text style={styles.textContent}>{dataGetById.totalPaidOn}</Text>
             </View>
+            <TouchableOpacity
+              style={{ flexDirection: "row" }}
+              onPress={changeToAdvanceOnDetailsScreen}
+            >
+              <Text style={styles.textDisplay}>Total OPS:</Text>
+              <Text style={styles.textContent}>{dataGetById.totalOPS}</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{ flexDirection: "row" }}
+              onPress={changeToFinalSettlementOnDetailsScreen}
+            >
+              <Text style={styles.textDisplay}>Quyết Toán OPS:</Text>
+              <Text style={styles.textContent}>
+                {dataGetById.finalSettlementOPS}
+              </Text>
+            </TouchableOpacity>
             <View style={{ flexDirection: "row" }}>
               {/* <TouchableOpacity onPress={console.log("z")}> */}
               <Text style={styles.textDisplay}>Lợi nhuận:</Text>
@@ -215,32 +237,32 @@ const ProfitReport = ({ route, navigation }) => {
               <Text style={styles.textDisplay}>Lợi nhuận VAT: </Text>
               <Text style={styles.textContent}>{dataGetById.profitVAT}</Text>
             </View>
-            <TouchableOpacity
-              style={{ flexDirection: "row" }}
-              onPress={changeToExchangeRateScreen}
-            >
-              <Text style={styles.textDisplay}>Tỉ giá:</Text>
-              <Text style={styles.textContent}>
-                {dataGetById.report.exchangeRate}
-              </Text>
-              {/* (
-                {dataGetById.report.exchangeRate}==0||{dataGetById.report.exchangeRate}==null
-                )
-                ?
-                (<Text style={styles.textContent}>Thêm tỉ giá</Text>)
-                :
-                (
+
+            {dataGetById.report.exchangeRate !== 0 ? (
+              <View>
+                <Text style={styles.textDisplay}>Tỉ giá:</Text>
                 <Text style={styles.textContent}>
                   {dataGetById.report.exchangeRate}
                 </Text>
-                ) */}
-            </TouchableOpacity>
+              </View>
+            ) : (
+              <TouchableOpacity
+                style={{ flexDirection: "row" }}
+                onPress={changeToExchangeRateScreen}
+              >
+                <Text style={styles.textDisplay}>Tỉ giá:</Text>
+                <Text style={styles.textContent}>
+                  {dataGetById.report.exchangeRate}
+                </Text>
+              </TouchableOpacity>
+            )}
+
             <View style={{ flexDirection: "row" }}>
               <Text style={styles.textDisplay}>Lợi nhuận tính usd: </Text>
               <Text style={styles.textContent}>
                 {(
                   dataGetById.profit / dataGetById.report.exchangeRate
-                ).toFixed()}
+                ).toFixed()}{" "}
                 USD
               </Text>
             </View>
@@ -303,24 +325,47 @@ const ProfitReport = ({ route, navigation }) => {
                       Nhập chi hộ
                     </Text>
                   </TouchableOpacity>
-                  {/* <TouchableOpacity
-                style={[styles.buttonUpdate]}
-                onPress={() => {
-                  navigation.navigate("AddBuyDetail", {
-                    data: data,
-                  });
-                }}
-              >
-                <Text
-                  style={{
-                    fontSize: 18,
-                    color: color.primary,
-                    fontWeight: "bold",
-                  }}
-                >
-                  Nhập giá mua
-                </Text>
-              </TouchableOpacity> */}
+                  <TouchableOpacity
+                    style={[styles.buttonUpdate]}
+                    onPress={() => {
+                      navigation.navigate("AddAdvance", {
+                        data: data,
+                      });
+                    }}
+                  >
+                    <Text
+                      style={{
+                        fontSize: 18,
+                        color: color.primary,
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Nhập tạm ứng OPS
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.styleButton}>
+                  <TouchableOpacity
+                    style={[styles.buttonUpdate]}
+                    onPress={() => {
+                      navigation.navigate("AddFinalSettlement", {
+                        data: data,
+                        ops: dataGetById.totalOPS,
+                        paid: dataGetById.totalPaidOn,
+                        buy: dataGetById.totalBuy,
+                      });
+                    }}
+                  >
+                    <Text
+                      style={{
+                        fontSize: 18,
+                        color: color.primary,
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Nhập quyết toán
+                    </Text>
+                  </TouchableOpacity>
                 </View>
               </>
             ) : null}

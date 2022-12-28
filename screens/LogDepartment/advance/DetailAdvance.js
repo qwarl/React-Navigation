@@ -18,49 +18,53 @@ import clientAdvanceOPS from "../../../api/clientAdvanceOPS";
 import * as XLSX from "xlsx";
 import * as FileSystem from "expo-file-system";
 import * as Sharing from "expo-sharing";
-const DetailAdvance = () => {
-  const [data, setData] = useState([]);
-  const [ops, setOps] = useState({ ops: "", userCreate: "Mr Thắng" });
-  const url = "/getAll";
-  const id = "Mr Thắng";
+import clientReport from "../../../api/clientReport";
+import { ipAddress } from "../../../contains/constant";
+const DetailAdvance = ({ route, navigation }) => {
+  const [data, setData] = useState(route.params.id);
+  const [ops, setOps] = useState();
 
+  const getAllOPSItemDetails = async () => {
+    const url = `api/report-log/getById/`;
+    clientReport
+      .get(`${ipAddress}/${url}` + data)
+      //   .then((res) => setBuyItem(res.data.report.buyReport))
+      .then((res) => setOps(res.data))
+      .catch((err) => console.log(err));
+  };
   useEffect(() => {
-    clientAdvanceOPS
-      .get(url)
-      .then((res) => {
-        setData(res.data.advanceOPS);
-        // console.log(data[0].ops);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    getAllOPSItemDetails();
   }, []);
+  console.log("buy", route.params);
 
   // const totalOps = data
   //   .map((item) => Number(item.money))
   //   .reduce((prev, curr) => prev + curr, 0);
 
   // console.log(totalOps);
-  // const newArray = () => {
-  //   var numbers = [];
-  //   for (var i = 0; i < data.length; i++) {
-  //     var money = data[i].money;
-  //     var username = data[i].username;
-  //     var reason = data[i].reason;
-  //     var status = data[i].status;
-  //     var date = data[i].date;
-  //     numbers.push([money, username, reason, status, date]);
-  //   }
-  // for (var i = 0; i < numbers.length; i++) {
-  //   let row = numbers[i];
-  //   let row1 = [];
-  //   row1.push(row);
-  //   const [childRow] = row1;
-  //   // console.log(row1);
-  //   return childRow;
-  // }
-  //   return numbers;
-  // };
+
+  // console.log(ops.report.advanceOps);
+  const newArray = () => {
+    var numbers = [];
+    const data1 = ops.report.advanceOps;
+    for (var i = 0; i < data1.length; i++) {
+      var money = data1[i].money;
+      var username = data1[i].username;
+      var reason = data1[i].reason;
+      var status = data1[i].status;
+      var date = data1[i].date;
+      numbers.push([money, username, reason, status, date]);
+    }
+    for (var i = 0; i < numbers.length; i++) {
+      let row = numbers[i];
+      let row1 = [];
+      row1.push(row);
+      const [childRow] = row1;
+      // console.log(row1);
+      return childRow;
+    }
+    return numbers;
+  };
 
   const generateExcel = () => {
     let row4 = newArray(); // [[1,2,3], [4,5]]
@@ -198,72 +202,63 @@ const DetailAdvance = () => {
     </TouchableOpacity>
   );
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: color.white,
-        marginTop: 40,
-      }}
-    >
-      <View style={{ marginTop: 10, flexDirection: "row" }}>
-        <Text
-          style={{
-            fontSize: 20,
-            alignItems: "center",
-            justifyContent: "center",
-            alignContent: "center",
-            color: color.primary,
-          }}
-        >
-          Tạm Ứng OPS
-        </Text>
-        {/* <Icon
-          onPress={() => navigation.navigate("AddAdvance")}
-          name="add-to-list"
-          size={35}
-          color="#000"
-          style={{
-            top: -5,
-            position: "absolute",
-            right: -110,
-            marginBottom: 0,
-            zIndex: 1000,
-          }}
-        /> */}
-      </View>
-      <View style={styles.displayData}>
-        <FlatList
-          style={styles.list}
-          data={data}
-          renderItem={renderItem}
-          keyExtractor={(item) => item._id}
-        />
-      </View>
+    <>
+      {ops?.report && (
+        <View style={styles.displayData}>
+          <FlatList
+            style={styles.list}
+            data={ops.report.advanceOps}
+            renderItem={renderItem}
+            keyExtractor={(item) => item._id}
+          />
+        </View>
+      )}
       <View
         style={{
-          flex: 0.5,
-          marginVertical: 30,
-          marginHorizontal: 80,
-          justifyContent: "center",
-          alignItems: "center",
-          marginTop: 2,
+          flexDirection: "row",
+          justifyContent: "space-between",
+          marginLeft: 15,
+          marginRight: 15,
+          backgroundColor: color.primary,
+          padding: 15,
+          paddingLeft: 30,
+          paddingRight: 30,
+          marginBottom: 15,
+          borderRadius: 8,
         }}
       >
-        <TouchableOpacity style={[styles.buttonInsert]} onPress={generateExcel}>
-          <Text
-            style={{
-              fontSize: 18,
-              color: color.primary,
-              fontWeight: "bold",
-            }}
+        <Text style={{ fontSize: 17, color: "white" }}>Total OPS: </Text>
+        {ops?.report && (
+          <Text style={{ fontSize: 17, color: "white" }}>{ops.totalOPS}</Text>
+        )}
+
+        {/* <View
+          style={{
+            flex: 0.5,
+            marginVertical: 30,
+            marginHorizontal: 80,
+            justifyContent: "center",
+            alignItems: "center",
+            marginTop: 2,
+          }}
+        >
+          <TouchableOpacity
+            style={[styles.buttonInsert]}
+            onPress={generateExcel}
           >
-            Xuất File Excel
-          </Text>
-        </TouchableOpacity>
+            <Text
+              style={{
+                fontSize: 18,
+                color: color.primary,
+                fontWeight: "bold",
+              }}
+            >
+              Xuất File Excel
+            </Text>
+          </TouchableOpacity>
+        </View> */}
       </View>
-    </View>
+    </>
   );
 };
 
