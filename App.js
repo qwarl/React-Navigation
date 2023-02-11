@@ -22,6 +22,8 @@ import DetailAdvance from "./screens/LogDepartment/advance/DetailAdvance";
 import PaymentLog from "./screens/LogDepartment/formLog/PaymentLog";
 import ReceiptLog from "./screens/LogDepartment/formLog/ReceiptLog";
 import AddReceiptLog from "./screens/LogDepartment/formLog/AddReceiptLog";
+import StartScreen from "./screens/SignIn/StartScreen";
+import ScreenSignIn from "./screens/SignIn/ScreenSignIn";
 // import ScreenAIR from "./screens/AIRDepartment/ScreenAIR";
 
 const Stack = createStackNavigator();
@@ -38,6 +40,7 @@ export default function App() {
       {/* <ScreenDoor/> */}
       {/* <ScreenAIR/> */}
       <DrawerScreen />
+      {/* <ScreenSignIn /> */}
       {/* <ScreenAdvance /> */}
       {/* <ReceiptLog /> */}
       {/* <AddReceiptLog /> */}

@@ -1,14 +1,14 @@
 import {
-	View,
-	Text,
-	TouchableOpacity,
-	StyleSheet,
-	ScrollView,
-	Platform,
-	Dimensions,
-	Alert,
-	Button,
-	TextInput,
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  ScrollView,
+  Platform,
+  Dimensions,
+  Alert,
+  Button,
+  TextInput,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import FormInput from "../../components/FormInput";
@@ -28,95 +28,94 @@ import axios from "axios";
 import client from "../../api/client";
 import Icon from "react-native-vector-icons/FontAwesome";
 
-
 const Add = ({ navigation, route }) => {
-	const [date, setDate] = useState(new Date());
-	// const [mode, setMode] = useState("date");
-	const [show, setShow] = useState(false);
-	const [selectedDate, setSelectedDate] = useState('');
+  const [date, setDate] = useState(new Date());
+  const [mode, setMode] = useState("date");
+  const [show, setShow] = useState(false);
+  const [selectedDate, setSelectedDate] = useState("");
 
-	//handle time picker
-	const onChange = (event, selectedDate) => {
-		const currentDate = selectedDate || date;
-		setShow(Platform.OS === "ios");
-		setDate(currentDate);
+  //handle time picker
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setShow(Platform.OS === "ios");
+    setDate(currentDate);
 
-		let tempDate = new Date(currentDate);
-		let fDate =
-			tempDate.getDate() +
-			"/" +
-			(tempDate.getMonth() + 1) +
-			"/" +
-			tempDate.getFullYear();
+    let tempDate = new Date(currentDate);
+    let fDate =
+      tempDate.getDate() +
+      "/" +
+      (tempDate.getMonth() + 1) +
+      "/" +
+      tempDate.getFullYear();
 
-		handleOnChangeText(fDate, "valid");
-	};
+    handleOnChangeText(fDate, "valid");
+  };
 
-	//handle time picker
-	// const showMode = (currentMode) => {
-	// 	setShow(true);
-	// 	setMode(currentMode);
-	// };
+  //handle time picker
+  const showMode = (currentMode) => {
+    setShow(true);
+    setMode(currentMode);
+  };
 
-	let {
-		type,
-		continent,
-		month,
-		pol,
-		carrier,
-		pod,
-		of20,
-		of40,
-		of45,
-		sur20,
-		sur40,
-		valid,
-		freeTime,
-		lines,
-		notes,
-	} = route?.params || {};
+  let {
+    type,
+    continent,
+    month,
+    pol,
+    carrier,
+    pod,
+    of20,
+    of40,
+    of45,
+    sur20,
+    sur40,
+    valid,
+    freeTime,
+    lines,
+    notes,
+  } = route?.params || {};
 
-	const handleOnChangeText = (value, fieldName) => {
-		setFclInfo({ ...fclInfo, [fieldName]: value });
-	};
+  const handleOnChangeText = (value, fieldName) => {
+    setFclInfo({ ...fclInfo, [fieldName]: value });
+  };
 
-	const addDate = () => {
-		showMode("date");
-	};
-	const [fclInfo, setFclInfo] = useState({
-		month: month,
-		continent: continent,
-		type: type,
-		pol: pol,
-		pod: pod,
-		carrier: carrier,
-		of20: of20,
-		of40: of40,
-		of45: of45,
-		sur20: sur20,
-		sur40: sur40,
-		valid: valid,
-		lines: lines,
-		freeTime: freeTime,
-		notes: notes,
-	});
-	console.log("valid", fclInfo.valid);
-	const submitForm = async () => {
-		try {
-			const res = await client.post("/create", { ...fclInfo });
-			if (res.data.success) {
-				Alert.alert("Thêm Thành Công");
-				// navigation.goBack();
-			}
-		} catch (error) {
-			console.log(error.message);
-		}
-	};
+  const addDate = () => {
+    showMode("date");
+  };
+  const [fclInfo, setFclInfo] = useState({
+    month: month,
+    continent: continent,
+    type: type,
+    pol: pol,
+    pod: pod,
+    carrier: carrier,
+    of20: of20,
+    of40: of40,
+    of45: of45,
+    sur20: sur20,
+    sur40: sur40,
+    valid: valid,
+    lines: lines,
+    freeTime: freeTime,
+    notes: notes,
+  });
+  // console.log("valid", fclInfo.valid);
+  const submitForm = async () => {
+    try {
+      const res = await client.post("/create", { ...fclInfo });
+      if (res.data.success) {
+        Alert.alert("Thêm Thành Công");
+        navigation.goBack();
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
-	const submitUpdateForm = async () => {
-		// if (isValidForm()) {
+  const submitUpdateForm = async () => {
+    // if (isValidForm()) {
 
-		const url = `http://'${ipAddress}'/api/quotations/update/${route.params._id}`;
+    const url = `http://'${ipAddress}'/api/quotations/update/${route.params._id}`;
 
     try {
       const res = await axios.post(url, { ...fclInfo });
@@ -319,112 +318,112 @@ const Add = ({ navigation, route }) => {
 };
 
 const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-	},
-	iconWrapper: {
-		width: 44,
-		height: 44,
-		backgroundColor: color.colorbutton,
-		borderRadius: 44,
-		alignItems: "center",
-		justifyContent: "center",
-		borderWidth: 2,
-		borderColor: color.background,
-	},
-	icon: {
-		fontSize: 24,
-		color: color.white,
-		alignItems: "center",
-		justifyContent: "center",
-	},
-	dropMenu: {
-		paddingHorizontal: 20,
-		paddingVertical: 4,
-		flex: 1,
-		minWidth: 180,
-	},
-	label: {
-		fontSize: 18,
-		fontWeight: "bold",
-		marginBottom: 5,
-	},
-	buttonInsert: {
-		height: 50,
-		width: 150,
-		borderColor: color.borderColor,
-		borderWidth: 1.5,
-		borderRadius: 8,
-		justifyContent: "center",
-		alignItems: "center",
-		borderRadius: 30,
-		marginLeft: 10,
-	},
-	buttonTime: {
-		height: 40,
-		borderColor: color.colorbutton,
-		borderWidth: 2,
-		borderRadius: 8,
-		justifyContent: "center",
-		alignItems: "center",
-		borderRadius: 30,
-		marginHorizontal: 80,
-	},
-	buttonImage: {
-		height: 50,
-		borderRadius: 8,
-		justifyContent: "center",
-		alignItems: "center",
-		borderRadius: 30,
-		marginHorizontal: 40,
-	},
-	styleButton: {
-		padding: 20,
-		marginLeft: 50,
-	},
-	styleImage: {
-		width: 200,
-		height: 200,
-		alignItems: "center",
-		justifyContent: "center",
-		marginLeft: 20,
-	},
-	dropdown: {
-		height: 50,
-		borderColor: "gray",
-		borderWidth: 0.5,
-		borderRadius: 8,
-		paddingHorizontal: 8,
-	},
-	placeholderStyle: {
-		fontSize: 16,
-	},
-	selectedTextStyle: {
-		fontSize: 16,
-	},
-	iconStyle: {
-		width: 20,
-		height: 20,
-	},
-	inputSearchStyle: {
-		height: 40,
-		fontSize: 16,
-	},
-	validStyle: {
-		height: 35,
-		width: "90%",
-		fontSize: 14,
-		padding: 5,
-		marginBottom: 10,
-		height: 50,
-		marginLeft: 17,
-		marginRight: 17,
-		borderBottomWidth: 1,
-	},
-	textValid: {
-		fontWeight: "bold",
-		marginLeft: 17,
-	},
+  container: {
+    flex: 1,
+  },
+  iconWrapper: {
+    width: 44,
+    height: 44,
+    backgroundColor: color.colorbutton,
+    borderRadius: 44,
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 2,
+    borderColor: color.background,
+  },
+  icon: {
+    fontSize: 24,
+    color: color.white,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  dropMenu: {
+    paddingHorizontal: 20,
+    paddingVertical: 4,
+    flex: 1,
+    minWidth: 180,
+  },
+  label: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 5,
+  },
+  buttonInsert: {
+    height: 50,
+    width: 150,
+    borderColor: color.borderColor,
+    borderWidth: 1.5,
+    borderRadius: 8,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 30,
+    marginLeft: 10,
+  },
+  buttonTime: {
+    height: 40,
+    borderColor: color.colorbutton,
+    borderWidth: 2,
+    borderRadius: 8,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 30,
+    marginHorizontal: 80,
+  },
+  buttonImage: {
+    height: 50,
+    borderRadius: 8,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 30,
+    marginHorizontal: 40,
+  },
+  styleButton: {
+    padding: 20,
+    marginLeft: 50,
+  },
+  styleImage: {
+    width: 200,
+    height: 200,
+    alignItems: "center",
+    justifyContent: "center",
+    marginLeft: 20,
+  },
+  dropdown: {
+    height: 50,
+    borderColor: "gray",
+    borderWidth: 0.5,
+    borderRadius: 8,
+    paddingHorizontal: 8,
+  },
+  placeholderStyle: {
+    fontSize: 16,
+  },
+  selectedTextStyle: {
+    fontSize: 16,
+  },
+  iconStyle: {
+    width: 20,
+    height: 20,
+  },
+  inputSearchStyle: {
+    height: 40,
+    fontSize: 16,
+  },
+  validStyle: {
+    height: 35,
+    width: "90%",
+    fontSize: 14,
+    padding: 5,
+    marginBottom: 10,
+    height: 50,
+    marginLeft: 17,
+    marginRight: 17,
+    borderBottomWidth: 1,
+  },
+  textValid: {
+    fontWeight: "bold",
+    marginLeft: 17,
+  },
 });
 
 export default Add;

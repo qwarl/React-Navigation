@@ -9,7 +9,7 @@ import {
   Button,
   RefreshControl,
   ScrollView,
-  Alert
+  Alert,
 } from "react-native";
 import React, { useEffect, useState, useCallback } from "react";
 import axios from "axios";
@@ -32,13 +32,13 @@ import RadioForm, {
 } from "react-native-simple-radio-button";
 import { Dropdown } from "react-native-element-dropdown";
 import client from "../../api/client";
-import { useIsFocused } from '@react-navigation/native'
+import { useIsFocused } from "@react-navigation/native";
 
 const { width, height } = Dimensions.get("window");
 
 const wait = (timeout) => {
-  return new Promise(resolve => setTimeout(resolve, timeout));
-}
+  return new Promise((resolve) => setTimeout(resolve, timeout));
+};
 const Home = ({ navigation, route }) => {
   const [data1, setData1] = useState([]);
 
@@ -54,15 +54,15 @@ const Home = ({ navigation, route }) => {
     type: "",
   });
 
-  const [refreshing, setRefreshing] = useState(false)
+  const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
-    navigation.replace('Home')
+    navigation.replace("Home");
     // alert('refresh')
     // console.log('refreshed')
     wait(500).then(() => setRefreshing(false));
-  }, [])
+  }, []);
 
   function getData() {
     const url = `/api/quotations/getAll`;
@@ -78,12 +78,12 @@ const Home = ({ navigation, route }) => {
       .then((res) => {
         setData1(res.data.quotations);
       })
-      .catch((err) =>  {
+      .catch((err) => {
         console.log(err);
       });
   }, [data1]);
 
-  const isFocused = useIsFocused()
+  const isFocused = useIsFocused();
   // useEffect(() => {
   //   isFocused
   // }, [isFocused])
@@ -181,7 +181,7 @@ const Home = ({ navigation, route }) => {
           .includes(fclInfo.continent.toLowerCase()) &&
         checkTypeSearch(searchText, eachFcl) &&
         checkPriceSearch(eachFcl) &&
-        eachFcl.type.toLowerCase().includes(fclInfo.type.toLowerCase()) &&
+        // eachFcl.type.toLowerCase().includes(fclInfo.type.toLowerCase()) &&
         eachFcl.valid.slice(eachFcl.valid.length - 4).includes(fclInfo.year)
     );
 
@@ -190,10 +190,7 @@ const Home = ({ navigation, route }) => {
       <ScrollView
         // contentContainerStyle={styles.scrollView}
         refreshControl={
-          <RefreshControl
-            refreshing={refreshing}
-            onRefresh={onRefresh}
-          />
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       >
         <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -400,7 +397,7 @@ const styles = StyleSheet.create({
     flex: 1,
     width: "100%",
     padding: 10,
-    height:height*0.47
+    height: height * 0.47,
   },
   list: {
     flex: 1,
